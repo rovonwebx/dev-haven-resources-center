@@ -104,16 +104,16 @@ const Index = () => {
         </div>
 
         {/* Table of Contents */}
-        <Card className="mb-8 border border-gray-300">
-          <CardContent className="p-4">
-            <h2 className="text-lg font-semibold mb-3 text-black">Contents</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <Card className="mb-8 border border-gray-200 bg-gray-50">
+          <CardContent className="p-6">
+            <h2 className="text-xl font-serif text-black mb-4 pb-2 border-b border-gray-300">Contents</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {resourceCategories.map((category, index) => (
-                <div key={category.title} className="flex items-center">
-                  <span className="text-blue-600 mr-2">{index + 1}.</span>
+                <div key={category.title} className="flex items-center py-1">
+                  <span className="text-blue-700 font-medium mr-3 min-w-[24px]">{index + 1}.</span>
                   <Link 
                     to={category.path} 
-                    className="text-blue-600 hover:underline text-sm"
+                    className="text-blue-700 hover:text-blue-900 hover:underline text-sm font-medium transition-colors"
                   >
                     {category.title}
                   </Link>
