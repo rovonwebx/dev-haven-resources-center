@@ -1,42 +1,25 @@
 
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, GraduationCap, BookOpen, Clock } from "lucide-react";
+import { ArrowLeft, BookOpen, Clock } from "lucide-react";
 
 const Theories = () => {
   const theoryTopics = [
     {
       category: "Computer Science Theory",
       topics: [
-        { title: "Computational Complexity Theory", description: "P vs NP, complexity classes, and algorithmic efficiency", difficulty: "Advanced", readTime: "45 min" },
-        { title: "Automata Theory", description: "Finite state machines, regular expressions, and formal languages", difficulty: "Intermediate", readTime: "35 min" },
-        { title: "Graph Theory", description: "Graph algorithms, connectivity, and network analysis", difficulty: "Intermediate", readTime: "40 min" }
+        { title: "Computational Complexity Theory", description: "Study of P vs NP problems, complexity classes, and algorithmic efficiency analysis", difficulty: "Advanced", readTime: "45 min" },
+        { title: "Automata Theory", description: "Finite state machines, regular expressions, context-free grammars, and formal languages", difficulty: "Intermediate", readTime: "35 min" },
+        { title: "Graph Theory", description: "Mathematical study of graphs, algorithms for connectivity, shortest paths, and network analysis", difficulty: "Intermediate", readTime: "40 min" }
       ]
     },
     {
       category: "Software Engineering Principles",
       topics: [
-        { title: "SOLID Principles", description: "Five design principles for maintainable software", difficulty: "Beginner", readTime: "25 min" },
-        { title: "Design Patterns", description: "Common solutions to recurring design problems", difficulty: "Intermediate", readTime: "50 min" },
-        { title: "Software Architecture Patterns", description: "MVC, MVP, MVVM, and architectural styles", difficulty: "Advanced", readTime: "60 min" }
-      ]
-    },
-    {
-      category: "Database Theory",
-      topics: [
-        { title: "Relational Database Theory", description: "Normalization, ACID properties, and relational algebra", difficulty: "Intermediate", readTime: "40 min" },
-        { title: "CAP Theorem", description: "Consistency, availability, and partition tolerance trade-offs", difficulty: "Advanced", readTime: "30 min" },
-        { title: "Concurrency Control", description: "Locking mechanisms, deadlocks, and isolation levels", difficulty: "Advanced", readTime: "45 min" }
-      ]
-    },
-    {
-      category: "Distributed Systems",
-      topics: [
-        { title: "Consensus Algorithms", description: "Paxos, Raft, and Byzantine fault tolerance", difficulty: "Advanced", readTime: "55 min" },
-        { title: "Distributed Computing Models", description: "Message passing, shared memory, and actor model", difficulty: "Advanced", readTime: "50 min" },
-        { title: "Consistency Models", description: "Strong, eventual, and causal consistency", difficulty: "Advanced", readTime: "40 min" }
+        { title: "SOLID Principles", description: "Five fundamental design principles for writing maintainable and scalable object-oriented software", difficulty: "Beginner", readTime: "25 min" },
+        { title: "Design Patterns", description: "Reusable solutions to commonly occurring problems in software design and architecture", difficulty: "Intermediate", readTime: "50 min" },
+        { title: "Software Architecture Patterns", description: "High-level structural patterns including MVC, MVP, MVVM, and microservices architecture", difficulty: "Advanced", readTime: "60 min" }
       ]
     }
   ];
@@ -51,51 +34,57 @@ const Theories = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" asChild>
+    <div className="min-h-screen bg-white">
+      <header className="border-b border-gray-300 bg-white">
+        <div className="max-w-5xl mx-auto px-4 py-6">
+          <div className="flex items-center space-x-4 mb-2">
+            <Button variant="ghost" size="sm" asChild className="text-blue-600 hover:bg-blue-50">
               <Link to="/">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Hub
+                <ArrowLeft className="w-4 h-4 mr-1" />
+                Main Page
               </Link>
             </Button>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                <GraduationCap className="w-8 h-8 inline mr-2 text-indigo-600" />
-                Engineering Theories
-              </h1>
-              <p className="text-gray-600 mt-1">Fundamental concepts and theoretical knowledge</p>
-            </div>
           </div>
+          <h1 className="text-3xl font-serif text-black">Engineering Theories</h1>
+          <p className="text-gray-600 text-sm mt-1">Fundamental concepts and theoretical foundations</p>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-5xl mx-auto px-4 py-8">
+        <div className="mb-6">
+          <p className="text-gray-700 leading-relaxed">
+            This section covers essential <strong>theoretical foundations</strong> in computer science and software engineering. 
+            Understanding these theories provides the conceptual framework necessary for advanced problem-solving 
+            and system design in engineering practice.
+          </p>
+        </div>
+
         {theoryTopics.map((category, categoryIndex) => (
-          <div key={categoryIndex} className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">{category.category}</h2>
+          <section key={categoryIndex} className="mb-8">
+            <h2 className="text-xl font-serif text-black mb-4 border-b border-gray-200 pb-2">
+              {category.category}
+            </h2>
+            
             <div className="space-y-4">
               {category.topics.map((topic, topicIndex) => (
-                <Card key={topicIndex} className="hover:shadow-md transition-shadow duration-300">
-                  <CardContent className="pt-6">
+                <Card key={topicIndex} className="border border-gray-200 hover:shadow-sm transition-shadow">
+                  <CardContent className="p-4">
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">{topic.title}</h3>
-                        <p className="text-gray-600 mb-3">{topic.description}</p>
-                        <div className="flex items-center space-x-4">
-                          <Badge className={getDifficultyColor(topic.difficulty)}>
+                        <h3 className="font-medium text-black mb-2">{topic.title}</h3>
+                        <p className="text-gray-700 text-sm leading-relaxed mb-3">{topic.description}</p>
+                        <div className="flex items-center space-x-4 text-xs">
+                          <span className={`px-2 py-1 rounded ${getDifficultyColor(topic.difficulty)}`}>
                             {topic.difficulty}
-                          </Badge>
-                          <div className="flex items-center text-sm text-gray-500">
-                            <Clock className="w-4 h-4 mr-1" />
+                          </span>
+                          <div className="flex items-center text-gray-600">
+                            <Clock className="w-3 h-3 mr-1" />
                             {topic.readTime}
                           </div>
                         </div>
                       </div>
-                      <Button variant="outline" size="sm">
-                        <BookOpen className="w-4 h-4 mr-2" />
+                      <Button variant="outline" size="sm" className="text-xs ml-4">
+                        <BookOpen className="w-3 h-3 mr-1" />
                         Study Theory
                       </Button>
                     </div>
@@ -103,36 +92,41 @@ const Theories = () => {
                 </Card>
               ))}
             </div>
-          </div>
+          </section>
         ))}
 
-        <Card className="mt-12">
-          <CardHeader>
-            <CardTitle>Study Approach for Theoretical Concepts</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="mt-8 border border-gray-200">
+          <CardContent className="p-4">
+            <h3 className="font-semibold text-black mb-3">Study Methodology</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
-                <h4 className="font-semibold mb-2">Understanding Theory</h4>
-                <ul className="text-sm text-gray-700 space-y-1">
-                  <li>• Start with basic definitions and concepts</li>
-                  <li>• Use visual aids and diagrams</li>
-                  <li>• Connect theory to practical applications</li>
-                  <li>• Work through examples step by step</li>
+                <h4 className="font-medium mb-2 text-black">Understanding Theory</h4>
+                <ul className="text-gray-700 space-y-1">
+                  <li>• Begin with fundamental definitions and concepts</li>
+                  <li>• Utilize visual aids and mathematical proofs</li>
+                  <li>• Connect theoretical concepts to practical applications</li>
+                  <li>• Work through examples systematically</li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold mb-2">Applying Knowledge</h4>
-                <ul className="text-sm text-gray-700 space-y-1">
-                  <li>• Implement theoretical concepts in code</li>
-                  <li>• Discuss concepts with peers</li>
-                  <li>• Solve related problems and exercises</li>
-                  <li>• Teach concepts to reinforce learning</li>
+                <h4 className="font-medium mb-2 text-black">Practical Application</h4>
+                <ul className="text-gray-700 space-y-1">
+                  <li>• Implement theoretical concepts in programming</li>
+                  <li>• Engage in peer discussions and study groups</li>
+                  <li>• Solve related problems and case studies</li>
+                  <li>• Teach concepts to reinforce understanding</li>
                 </ul>
               </div>
             </div>
           </CardContent>
         </Card>
+
+        <div className="mt-12 pt-6 border-t border-gray-200">
+          <p className="text-gray-500 text-xs">
+            Theoretical content is curated from academic sources and industry best practices. 
+            For additional learning resources, visit the main <Link to="/" className="text-blue-600 hover:underline">Engineering Resources Hub</Link>.
+          </p>
+        </div>
       </main>
     </div>
   );

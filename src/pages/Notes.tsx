@@ -1,9 +1,8 @@
 
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, FileText, Download, Eye } from "lucide-react";
+import { ArrowLeft, Download, Eye } from "lucide-react";
 
 const Notes = () => {
   const noteCategories = [
@@ -30,65 +29,61 @@ const Notes = () => {
         { title: "Database Design Principles", type: "PDF", size: "3.5 MB", downloads: 1200 },
         { title: "Microservices Architecture", type: "PDF", size: "5.2 MB", downloads: 1400 }
       ]
-    },
-    {
-      category: "Interview Preparation",
-      notes: [
-        { title: "Technical Interview Questions", type: "PDF", size: "2.9 MB", downloads: 3200 },
-        { title: "Behavioral Interview Guide", type: "PDF", size: "1.7 MB", downloads: 2800 },
-        { title: "Salary Negotiation Tips", type: "PDF", size: "1.2 MB", downloads: 2100 }
-      ]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" asChild>
+    <div className="min-h-screen bg-white">
+      <header className="border-b border-gray-300 bg-white">
+        <div className="max-w-5xl mx-auto px-4 py-6">
+          <div className="flex items-center space-x-4 mb-2">
+            <Button variant="ghost" size="sm" asChild className="text-blue-600 hover:bg-blue-50">
               <Link to="/">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Hub
+                <ArrowLeft className="w-4 h-4 mr-1" />
+                Main Page
               </Link>
             </Button>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                <FileText className="w-8 h-8 inline mr-2 text-green-600" />
-                Study Notes
-              </h1>
-              <p className="text-gray-600 mt-1">Quick reference guides and study materials</p>
-            </div>
           </div>
+          <h1 className="text-3xl font-serif text-black">Study Notes</h1>
+          <p className="text-gray-600 text-sm mt-1">Quick reference guides and study materials</p>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-5xl mx-auto px-4 py-8">
+        <div className="mb-6">
+          <p className="text-gray-700 leading-relaxed">
+            This collection contains comprehensive <strong>study notes</strong> and quick reference materials 
+            covering fundamental computer science concepts, programming languages, and system design principles. 
+            All materials are available in PDF format for easy download and offline study.
+          </p>
+        </div>
+
         {noteCategories.map((category, categoryIndex) => (
-          <div key={categoryIndex} className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">{category.category}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <section key={categoryIndex} className="mb-8">
+            <h2 className="text-xl font-serif text-black mb-4 border-b border-gray-200 pb-2">
+              {category.category}
+            </h2>
+            
+            <div className="space-y-3">
               {category.notes.map((note, noteIndex) => (
-                <Card key={noteIndex} className="hover:shadow-md transition-shadow duration-300">
-                  <CardHeader>
-                    <CardTitle className="text-lg font-semibold text-gray-900">
-                      {note.title}
-                    </CardTitle>
-                    <div className="flex items-center space-x-2">
-                      <Badge variant="secondary">{note.type}</Badge>
-                      <span className="text-sm text-gray-600">{note.size}</span>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">{note.downloads} downloads</span>
+                <Card key={noteIndex} className="border border-gray-200 hover:shadow-sm transition-shadow">
+                  <CardContent className="p-4">
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <h3 className="font-medium text-black mb-1">{note.title}</h3>
+                        <div className="flex items-center space-x-4 text-sm text-gray-600">
+                          <span>{note.type}</span>
+                          <span>{note.size}</span>
+                          <span>{note.downloads} downloads</span>
+                        </div>
+                      </div>
                       <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
-                          <Eye className="w-4 h-4 mr-1" />
+                        <Button size="sm" variant="outline" className="text-xs">
+                          <Eye className="w-3 h-3 mr-1" />
                           Preview
                         </Button>
-                        <Button size="sm">
-                          <Download className="w-4 h-4 mr-1" />
+                        <Button size="sm" className="text-xs">
+                          <Download className="w-3 h-3 mr-1" />
                           Download
                         </Button>
                       </div>
@@ -97,8 +92,15 @@ const Notes = () => {
                 </Card>
               ))}
             </div>
-          </div>
+          </section>
         ))}
+
+        <div className="mt-12 pt-6 border-t border-gray-200">
+          <p className="text-gray-500 text-xs">
+            All study materials are regularly updated and verified for accuracy. 
+            For additional resources, visit the main <Link to="/" className="text-blue-600 hover:underline">Engineering Resources Hub</Link>.
+          </p>
+        </div>
       </main>
     </div>
   );

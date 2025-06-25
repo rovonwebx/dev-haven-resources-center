@@ -1,7 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { 
   Award, 
   Code, 
@@ -22,173 +21,148 @@ const Index = () => {
       description: "Industry-recognized certifications and online courses",
       icon: Award,
       path: "/certificates",
-      color: "bg-blue-500"
     },
     {
       title: "Projects",
       description: "Hands-on projects and portfolio ideas",
       icon: Code,
       path: "/projects",
-      color: "bg-green-500"
     },
     {
       title: "Ideas",
       description: "Innovation concepts and startup ideas",
       icon: Lightbulb,
       path: "/ideas",
-      color: "bg-yellow-500"
     },
     {
       title: "Blogs",
       description: "Technical articles and engineering insights",
       icon: BookOpen,
       path: "/blogs",
-      color: "bg-purple-500"
     },
     {
       title: "DSA",
       description: "Data Structures and Algorithms resources",
       icon: Brain,
       path: "/dsa",
-      color: "bg-red-500"
     },
     {
       title: "Coding Challenges",
       description: "Programming contests and practice problems",
       icon: Trophy,
       path: "/coding-challenges",
-      color: "bg-orange-500"
     },
     {
       title: "Internships",
       description: "Internship opportunities and career guidance",
       icon: Briefcase,
       path: "/internships",
-      color: "bg-indigo-500"
     },
     {
       title: "Notes",
       description: "Study materials and quick reference guides",
       icon: FileText,
       path: "/notes",
-      color: "bg-teal-500"
     },
     {
       title: "Documents",
       description: "Technical documentation and manuals",
       icon: File,
       path: "/documents",
-      color: "bg-pink-500"
     },
     {
       title: "Theories",
       description: "Fundamental concepts and theoretical knowledge",
       icon: GraduationCap,
       path: "/theories",
-      color: "bg-cyan-500"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              Engineering Resources Hub
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Your comprehensive platform for engineering knowledge, projects, and career development
-            </p>
-          </div>
+      <header className="border-b border-gray-300 bg-white">
+        <div className="max-w-5xl mx-auto px-4 py-6">
+          <h1 className="text-3xl font-serif text-black mb-2">
+            Engineering Resources Hub
+          </h1>
+          <p className="text-gray-600 text-sm">
+            A comprehensive collection of engineering knowledge and resources
+          </p>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <Card className="text-center">
-            <CardContent className="pt-6">
-              <div className="text-3xl font-bold text-blue-600 mb-2">10+</div>
-              <div className="text-gray-600">Resource Categories</div>
-            </CardContent>
-          </Card>
-          <Card className="text-center">
-            <CardContent className="pt-6">
-              <div className="text-3xl font-bold text-green-600 mb-2">500+</div>
-              <div className="text-gray-600">Learning Resources</div>
-            </CardContent>
-          </Card>
-          <Card className="text-center">
-            <CardContent className="pt-6">
-              <div className="text-3xl font-bold text-purple-600 mb-2">24/7</div>
-              <div className="text-gray-600">Access Available</div>
-            </CardContent>
-          </Card>
+      <main className="max-w-5xl mx-auto px-4 py-8">
+        {/* Introduction */}
+        <div className="mb-8">
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The <strong>Engineering Resources Hub</strong> is a comprehensive platform designed to support engineers 
+            at every stage of their career. From foundational concepts to advanced theories, this hub provides 
+            structured access to essential learning materials, practical projects, and career development resources.
+          </p>
         </div>
 
-        {/* Resource Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Table of Contents */}
+        <Card className="mb-8 border border-gray-300">
+          <CardContent className="p-4">
+            <h2 className="text-lg font-semibold mb-3 text-black">Contents</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {resourceCategories.map((category, index) => (
+                <div key={category.title} className="flex items-center">
+                  <span className="text-blue-600 mr-2">{index + 1}.</span>
+                  <Link 
+                    to={category.path} 
+                    className="text-blue-600 hover:underline text-sm"
+                  >
+                    {category.title}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Resource Categories */}
+        <div className="space-y-8">
           {resourceCategories.map((category) => {
             const IconComponent = category.icon;
             return (
-              <Card key={category.title} className="hover:shadow-lg transition-shadow duration-300 group">
-                <CardHeader className="text-center pb-4">
-                  <div className={`w-16 h-16 ${category.color} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className="w-8 h-8 text-white" />
-                  </div>
-                  <CardTitle className="text-xl font-semibold text-gray-900">
-                    {category.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-center">
-                  <p className="text-gray-600 mb-6 text-sm">
-                    {category.description}
-                  </p>
-                  <Button asChild className="w-full">
-                    <Link to={category.path}>
-                      Explore {category.title}
+              <section key={category.title} className="border-b border-gray-200 pb-6">
+                <div className="flex items-start space-x-3">
+                  <IconComponent className="w-5 h-5 text-gray-600 mt-1 flex-shrink-0" />
+                  <div className="flex-1">
+                    <h2 className="text-xl font-serif text-black mb-2">
+                      <Link 
+                        to={category.path} 
+                        className="text-blue-600 hover:underline"
+                      >
+                        {category.title}
+                      </Link>
+                    </h2>
+                    <p className="text-gray-700 leading-relaxed text-sm mb-3">
+                      {category.description}
+                    </p>
+                    <Link 
+                      to={category.path}
+                      className="text-blue-600 hover:underline text-sm font-medium"
+                    >
+                      Main article: {category.title} →
                     </Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                  </div>
+                </div>
+              </section>
             );
           })}
         </div>
 
-        {/* Call to Action */}
-        <div className="mt-16 text-center">
-          <Card className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-            <CardContent className="py-12">
-              <h2 className="text-3xl font-bold mb-4">Ready to Level Up Your Engineering Skills?</h2>
-              <p className="text-xl mb-8 opacity-90">
-                Start exploring our comprehensive collection of resources designed for engineers at every level
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" variant="secondary" asChild>
-                  <Link to="/projects">Start with Projects</Link>
-                </Button>
-                <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-blue-600" asChild>
-                  <Link to="/dsa">Practice DSA</Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Footer */}
+        <div className="mt-12 pt-6 border-t border-gray-200">
+          <p className="text-gray-500 text-xs">
+            Last updated: December 2024 • This page provides an overview of engineering resources available on the platform.
+          </p>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center">
-            <p className="text-gray-400">
-              © 2024 Engineering Resources Hub. Empowering engineers worldwide.
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
