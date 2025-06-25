@@ -83,6 +83,17 @@ const Index = () => {
       {/* Header */}
       <header className="border-b border-gray-300 bg-white">
         <div className="max-w-5xl mx-auto px-4 py-6">
+          {/* Logo Section */}
+          <div className="flex items-center mb-4">
+            <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+              <span className="text-white font-bold text-xl">D</span>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-black mb-1">DHRC</h1>
+              <p className="text-sm text-gray-600">by Launch Layer R1</p>
+            </div>
+          </div>
+          
           <h1 className="text-3xl font-serif text-black mb-2">
             Engineering Resources Hub
           </h1>
