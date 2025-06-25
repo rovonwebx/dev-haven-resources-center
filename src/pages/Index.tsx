@@ -96,7 +96,7 @@ const Index = () => {
           </div>
           
           <h1 className="text-3xl font-serif text-black mb-2">
-            Dev haven Resources center
+            Dev Haven Resources center
           </h1>
           <p className="text-gray-600 text-sm">
             A comprehensive collection of engineering knowledge and resources
@@ -109,7 +109,7 @@ const Index = () => {
         {/* Introduction */}
         <div className="mb-8">
           <p className="text-gray-700 leading-relaxed mb-4">
-            The <strong> Dev haven Resources center</strong> is a comprehensive platform designed to support engineers 
+            The <strong> Dev Haven Resources center</strong> is a comprehensive platform designed to support engineers 
             at every stage of their career. From foundational concepts to advanced theories, this hub provides 
             structured access to essential learning materials, practical projects, and career development resources.
           </p>
