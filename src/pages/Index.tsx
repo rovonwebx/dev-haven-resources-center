@@ -171,7 +171,7 @@ const Index = () => {
         {/* Footer */}
         <div className="mt-12 pt-6 border-t border-gray-200">
           <p className="text-gray-500 text-xs">
-            Last updated: December 2024 • This page provides an overview of engineering resources available on the platform.
+            Last updated: June 2025 • This page provides an overview of engineering resources available on the platform.
           </p>
         </div>
       </main>
