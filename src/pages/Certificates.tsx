@@ -1,11 +1,14 @@
-
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ExternalLink, Clock, Users, Star } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft, ExternalLink, Clock, Users, Star, Search } from "lucide-react";
 
 const Certificates = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
   const certificates = [
     // Cloud Computing
     { title: "AWS Certified Solutions Architect", provider: "Amazon Web Services", duration: "3-6 months", level: "Professional", rating: 4.8, students: "50K+", description: "Design and deploy scalable AWS solutions", link: "https://aws.amazon.com/certification/", tags: ["Cloud", "AWS", "Architecture"] },
@@ -154,6 +157,13 @@ const Certificates = () => {
     { title: "Databricks Certified Developer", provider: "Databricks", duration: "2-4 months", level: "Intermediate", rating: 4.5, students: "12K+", description: "Unified analytics platform", link: "https://academy.databricks.com/", tags: ["Databricks", "Analytics", "Big Data"] }
   ];
 
+  const filteredCertificates = certificates.filter(cert => 
+    cert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    cert.provider.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    cert.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    cert.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
   const getLevelColor = (level: string) => {
     switch (level) {
       case "Beginner": return "bg-green-100 text-green-800";
@@ -166,28 +176,46 @@ const Certificates = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Simple Header */}
+      {/* Header */}
       <header className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Certificates</h1>
+              <p className="text-gray-600 text-sm">Industry-recognized certifications</p>
+            </div>
             <Button variant="ghost" size="sm" asChild>
               <Link to="/">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back
               </Link>
             </Button>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Certificates</h1>
-              <p className="text-gray-600 text-sm">Industry-recognized certifications</p>
-            </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-6">
+        {/* Search Bar */}
+        <div className="mb-6">
+          <div className="relative max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              type="text"
+              placeholder="Search certificates..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <p className="text-sm text-gray-500 mt-2">
+            Showing {filteredCertificates.length} of {certificates.length} certificates
+          </p>
+        </div>
+
+        {/* Certificates Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {certificates.map((cert, index) => (
+          {filteredCertificates.map((cert, index) => (
             <Card key={index} className="hover:shadow-md transition-shadow">
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start mb-2">
@@ -236,6 +264,15 @@ const Certificates = () => {
             </Card>
           ))}
         </div>
+
+        {/* No Results */}
+        {filteredCertificates.length === 0 && (
+          <div className="text-center py-12">
+            <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No certificates found</h3>
+            <p className="text-gray-500">Try adjusting your search terms</p>
+          </div>
+        )}
 
         {/* Tips Section */}
         <div className="mt-8">
