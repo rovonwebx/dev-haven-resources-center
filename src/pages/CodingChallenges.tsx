@@ -3,180 +3,286 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Trophy, Clock, Users, Star, ExternalLink } from "lucide-react";
+import { ArrowLeft, Trophy, Clock, Users, Star, ExternalLink, Calendar, Award, Code, Zap } from "lucide-react";
 
 const CodingChallenges = () => {
   const platforms = [
     {
       name: "LeetCode",
-      description: "Most popular platform for coding interview preparation",
-      challenges: "3000+",
+      description: "The most comprehensive coding interview preparation platform",
+      challenges: "3200+",
       difficulty: ["Easy", "Medium", "Hard"],
-      rating: 4.8,
-      users: "10M+",
-      specialties: ["Algorithms", "Data Structures", "Database", "System Design"],
-      url: "https://leetcode.com"
+      rating: 4.9,
+      users: "15M+",
+      specialties: ["Algorithms", "Data Structures", "System Design", "SQL"],
+      url: "https://leetcode.com",
+      gradient: "from-orange-400 to-red-500",
+      newFeatures: ["Daily Challenge Streaks", "Interview Simulator", "Contest Ratings"]
     },
     {
       name: "HackerRank",
-      description: "Comprehensive programming challenges and skill assessments",
-      challenges: "2000+",
-      difficulty: ["Easy", "Medium", "Hard"],
-      rating: 4.6,
-      users: "8M+",
-      specialties: ["Algorithms", "Mathematics", "AI", "Databases"],
-      url: "https://hackerrank.com"
+      description: "Skill-based programming challenges with certification programs",
+      challenges: "2500+",
+      difficulty: ["Easy", "Medium", "Hard", "Expert"],
+      rating: 4.7,
+      users: "12M+",
+      specialties: ["Problem Solving", "AI/ML", "Databases", "Mathematics"],
+      url: "https://hackerrank.com",
+      gradient: "from-green-400 to-blue-500",
+      newFeatures: ["AI Code Review", "Skill Certifications", "Company Challenges"]
     },
     {
       name: "CodeChef",
-      description: "Competitive programming platform with monthly contests",
-      challenges: "1500+",
-      difficulty: ["Beginner", "Easy", "Medium", "Hard"],
-      rating: 4.5,
-      users: "3M+",
+      description: "Competitive programming with global contests and rankings",
+      challenges: "1800+",
+      difficulty: ["Beginner", "Easy", "Medium", "Hard", "Challenge"],
+      rating: 4.6,
+      users: "4M+",
       specialties: ["Competitive Programming", "Long Challenges", "Cook-offs"],
-      url: "https://codechef.com"
+      url: "https://codechef.com",
+      gradient: "from-purple-400 to-pink-500",
+      newFeatures: ["Practice Battles", "Mentor Program", "CodeChef Learn"]
     },
     {
       name: "Codeforces",
-      description: "Premier platform for competitive programming contests",
-      challenges: "8000+",
-      difficulty: ["Div 1", "Div 2", "Div 3", "Educational"],
+      description: "Premier competitive programming platform with rating system",
+      challenges: "9000+",
+      difficulty: ["Div 4", "Div 3", "Div 2", "Div 1"],
+      rating: 4.8,
+      users: "3M+",
+      specialties: ["Contest Problems", "Problem Archive", "Educational Rounds"],
+      url: "https://codeforces.com",
+      gradient: "from-blue-400 to-indigo-500",
+      newFeatures: ["Virtual Participation", "Polygon System", "Educational Content"]
+    },
+    {
+      name: "AtCoder",
+      description: "Japanese competitive programming platform with beginner-friendly contests",
+      challenges: "4000+",
+      difficulty: ["ABC", "ARC", "AGC", "AHC"],
       rating: 4.7,
-      users: "2M+",
-      specialties: ["Contests", "Problem Archive", "Ratings"],
-      url: "https://codeforces.com"
+      users: "800K+",
+      specialties: ["Beginner Contests", "Algorithm Contests", "Heuristic Contests"],
+      url: "https://atcoder.jp",
+      gradient: "from-teal-400 to-cyan-500",
+      newFeatures: ["AtCoder Library", "Practice Contests", "Problem Editorials"]
+    },
+    {
+      name: "Topcoder",
+      description: "Historic platform for competitive programming and algorithm challenges",
+      challenges: "5000+",
+      difficulty: ["Div 1", "Div 2", "Marathon"],
+      rating: 4.5,
+      users: "1.5M+",
+      specialties: ["SRM Contests", "Marathon Matches", "Algorithm Tutorials"],
+      url: "https://topcoder.com",
+      gradient: "from-yellow-400 to-orange-500",
+      newFeatures: ["Topcoder Open", "First2Finish", "Practice Rooms"]
     }
   ];
 
   const upcomingContests = [
     {
-      name: "Weekly Contest 375",
+      name: "LeetCode Weekly Contest 415",
       platform: "LeetCode",
-      date: "Dec 24, 2024",
+      date: "Aug 25, 2025",
       time: "10:30 AM EST",
       duration: "1.5 hours",
-      participants: "25K+"
+      participants: "35K+",
+      prize: "$1000",
+      gradient: "from-orange-400 to-red-500"
     },
     {
-      name: "Cook-Off December",
+      name: "CodeChef Starters 145",
       platform: "CodeChef",
-      date: "Dec 25, 2024",
-      time: "9:30 PM IST",
-      duration: "2.5 hours",
-      participants: "15K+"
+      date: "Aug 28, 2025",
+      time: "8:00 PM IST",
+      duration: "3 hours",
+      participants: "20K+",
+      prize: "₹25,000",
+      gradient: "from-purple-400 to-pink-500"
     },
     {
-      name: "Codeforces Round #915",
+      name: "Codeforces Round #970",
       platform: "Codeforces",
-      date: "Dec 26, 2024",
-      time: "2:35 PM MSK",
+      date: "Aug 30, 2025",
+      time: "5:35 PM MSK",
       duration: "2 hours",
-      participants: "30K+"
+      participants: "40K+",
+      prize: "T-shirts",
+      gradient: "from-blue-400 to-indigo-500"
+    },
+    {
+      name: "AtCoder Beginner Contest 320",
+      platform: "AtCoder",
+      date: "Sep 1, 2025",
+      time: "9:00 PM JST",
+      duration: "100 minutes",
+      participants: "15K+",
+      prize: "Certificates",
+      gradient: "from-teal-400 to-cyan-500"
     }
   ];
 
   const challengeTypes = [
     {
-      type: "Algorithm Challenges",
-      description: "Solve complex algorithmic problems",
+      type: "Dynamic Programming",
+      description: "Master complex optimization problems",
       icon: "🧠",
-      examples: ["Two Sum", "Binary Search", "Dynamic Programming"]
+      examples: ["Knapsack Problem", "Longest Common Subsequence", "Edit Distance"],
+      difficulty: "Hard",
+      color: "from-purple-500 to-indigo-600"
+    },
+    {
+      type: "Graph Algorithms",
+      description: "Navigate complex network problems",
+      icon: "🌐",
+      examples: ["Dijkstra's Algorithm", "Minimum Spanning Tree", "Topological Sort"],
+      difficulty: "Medium",
+      color: "from-blue-500 to-cyan-600"
     },
     {
       type: "System Design",
       description: "Design scalable distributed systems",
       icon: "🏗️",
-      examples: ["Design Twitter", "Design URL Shortener", "Design Chat System"]
+      examples: ["Design Twitter", "Design URL Shortener", "Design Chat System"],
+      difficulty: "Expert",
+      color: "from-green-500 to-teal-600"
     },
     {
-      type: "Database Problems",
-      description: "SQL queries and database optimization",
-      icon: "🗃️",
-      examples: ["Complex Joins", "Query Optimization", "Schema Design"]
+      type: "String Algorithms",
+      description: "Process and manipulate text efficiently",
+      icon: "🔤",
+      examples: ["KMP Algorithm", "Rabin-Karp", "Suffix Arrays"],
+      difficulty: "Medium",
+      color: "from-orange-500 to-red-600"
     },
     {
-      type: "Mathematics",
-      description: "Mathematical problem solving",
+      type: "Tree & Binary Search",
+      description: "Hierarchical data structure problems",
+      icon: "🌳",
+      examples: ["Binary Tree Traversal", "AVL Trees", "Segment Trees"],
+      difficulty: "Medium",
+      color: "from-emerald-500 to-green-600"
+    },
+    {
+      type: "Mathematical Problems",
+      description: "Number theory and combinatorics",
       icon: "🔢",
-      examples: ["Number Theory", "Combinatorics", "Probability"]
+      examples: ["Prime Numbers", "Modular Arithmetic", "Combinatorial Game Theory"],
+      difficulty: "Hard",
+      color: "from-pink-500 to-rose-600"
     }
   ];
 
+  const recentWinners = [
+    { name: "tourist", platform: "Codeforces", contest: "Round #969", rank: 1, rating: 3859 },
+    { name: "jiangly", platform: "AtCoder", contest: "AGC 062", rank: 1, rating: 3540 },
+    { name: "Benq", platform: "CodeChef", contest: "July Long", rank: 2, rating: 2847 },
+    { name: "neal", platform: "LeetCode", contest: "Weekly 414", rank: 1, rating: 3421 }
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-black/20 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
+              <Button variant="ghost" size="sm" asChild className="text-white hover:bg-white/10">
                 <Link to="/">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Hub
                 </Link>
               </Button>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">
-                  <Trophy className="w-8 h-8 inline mr-2 text-yellow-600" />
-                  Coding Challenges
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
+                  <Trophy className="w-8 h-8 inline mr-2 text-yellow-400" />
+                  Coding Challenges 2025
                 </h1>
-                <p className="text-gray-600 mt-1">Programming contests and practice problems</p>
+                <p className="text-gray-300 mt-1">Master algorithms • Compete globally • Level up your skills</p>
               </div>
             </div>
           </div>
         </div>
       </header>
 
+      {/* Stats Banner */}
+      <div className="bg-gradient-to-r from-yellow-400/10 to-orange-500/10 border-y border-yellow-400/20 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div className="text-white">
+              <div className="text-2xl font-bold text-yellow-400">50M+</div>
+              <div className="text-sm text-gray-300">Active Coders</div>
+            </div>
+            <div className="text-white">
+              <div className="text-2xl font-bold text-orange-400">28K+</div>
+              <div className="text-sm text-gray-300">Daily Challenges</div>
+            </div>
+            <div className="text-white">
+              <div className="text-2xl font-bold text-red-400">180+</div>
+              <div className="text-sm text-gray-300">Countries</div>
+            </div>
+            <div className="text-white">
+              <div className="text-2xl font-bold text-purple-400">$2M+</div>
+              <div className="text-sm text-gray-300">Prize Money 2025</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Popular Platforms */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Popular Platforms</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            🚀 Top Coding Platforms
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {platforms.map((platform, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
+              <Card key={index} className={`group hover:scale-105 transition-all duration-500 bg-gradient-to-br ${platform.gradient} border-0 text-white overflow-hidden relative`}>
+                <div className="absolute inset-0 bg-black/20"></div>
+                <CardHeader className="relative z-10">
+                  <div className="flex justify-between items-start mb-4">
                     <div>
-                      <CardTitle className="text-xl font-semibold text-gray-900">
+                      <CardTitle className="text-2xl font-bold text-white mb-2">
                         {platform.name}
                       </CardTitle>
-                      <p className="text-gray-600 mt-1">{platform.description}</p>
+                      <p className="text-white/90 text-sm leading-relaxed">{platform.description}</p>
                     </div>
-                    <div className="flex items-center">
-                      <Star className="w-4 h-4 mr-1 text-yellow-500" />
-                      <span className="text-sm font-medium">{platform.rating}</span>
+                    <div className="flex items-center bg-black/30 rounded-full px-3 py-1">
+                      <Star className="w-4 h-4 mr-1 text-yellow-300" />
+                      <span className="text-sm font-bold">{platform.rating}</span>
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="relative z-10">
                   <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <div className="text-sm text-gray-600">Challenges</div>
-                      <div className="font-semibold text-gray-900">{platform.challenges}</div>
+                    <div className="bg-black/30 rounded-lg p-3 text-center">
+                      <div className="text-xs text-white/70">Challenges</div>
+                      <div className="font-bold text-lg">{platform.challenges}</div>
                     </div>
-                    <div>
-                      <div className="text-sm text-gray-600">Users</div>
-                      <div className="font-semibold text-gray-900">{platform.users}</div>
+                    <div className="bg-black/30 rounded-lg p-3 text-center">
+                      <div className="text-xs text-white/70">Users</div>
+                      <div className="font-bold text-lg">{platform.users}</div>
                     </div>
                   </div>
 
                   <div className="mb-4">
-                    <div className="text-sm text-gray-600 mb-2">Specialties</div>
-                    <div className="flex flex-wrap gap-2">
-                      {platform.specialties.map((specialty, idx) => (
-                        <Badge key={idx} variant="secondary" className="text-xs">
-                          {specialty}
+                    <div className="text-xs text-white/70 mb-2">New in 2025</div>
+                    <div className="flex flex-wrap gap-1">
+                      {platform.newFeatures.map((feature, idx) => (
+                        <Badge key={idx} variant="secondary" className="text-xs bg-white/20 text-white border-white/30">
+                          {feature}
                         </Badge>
                       ))}
                     </div>
                   </div>
 
-                  <Button className="w-full" asChild>
+                  <Button className="w-full bg-black/30 hover:bg-black/50 border border-white/30 text-white" asChild>
                     <a href={platform.url} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="w-4 h-4 mr-2" />
-                      Visit Platform
+                      Start Coding
                     </a>
                   </Button>
                 </CardContent>
@@ -186,30 +292,39 @@ const CodingChallenges = () => {
         </div>
 
         {/* Upcoming Contests */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Upcoming Contests</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            🏆 Upcoming Contests
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             {upcomingContests.map((contest, index) => (
-              <Card key={index} className="hover:shadow-md transition-shadow duration-300">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-gray-900">
+              <Card key={index} className={`group hover:shadow-2xl transition-all duration-300 bg-gradient-to-br ${contest.gradient} border-0 text-white overflow-hidden relative`}>
+                <div className="absolute inset-0 bg-black/20"></div>
+                <CardHeader className="relative z-10">
+                  <Badge variant="outline" className="self-start bg-white/20 text-white border-white/50 mb-3">
+                    {contest.platform}
+                  </Badge>
+                  <CardTitle className="text-lg font-bold text-white leading-tight">
                     {contest.name}
                   </CardTitle>
-                  <Badge variant="outline">{contest.platform}</Badge>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center">
-                      <Clock className="w-4 h-4 mr-2 text-gray-500" />
-                      <span>{contest.date} at {contest.time}</span>
+                <CardContent className="relative z-10">
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center bg-black/20 rounded-lg p-2">
+                      <Calendar className="w-4 h-4 mr-2 text-white/80" />
+                      <span>{contest.date}</span>
                     </div>
-                    <div className="flex items-center">
-                      <Trophy className="w-4 h-4 mr-2 text-gray-500" />
-                      <span>Duration: {contest.duration}</span>
+                    <div className="flex items-center bg-black/20 rounded-lg p-2">
+                      <Clock className="w-4 h-4 mr-2 text-white/80" />
+                      <span>{contest.time} • {contest.duration}</span>
                     </div>
-                    <div className="flex items-center">
-                      <Users className="w-4 h-4 mr-2 text-gray-500" />
+                    <div className="flex items-center bg-black/20 rounded-lg p-2">
+                      <Users className="w-4 h-4 mr-2 text-white/80" />
                       <span>{contest.participants} expected</span>
+                    </div>
+                    <div className="flex items-center bg-black/20 rounded-lg p-2">
+                      <Award className="w-4 h-4 mr-2 text-yellow-300" />
+                      <span className="font-semibold">{contest.prize}</span>
                     </div>
                   </div>
                 </CardContent>
@@ -219,23 +334,31 @@ const CodingChallenges = () => {
         </div>
 
         {/* Challenge Types */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Challenge Types</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            💡 Master These Topics
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {challengeTypes.map((type, index) => (
-              <Card key={index} className="hover:shadow-md transition-shadow duration-300">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-gray-900">
-                    <span className="text-2xl mr-2">{type.icon}</span>
+              <Card key={index} className={`group hover:scale-105 transition-all duration-300 bg-gradient-to-br ${type.color} border-0 text-white overflow-hidden relative`}>
+                <div className="absolute inset-0 bg-black/10"></div>
+                <CardHeader className="relative z-10">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-3xl">{type.icon}</span>
+                    <Badge variant="outline" className="bg-white/20 text-white border-white/50">
+                      {type.difficulty}
+                    </Badge>
+                  </div>
+                  <CardTitle className="text-xl font-bold text-white mb-2">
                     {type.type}
                   </CardTitle>
-                  <p className="text-gray-600">{type.description}</p>
+                  <p className="text-white/90 text-sm">{type.description}</p>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-sm text-gray-600 mb-2">Popular Examples:</div>
+                <CardContent className="relative z-10">
+                  <div className="text-xs text-white/70 mb-2">Key Problems:</div>
                   <div className="flex flex-wrap gap-2">
                     {type.examples.map((example, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs">
+                      <Badge key={idx} variant="outline" className="text-xs bg-black/20 text-white border-white/30">
                         {example}
                       </Badge>
                     ))}
@@ -246,29 +369,68 @@ const CodingChallenges = () => {
           </div>
         </div>
 
+        {/* Recent Winners */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">
+            🌟 Recent Champions
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {recentWinners.map((winner, index) => (
+              <Card key={index} className="bg-gradient-to-br from-yellow-400/20 to-orange-500/20 border border-yellow-400/30 text-white hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-6 text-center">
+                  <div className="text-2xl mb-2">👑</div>
+                  <div className="text-lg font-bold text-yellow-400 mb-1">{winner.name}</div>
+                  <div className="text-sm text-white/80 mb-2">{winner.platform}</div>
+                  <div className="text-xs text-white/70 mb-2">{winner.contest}</div>
+                  <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold">
+                    Rank #{winner.rank} • {winner.rating}
+                  </Badge>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
         {/* Success Tips */}
-        <Card>
+        <Card className="bg-gradient-to-br from-blue-900/50 to-purple-900/50 border border-blue-400/30 text-white">
           <CardHeader>
-            <CardTitle>Coding Challenge Success Tips</CardTitle>
+            <CardTitle className="text-2xl text-center bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              🚀 Pro Tips for Success
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-semibold mb-2">Before the Contest</h4>
-                <ul className="text-sm text-gray-700 space-y-1">
-                  <li>• Practice regularly on different platforms</li>
-                  <li>• Learn common algorithms and patterns</li>
-                  <li>• Set up your coding environment</li>
-                  <li>• Review time complexity concepts</li>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <Code className="w-12 h-12 mx-auto mb-4 text-blue-400" />
+                <h4 className="font-bold mb-3 text-blue-300">Before Competing</h4>
+                <ul className="text-sm text-gray-300 space-y-2 text-left">
+                  <li>• Master fundamental data structures</li>
+                  <li>• Practice 2-3 problems daily</li>
+                  <li>• Learn common algorithm patterns</li>
+                  <li>• Set up fast coding environment</li>
+                  <li>• Study time complexity analysis</li>
                 </ul>
               </div>
-              <div>
-                <h4 className="font-semibold mb-2">During the Contest</h4>
-                <ul className="text-sm text-gray-700 space-y-1">
+              <div className="text-center">
+                <Zap className="w-12 h-12 mx-auto mb-4 text-yellow-400" />
+                <h4 className="font-bold mb-3 text-yellow-300">During Contest</h4>
+                <ul className="text-sm text-gray-300 space-y-2 text-left">
                   <li>• Read all problems first</li>
-                  <li>• Start with easiest problems</li>
-                  <li>• Test with edge cases</li>
-                  <li>• Manage your time effectively</li>
+                  <li>• Start with easiest problem</li>
+                  <li>• Code clean, readable solutions</li>
+                  <li>• Test with sample cases</li>
+                  <li>• Don't get stuck on one problem</li>
+                </ul>
+              </div>
+              <div className="text-center">
+                <Trophy className="w-12 h-12 mx-auto mb-4 text-green-400" />
+                <h4 className="font-bold mb-3 text-green-300">After Contest</h4>
+                <ul className="text-sm text-gray-300 space-y-2 text-left">
+                  <li>• Review editorial solutions</li>
+                  <li>• Understand why you failed</li>
+                  <li>• Practice similar problems</li>
+                  <li>• Join discussion forums</li>
+                  <li>• Track your progress</li>
                 </ul>
               </div>
             </div>
