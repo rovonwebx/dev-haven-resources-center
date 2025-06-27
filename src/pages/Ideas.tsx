@@ -1,10 +1,9 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Lightbulb, TrendingUp, Clock, Users, Search, Github, ExternalLink } from "lucide-react";
+import { ArrowLeft, Lightbulb, TrendingUp, Clock, Users, Search } from "lucide-react";
 import { useState, useMemo } from "react";
 
 const Ideas = () => {
@@ -20,8 +19,6 @@ const Ideas = () => {
       tags: ["IoT", "Machine Learning", "Energy", "Smart Home"],
       timeToMarket: "6-12 months",
       targetAudience: "Homeowners",
-      cardColor: "bg-gradient-to-br from-blue-500 to-blue-700",
-      textColor: "text-white"
     },
     {
       title: "Code Review Assistant",
@@ -32,8 +29,6 @@ const Ideas = () => {
       tags: ["AI", "Code Analysis", "Security", "DevOps"],
       timeToMarket: "8-14 months",
       targetAudience: "Developers",
-      cardColor: "bg-gradient-to-br from-purple-500 to-purple-700",
-      textColor: "text-white"
     },
     {
       title: "Virtual Study Buddy",
@@ -44,8 +39,6 @@ const Ideas = () => {
       tags: ["Education", "Social", "AI Matching", "Study"],
       timeToMarket: "4-8 months",
       targetAudience: "Students",
-      cardColor: "bg-gradient-to-br from-green-500 to-green-700",
-      textColor: "text-white"
     },
     {
       title: "Sustainable Transport Router",
@@ -56,8 +49,6 @@ const Ideas = () => {
       tags: ["Sustainability", "Transportation", "Mobile", "APIs"],
       timeToMarket: "3-6 months",
       targetAudience: "Eco-conscious travelers",
-      cardColor: "bg-gradient-to-br from-emerald-500 to-emerald-700",
-      textColor: "text-white"
     },
     {
       title: "Mental Health Companion",
@@ -68,8 +59,6 @@ const Ideas = () => {
       tags: ["Mental Health", "AI", "Healthcare", "Privacy"],
       timeToMarket: "12-18 months",
       targetAudience: "General public",
-      cardColor: "bg-gradient-to-br from-pink-500 to-pink-700",
-      textColor: "text-white"
     },
     {
       title: "Local Skill Exchange Platform",
@@ -80,8 +69,6 @@ const Ideas = () => {
       tags: ["Community", "Skills", "Barter", "Local"],
       timeToMarket: "2-4 months",
       targetAudience: "Local communities",
-      cardColor: "bg-gradient-to-br from-orange-500 to-orange-700",
-      textColor: "text-white"
     },
     {
       title: "AR Interior Designer",
@@ -92,8 +79,6 @@ const Ideas = () => {
       tags: ["AR", "Interior Design", "E-commerce", "3D"],
       timeToMarket: "10-15 months",
       targetAudience: "Homeowners",
-      cardColor: "bg-gradient-to-br from-red-500 to-red-700",
-      textColor: "text-white"
     },
     {
       title: "Blockchain Voting System",
@@ -104,8 +89,6 @@ const Ideas = () => {
       tags: ["Blockchain", "Security", "Democracy", "Transparency"],
       timeToMarket: "18-24 months",
       targetAudience: "Government & Organizations",
-      cardColor: "bg-gradient-to-br from-indigo-500 to-indigo-700",
-      textColor: "text-white"
     },
     {
       title: "Voice-Controlled Recipe Assistant",
@@ -116,8 +99,6 @@ const Ideas = () => {
       tags: ["Voice AI", "Cooking", "Smart Kitchen", "IoT"],
       timeToMarket: "6-10 months",
       targetAudience: "Home cooks",
-      cardColor: "bg-gradient-to-br from-yellow-500 to-yellow-700",
-      textColor: "text-white"
     },
     {
       title: "Personal Finance AI Coach",
@@ -128,8 +109,6 @@ const Ideas = () => {
       tags: ["AI", "Finance", "Budgeting", "Investment"],
       timeToMarket: "8-12 months",
       targetAudience: "Young professionals",
-      cardColor: "bg-gradient-to-br from-teal-500 to-teal-700",
-      textColor: "text-white"
     },
     {
       title: "Pet Health Monitor",
@@ -140,8 +119,6 @@ const Ideas = () => {
       tags: ["IoT", "Health", "Pets", "Wearables"],
       timeToMarket: "8-12 months",
       targetAudience: "Pet owners",
-      cardColor: "bg-gradient-to-br from-cyan-500 to-cyan-700",
-      textColor: "text-white"
     },
     {
       title: "Language Exchange VR",
@@ -152,8 +129,6 @@ const Ideas = () => {
       tags: ["VR", "Language Learning", "Social", "Education"],
       timeToMarket: "12-18 months",
       targetAudience: "Language learners",
-      cardColor: "bg-gradient-to-br from-violet-500 to-violet-700",
-      textColor: "text-white"
     },
     {
       title: "Micro-Investment Game",
@@ -164,8 +139,6 @@ const Ideas = () => {
       tags: ["Gaming", "Investment", "Education", "Finance"],
       timeToMarket: "6-9 months",
       targetAudience: "Young adults",
-      cardColor: "bg-gradient-to-br from-rose-500 to-rose-700",
-      textColor: "text-white"
     },
     {
       title: "Smart Garden Assistant",
@@ -176,8 +149,6 @@ const Ideas = () => {
       tags: ["IoT", "Agriculture", "Automation", "Sustainability"],
       timeToMarket: "5-8 months",
       targetAudience: "Garden enthusiasts",
-      cardColor: "bg-gradient-to-br from-lime-500 to-lime-700",
-      textColor: "text-white"
     },
     {
       title: "Mood-Based Music Generator",
@@ -188,8 +159,6 @@ const Ideas = () => {
       tags: ["AI", "Music", "Emotion Detection", "Personalization"],
       timeToMarket: "10-14 months",
       targetAudience: "Music lovers",
-      cardColor: "bg-gradient-to-br from-amber-500 to-amber-700",
-      textColor: "text-white"
     },
     {
       title: "Collaborative Workspace VR",
@@ -200,8 +169,6 @@ const Ideas = () => {
       tags: ["VR", "Collaboration", "Remote Work", "3D"],
       timeToMarket: "15-20 months",
       targetAudience: "Remote teams",
-      cardColor: "bg-gradient-to-br from-slate-500 to-slate-700",
-      textColor: "text-white"
     },
     {
       title: "Habit Formation Tracker",
@@ -212,8 +179,6 @@ const Ideas = () => {
       tags: ["Psychology", "Habits", "Wellness", "Gamification"],
       timeToMarket: "4-7 months",
       targetAudience: "Self-improvement seekers",
-      cardColor: "bg-gradient-to-br from-emerald-400 to-emerald-600",
-      textColor: "text-white"
     },
     {
       title: "AI-Powered Resume Builder",
@@ -224,8 +189,6 @@ const Ideas = () => {
       tags: ["AI", "Career", "Resume", "Job Search"],
       timeToMarket: "3-6 months",
       targetAudience: "Job seekers",
-      cardColor: "bg-gradient-to-br from-blue-400 to-blue-600",
-      textColor: "text-white"
     },
     {
       title: "Smart Wardrobe Assistant",
@@ -236,8 +199,6 @@ const Ideas = () => {
       tags: ["AI", "Fashion", "Style", "Weather"],
       timeToMarket: "6-9 months",
       targetAudience: "Fashion conscious",
-      cardColor: "bg-gradient-to-br from-purple-400 to-purple-600",
-      textColor: "text-white"
     },
     {
       title: "Neighborhood Safety Network",
@@ -248,8 +209,6 @@ const Ideas = () => {
       tags: ["Community", "Safety", "Social", "Location"],
       timeToMarket: "3-5 months",
       targetAudience: "Local communities",
-      cardColor: "bg-gradient-to-br from-red-400 to-red-600",
-      textColor: "text-white"
     },
     {
       title: "Elderly Care Companion",
@@ -260,8 +219,6 @@ const Ideas = () => {
       tags: ["Healthcare", "AI", "Elderly Care", "Emergency"],
       timeToMarket: "10-15 months",
       targetAudience: "Elderly & families",
-      cardColor: "bg-gradient-to-br from-pink-400 to-pink-600",
-      textColor: "text-white"
     },
     {
       title: "Event Planning Assistant",
@@ -272,8 +229,6 @@ const Ideas = () => {
       tags: ["Events", "Planning", "Budget", "Vendor Management"],
       timeToMarket: "5-8 months",
       targetAudience: "Event planners",
-      cardColor: "bg-gradient-to-br from-orange-400 to-orange-600",
-      textColor: "text-white"
     },
     {
       title: "Skill Assessment Platform",
@@ -284,8 +239,6 @@ const Ideas = () => {
       tags: ["AI", "Skills", "Assessment", "HR"],
       timeToMarket: "8-12 months",
       targetAudience: "HR departments",
-      cardColor: "bg-gradient-to-br from-teal-400 to-teal-600",
-      textColor: "text-white"
     },
     {
       title: "Local Food Discovery",
@@ -296,8 +249,6 @@ const Ideas = () => {
       tags: ["Food", "Local", "Discovery", "Community"],
       timeToMarket: "3-6 months",
       targetAudience: "Food enthusiasts",
-      cardColor: "bg-gradient-to-br from-yellow-400 to-yellow-600",
-      textColor: "text-white"
     },
     {
       title: "Meditation Space Finder",
@@ -308,8 +259,6 @@ const Ideas = () => {
       tags: ["Meditation", "Wellness", "Booking", "Mindfulness"],
       timeToMarket: "2-4 months",
       targetAudience: "Wellness seekers",
-      cardColor: "bg-gradient-to-br from-indigo-400 to-indigo-600",
-      textColor: "text-white"
     },
     {
       title: "Smart Water Quality Monitor",
@@ -320,8 +269,6 @@ const Ideas = () => {
       tags: ["IoT", "Health", "Water Quality", "Monitoring"],
       timeToMarket: "6-10 months",
       targetAudience: "Health-conscious families",
-      cardColor: "bg-gradient-to-br from-cyan-400 to-cyan-600",
-      textColor: "text-white"
     },
     {
       title: "Virtual Art Gallery",
@@ -332,8 +279,6 @@ const Ideas = () => {
       tags: ["VR", "AR", "Art", "Gallery", "Social"],
       timeToMarket: "8-12 months",
       targetAudience: "Artists & art lovers",
-      cardColor: "bg-gradient-to-br from-violet-400 to-violet-600",
-      textColor: "text-white"
     },
     {
       title: "Freelancer Project Matcher",
@@ -344,8 +289,6 @@ const Ideas = () => {
       tags: ["AI", "Freelancing", "Matching", "Gig Economy"],
       timeToMarket: "4-7 months",
       targetAudience: "Freelancers & businesses",
-      cardColor: "bg-gradient-to-br from-rose-400 to-rose-600",
-      textColor: "text-white"
     },
     {
       title: "Sleep Optimization Coach",
@@ -356,8 +299,6 @@ const Ideas = () => {
       tags: ["Sleep", "Health", "Tracking", "Optimization"],
       timeToMarket: "5-8 months",
       targetAudience: "Sleep-troubled individuals",
-      cardColor: "bg-gradient-to-br from-slate-400 to-slate-600",
-      textColor: "text-white"
     },
     {
       title: "Carbon Footprint Gamifier",
@@ -368,8 +309,6 @@ const Ideas = () => {
       tags: ["Sustainability", "Gaming", "Carbon", "Community"],
       timeToMarket: "4-6 months",
       targetAudience: "Environmentally conscious",
-      cardColor: "bg-gradient-to-br from-green-400 to-green-600",
-      textColor: "text-white"
     },
     {
       title: "Remote Team Building Hub",
@@ -380,8 +319,6 @@ const Ideas = () => {
       tags: ["Remote Work", "Team Building", "Games", "Collaboration"],
       timeToMarket: "3-5 months",
       targetAudience: "Remote teams",
-      cardColor: "bg-gradient-to-br from-amber-400 to-amber-600",
-      textColor: "text-white"
     },
     {
       title: "AI Recipe Optimizer",
@@ -392,8 +329,6 @@ const Ideas = () => {
       tags: ["AI", "Cooking", "Recipe", "Optimization"],
       timeToMarket: "4-7 months",
       targetAudience: "Home cooks",
-      cardColor: "bg-gradient-to-br from-lime-400 to-lime-600",
-      textColor: "text-white"
     },
     {
       title: "Digital Detox Companion",
@@ -404,8 +339,6 @@ const Ideas = () => {
       tags: ["Digital Wellness", "Screen Time", "Mindfulness", "Health"],
       timeToMarket: "2-4 months",
       targetAudience: "Digital wellness seekers",
-      cardColor: "bg-gradient-to-br from-emerald-300 to-emerald-500",
-      textColor: "text-white"
     },
     {
       title: "Smart Parking Solution",
@@ -416,8 +349,6 @@ const Ideas = () => {
       tags: ["IoT", "Smart City", "Parking", "Real-time"],
       timeToMarket: "8-12 months",
       targetAudience: "City planners & drivers",
-      cardColor: "bg-gradient-to-br from-blue-300 to-blue-500",
-      textColor: "text-white"
     },
     {
       title: "Volunteer Matching Platform",
@@ -428,8 +359,6 @@ const Ideas = () => {
       tags: ["Volunteering", "Social Impact", "Matching", "Community"],
       timeToMarket: "3-5 months",
       targetAudience: "Volunteers & nonprofits",
-      cardColor: "bg-gradient-to-br from-purple-300 to-purple-500",
-      textColor: "text-white"
     },
     {
       title: "Language Pronunciation Coach",
@@ -440,8 +369,6 @@ const Ideas = () => {
       tags: ["AI", "Language Learning", "Speech Recognition", "Education"],
       timeToMarket: "6-10 months",
       targetAudience: "Language learners",
-      cardColor: "bg-gradient-to-br from-red-300 to-red-500",
-      textColor: "text-white"
     },
     {
       title: "Sustainable Shopping Guide",
@@ -452,8 +379,6 @@ const Ideas = () => {
       tags: ["Sustainability", "Shopping", "Eco-friendly", "Scanner"],
       timeToMarket: "5-8 months",
       targetAudience: "Conscious consumers",
-      cardColor: "bg-gradient-to-br from-green-300 to-green-500",
-      textColor: "text-white"
     },
     {
       title: "Personal Brand Builder",
@@ -464,8 +389,6 @@ const Ideas = () => {
       tags: ["Personal Branding", "Social Media", "Professional", "Content"],
       timeToMarket: "4-7 months",
       targetAudience: "Professionals & creators",
-      cardColor: "bg-gradient-to-br from-orange-300 to-orange-500",
-      textColor: "text-white"
     },
     {
       title: "Micro-Learning Platform",
@@ -476,8 +399,6 @@ const Ideas = () => {
       tags: ["Education", "Micro-learning", "Personalization", "Mobile"],
       timeToMarket: "5-8 months",
       targetAudience: "Busy professionals",
-      cardColor: "bg-gradient-to-br from-pink-300 to-pink-500",
-      textColor: "text-white"
     },
     {
       title: "Smart Home Security Hub",
@@ -488,8 +409,6 @@ const Ideas = () => {
       tags: ["Smart Home", "Security", "AI", "Automation"],
       timeToMarket: "10-15 months",
       targetAudience: "Homeowners",
-      cardColor: "bg-gradient-to-br from-teal-300 to-teal-500",
-      textColor: "text-white"
     },
     {
       title: "Wellness Challenge Creator",
@@ -500,8 +419,6 @@ const Ideas = () => {
       tags: ["Wellness", "Challenges", "Community", "Gamification"],
       timeToMarket: "3-5 months",
       targetAudience: "Health enthusiasts",
-      cardColor: "bg-gradient-to-br from-yellow-300 to-yellow-500",
-      textColor: "text-white"
     },
     {
       title: "AI Code Documentation",
@@ -512,8 +429,6 @@ const Ideas = () => {
       tags: ["AI", "Documentation", "Code Analysis", "Developer Tools"],
       timeToMarket: "6-9 months",
       targetAudience: "Developers",
-      cardColor: "bg-gradient-to-br from-indigo-300 to-indigo-500",
-      textColor: "text-white"
     },
     {
       title: "Virtual Interior Design",
@@ -524,8 +439,6 @@ const Ideas = () => {
       tags: ["AI", "Interior Design", "Virtual", "Personalization"],
       timeToMarket: "6-10 months",
       targetAudience: "Homeowners",
-      cardColor: "bg-gradient-to-br from-violet-300 to-violet-500",
-      textColor: "text-white"
     },
     {
       title: "Fitness Form Checker",
@@ -536,8 +449,6 @@ const Ideas = () => {
       tags: ["AI", "Computer Vision", "Fitness", "Form Analysis"],
       timeToMarket: "8-12 months",
       targetAudience: "Fitness enthusiasts",
-      cardColor: "bg-gradient-to-br from-rose-300 to-rose-500",
-      textColor: "text-white"
     },
     {
       title: "Startup Idea Validator",
@@ -548,8 +459,6 @@ const Ideas = () => {
       tags: ["Startup", "Validation", "Market Research", "Analysis"],
       timeToMarket: "4-6 months",
       targetAudience: "Entrepreneurs",
-      cardColor: "bg-gradient-to-br from-cyan-300 to-cyan-500",
-      textColor: "text-white"
     },
     {
       title: "Smart Study Scheduler",
@@ -560,8 +469,6 @@ const Ideas = () => {
       tags: ["AI", "Education", "Scheduling", "Learning Optimization"],
       timeToMarket: "5-8 months",
       targetAudience: "Students",
-      cardColor: "bg-gradient-to-br from-amber-300 to-amber-500",
-      textColor: "text-white"
     },
     {
       title: "Community Garden Network",
@@ -572,8 +479,6 @@ const Ideas = () => {
       tags: ["Community", "Gardening", "Volunteering", "Sustainability"],
       timeToMarket: "2-4 months",
       targetAudience: "Community gardeners",
-      cardColor: "bg-gradient-to-br from-lime-300 to-lime-500",
-      textColor: "text-white"
     },
     {
       title: "Expense Splitting Smart App",
@@ -584,8 +489,6 @@ const Ideas = () => {
       tags: ["Finance", "Expense Splitting", "OCR", "Payment"],
       timeToMarket: "4-6 months",
       targetAudience: "Groups & roommates",
-      cardColor: "bg-gradient-to-br from-emerald-200 to-emerald-400",
-      textColor: "text-gray-800"
     },
     {
       title: "Senior Tech Support",
@@ -596,8 +499,6 @@ const Ideas = () => {
       tags: ["Accessibility", "Senior Citizens", "Tech Support", "Simplicity"],
       timeToMarket: "3-5 months",
       targetAudience: "Elderly users",
-      cardColor: "bg-gradient-to-br from-blue-200 to-blue-400",
-      textColor: "text-gray-800"
     },
     {
       title: "Travel Memory Keeper",
@@ -608,8 +509,6 @@ const Ideas = () => {
       tags: ["Travel", "AI", "Photo Organization", "Storytelling"],
       timeToMarket: "5-8 months",
       targetAudience: "Travelers",
-      cardColor: "bg-gradient-to-br from-purple-200 to-purple-400",
-      textColor: "text-gray-800"
     }
   ];
 
@@ -644,18 +543,17 @@ const Ideas = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm shadow-sm border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-4">
-              <div>
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                  💡 Innovative Ideas
-                </h1>
-                <p className="text-gray-600 mt-1">50 creative project concepts waiting to be built</p>
-              </div>
+      <header className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                <Lightbulb className="w-6 h-6 inline mr-2 text-blue-600" />
+                Innovative Ideas
+              </h1>
+              <p className="text-gray-600 text-sm">50 creative project concepts waiting to be built</p>
             </div>
             <Button variant="ghost" size="sm" asChild>
               <Link to="/">
@@ -664,8 +562,13 @@ const Ideas = () => {
               </Link>
             </Button>
           </div>
+        </div>
+      </header>
 
-          {/* Search */}
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-6 py-6">
+        {/* Search */}
+        <div className="mb-6">
           <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
@@ -673,41 +576,38 @@ const Ideas = () => {
               placeholder="Search ideas by title, category, or tags..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-white/70 backdrop-blur-sm border-gray-200"
+              className="pl-10"
             />
           </div>
-          <p className="text-sm text-gray-600 mt-2">
+          <p className="text-sm text-gray-500 mt-2">
             Showing {filteredIdeas.length} of {ideas.length} ideas
           </p>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Ideas Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredIdeas.map((idea, index) => (
-            <Card key={index} className={`${idea.cardColor} ${idea.textColor} hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-0 overflow-hidden group`}>
+            <Card key={index} className="hover:shadow-md transition-shadow">
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start mb-2">
-                  <CardTitle className="text-lg font-bold flex-1 group-hover:text-yellow-200 transition-colors">
-                    <Lightbulb className="w-5 h-5 inline mr-2 opacity-80" />
+                  <CardTitle className="text-lg font-semibold text-gray-900 flex-1">
                     {idea.title}
                   </CardTitle>
-                  <Badge variant="secondary" className="text-xs bg-white/20 text-white border-white/30">
+                  <Badge variant="secondary" className="text-xs">
                     {idea.category}
                   </Badge>
                 </div>
-                <p className="opacity-90 text-sm leading-relaxed">{idea.description}</p>
+                <p className="text-gray-700 text-sm">{idea.description}</p>
               </CardHeader>
-              <CardContent className="pt-0">
+              <CardContent>
                 <div className="flex flex-wrap gap-1 mb-4">
                   {idea.tags.slice(0, 3).map((tag, tagIndex) => (
-                    <Badge key={tagIndex} variant="secondary" className="text-xs bg-white/20 text-white border-white/30">
+                    <Badge key={tagIndex} variant="outline" className="text-xs">
                       {tag}
                     </Badge>
                   ))}
                   {idea.tags.length > 3 && (
-                    <Badge variant="secondary" className="text-xs bg-white/20 text-white border-white/30">
+                    <Badge variant="outline" className="text-xs">
                       +{idea.tags.length - 3}
                     </Badge>
                   )}
@@ -716,8 +616,8 @@ const Ideas = () => {
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div>
                     <div className="flex items-center mb-1">
-                      <TrendingUp className="w-3 h-3 mr-1 opacity-70" />
-                      <span className="text-xs font-medium opacity-90">Market</span>
+                      <TrendingUp className="w-3 h-3 mr-1 text-gray-500" />
+                      <span className="text-xs font-medium text-gray-600">Market</span>
                     </div>
                     <Badge className={`${getMarketPotentialColor(idea.marketPotential)} text-xs`}>
                       {idea.marketPotential}
@@ -725,8 +625,8 @@ const Ideas = () => {
                   </div>
                   <div>
                     <div className="flex items-center mb-1">
-                      <Clock className="w-3 h-3 mr-1 opacity-70" />
-                      <span className="text-xs font-medium opacity-90">Complexity</span>
+                      <Clock className="w-3 h-3 mr-1 text-gray-500" />
+                      <span className="text-xs font-medium text-gray-600">Complexity</span>
                     </div>
                     <Badge className={`${getComplexityColor(idea.complexity)} text-xs`}>
                       {idea.complexity}
@@ -734,7 +634,7 @@ const Ideas = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-xs opacity-80 mb-4">
+                <div className="flex items-center justify-between text-xs text-gray-600">
                   <div className="flex items-center">
                     <Clock className="w-3 h-3 mr-1" />
                     {idea.timeToMarket}
@@ -744,62 +644,45 @@ const Ideas = () => {
                     {idea.targetAudience}
                   </div>
                 </div>
-
-                <div className="flex gap-2">
-                  <Button 
-                    size="sm" 
-                    className="flex-1 bg-white/20 hover:bg-white/30 text-white border-white/30 backdrop-blur-sm transition-all group-hover:bg-white/40"
-                  >
-                    <ExternalLink className="w-3 h-3 mr-1" />
-                    Explore
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant="ghost" 
-                    className="bg-white/10 hover:bg-white/20 text-white border-white/20 backdrop-blur-sm transition-all"
-                  >
-                    <Github className="w-3 h-3" />
-                  </Button>
-                </div>
               </CardContent>
             </Card>
           ))}
         </div>
 
         {/* Idea Generation Tips */}
-        <div className="mt-16">
-          <Card className="bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
+        <div className="mt-12">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-2xl text-indigo-900">🚀 Idea Generation Framework</CardTitle>
-              <p className="text-indigo-700">Turn concepts into reality with this structured approach</p>
+              <CardTitle className="text-xl">Idea Generation Framework</CardTitle>
+              <p className="text-gray-600">Turn concepts into reality with this structured approach</p>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-indigo-900 text-lg">💭 Problem Identification</h4>
-                  <ul className="text-sm text-indigo-800 space-y-2">
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Look for everyday frustrations</li>
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Identify market gaps</li>
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Study emerging technologies</li>
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Analyze user feedback</li>
+                  <h4 className="font-semibold text-gray-900">Problem Identification</h4>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• Look for everyday frustrations</li>
+                    <li>• Identify market gaps</li>
+                    <li>• Study emerging technologies</li>
+                    <li>• Analyze user feedback</li>
                   </ul>
                 </div>
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-indigo-900 text-lg">🔨 Solution Development</h4>
-                  <ul className="text-sm text-indigo-800 space-y-2">
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Start with MVP concepts</li>
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Validate with potential users</li>
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Research competition</li>
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Plan monetization strategy</li>
+                  <h4 className="font-semibold text-gray-900">Solution Development</h4>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• Start with MVP concepts</li>
+                    <li>• Validate with potential users</li>
+                    <li>• Research competition</li>
+                    <li>• Plan monetization strategy</li>
                   </ul>
                 </div>
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-indigo-900 text-lg">📈 Execution Strategy</h4>
-                  <ul className="text-sm text-indigo-800 space-y-2">
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Create detailed roadmap</li>
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Build prototype quickly</li>
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Test with real users</li>
-                    <li className="flex items-start"><span className="text-indigo-500 mr-2">•</span>Iterate based on feedback</li>
+                  <h4 className="font-semibold text-gray-900">Execution Strategy</h4>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• Create detailed roadmap</li>
+                    <li>• Build prototype quickly</li>
+                    <li>• Test with real users</li>
+                    <li>• Iterate based on feedback</li>
                   </ul>
                 </div>
               </div>
