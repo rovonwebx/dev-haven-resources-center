@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ import {
   Zap,
   ArrowRight
 } from "lucide-react";
+import Chatbot from "@/components/Chatbot";
 
 const Index = () => {
   const resourceCategories = [
@@ -101,23 +103,36 @@ const Index = () => {
       {/* Header */}
       <header className="border-b border-gray-300 bg-white">
         <div className="max-w-7xl mx-auto px-4 py-6">
-          {/* Logo Section */}
-          <div className="flex items-center mb-4">
-            <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
-              <Lock className="w-6 h-6 text-white" />
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              {/* Logo Section */}
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                  <Lock className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-black mb-1">DHRC</h1>
+                  <p className="text-sm text-gray-600">by Launch Layer R1</p>
+                </div>
+              </div>
+              
+              <h1 className="text-3xl font-serif text-black mb-2">
+                Dev Haven Resources Center
+              </h1>
+              <p className="text-gray-600 text-sm">
+                A comprehensive collection of engineering knowledge and resources
+              </p>
             </div>
-            <div>
-              <h1 className="text-2xl font-bold text-black mb-1">DHRC</h1>
-              <p className="text-sm text-gray-600">by Launch Layer R1</p>
+            
+            {/* Header Image */}
+            <div className="hidden md:block ml-8">
+              <img 
+                src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                alt="Development Resources"
+                className="w-64 h-32 object-cover rounded-lg shadow-md"
+              />
             </div>
           </div>
-          
-          <h1 className="text-3xl font-serif text-black mb-2">
-            Dev Haven Resources Center
-          </h1>
-          <p className="text-gray-600 text-sm">
-            A comprehensive collection of engineering knowledge and resources
-          </p>
         </div>
       </header>
 
@@ -256,6 +271,9 @@ const Index = () => {
           </div>
         </div>
       </div>
+
+      {/* Chatbot */}
+      <Chatbot />
     </div>
   );
 };
