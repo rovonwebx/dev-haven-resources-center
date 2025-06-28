@@ -127,7 +127,7 @@ const Index = () => {
             {/* Header Image */}
             <div className="hidden md:block ml-8">
               <img 
-                src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                src="https://i.ibb.co/zWCZYk4M/DHRC.png"
                 alt="Development Resources"
                 className="w-64 h-32 object-cover rounded-lg shadow-md"
               />
