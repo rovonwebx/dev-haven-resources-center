@@ -12,7 +12,9 @@ import {
   FileText, 
   File, 
   GraduationCap,
-  Lock
+  Lock,
+  Users,
+  Calendar
 } from "lucide-react";
 
 const Index = () => {
@@ -76,6 +78,18 @@ const Index = () => {
       description: "Fundamental concepts and theoretical knowledge",
       icon: GraduationCap,
       path: "/theories",
+    },
+    {
+      title: "Student Projects",
+      description: "Innovative projects built by students across India",
+      icon: Users,
+      path: "/student-projects",
+    },
+    {
+      title: "Events",
+      description: "Tech events, competitions, and conferences",
+      icon: Calendar,
+      path: "/events",
     }
   ];
 
