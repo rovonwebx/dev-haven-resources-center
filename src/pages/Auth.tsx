@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -74,20 +73,18 @@ const Auth = () => {
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <Link to="/" className="flex items-center mr-6">
-                <ArrowLeft className="w-5 h-5 text-gray-600 mr-2" />
-                <span className="text-sm text-gray-600">Back to DHRC</span>
-              </Link>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
-                  <ServiceIcon className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-black mb-1">{serviceInfo.title}</h1>
-                  <p className="text-sm text-gray-600">{serviceInfo.description}</p>
-                </div>
+              <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
+                <ServiceIcon className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-black mb-1">{serviceInfo.title}</h1>
+                <p className="text-sm text-gray-600">{serviceInfo.description}</p>
               </div>
             </div>
+            <Link to="/" className="flex items-center">
+              <span className="text-sm text-gray-600 mr-2">Back to DHRC</span>
+              <ArrowLeft className="w-5 h-5 text-gray-600" />
+            </Link>
           </div>
         </div>
       </header>
