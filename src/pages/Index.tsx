@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -165,10 +164,12 @@ const Index = () => {
                   <p className="text-xs text-gray-600 mb-3">
                     Practice coding interviews with AI-powered mock sessions
                   </p>
-                  <Button size="sm" className="w-full text-xs">
-                    Start Practice
-                    <ArrowRight className="w-3 h-3 ml-1" />
-                  </Button>
+                  <Link to="/auth?service=ai-interviews">
+                    <Button size="sm" className="w-full text-xs">
+                      Start Practice
+                      <ArrowRight className="w-3 h-3 ml-1" />
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </div>
@@ -267,10 +268,12 @@ const Index = () => {
                   <p className="text-xs text-gray-600 mb-3">
                     Organize your development workflow with smart tools
                   </p>
-                  <Button size="sm" variant="outline" className="w-full text-xs">
-                    Get Organized
-                    <ArrowRight className="w-3 h-3 ml-1" />
-                  </Button>
+                  <Link to="/auth?service=organizer">
+                    <Button size="sm" variant="outline" className="w-full text-xs">
+                      Get Organized
+                      <ArrowRight className="w-3 h-3 ml-1" />
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </div>
