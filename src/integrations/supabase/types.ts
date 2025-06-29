@@ -9,7 +9,275 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      ai_interview_questions: {
+        Row: {
+          asked_at: string
+          correct_answer: string | null
+          id: string
+          is_correct: boolean | null
+          question_text: string
+          session_id: string
+          time_taken: number | null
+          user_answer: string | null
+        }
+        Insert: {
+          asked_at?: string
+          correct_answer?: string | null
+          id?: string
+          is_correct?: boolean | null
+          question_text: string
+          session_id: string
+          time_taken?: number | null
+          user_answer?: string | null
+        }
+        Update: {
+          asked_at?: string
+          correct_answer?: string | null
+          id?: string
+          is_correct?: boolean | null
+          question_text?: string
+          session_id?: string
+          time_taken?: number | null
+          user_answer?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_interview_questions_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "ai_interview_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_interview_sessions: {
+        Row: {
+          completed_at: string | null
+          correct_answers: number | null
+          created_at: string
+          difficulty: string | null
+          feedback: string | null
+          id: string
+          questions_asked: number | null
+          score: number | null
+          started_at: string
+          status: string | null
+          topic: string | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          correct_answers?: number | null
+          created_at?: string
+          difficulty?: string | null
+          feedback?: string | null
+          id?: string
+          questions_asked?: number | null
+          score?: number | null
+          started_at?: string
+          status?: string | null
+          topic?: string | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          correct_answers?: number | null
+          created_at?: string
+          difficulty?: string | null
+          feedback?: string | null
+          id?: string
+          questions_asked?: number | null
+          score?: number | null
+          started_at?: string
+          status?: string | null
+          topic?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      organizer_notes: {
+        Row: {
+          category: string | null
+          content: string | null
+          created_at: string
+          id: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      organizer_projects: {
+        Row: {
+          created_at: string
+          description: string | null
+          end_date: string | null
+          id: string
+          name: string
+          start_date: string | null
+          status: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name: string
+          start_date?: string | null
+          status?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name?: string
+          start_date?: string | null
+          status?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      organizer_tasks: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          priority: string | null
+          status: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          priority?: string | null
+          status?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          priority?: string | null
+          status?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      organizer_time_entries: {
+        Row: {
+          created_at: string
+          description: string | null
+          duration: number | null
+          end_time: string | null
+          id: string
+          project_id: string | null
+          start_time: string
+          task_id: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          end_time?: string | null
+          id?: string
+          project_id?: string | null
+          start_time: string
+          task_id?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          duration?: number | null
+          end_time?: string | null
+          id?: string
+          project_id?: string | null
+          start_time?: string
+          task_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organizer_time_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "organizer_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organizer_time_entries_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "organizer_tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

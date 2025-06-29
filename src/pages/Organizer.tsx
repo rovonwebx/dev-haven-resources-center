@@ -1,9 +1,33 @@
-import { Link } from "react-router-dom";
+
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Zap, ArrowLeft, Calendar, CheckSquare, FileText, Folder, Clock, Target } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const Organizer = () => {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth?service=organizer');
+    }
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -19,7 +43,7 @@ const Organizer = () => {
                 <p className="text-sm text-gray-600">Organize your development workflow with smart tools</p>
               </div>
             </div>
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center ml-auto">
               <span className="text-sm text-gray-600 mr-2">Back to DHRC</span>
               <ArrowLeft className="w-5 h-5 text-gray-600" />
             </Link>
@@ -29,6 +53,10 @@ const Organizer = () => {
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="mb-6">
+          <p className="text-gray-600">Welcome back, {user.email}!</p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Task Manager */}
           <Card className="border border-gray-200 bg-gradient-to-br from-green-50 to-emerald-100">

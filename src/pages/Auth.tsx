@@ -1,34 +1,84 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Lock, Bot, Zap, ArrowLeft } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const service = searchParams.get('service'); // 'ai-interviews' or 'organizer'
+  const { signUp, signIn, user } = useAuth();
+  const { toast } = useToast();
+  const service = searchParams.get('service');
   const [isSignUp, setIsSignUp] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    name: ''
+    fullName: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user) {
+      if (service === 'ai-interviews') {
+        navigate('/ai-interviews');
+      } else if (service === 'organizer') {
+        navigate('/organizer');
+      } else {
+        navigate('/');
+      }
+    }
+  }, [user, service, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple demo authentication - in real app, this would connect to your auth service
-    console.log('Auth submitted:', { ...formData, isSignUp, service });
-    
-    // Navigate to the appropriate service after "authentication"
-    if (service === 'ai-interviews') {
-      navigate('/ai-interviews');
-    } else if (service === 'organizer') {
-      navigate('/organizer');
-    } else {
-      navigate('/');
+    setLoading(true);
+
+    try {
+      if (isSignUp) {
+        const { error } = await signUp(formData.email, formData.password, formData.fullName);
+        if (error) {
+          toast({
+            title: "Sign up failed",
+            description: error.message,
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Success!",
+            description: "Please check your email for verification link.",
+          });
+        }
+      } else {
+        const { error } = await signIn(formData.email, formData.password);
+        if (error) {
+          toast({
+            title: "Sign in failed",
+            description: error.message,
+            variant: "destructive",
+          });
+        } else {
+          // Navigation will be handled by the useEffect above
+          toast({
+            title: "Welcome back!",
+            description: "You have been signed in successfully.",
+          });
+        }
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -81,7 +131,7 @@ const Auth = () => {
                 <p className="text-sm text-gray-600">{serviceInfo.description}</p>
               </div>
             </div>
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center ml-auto">
               <span className="text-sm text-gray-600 mr-2">Back to DHRC</span>
               <ArrowLeft className="w-5 h-5 text-gray-600" />
             </Link>
@@ -109,13 +159,13 @@ const Auth = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               {isSignUp && (
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label htmlFor="fullName">Full Name</Label>
                   <Input
-                    id="name"
-                    name="name"
+                    id="fullName"
+                    name="fullName"
                     type="text"
                     required
-                    value={formData.name}
+                    value={formData.fullName}
                     onChange={handleInputChange}
                     className="bg-white"
                   />
@@ -148,8 +198,8 @@ const Auth = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full">
-                {isSignUp ? 'Create Account' : 'Sign In'}
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? 'Loading...' : (isSignUp ? 'Create Account' : 'Sign In')}
               </Button>
             </form>
 
@@ -164,12 +214,6 @@ const Auth = () => {
                   : "Don't have an account? Sign up"
                 }
               </button>
-            </div>
-
-            <div className="text-center pt-4 border-t border-gray-200">
-              <p className="text-xs text-gray-500">
-                Demo authentication - all credentials accepted
-              </p>
             </div>
           </CardContent>
         </Card>
