@@ -85,6 +85,12 @@ const Index = () => {
       path: "/theories",
     },
     {
+      title: "Roadmaps",
+      description: "Structured learning paths for DSA and Web Development",
+      icon: Calendar,
+      path: "/roadmaps",
+    },
+    {
       title: "Student Projects",
       description: "Innovative projects built by students across India",
       icon: Users,
