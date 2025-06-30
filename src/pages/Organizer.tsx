@@ -1,20 +1,48 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Zap, ArrowLeft, Calendar, CheckSquare, FileText, Folder, Clock, Target } from "lucide-react";
+import { Zap, ArrowLeft, Calendar, CheckSquare, FileText, Folder, Clock, Target, User, LogOut, Plus } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { TaskManager } from "@/components/organizer/TaskManager";
+import { ProjectCalendar } from "@/components/organizer/ProjectCalendar";
+import { NotesManager } from "@/components/organizer/NotesManager";
+import { TimeTracker } from "@/components/organizer/TimeTracker";
+import { GoalSetting } from "@/components/organizer/GoalSetting";
+import { FileOrganizer } from "@/components/organizer/FileOrganizer";
+import { ProfileModal } from "@/components/organizer/ProfileModal";
 
 const Organizer = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [activeTab, setActiveTab] = useState("tasks");
+  const [showProfile, setShowProfile] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
       navigate('/auth?service=organizer');
     }
   }, [user, loading, navigate]);
+
+  const handleSignOut = async () => {
+    const { error } = await signOut();
+    if (error) {
+      toast({
+        title: "Error signing out",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Signed out successfully",
+        description: "You have been logged out.",
+      });
+      navigate('/auth?service=organizer');
+    }
+  };
 
   if (loading) {
     return (
@@ -28,11 +56,30 @@ const Organizer = () => {
     return null;
   }
 
+  const renderActiveComponent = () => {
+    switch (activeTab) {
+      case "tasks":
+        return <TaskManager />;
+      case "calendar":
+        return <ProjectCalendar />;
+      case "notes":
+        return <NotesManager />;
+      case "files":
+        return <FileOrganizer />;
+      case "time":
+        return <TimeTracker />;
+      case "goals":
+        return <GoalSetting />;
+      default:
+        return <TaskManager />;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b border-gray-300 bg-white">
-        <div className="max-w-7xl mx-auto px-4 py-6">
+      <header className="border-b border-gray-300 bg-white sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4">
@@ -43,120 +90,77 @@ const Organizer = () => {
                 <p className="text-sm text-gray-600">Organize your development workflow with smart tools</p>
               </div>
             </div>
-            <Link to="/" className="flex items-center ml-auto">
-              <span className="text-sm text-gray-600 mr-2">Back to DHRC</span>
-              <ArrowLeft className="w-5 h-5 text-gray-600" />
-            </Link>
+            
+            <div className="flex items-center space-x-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowProfile(true)}
+                className="flex items-center"
+              >
+                <User className="w-4 h-4 mr-2" />
+                Profile
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleSignOut}
+                className="flex items-center text-red-600 hover:text-red-700"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+              </Button>
+              
+              <Link to="/" className="flex items-center">
+                <span className="text-sm text-gray-600 mr-2">Back to DHRC</span>
+                <ArrowLeft className="w-5 h-5 text-gray-600" />
+              </Link>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="mb-6">
           <p className="text-gray-600">Welcome back, {user.email}!</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Task Manager */}
-          <Card className="border border-gray-200 bg-gradient-to-br from-green-50 to-emerald-100">
-            <CardHeader>
-              <CheckSquare className="w-8 h-8 text-green-600 mb-2" />
-              <CardTitle className="text-xl">Task Manager</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
-                Organize and track your development tasks with smart prioritization.
-              </p>
-              <Button className="w-full">
-                Manage Tasks
-              </Button>
-            </CardContent>
-          </Card>
+        {/* Navigation Tabs */}
+        <div className="flex space-x-1 mb-8 bg-gray-100 p-1 rounded-lg">
+          {[
+            { id: "tasks", label: "Task Manager", icon: CheckSquare },
+            { id: "calendar", label: "Calendar", icon: Calendar },
+            { id: "notes", label: "Notes", icon: FileText },
+            { id: "files", label: "Files", icon: Folder },
+            { id: "time", label: "Time Tracker", icon: Clock },
+            { id: "goals", label: "Goals", icon: Target },
+          ].map((tab) => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  activeTab === tab.id
+                    ? "bg-white text-green-600 shadow-sm"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                <Icon className="w-4 h-4 mr-2" />
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
 
-          {/* Project Calendar */}
-          <Card className="border border-gray-200">
-            <CardHeader>
-              <Calendar className="w-8 h-8 text-blue-600 mb-2" />
-              <CardTitle className="text-xl">Project Calendar</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
-                Schedule and track your project milestones and deadlines.
-              </p>
-              <Button variant="outline" className="w-full">
-                View Calendar
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Notes & Documentation */}
-          <Card className="border border-gray-200">
-            <CardHeader>
-              <FileText className="w-8 h-8 text-purple-600 mb-2" />
-              <CardTitle className="text-xl">Notes & Docs</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
-                Keep all your development notes and documentation organized.
-              </p>
-              <Button variant="outline" className="w-full">
-                Open Notes
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* File Organizer */}
-          <Card className="border border-gray-200">
-            <CardHeader>
-              <Folder className="w-8 h-8 text-orange-600 mb-2" />
-              <CardTitle className="text-xl">File Organizer</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
-                Smart file organization for your development resources.
-              </p>
-              <Button variant="outline" className="w-full">
-                Organize Files
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Time Tracker */}
-          <Card className="border border-gray-200">
-            <CardHeader>
-              <Clock className="w-8 h-8 text-red-600 mb-2" />
-              <CardTitle className="text-xl">Time Tracker</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
-                Track time spent on different projects and tasks.
-              </p>
-              <Button variant="outline" className="w-full">
-                Start Tracking
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Goal Setting */}
-          <Card className="border border-gray-200">
-            <CardHeader>
-              <Target className="w-8 h-8 text-indigo-600 mb-2" />
-              <CardTitle className="text-xl">Goal Setting</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
-                Set and track your development goals and milestones.
-              </p>
-              <Button variant="outline" className="w-full">
-                Set Goals
-              </Button>
-            </CardContent>
-          </Card>
+        {/* Active Component */}
+        <div className="mb-8">
+          {renderActiveComponent()}
         </div>
 
         {/* Productivity Tips */}
-        <Card className="mt-8 border border-gray-200 bg-gray-50">
+        <Card className="border border-gray-200 bg-gray-50">
           <CardHeader>
             <CardTitle className="text-xl font-serif text-black">Productivity Tips</CardTitle>
           </CardHeader>
@@ -182,6 +186,12 @@ const Organizer = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Profile Modal */}
+      <ProfileModal 
+        isOpen={showProfile} 
+        onClose={() => setShowProfile(false)} 
+      />
     </div>
   );
 };
