@@ -101,6 +101,12 @@ const Index = () => {
       icon: Calendar,
       path: "/events",
     }
+    {
+      title: "Interview Questions",
+      description: "Tech events, competitions, and conferences",
+      icon: Calendar,
+      path: "/Interview questions",
+    }
   ];
 
   return (
