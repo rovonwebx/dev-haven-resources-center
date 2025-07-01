@@ -18,7 +18,8 @@ import {
   Calendar,
   Bot,
   Zap,
-  ArrowRight
+  ArrowRight,
+  HelpCircle
 } from "lucide-react";
 import Chatbot from "@/components/Chatbot";
 
@@ -104,9 +105,9 @@ const Index = () => {
     },
     {
       title: "Interview Questions",
-      description: "Tech events, competitions, and conferences",
-      icon: Calendar,
-      path: "/Interview questions",
+      description: "Comprehensive SQL interview questions and answers",
+      icon: HelpCircle,
+      path: "/interview-questions",
     }
   ];
 
