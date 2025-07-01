@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -59,7 +58,15 @@ export const TaskManager = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setTasks(data || []);
+      
+      // Type cast the data to ensure compatibility
+      const typedTasks = (data || []).map(task => ({
+        ...task,
+        status: task.status as 'todo' | 'in_progress' | 'completed',
+        priority: task.priority as 'low' | 'medium' | 'high'
+      }));
+      
+      setTasks(typedTasks);
     } catch (error) {
       console.error('Error fetching tasks:', error);
       toast({

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
@@ -36,7 +35,14 @@ export const ProjectCalendar = () => {
         .not('due_date', 'is', null);
 
       if (error) throw error;
-      setTasks(data || []);
+      
+      // Type cast the data to ensure compatibility
+      const typedTasks = (data || []).map(task => ({
+        ...task,
+        priority: task.priority as 'low' | 'medium' | 'high'
+      }));
+      
+      setTasks(typedTasks);
     } catch (error) {
       console.error('Error fetching tasks:', error);
     } finally {
