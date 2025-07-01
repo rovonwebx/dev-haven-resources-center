@@ -3,9 +3,201 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowLeft, Brain, Clock, CheckCircle, ExternalLink, Star, Code, Target, Building2 } from "lucide-react";
+import { ArrowLeft, Brain, Clock, CheckCircle, ExternalLink, Star, Code, Target, Building2, Zap } from "lucide-react";
 
 const DSA = () => {
+  const faangQuestions = {
+    "Array & Matrix": [
+      "Two Sum",
+      "Best Time to Buy and Sell Stock",
+      "Maximum Subarray (Kadanes Algorithm)",
+      "Merge Intervals",
+      "Product of Array Except Self",
+      "Find Duplicate Number",
+      "Set Matrix Zeroes",
+      "Rotate Image (90 Matrix Rotation)",
+      "Spiral Matrix",
+      "Longest Consecutive Sequence",
+      "Subarray Sum Equals K",
+      "Merge Sorted Arrays",
+      "Minimum Number of Swaps to Sort",
+      "Sliding Window Maximum",
+      "Matrix Search (Search in 2D matrix)"
+    ],
+    "String": [
+      "Longest Substring Without Repeating Characters",
+      "Valid Anagram",
+      "Group Anagrams",
+      "Longest Palindromic Substring",
+      "Palindrome Partitioning",
+      "String to Integer (Atoi)",
+      "Implement strStr()",
+      "Decode Ways",
+      "Roman to Integer",
+      "Multiply Strings"
+    ],
+    "Linked List": [
+      "Reverse a Linked List",
+      "Detect Cycle in Linked List",
+      "Merge Two Sorted Lists",
+      "Remove N-th Node from End",
+      "Intersection of Two Linked Lists",
+      "Add Two Numbers (as Linked Lists)",
+      "Copy List with Random Pointer",
+      "Reverse Nodes in K-Group",
+      "Rotate Linked List",
+      "Sort a Linked List"
+    ],
+    "Stack & Queue": [
+      "Valid Parentheses",
+      "Min Stack",
+      "Evaluate Reverse Polish Notation",
+      "Largest Rectangle in Histogram",
+      "Daily Temperatures",
+      "Sliding Window Maximum",
+      "Implement Queue using Stacks",
+      "Implement Stack using Queues",
+      "Next Greater Element",
+      "Remove K Digits"
+    ],
+    "Trees & Graphs": [
+      "Binary Tree Level Order Traversal",
+      "Validate Binary Search Tree",
+      "Lowest Common Ancestor",
+      "Invert Binary Tree",
+      "Serialize and Deserialize Binary Tree",
+      "Construct Binary Tree from Traversals",
+      "Diameter of Binary Tree",
+      "Path Sum",
+      "Word Ladder",
+      "Number of Islands",
+      "Clone Graph",
+      "Course Schedule (Topological Sort)",
+      "Binary Tree Zigzag Level Order",
+      "Symmetric Tree",
+      "Maximum Depth of Binary Tree"
+    ],
+    "Heap / Priority Queue": [
+      "Merge K Sorted Lists",
+      "Find Median from Data Stream",
+      "Top K Frequent Elements",
+      "Kth Largest Element in Array",
+      "Sliding Window Median"
+    ],
+    "Backtracking": [
+      "Subsets",
+      "Permutations",
+      "Word Search",
+      "Sudoku Solver",
+      "N-Queens",
+      "Combination Sum",
+      "Palindrome Partitioning",
+      "Letter Combinations of a Phone Number",
+      "Generate Parentheses",
+      "Rat in a Maze"
+    ],
+    "Greedy & Interval Problems": [
+      "Jump Game",
+      "Gas Station",
+      "Insert Interval",
+      "Non-overlapping Intervals",
+      "Minimum Number of Arrows to Burst Balloons"
+    ],
+    "Dynamic Programming": [
+      "Climbing Stairs",
+      "Coin Change",
+      "Longest Increasing Subsequence",
+      "House Robber",
+      "House Robber II",
+      "Longest Common Subsequence",
+      "Edit Distance",
+      "Decode Ways",
+      "Word Break",
+      "Maximum Product Subarray",
+      "Unique Paths",
+      "Target Sum",
+      "Partition Equal Subset Sum",
+      "Palindromic Substrings",
+      "Rod Cutting Problem"
+    ],
+    "Bit Manipulation, Math & Others": [
+      "Single Number",
+      "Counting Bits",
+      "Reverse Bits",
+      "Power of Two",
+      "Majority Element"
+    ]
+  };
+
+  const importantAdditions = [
+    {
+      category: "Array & Matrix",
+      problems: [
+        { name: "Trapping Rain Water", note: "Important — tricky two-pointer & stack problem" },
+        { name: "Median of Two Sorted Arrays", note: "Important — involves binary search, asked at Google" }
+      ]
+    },
+    {
+      category: "String",
+      problems: [
+        { name: "Minimum Window Substring", note: "Important — sliding window, high complexity" },
+        { name: "Find All Anagrams in a String", note: "Important — string manipulation & window logic" }
+      ]
+    },
+    {
+      category: "Linked List",
+      problems: [
+        { name: "Flatten a Multilevel Doubly Linked List", note: "Important — recursion + edge case handling" },
+        { name: "Linked List Cycle II", note: "Important — detects loop + returns start, asked at Amazon" }
+      ]
+    },
+    {
+      category: "Stack & Queue",
+      problems: [
+        { name: "Basic Calculator", note: "Important — stack + parsing logic" }
+      ]
+    },
+    {
+      category: "Trees & Graphs",
+      problems: [
+        { name: "Binary Tree Maximum Path Sum", note: "Important — classic recursive traversal problem" },
+        { name: "Critical Connections in a Network", note: "Important — advanced graph, Tarjan's algorithm" }
+      ]
+    },
+    {
+      category: "Heap / Priority Queue",
+      problems: [
+        { name: "Task Scheduler", note: "Important — greedy + priority queue, asked at Google" }
+      ]
+    },
+    {
+      category: "Backtracking",
+      problems: [
+        { name: "Word Search II", note: "Important — combines Trie + backtracking" },
+        { name: "Combination Sum II", note: "Important — handles duplicates, pruning logic" }
+      ]
+    },
+    {
+      category: "Greedy",
+      problems: [
+        { name: "Reconstruct Queue by Height", note: "Important — tricky greedy, asked in Google/Meta" }
+      ]
+    },
+    {
+      category: "Dynamic Programming",
+      problems: [
+        { name: "Paint House", note: "Important — grid-based DP variant" },
+        { name: "Maximum Length of Repeated Subarray", note: "Important — like LCS but optimized, Amazon favorite" }
+      ]
+    },
+    {
+      category: "Bit Manipulation",
+      problems: [
+        { name: "Counting Set Bits", note: "Important — frequent in system design & low-level ops" }
+      ]
+    }
+  ];
+
   const companyPrepQuestions = [
     // Beginner Level (1-20)
     { id: 1, title: "Contains Duplicate", category: "Arrays", difficulty: "Easy", url: "https://leetcode.com/problems/contains-duplicate/" },
@@ -348,6 +540,73 @@ const DSA = () => {
 
       {/* Main Content */}
       <main className="max-w-5xl mx-auto px-4 py-8">
+        {/* Top 100 FAANG DSA Questions */}
+        <div className="mb-12">
+          <h2 className="text-xl font-serif text-black mb-6 pb-2 border-b border-gray-300 flex items-center">
+            <Zap className="w-5 h-5 mr-2 text-gray-600" />
+            Top 100 FAANG DSA Questions
+          </h2>
+          <p className="text-gray-600 text-sm mb-6">
+            Curated list of 100 most important DSA problems frequently asked in FAANG interviews. 
+            Master these problems to excel in technical interviews at top tech companies.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {Object.entries(faangQuestions).map(([category, problems]) => (
+              <Card key={category} className="border border-gray-200">
+                <CardHeader>
+                  <CardTitle className="text-base font-semibold text-gray-900 flex items-center">
+                    <Code className="w-4 h-4 mr-2 text-blue-600" />
+                    {category} ({problems.length})
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {problems.map((problem, index) => (
+                      <li key={index} className="text-sm text-gray-700 flex items-center">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full mr-2 flex-shrink-0"></div>
+                        {problem}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Important Additions */}
+          <Card className="border border-gray-200 mb-8">
+            <CardHeader>
+              <CardTitle className="text-base font-semibold text-gray-900 flex items-center">
+                <Star className="w-4 h-4 mr-2 text-yellow-500" />
+                Optional & Important Additions to FAANG DSA List
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {importantAdditions.map((section, index) => (
+                  <div key={index}>
+                    <h4 className="font-medium text-gray-900 mb-2">{section.category}</h4>
+                    <ul className="space-y-2 ml-4">
+                      {section.problems.map((problem, problemIndex) => (
+                        <li key={problemIndex} className="text-sm">
+                          <span className="font-medium text-gray-800">{problem.name}</span>
+                          <span className="text-gray-600 ml-2">({problem.note})</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="text-xs text-gray-500 mb-8">
+            <p>Source: Top 100 FAANG DSA Questions - Prepared for: Dhanush Reddy</p>
+            <p>These questions cover the most frequently asked problems in FAANG company interviews</p>
+          </div>
+        </div>
+
         {/* Company Prep DSA Questions */}
         <div className="mb-12">
           <h2 className="text-xl font-serif text-black mb-6 pb-2 border-b border-gray-300 flex items-center">
