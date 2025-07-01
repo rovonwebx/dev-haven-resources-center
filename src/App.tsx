@@ -22,6 +22,7 @@ import Theories from "./pages/Theories";
 import StudentProjects from "./pages/StudentProjects";
 import Events from "./pages/Events";
 import Roadmaps from "./pages/Roadmaps";
+import InterviewQuestions from "./pages/InterviewQuestions";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/student-projects" element={<StudentProjects />} />
             <Route path="/events" element={<Events />} />
             <Route path="/roadmaps" element={<Roadmaps />} />
+            <Route path="/interview-questions" element={<InterviewQuestions />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
