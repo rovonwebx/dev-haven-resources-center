@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -100,7 +101,7 @@ const Index = () => {
       description: "Tech events, competitions, and conferences",
       icon: Calendar,
       path: "/events",
-    }
+    },
     {
       title: "Interview Questions",
       description: "Tech events, competitions, and conferences",
