@@ -7,10 +7,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, Briefcase, MapPin, Clock, DollarSign, ExternalLink, Calendar, Filter } from "lucide-react";
 
 const Internships = () => {
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedRegion, setSelectedRegion] = useState("all");
 
   const internships = [
-    // Tech Giants - Summer 2025
+    // US Tech Giants - Summer 2025
     {
       company: "Google",
       role: "Software Engineering Intern - Summer 2025",
@@ -18,6 +19,7 @@ const Internships = () => {
       duration: "12-14 weeks",
       stipend: "$9,500/month + housing",
       type: "Summer",
+      category: "US Tech Giants",
       requirements: ["Currently pursuing BS/MS in CS or related field", "Strong programming skills in C++, Java, or Python", "Data structures and algorithms knowledge"],
       deadline: "February 28, 2025",
       applicationPeriod: "January 15 - February 28, 2025",
@@ -31,6 +33,7 @@ const Internships = () => {
       duration: "12-16 weeks",
       stipend: "$10,000/month + housing",
       type: "Summer",
+      category: "US Tech Giants",
       requirements: ["Pursuing BS/MS in Computer Science", "Experience with programming languages like Python, Java, C++", "Understanding of computer science fundamentals"],
       deadline: "March 15, 2025",
       applicationPeriod: "February 1 - March 15, 2025",
@@ -44,6 +47,7 @@ const Internships = () => {
       duration: "12 weeks",
       stipend: "$8,800/month + housing",
       type: "Summer",
+      category: "US Tech Giants",
       requirements: ["Currently enrolled in BS/MS Computer Science program", "Programming experience in Java, C++, or Python", "Understanding of CS fundamentals"],
       deadline: "February 15, 2025",
       applicationPeriod: "January 10 - February 15, 2025",
@@ -57,250 +61,23 @@ const Internships = () => {
       duration: "12 weeks",
       stipend: "$8,500/month + housing",
       type: "Summer",
+      category: "US Tech Giants",
       requirements: ["Currently pursuing BS/MS in Computer Science", "Experience with C#, Java, or similar languages", "Strong problem-solving skills"],
       deadline: "March 1, 2025",
       applicationPeriod: "January 20 - March 1, 2025",
       url: "https://careers.microsoft.com/students/us/en/us-internship-programs",
       region: "US"
     },
-    {
-      company: "Apple",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "Cupertino, CA / Austin, TX",
-      duration: "12 weeks",
-      stipend: "$9,000/month + housing",
-      type: "Summer",
-      requirements: ["Currently enrolled in BS/MS Computer Science program", "Strong programming skills in Swift, C++, or Python", "iOS/macOS development experience preferred"],
-      deadline: "February 20, 2025",
-      applicationPeriod: "January 25 - February 20, 2025",
-      url: "https://jobs.apple.com/en-us/search?location=united-states-USA&team=internships-STDNT-INTRN",
-      region: "US"
-    },
 
-    // Unicorns and High-Growth Companies
+    // Big IT & Consulting Firms - India
     {
-      company: "OpenAI",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "San Francisco, CA",
-      duration: "12 weeks",
-      stipend: "$12,000/month + housing",
-      type: "Summer",
-      requirements: ["Pursuing degree in Computer Science or related field", "Experience with Python, machine learning frameworks", "Interest in AI/ML applications"],
-      deadline: "March 10, 2025",
-      applicationPeriod: "February 15 - March 10, 2025",
-      url: "https://openai.com/careers",
-      region: "US"
-    },
-    {
-      company: "Stripe",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "San Francisco, CA / Seattle, WA",
-      duration: "12 weeks",
-      stipend: "$10,500/month + housing",
-      type: "Summer",
-      requirements: ["Currently enrolled in CS/Engineering program", "Experience with web technologies", "Interest in fintech and payments"],
-      deadline: "February 25, 2025",
-      applicationPeriod: "February 1 - February 25, 2025",
-      url: "https://stripe.com/jobs/search?s=intern",
-      region: "US"
-    },
-    {
-      company: "Airbnb",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "San Francisco, CA",
-      duration: "12 weeks",
-      stipend: "$9,800/month + housing",
-      type: "Summer",
-      requirements: ["Pursuing BS/MS in Computer Science", "Full-stack development experience", "Experience with React, Node.js preferred"],
-      deadline: "March 5, 2025",
-      applicationPeriod: "February 10 - March 5, 2025",
-      url: "https://careers.airbnb.com/students/",
-      region: "US"
-    },
-    {
-      company: "Uber",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "San Francisco, CA / New York, NY",
-      duration: "12 weeks",
-      stipend: "$9,200/month + housing",
-      type: "Summer",
-      requirements: ["Currently enrolled in Computer Science program", "Backend/frontend development experience", "Knowledge of distributed systems"],
-      deadline: "February 28, 2025",
-      applicationPeriod: "February 5 - February 28, 2025",
-      url: "https://www.uber.com/us/en/careers/teams/university/",
-      region: "US"
-    },
-    {
-      company: "Spotify",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "New York, NY / Stockholm, Sweden",
-      duration: "10-12 weeks",
-      stipend: "$8,500/month + benefits",
-      type: "Summer",
-      requirements: ["Studying Computer Science or related field", "Experience with Java, Python, or JavaScript", "Passion for music and technology"],
-      deadline: "March 20, 2025",
-      applicationPeriod: "March 1 - March 20, 2025",
-      url: "https://www.lifeatspotify.com/students-and-grads",
-      region: "US"
-    },
-
-    // Financial Services
-    {
-      company: "Goldman Sachs",
-      role: "Technology Summer Analyst - 2025",
-      location: "New York, NY / Salt Lake City, UT",
-      duration: "10 weeks",
-      stipend: "$10,800/month + housing",
-      type: "Summer",
-      requirements: ["Pursuing BS/MS in Computer Science or Engineering", "Strong programming skills", "Interest in financial technology"],
-      deadline: "February 1, 2025",
-      applicationPeriod: "January 8 - February 1, 2025",
-      url: "https://www.goldmansachs.com/careers/students/programs/americas/summer-analyst-program/",
-      region: "US"
-    },
-    {
-      company: "JPMorgan Chase",
-      role: "Software Engineer Intern - Summer 2025",
-      location: "New York, NY / Jersey City, NJ / Columbus, OH",
-      duration: "10 weeks",
-      stipend: "$9,500/month + housing",
-      type: "Summer",
-      requirements: ["Currently enrolled in Computer Science program", "Programming experience in Java, Python, or C++", "Interest in financial services technology"],
-      deadline: "January 31, 2025",
-      applicationPeriod: "January 5 - January 31, 2025",
-      url: "https://careers.jpmorgan.com/students/programs",
-      region: "US"
-    },
-    {
-      company: "Citadel",
-      role: "Software Engineer Intern - Summer 2025",
-      location: "Chicago, IL / New York, NY",
-      duration: "11 weeks",
-      stipend: "$13,000/month + housing",
-      type: "Summer",
-      requirements: ["Pursuing degree in Computer Science or related field", "Strong algorithmic problem-solving skills", "Experience with C++, Java, or Python"],
-      deadline: "February 10, 2025",
-      applicationPeriod: "January 20 - February 10, 2025",
-      url: "https://www.citadel.com/careers/students/",
-      region: "US"
-    },
-
-    // Spring/Fall 2025 Opportunities
-    {
-      company: "Tesla",
-      role: "Software Engineering Intern - Spring 2025",
-      location: "Palo Alto, CA / Austin, TX",
-      duration: "12-16 weeks",
-      stipend: "$8,200/month",
-      type: "Spring",
-      requirements: ["Currently enrolled in CS/Engineering program", "Experience with embedded systems or automotive software", "C++ or Python proficiency"],
-      deadline: "December 15, 2024",
-      applicationPeriod: "November 1 - December 15, 2024",
-      url: "https://www.tesla.com/careers/search/?country=US&type=3",
-      region: "US"
-    },
-    {
-      company: "Netflix",
-      role: "Software Engineering Intern - Fall 2025",
-      location: "Los Gatos, CA",
-      duration: "12-16 weeks",
-      stipend: "$9,000/month",
-      type: "Fall",
-      requirements: ["Pursuing BS/MS in Computer Science", "Experience with distributed systems", "Interest in streaming technology"],
-      deadline: "August 15, 2025",
-      applicationPeriod: "July 1 - August 15, 2025",
-      url: "https://jobs.netflix.com/search?q=intern",
-      region: "US"
-    },
-    {
-      company: "LinkedIn",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "Sunnyvale, CA / New York, NY",
-      duration: "12 weeks",
-      stipend: "$9,300/month + housing",
-      type: "Summer",
-      requirements: ["Currently enrolled in Computer Science program", "Full-stack development experience", "Experience with large-scale systems"],
-      deadline: "March 8, 2025",
-      applicationPeriod: "February 12 - March 8, 2025",
-      url: "https://careers.linkedin.com/students",
-      region: "US"
-    },
-
-    // Emerging Tech Companies
-    {
-      company: "Anthropic",
-      role: "AI Safety Research Intern - Summer 2025",
-      location: "San Francisco, CA",
-      duration: "12 weeks",
-      stipend: "$11,500/month + housing",
-      type: "Summer",
-      requirements: ["Pursuing PhD/MS in CS, AI/ML, or related field", "Research experience in AI safety or alignment", "Strong background in machine learning"],
-      deadline: "March 25, 2025",
-      applicationPeriod: "March 1 - March 25, 2025",
-      url: "https://www.anthropic.com/careers",
-      region: "US"
-    },
-    {
-      company: "Figma",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "San Francisco, CA / New York, NY",
-      duration: "12 weeks",
-      stipend: "$9,700/month + housing",
-      type: "Summer",
-      requirements: ["Currently enrolled in Computer Science program", "Frontend development experience with React", "Interest in design tools and collaboration"],
-      deadline: "February 22, 2025",
-      applicationPeriod: "February 8 - February 22, 2025",
-      url: "https://www.figma.com/careers/",
-      region: "US"
-    },
-    {
-      company: "Palantir",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "Palo Alto, CA / New York, NY / Denver, CO",
-      duration: "12 weeks",
-      stipend: "$10,200/month + housing",
-      type: "Summer",
-      requirements: ["Pursuing degree in Computer Science or Engineering", "Strong algorithmic thinking", "Interest in data analysis and big data"],
-      deadline: "February 18, 2025",
-      applicationPeriod: "January 28 - February 18, 2025",
-      url: "https://www.palantir.com/careers/students/",
-      region: "US"
-    },
-    {
-      company: "Snowflake",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "San Mateo, CA / Bellevue, WA",
-      duration: "12 weeks",
-      stipend: "$9,100/month + housing",
-      type: "Summer",
-      requirements: ["Currently enrolled in CS/Engineering program", "Database systems knowledge", "Experience with cloud platforms"],
-      deadline: "March 12, 2025",
-      applicationPeriod: "February 20 - March 12, 2025",
-      url: "https://careers.snowflake.com/us/en/students",
-      region: "US"
-    },
-    {
-      company: "Databricks",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "San Francisco, CA / Mountain View, CA",
-      duration: "12 weeks",
-      stipend: "$9,400/month + housing",
-      type: "Summer",
-      requirements: ["Pursuing BS/MS in Computer Science", "Experience with distributed systems", "Knowledge of Apache Spark or similar technologies"],
-      deadline: "March 3, 2025",
-      applicationPeriod: "February 15 - March 3, 2025",
-      url: "https://databricks.com/company/careers/university-recruiting",
-      region: "US"
-    },
-
-    // Indian Companies - Large Scale
-    {
-      company: "Tata Consultancy Services",
+      company: "Tata Consultancy Services (TCS)",
       role: "Software Developer Intern - 2025",
       location: "Mumbai, Pune, Bangalore, Hyderabad",
       duration: "8-12 weeks",
       stipend: "₹25,000-35,000/month",
       type: "Summer/Winter",
+      category: "Big IT & Consulting Firms",
       requirements: ["BE/BTech in CS/IT/ECE", "Knowledge of Java, Python, or C++", "Good academic record (60%+)"],
       deadline: "March 31, 2025",
       applicationPeriod: "February 1 - March 31, 2025",
@@ -308,92 +85,377 @@ const Internships = () => {
       region: "India"
     },
     {
-      company: "Wipro",
-      role: "Software Engineering Intern - 2025",
-      location: "Bangalore, Hyderabad, Chennai, Pune",
-      duration: "10-12 weeks",
-      stipend: "₹20,000-30,000/month",
-      type: "Summer",
-      requirements: ["Engineering student in final year", "Programming skills in Java/Python/C++", "Minimum 65% academic score"],
-      deadline: "April 15, 2025",
-      applicationPeriod: "March 1 - April 15, 2025",
-      url: "https://careers.wipro.com/careers-home/",
-      region: "India"
-    },
-    {
       company: "Infosys",
-      role: "InStep Internship Program - 2025",
+      role: "Software Development Intern - Digital Transformation",
       location: "Bangalore, Mysore, Pune, Chennai",
-      duration: "8 weeks",
-      stipend: "₹25,000/month + accommodation",
+      duration: "8-12 weeks",
+      stipend: "₹30,000-40,000/month",
       type: "Summer",
-      requirements: ["Pre-final year engineering students", "CS/IT/ECE/EEE background", "Strong problem-solving skills"],
+      category: "Big IT & Consulting Firms",
+      requirements: ["Pre-final year engineering students", "CS/IT/ECE/EEE background", "Cloud and AI Engineering skills preferred"],
       deadline: "February 28, 2025",
       applicationPeriod: "January 15 - February 28, 2025",
       url: "https://www.infosys.com/careers/instep.html",
       region: "India"
     },
     {
-      company: "Microsoft India",
+      company: "HCLTech",
+      role: "Software Development Intern - IT Consulting",
+      location: "Noida, Chennai, Bangalore",
+      duration: "10-12 weeks",
+      stipend: "₹28,000-35,000/month",
+      type: "Summer",
+      category: "Big IT & Consulting Firms",
+      requirements: ["Engineering background in CS/IT", "Cybersecurity and Software Development knowledge", "Problem-solving abilities"],
+      deadline: "March 20, 2025",
+      applicationPeriod: "February 15 - March 20, 2025",
+      url: "https://www.hcltech.com/careers",
+      region: "India"
+    },
+    {
+      company: "Wipro",
+      role: "Software Engineering Intern - Cybersecurity",
+      location: "Bangalore, Hyderabad, Chennai, Pune",
+      duration: "10-12 weeks",
+      stipend: "₹25,000-32,000/month",
+      type: "Summer",
+      category: "Big IT & Consulting Firms",
+      requirements: ["Engineering student in final year", "Cybersecurity and Business Analysis skills", "Minimum 65% academic score"],
+      deadline: "April 15, 2025",
+      applicationPeriod: "March 1 - April 15, 2025",
+      url: "https://careers.wipro.com/careers-home/",
+      region: "India"
+    },
+    {
+      company: "Tech Mahindra",
+      role: "5G & AI Automation Intern - 2025",
+      location: "Pune, Hyderabad, Bangalore",
+      duration: "8-10 weeks",
+      stipend: "₹30,000-38,000/month",
+      type: "Summer",
+      category: "Big IT & Consulting Firms",
+      requirements: ["BTech in CS/ECE/IT", "Interest in 5G, AI, and Infrastructure Automation", "Strong technical foundation"],
+      deadline: "March 25, 2025",
+      applicationPeriod: "February 20 - March 25, 2025",
+      url: "https://www.techmahindra.com/careers/",
+      region: "India"
+    },
+    {
+      company: "Accenture",
+      role: "Software Development Intern - Cloud Analytics",
+      location: "Bangalore, Hyderabad, Mumbai",
+      duration: "10-12 weeks",
+      stipend: "₹35,000-45,000/month",
+      type: "Summer",
+      category: "Big IT & Consulting Firms",
+      requirements: ["Engineering background", "Cloud and Analytics knowledge", "Software Development skills"],
+      deadline: "February 28, 2025",
+      applicationPeriod: "February 1 - February 28, 2025",
+      url: "https://www.accenture.com/in-en/careers/students",
+      region: "India"
+    },
+    {
+      company: "Capgemini",
+      role: "Cloud Data Science Intern - 2025",
+      location: "Mumbai, Pune, Chennai",
+      duration: "8-12 weeks",
+      stipend: "₹32,000-40,000/month",
+      type: "Summer",
+      category: "Big IT & Consulting Firms",
+      requirements: ["BTech/MTech in CS/IT", "Cloud and Data Science background", "Software Development experience"],
+      deadline: "March 15, 2025",
+      applicationPeriod: "February 10 - March 15, 2025",
+      url: "https://www.capgemini.com/careers/",
+      region: "India"
+    },
+    {
+      company: "Cognizant",
+      role: "AI/ML Cloud Consultant Intern - 2025",
+      location: "Chennai, Bangalore, Hyderabad",
+      duration: "10-14 weeks",
+      stipend: "₹35,000-42,000/month",
+      type: "Summer",
+      category: "Big IT & Consulting Firms",
+      requirements: ["Engineering degree in CS/IT", "AI/ML and Data Science knowledge", "Cloud Consulting interest"],
+      deadline: "March 10, 2025",
+      applicationPeriod: "February 5 - March 10, 2025",
+      url: "https://careers.cognizant.com/",
+      region: "India"
+    },
+
+    // Financial & Analytics - India
+    {
+      company: "JPMorgan Chase",
+      role: "Software Engineer Intern - Ops Manager Track",
+      location: "Mumbai, Bangalore",
+      duration: "10-12 weeks",
+      stipend: "₹60,000-80,000/month",
+      type: "Summer",
+      category: "Financial & Analytics",
+      requirements: ["Engineering background in CS/IT", "Interest in financial services technology", "Operations Management skills"],
+      deadline: "January 31, 2025",
+      applicationPeriod: "January 5 - January 31, 2025",
+      url: "https://careers.jpmorgan.com/students/programs",
+      region: "India"
+    },
+    {
+      company: "Standard Chartered",
+      role: "Software Development Intern - 2025",
+      location: "Mumbai, Chennai",
+      duration: "8-10 weeks",
+      stipend: "₹50,000-65,000/month",
+      type: "Summer",
+      category: "Financial & Analytics",
+      requirements: ["BTech in CS/IT/ECE", "Software Development skills", "Financial technology interest"],
+      deadline: "February 20, 2025",
+      applicationPeriod: "January 25 - February 20, 2025",
+      url: "https://www.sc.com/careers/",
+      region: "India"
+    },
+    {
+      company: "S&P Global",
       role: "Software Engineering Intern - 2025",
+      location: "Gurgaon, Hyderabad",
+      duration: "10-12 weeks",
+      stipend: "₹55,000-70,000/month",
+      type: "Summer",
+      category: "Financial & Analytics",
+      requirements: ["Engineering background", "Software Engineering skills", "Financial data analysis interest"],
+      deadline: "March 5, 2025",
+      applicationPeriod: "February 10 - March 5, 2025",
+      url: "https://www.spglobal.com/careers/",
+      region: "India"
+    },
+    {
+      company: "BlackRock",
+      role: "Data Analytics FinTech Intern - 2025",
+      location: "Mumbai, Gurgaon",
+      duration: "10-14 weeks",
+      stipend: "₹65,000-85,000/month",
+      type: "Summer",
+      category: "Financial & Analytics",
+      requirements: ["BTech/MTech in CS/IT/ECE", "Data Analytics and FinTech knowledge", "Strong analytical skills"],
+      deadline: "February 15, 2025",
+      applicationPeriod: "January 20 - February 15, 2025",
+      url: "https://careers.blackrock.com/",
+      region: "India"
+    },
+
+    // Banking & Insurance - India
+    {
+      company: "Kotak Life Insurance",
+      role: "Operations Manager Intern - 2025",
+      location: "Mumbai, Delhi, Bangalore",
+      duration: "8-12 weeks",
+      stipend: "₹35,000-45,000/month",
+      type: "Summer",
+      category: "Banking & Insurance",
+      requirements: ["MBA/Engineering background", "Operations Management interest", "Insurance domain knowledge preferred"],
+      deadline: "March 30, 2025",
+      applicationPeriod: "March 1 - March 30, 2025",
+      url: "https://www.kotaklife.com/careers",
+      region: "India"
+    },
+    {
+      company: "Tata Capital",
+      role: "Operations Manager Intern - 2025",
+      location: "Mumbai, Pune, Chennai",
+      duration: "10-12 weeks",
+      stipend: "₹40,000-50,000/month",
+      type: "Summer",
+      category: "Banking & Insurance",
+      requirements: ["Engineering/MBA background", "Financial services interest", "Operations management skills"],
+      deadline: "April 10, 2025",
+      applicationPeriod: "March 15 - April 10, 2025",
+      url: "https://www.tatacapital.com/careers/",
+      region: "India"
+    },
+    {
+      company: "SBI Bank",
+      role: "Circle Based Officer (CBO) Intern - 2025",
+      location: "Multiple locations across India",
+      duration: "12 weeks",
+      stipend: "₹25,000-35,000/month",
+      type: "Summer",
+      category: "Banking & Insurance",
+      requirements: ["Graduate degree", "Banking sector interest", "2,964 positions available"],
+      deadline: "April 30, 2025",
+      applicationPeriod: "April 1 - April 30, 2025",
+      url: "https://sbi.co.in/careers",
+      region: "India"
+    },
+
+    // Global & Other Roles - India Operations
+    {
+      company: "Microsoft India",
+      role: "Software Engineering Intern - Product Management",
       location: "Bangalore, Hyderabad",
       duration: "12 weeks",
       stipend: "₹80,000-1,00,000/month",
       type: "Summer",
-      requirements: ["Currently pursuing BTech/MTech in CS", "Strong coding skills", "Excellent academic record"],
+      category: "Global & Other Roles",
+      requirements: ["Currently pursuing BTech/MTech in CS", "Software Engineering and Product Management skills", "Excellent academic record"],
       deadline: "January 31, 2025",
       applicationPeriod: "December 1, 2024 - January 31, 2025",
       url: "https://careers.microsoft.com/students/us/en/india-full-time-opportunities",
       region: "India"
     },
     {
-      company: "Google India",
-      role: "Software Engineering Intern - Summer 2025",
-      location: "Bangalore, Hyderabad",
+      company: "Tesla India",
+      role: "Vehicle Service & Sales Operations Intern",
+      location: "Mumbai, Delhi, Bangalore",
       duration: "10-12 weeks",
-      stipend: "₹1,00,000-1,20,000/month",
+      stipend: "₹45,000-60,000/month",
       type: "Summer",
-      requirements: ["Pursuing BTech/MTech in CS/related field", "Strong programming foundation", "Data structures and algorithms expertise"],
-      deadline: "February 15, 2025",
-      applicationPeriod: "January 1 - February 15, 2025",
-      url: "https://careers.google.com/jobs/results/?location=India",
+      category: "Global & Other Roles",
+      requirements: ["Engineering/Business background", "Interest in automotive technology", "Sales and Operations skills"],
+      deadline: "March 15, 2025",
+      applicationPeriod: "February 15 - March 15, 2025",
+      url: "https://www.tesla.com/careers/search/?country=IN",
+      region: "India"
+    },
+    {
+      company: "Heineken India",
+      role: "Tech Operations Intern - 2025",
+      location: "Hyderabad",
+      duration: "8-10 weeks",
+      stipend: "₹35,000-45,000/month",
+      type: "Summer",
+      category: "Global & Other Roles",
+      requirements: ["Engineering background", "3,000+ tech roles available in Hyderabad", "Operations and technology interest"],
+      deadline: "April 20, 2025",
+      applicationPeriod: "March 25 - April 20, 2025",
+      url: "https://www.theheinekencompany.com/careers",
       region: "India"
     },
 
-    // Indian Startups - Small to Medium Scale
+    // Government & Specialist Roles - India
     {
-      company: "Razorpay",
-      role: "Software Development Intern - 2025",
-      location: "Bangalore",
-      duration: "6 months",
-      stipend: "₹40,000-50,000/month",
-      type: "Full-time",
-      requirements: ["BTech/MTech in CS/IT", "Experience with web technologies", "Fintech interest preferred"],
-      deadline: "March 20, 2025",
-      applicationPeriod: "February 15 - March 20, 2025",
-      url: "https://razorpay.com/jobs/",
+      company: "NABARD",
+      role: "Data Scientist & AI Engineer Intern - 2025",
+      location: "Mumbai, Delhi, Regional Offices",
+      duration: "10-12 weeks",
+      stipend: "₹30,000-40,000/month",
+      type: "Summer",
+      category: "Government & Specialist Roles",
+      requirements: ["BTech/MTech in CS/IT", "Data Science and AI Engineering skills", "Apply by June 30, 2025"],
+      deadline: "June 30, 2025",
+      applicationPeriod: "May 15 - June 30, 2025",
+      url: "https://www.nabard.org/careers.aspx",
       region: "India"
     },
     {
-      company: "Zomato",
-      role: "Product Development Intern - 2025",
-      location: "Gurgaon, Delhi",
-      duration: "6 months",
+      company: "UP Government Corporations (GCCs)",
+      role: "IT Analytics Support Intern - 2025",
+      location: "Lucknow, Noida, Kanpur",
+      duration: "8-10 weeks",
+      stipend: "₹20,000-30,000/month",
+      type: "Summer",
+      category: "Government & Specialist Roles",
+      requirements: ["Engineering background in IT", "Analytics and support roles", "State government sector interest"],
+      deadline: "May 15, 2025",
+      applicationPeriod: "April 20 - May 15, 2025",
+      url: "https://up.gov.in/en/page/recruitment",
+      region: "India"
+    },
+
+    // Semiconductor & Hardware - India
+    {
+      company: "Qualcomm India",
+      role: "Software & Hardware Engineering Intern - 2025",
+      location: "Bangalore, Hyderabad",
+      duration: "12-14 weeks",
+      stipend: "₹60,000-80,000/month",
+      type: "Summer",
+      category: "Semiconductor & Hardware",
+      requirements: ["BTech/MTech in ECE/CS", "Hardware and Software Engineering skills", "Semiconductor technology interest"],
+      deadline: "February 28, 2025",
+      applicationPeriod: "January 30 - February 28, 2025",
+      url: "https://www.qualcomm.com/company/careers/students",
+      region: "India"
+    },
+    {
+      company: "Photon (Software & Java Development)",
+      role: "Java Developer Intern - 2025",
+      location: "Bangalore, Chennai",
+      duration: "8-12 weeks",
       stipend: "₹35,000-45,000/month",
+      type: "Summer",
+      category: "Semiconductor & Hardware",
+      requirements: ["BTech in CS/IT", "Java Development skills", "Software engineering background"],
+      deadline: "March 20, 2025",
+      applicationPeriod: "February 25 - March 20, 2025",
+      url: "https://www.photon.in/careers/",
+      region: "India"
+    },
+
+    // Pharma & Biotech - India
+    {
+      company: "Merck / MSD India",
+      role: "Operations Manager Intern - 2025",
+      location: "Mumbai, Bangalore",
+      duration: "10-12 weeks",
+      stipend: "₹40,000-55,000/month",
+      type: "Summer",
+      category: "Pharma & Biotech",
+      requirements: ["Engineering/Life Sciences background", "Operations Management skills", "Pharmaceutical industry interest"],
+      deadline: "April 5, 2025",
+      applicationPeriod: "March 10 - April 5, 2025",
+      url: "https://www.msd.com/careers/",
+      region: "India"
+    },
+    {
+      company: "Pfizer India",
+      role: "R&D Clinical Trial Coordinator Intern - 2025",
+      location: "Mumbai, Chennai",
+      duration: "8-10 weeks",
+      stipend: "₹35,000-50,000/month",
+      type: "Summer",
+      category: "Pharma & Biotech",
+      requirements: ["Life Sciences/Pharmacy background", "Clinical research interest", "R&D and trial coordination skills"],
+      deadline: "April 15, 2025",
+      applicationPeriod: "March 20 - April 15, 2025",
+      url: "https://www.pfizer.com/careers",
+      region: "India"
+    },
+    {
+      company: "Parexel India",
+      role: "Clinical Trials Operations Intern - 2025",
+      location: "Hyderabad, Bangalore",
+      duration: "8-12 weeks",
+      stipend: "₹30,000-40,000/month",
+      type: "Summer",
+      category: "Pharma & Biotech",
+      requirements: ["Life Sciences/Medical background", "Clinical trials interest", "Operations and research skills"],
+      deadline: "May 1, 2025",
+      applicationPeriod: "April 5 - May 1, 2025",
+      url: "https://www.parexel.com/careers",
+      region: "India"
+    },
+
+    // Logistics & E-commerce - India
+    {
+      company: "Flipkart",
+      role: "Category Manager & Data Analyst Intern - 2025",
+      location: "Bangalore, Hyderabad",
+      duration: "6 months",
+      stipend: "₹50,000-60,000/month",
       type: "Full-time",
-      requirements: ["Engineering background", "Mobile app development experience", "Interest in food-tech"],
-      deadline: "April 10, 2025",
-      applicationPeriod: "March 15 - April 10, 2025",
-      url: "https://www.zomato.com/careers",
+      category: "Logistics & E-commerce",
+      requirements: ["BTech/MTech final year", "Data analysis and category management skills", "E-commerce domain knowledge preferred"],
+      deadline: "February 20, 2025",
+      applicationPeriod: "January 25 - February 20, 2025",
+      url: "https://www.flipkartcareers.com/#!/",
       region: "India"
     },
     {
       company: "Swiggy",
-      role: "Software Engineering Intern - 2025",
+      role: "Associate Software Engineer Intern - 2025",
       location: "Bangalore",
       duration: "6 months",
       stipend: "₹40,000/month",
       type: "Full-time",
+      category: "Logistics & E-commerce",
       requirements: ["CS/IT/ECE background", "Full-stack development skills", "Problem-solving abilities"],
       deadline: "March 25, 2025",
       applicationPeriod: "February 20 - March 25, 2025",
@@ -401,140 +463,76 @@ const Internships = () => {
       region: "India"
     },
     {
-      company: "Paytm",
-      role: "Backend Development Intern - 2025",
-      location: "Noida, Bangalore",
+      company: "Delhivery",
+      role: "Operations Manager Intern - 2025",
+      location: "Gurgaon, Mumbai, Bangalore",
+      duration: "6 months",
+      stipend: "₹35,000-45,000/month",
+      type: "Full-time",
+      category: "Logistics & E-commerce",
+      requirements: ["Engineering/MBA background", "Logistics and operations interest", "Supply chain management skills"],
+      deadline: "April 1, 2025",
+      applicationPeriod: "March 5 - April 1, 2025",
+      url: "https://www.delhivery.com/careers/",
+      region: "India"
+    },
+
+    // Other Startups & IT Firms
+    {
+      company: "The Scalers",
+      role: "Offshore Development Intern - 2025",
+      location: "Bangalore, Mumbai",
       duration: "6 months",
       stipend: "₹30,000-40,000/month",
       type: "Full-time",
-      requirements: ["BTech in CS/IT", "Backend technologies knowledge", "Database management skills"],
-      deadline: "April 5, 2025",
-      applicationPeriod: "March 10 - April 5, 2025",
-      url: "https://jobs.paytm.com/",
-      region: "India"
-    },
-    {
-      company: "Ola",
-      role: "Mobile App Development Intern - 2025",
-      location: "Bangalore",
-      duration: "4-6 months",
-      stipend: "₹35,000/month",
-      type: "Full-time",
-      requirements: ["Engineering student", "Android/iOS development experience", "Transportation tech interest"],
+      category: "Other Startups & IT Firms",
+      requirements: ["Engineering background", "Offshore development teams experience", "Remote collaboration skills"],
       deadline: "March 30, 2025",
       applicationPeriod: "March 1 - March 30, 2025",
-      url: "https://www.olacabs.com/careers/",
+      url: "https://thescalers.com/careers/",
       region: "India"
     },
     {
-      company: "Flipkart",
-      role: "Software Development Intern - 2025",
-      location: "Bangalore, Hyderabad",
-      duration: "6 months",
-      stipend: "₹50,000-60,000/month",
-      type: "Full-time",
-      requirements: ["BTech/MTech final year", "Strong coding skills", "E-commerce domain knowledge preferred"],
-      deadline: "February 20, 2025",
-      applicationPeriod: "January 25 - February 20, 2025",
-      url: "https://www.flipkartcareers.com/#!/",
-      region: "India"
-    },
-    {
-      company: "BYJU'S",
-      role: "Product Development Intern - 2025",
-      location: "Bangalore",
-      duration: "6 months",
-      stipend: "₹30,000-40,000/month",
-      type: "Full-time",
-      requirements: ["Engineering background", "Interest in EdTech", "Mobile/Web development skills"],
-      deadline: "April 15, 2025",
-      applicationPeriod: "March 20 - April 15, 2025",
-      url: "https://byjus.com/careers/",
-      region: "India"
-    },
-
-    // Government and PSUs - India
-    {
-      company: "ISRO",
-      role: "Space Technology Intern - 2025",
-      location: "Bangalore, Thiruvananthapuram",
+      company: "Mphasis",
+      role: "Infrastructure & App Development Intern - 2025",
+      location: "Bangalore, Chennai, Pune",
       duration: "8-12 weeks",
-      stipend: "₹15,000-20,000/month",
+      stipend: "₹28,000-38,000/month",
       type: "Summer",
-      requirements: ["BTech in CS/ECE/Aerospace", "Strong academic record", "Interest in space technology"],
-      deadline: "March 15, 2025",
-      applicationPeriod: "February 1 - March 15, 2025",
-      url: "https://www.isro.gov.in/careers.html",
-      region: "India"
-    },
-    {
-      company: "DRDO",
-      role: "Defense Technology Intern - 2025",
-      location: "Delhi, Hyderabad, Pune",
-      duration: "8 weeks",
-      stipend: "₹12,000-18,000/month",
-      type: "Summer",
-      requirements: ["Engineering student", "Defense technology interest", "Security clearance eligible"],
-      deadline: "April 1, 2025",
-      applicationPeriod: "March 1 - April 1, 2025",
-      url: "https://www.drdo.gov.in/careers",
-      region: "India"
-    },
-
-    // Emerging Indian Startups
-    {
-      company: "Nykaa",
-      role: "Tech Intern - E-commerce - 2025",
-      location: "Mumbai",
-      duration: "6 months",
-      stipend: "₹25,000-35,000/month",
-      type: "Full-time",
-      requirements: ["CS/IT background", "E-commerce platform experience", "Beauty-tech interest"],
-      deadline: "March 10, 2025",
-      applicationPeriod: "February 15 - March 10, 2025",
-      url: "https://www.nykaa.com/careers",
-      region: "India"
-    },
-    {
-      company: "Meesho",
-      role: "Software Development Intern - 2025",
-      location: "Bangalore",
-      duration: "6 months",
-      stipend: "₹40,000/month",
-      type: "Full-time",
-      requirements: ["Engineering student", "Social commerce interest", "Scalable systems knowledge"],
-      deadline: "February 25, 2025",
-      applicationPeriod: "February 1 - February 25, 2025",
-      url: "https://www.meesho.com/careers",
-      region: "India"
-    },
-    {
-      company: "PhonePe",
-      role: "FinTech Development Intern - 2025",
-      location: "Bangalore",
-      duration: "6 months",
-      stipend: "₹50,000-60,000/month",
-      type: "Full-time",
-      requirements: ["BTech in CS/IT", "Payment systems interest", "Security-focused development"],
-      deadline: "January 30, 2025",
-      applicationPeriod: "January 1 - January 30, 2025",
-      url: "https://www.phonepe.com/careers/",
+      category: "Other Startups & IT Firms",
+      requirements: ["Engineering background in CS/IT", "Infrastructure and App Development skills", "Consulting interest"],
+      deadline: "April 10, 2025",
+      applicationPeriod: "March 15 - April 10, 2025",
+      url: "https://www.mphasis.com/careers/",
       region: "India"
     }
+  ];
+
+  const categories = [
+    { value: "all", label: "All Categories" },
+    { value: "US Tech Giants", label: "US Tech Giants" },
+    { value: "Big IT & Consulting Firms", label: "Big IT & Consulting Firms" },
+    { value: "Financial & Analytics", label: "Financial & Analytics" },
+    { value: "Banking & Insurance", label: "Banking & Insurance" },
+    { value: "Global & Other Roles", label: "Global & Other Roles" },
+    { value: "Government & Specialist Roles", label: "Government & Specialist Roles" },
+    { value: "Semiconductor & Hardware", label: "Semiconductor & Hardware" },
+    { value: "Pharma & Biotech", label: "Pharma & Biotech" },
+    { value: "Logistics & E-commerce", label: "Logistics & E-commerce" },
+    { value: "Other Startups & IT Firms", label: "Other Startups & IT Firms" }
   ];
 
   const regions = [
     { value: "all", label: "All Regions" },
     { value: "US", label: "United States" },
-    { value: "India", label: "India" },
-    { value: "Europe", label: "Europe" },
-    { value: "Canada", label: "Canada" },
-    { value: "Australia", label: "Australia" }
+    { value: "India", label: "India" }
   ];
 
-  const filteredInternships = selectedRegion === "all" 
-    ? internships 
-    : internships.filter(internship => internship.region === selectedRegion);
+  const filteredInternships = internships.filter(internship => {
+    const categoryMatch = selectedCategory === "all" || internship.category === selectedCategory;
+    const regionMatch = selectedRegion === "all" || internship.region === selectedRegion;
+    return categoryMatch && regionMatch;
+  });
 
   const tips = [
     "For Indian students: Start preparing early - most companies recruit 6-8 months in advance",
@@ -557,7 +555,7 @@ const Internships = () => {
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
                 <Briefcase className="w-6 h-6 inline mr-2 text-blue-600" />
-                Tech Internships 2025
+                Top 50+ Companies Hiring - June 2025
               </h1>
               <p className="text-gray-600 text-sm">Current opportunities from global and Indian companies</p>
             </div>
@@ -573,8 +571,20 @@ const Internships = () => {
 
       <main className="max-w-7xl mx-auto px-6 py-6">
         <div className="mb-6">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
             <Filter className="w-5 h-5 text-gray-600" />
+            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <SelectTrigger className="w-64">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category) => (
+                  <SelectItem key={category.value} value={category.value}>
+                    {category.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Select value={selectedRegion} onValueChange={setSelectedRegion}>
               <SelectTrigger className="w-48">
                 <SelectValue placeholder="Select region" />
@@ -604,9 +614,10 @@ const Internships = () => {
                     </CardTitle>
                     <p className="text-base font-medium text-blue-600 mt-1">{internship.company}</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 flex-wrap">
                     <Badge className="bg-green-100 text-green-800">{internship.type}</Badge>
                     <Badge variant="outline">{internship.region}</Badge>
+                    <Badge className="bg-purple-100 text-purple-800 text-xs">{internship.category}</Badge>
                   </div>
                 </div>
               </CardHeader>
