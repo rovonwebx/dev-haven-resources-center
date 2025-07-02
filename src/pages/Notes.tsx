@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,71 +9,71 @@ const Notes = () => {
       category: "First Year - Foundation Subjects",
       color: "bg-green-50 border-green-200",
       notes: [
-        { title: "Engineering Mathematics I", description: "Calculus, differential equations, and linear algebra notes", subject: "Mathematics", pages: 45, downloads: 1250, rating: 4.8, lastUpdated: "Jan 2025" },
-        { title: "Physics for Engineers", description: "Mechanics, thermodynamics, and electromagnetic theory", subject: "Physics", pages: 38, downloads: 980, rating: 4.7, lastUpdated: "Dec 2024" },
-        { title: "Chemistry Fundamentals", description: "Organic, inorganic chemistry and material science basics", subject: "Chemistry", pages: 32, downloads: 780, rating: 4.6, lastUpdated: "Jan 2025" },
-        { title: "C Programming Quick Notes", description: "Syntax, functions, pointers, and data structures in C", subject: "Programming", pages: 28, downloads: 1450, rating: 4.9, lastUpdated: "Jan 2025" },
-        { title: "Engineering Drawing Basics", description: "Technical drawing, projections, and CAD fundamentals", subject: "Technical Drawing", pages: 25, downloads: 650, rating: 4.5, lastUpdated: "Dec 2024" },
-        { title: "English Communication Skills", description: "Technical writing, presentation skills, and grammar", subject: "Communication", pages: 22, downloads: 450, rating: 4.4, lastUpdated: "Jan 2025" },
-        { title: "Environmental Science Notes", description: "Ecology, pollution control, and sustainable development", subject: "Environmental", pages: 30, downloads: 520, rating: 4.3, lastUpdated: "Dec 2024" },
-        { title: "Workshop Technology", description: "Manufacturing processes, tools, and safety procedures", subject: "Workshop", pages: 35, downloads: 720, rating: 4.6, lastUpdated: "Jan 2025" }
+        { id: "engineering-mathematics-1", title: "Engineering Mathematics I", description: "Calculus, differential equations, and linear algebra notes", subject: "Mathematics", pages: 45, downloads: 1250, rating: 4.8, lastUpdated: "Jan 2025" },
+        { id: "physics-engineers", title: "Physics for Engineers", description: "Mechanics, thermodynamics, and electromagnetic theory", subject: "Physics", pages: 38, downloads: 980, rating: 4.7, lastUpdated: "Dec 2024" },
+        { id: "chemistry-fundamentals", title: "Chemistry Fundamentals", description: "Organic, inorganic chemistry and material science basics", subject: "Chemistry", pages: 32, downloads: 780, rating: 4.6, lastUpdated: "Jan 2025" },
+        { id: "c-programming-notes", title: "C Programming Quick Notes", description: "Syntax, functions, pointers, and data structures in C", subject: "Programming", pages: 28, downloads: 1450, rating: 4.9, lastUpdated: "Jan 2025" },
+        { id: "engineering-drawing", title: "Engineering Drawing Basics", description: "Technical drawing, projections, and CAD fundamentals", subject: "Technical Drawing", pages: 25, downloads: 650, rating: 4.5, lastUpdated: "Dec 2024" },
+        { id: "english-communication", title: "English Communication Skills", description: "Technical writing, presentation skills, and grammar", subject: "Communication", pages: 22, downloads: 450, rating: 4.4, lastUpdated: "Jan 2025" },
+        { id: "environmental-science", title: "Environmental Science Notes", description: "Ecology, pollution control, and sustainable development", subject: "Environmental", pages: 30, downloads: 520, rating: 4.3, lastUpdated: "Dec 2024" },
+        { id: "workshop-technology", title: "Workshop Technology", description: "Manufacturing processes, tools, and safety procedures", subject: "Workshop", pages: 35, downloads: 720, rating: 4.6, lastUpdated: "Jan 2025" }
       ]
     },
     {
       category: "Second Year - Core Engineering",
       color: "bg-blue-50 border-blue-200",
       notes: [
-        { title: "Data Structures and Algorithms", description: "Arrays, linked lists, trees, graphs, and algorithm analysis", subject: "DSA", pages: 52, downloads: 2100, rating: 4.9, lastUpdated: "Jan 2025" },
-        { title: "Object-Oriented Programming", description: "OOP concepts, inheritance, polymorphism with Java/C++", subject: "Programming", pages: 48, downloads: 1850, rating: 4.8, lastUpdated: "Dec 2024" },
-        { title: "Digital Electronics", description: "Logic gates, circuits, flip-flops, and digital systems", subject: "Electronics", pages: 42, downloads: 1320, rating: 4.7, lastUpdated: "Jan 2025" },
-        { title: "Engineering Mathematics II", description: "Advanced calculus, complex analysis, and probability", subject: "Mathematics", pages: 50, downloads: 1150, rating: 4.6, lastUpdated: "Dec 2024" },
-        { title: "Computer Organization", description: "CPU architecture, memory systems, and instruction sets", subject: "Computer Science", pages: 45, downloads: 1680, rating: 4.8, lastUpdated: "Jan 2025" },
-        { title: "Discrete Mathematics", description: "Set theory, graph theory, and mathematical logic", subject: "Mathematics", pages: 40, downloads: 980, rating: 4.5, lastUpdated: "Dec 2024" },
-        { title: "Database Management Systems", description: "SQL, normalization, transactions, and database design", subject: "DBMS", pages: 46, downloads: 1750, rating: 4.8, lastUpdated: "Jan 2025" },
-        { title: "Operating Systems Concepts", description: "Process management, memory allocation, and file systems", subject: "OS", pages: 48, downloads: 1620, rating: 4.7, lastUpdated: "Dec 2024" },
-        { title: "Web Development Basics", description: "HTML, CSS, JavaScript fundamentals and responsive design", subject: "Web Dev", pages: 35, downloads: 1950, rating: 4.9, lastUpdated: "Jan 2025" }
+        { id: "dsa-notes", title: "Data Structures and Algorithms", description: "Arrays, linked lists, trees, graphs, and algorithm analysis", subject: "DSA", pages: 52, downloads: 2100, rating: 4.9, lastUpdated: "Jan 2025" },
+        { id: "oop-notes", title: "Object-Oriented Programming", description: "OOP concepts, inheritance, polymorphism with Java/C++", subject: "Programming", pages: 48, downloads: 1850, rating: 4.8, lastUpdated: "Dec 2024" },
+        { id: "digital-electronics", title: "Digital Electronics", description: "Logic gates, circuits, flip-flops, and digital systems", subject: "Electronics", pages: 42, downloads: 1320, rating: 4.7, lastUpdated: "Jan 2025" },
+        { id: "engineering-math-2", title: "Engineering Mathematics II", description: "Advanced calculus, complex analysis, and probability", subject: "Mathematics", pages: 50, downloads: 1150, rating: 4.6, lastUpdated: "Dec 2024" },
+        { id: "computer-organization", title: "Computer Organization", description: "CPU architecture, memory systems, and instruction sets", subject: "Computer Science", pages: 45, downloads: 1680, rating: 4.8, lastUpdated: "Jan 2025" },
+        { id: "discrete-mathematics", title: "Discrete Mathematics", description: "Set theory, graph theory, and mathematical logic", subject: "Mathematics", pages: 40, downloads: 980, rating: 4.5, lastUpdated: "Dec 2024" },
+        { id: "dbms-notes", title: "Database Management Systems", description: "SQL, normalization, transactions, and database design", subject: "DBMS", pages: 46, downloads: 1750, rating: 4.8, lastUpdated: "Jan 2025" },
+        { id: "os-concepts", title: "Operating Systems Concepts", description: "Process management, memory allocation, and file systems", subject: "OS", pages: 48, downloads: 1620, rating: 4.7, lastUpdated: "Dec 2024" },
+        { id: "web-dev-basics", title: "Web Development Basics", description: "HTML, CSS, JavaScript fundamentals and responsive design", subject: "Web Dev", pages: 35, downloads: 1950, rating: 4.9, lastUpdated: "Jan 2025" }
       ]
     },
     {
       category: "Third Year - Advanced Topics",
       color: "bg-purple-50 border-purple-200",
       notes: [
-        { title: "Software Engineering Principles", description: "SDLC, design patterns, testing, and project management", subject: "Software Engg", pages: 55, downloads: 1890, rating: 4.8, lastUpdated: "Jan 2025" },
-        { title: "Computer Networks", description: "OSI model, TCP/IP, routing protocols, and network security", subject: "Networks", pages: 50, downloads: 1650, rating: 4.7, lastUpdated: "Dec 2024" },
-        { title: "Algorithm Design & Analysis", description: "Advanced algorithms, complexity theory, and optimization", subject: "Algorithms", pages: 58, downloads: 1720, rating: 4.9, lastUpdated: "Jan 2025" },
-        { title: "Web Framework Development", description: "React, Node.js, Express, and full-stack development", subject: "Web Dev", pages: 62, downloads: 2250, rating: 4.9, lastUpdated: "Jan 2025" },
-        { title: "Database Systems Advanced", description: "NoSQL, distributed databases, and performance tuning", subject: "Database", pages: 48, downloads: 1450, rating: 4.6, lastUpdated: "Dec 2024" },
-        { title: "System Design Fundamentals", description: "Scalability, microservices, and distributed systems", subject: "System Design", pages: 52, downloads: 1980, rating: 4.8, lastUpdated: "Jan 2025" },
-        { title: "Mobile App Development", description: "Android, iOS development, and cross-platform solutions", subject: "Mobile Dev", pages: 45, downloads: 1560, rating: 4.7, lastUpdated: "Dec 2024" },
-        { title: "DevOps and Cloud Computing", description: "CI/CD, containerization, AWS, and deployment strategies", subject: "DevOps", pages: 50, downloads: 1820, rating: 4.8, lastUpdated: "Jan 2025" },
-        { title: "Cybersecurity Essentials", description: "Security principles, cryptography, and threat analysis", subject: "Security", pages: 44, downloads: 1380, rating: 4.6, lastUpdated: "Dec 2024" }
+        { id: "software-engineering", title: "Software Engineering Principles", description: "SDLC, design patterns, testing, and project management", subject: "Software Engg", pages: 55, downloads: 1890, rating: 4.8, lastUpdated: "Jan 2025" },
+        { id: "computer-networks", title: "Computer Networks", description: "OSI model, TCP/IP, routing protocols, and network security", subject: "Networks", pages: 50, downloads: 1650, rating: 4.7, lastUpdated: "Dec 2024" },
+        { id: "algorithm-design", title: "Algorithm Design & Analysis", description: "Advanced algorithms, complexity theory, and optimization", subject: "Algorithms", pages: 58, downloads: 1720, rating: 4.9, lastUpdated: "Jan 2025" },
+        { id: "web-frameworks", title: "Web Framework Development", description: "React, Node.js, Express, and full-stack development", subject: "Web Dev", pages: 62, downloads: 2250, rating: 4.9, lastUpdated: "Jan 2025" },
+        { id: "advanced-database", title: "Database Systems Advanced", description: "NoSQL, distributed databases, and performance tuning", subject: "Database", pages: 48, downloads: 1450, rating: 4.6, lastUpdated: "Dec 2024" },
+        { id: "system-design-fundamentals", title: "System Design Fundamentals", description: "Scalability, microservices, and distributed systems", subject: "System Design", pages: 52, downloads: 1980, rating: 4.8, lastUpdated: "Jan 2025" },
+        { id: "mobile-app-dev", title: "Mobile App Development", description: "Android, iOS development, and cross-platform solutions", subject: "Mobile Dev", pages: 45, downloads: 1560, rating: 4.7, lastUpdated: "Dec 2024" },
+        { id: "devops-cloud", title: "DevOps and Cloud Computing", description: "CI/CD, containerization, AWS, and deployment strategies", subject: "DevOps", pages: 50, downloads: 1820, rating: 4.8, lastUpdated: "Jan 2025" },
+        { id: "cybersecurity-essentials", title: "Cybersecurity Essentials", description: "Security principles, cryptography, and threat analysis", subject: "Security", pages: 44, downloads: 1380, rating: 4.6, lastUpdated: "Dec 2024" }
       ]
     },
     {
       category: "Fourth Year - Specialization & Industry",
       color: "bg-red-50 border-red-200",
       notes: [
-        { title: "Machine Learning Fundamentals", description: "Supervised learning, neural networks, and model evaluation", subject: "ML/AI", pages: 65, downloads: 2850, rating: 4.9, lastUpdated: "Jan 2025" },
-        { title: "Advanced System Design", description: "Large-scale systems, load balancing, and architecture patterns", subject: "System Design", pages: 60, downloads: 2150, rating: 4.8, lastUpdated: "Dec 2024" },
-        { title: "Blockchain Technology", description: "Cryptocurrency, smart contracts, and distributed ledgers", subject: "Blockchain", pages: 48, downloads: 1650, rating: 4.7, lastUpdated: "Jan 2025" },
-        { title: "Deep Learning and AI", description: "Neural networks, computer vision, and natural language processing", subject: "AI", pages: 70, downloads: 2450, rating: 4.9, lastUpdated: "Dec 2024" },
-        { title: "Big Data Analytics", description: "Hadoop, Spark, data processing, and analytics frameworks", subject: "Big Data", pages: 55, downloads: 1880, rating: 4.6, lastUpdated: "Jan 2025" },
-        { title: "Enterprise Software Development", description: "Microservices, API design, and enterprise patterns", subject: "Enterprise", pages: 58, downloads: 1720, rating: 4.7, lastUpdated: "Dec 2024" },
-        { title: "Cloud Architecture & Services", description: "AWS, Azure, GCP services and cloud-native development", subject: "Cloud", pages: 52, downloads: 2020, rating: 4.8, lastUpdated: "Jan 2025" },
-        { title: "IoT and Embedded Systems", description: "Internet of Things, sensors, and embedded programming", subject: "IoT", pages: 45, downloads: 1350, rating: 4.5, lastUpdated: "Dec 2024" },
-        { title: "Software Testing & QA", description: "Test automation, quality assurance, and testing frameworks", subject: "Testing", pages: 42, downloads: 1250, rating: 4.6, lastUpdated: "Jan 2025" }
+        { id: "ml-fundamentals", title: "Machine Learning Fundamentals", description: "Supervised learning, neural networks, and model evaluation", subject: "ML/AI", pages: 65, downloads: 2850, rating: 4.9, lastUpdated: "Jan 2025" },
+        { id: "advanced-system-design", title: "Advanced System Design", description: "Large-scale systems, load balancing, and architecture patterns", subject: "System Design", pages: 60, downloads: 2150, rating: 4.8, lastUpdated: "Dec 2024" },
+        { id: "blockchain-tech", title: "Blockchain Technology", description: "Cryptocurrency, smart contracts, and distributed ledgers", subject: "Blockchain", pages: 48, downloads: 1650, rating: 4.7, lastUpdated: "Jan 2025" },
+        { id: "deep-learning-ai", title: "Deep Learning and AI", description: "Neural networks, computer vision, and natural language processing", subject: "AI", pages: 70, downloads: 2450, rating: 4.9, lastUpdated: "Dec 2024" },
+        { id: "big-data-analytics", title: "Big Data Analytics", description: "Hadoop, Spark, data processing, and analytics frameworks", subject: "Big Data", pages: 55, downloads: 1880, rating: 4.6, lastUpdated: "Jan 2025" },
+        { id: "enterprise-software", title: "Enterprise Software Development", description: "Microservices, API design, and enterprise patterns", subject: "Enterprise", pages: 58, downloads: 1720, rating: 4.7, lastUpdated: "Dec 2024" },
+        { id: "cloud-architecture", title: "Cloud Architecture & Services", description: "AWS, Azure, GCP services and cloud-native development", subject: "Cloud", pages: 52, downloads: 2020, rating: 4.8, lastUpdated: "Jan 2025" },
+        { id: "iot-embedded", title: "IoT and Embedded Systems", description: "Internet of Things, sensors, and embedded programming", subject: "IoT", pages: 45, downloads: 1350, rating: 4.5, lastUpdated: "Dec 2024" },
+        { id: "software-testing", title: "Software Testing & QA", description: "Test automation, quality assurance, and testing frameworks", subject: "Testing", pages: 42, downloads: 1250, rating: 4.6, lastUpdated: "Jan 2025" }
       ]
     },
     {
       category: "Interview Preparation & Placement",
       color: "bg-yellow-50 border-yellow-200",
       notes: [
-        { title: "Technical Interview Questions", description: "Coding problems, system design, and technical discussions", subject: "Interview", pages: 85, downloads: 3250, rating: 4.9, lastUpdated: "Jan 2025" },
-        { title: "Resume Building Guide", description: "Professional resume templates and writing strategies", subject: "Career", pages: 25, downloads: 2150, rating: 4.7, lastUpdated: "Dec 2024" },
-        { title: "Aptitude Test Preparation", description: "Quantitative, logical reasoning, and verbal ability", subject: "Aptitude", pages: 68, downloads: 2850, rating: 4.8, lastUpdated: "Jan 2025" },
-        { title: "HR Interview Questions", description: "Behavioral questions and professional communication", subject: "HR", pages: 32, downloads: 1950, rating: 4.6, lastUpdated: "Dec 2024" },
-        { title: "Company-Specific Preparation", description: "FAANG, startup, and service company interview guides", subject: "Companies", pages: 75, downloads: 2680, rating: 4.8, lastUpdated: "Jan 2025" },
-        { title: "Salary Negotiation Guide", description: "Negotiation strategies and industry salary benchmarks", subject: "Career", pages: 28, downloads: 1480, rating: 4.5, lastUpdated: "Dec 2024" }
+        { id: "technical-interview", title: "Technical Interview Questions", description: "Coding problems, system design, and technical discussions", subject: "Interview", pages: 85, downloads: 3250, rating: 4.9, lastUpdated: "Jan 2025" },
+        { id: "resume-building", title: "Resume Building Guide", description: "Professional resume templates and writing strategies", subject: "Career", pages: 25, downloads: 2150, rating: 4.7, lastUpdated: "Dec 2024" },
+        { id: "aptitude-test", title: "Aptitude Test Preparation", description: "Quantitative, logical reasoning, and verbal ability", subject: "Aptitude", pages: 68, downloads: 2850, rating: 4.8, lastUpdated: "Jan 2025" },
+        { id: "hr-interview", title: "HR Interview Questions", description: "Behavioral questions and professional communication", subject: "HR", pages: 32, downloads: 1950, rating: 4.6, lastUpdated: "Dec 2024" },
+        { id: "company-specific", title: "Company-Specific Preparation", description: "FAANG, startup, and service company interview guides", subject: "Companies", pages: 75, downloads: 2680, rating: 4.8, lastUpdated: "Jan 2025" },
+        { id: "salary-negotiation", title: "Salary Negotiation Guide", description: "Negotiation strategies and industry salary benchmarks", subject: "Career", pages: 28, downloads: 1480, rating: 4.5, lastUpdated: "Dec 2024" }
       ]
     }
   ];
@@ -105,7 +104,10 @@ const Notes = () => {
     <div className="min-h-screen bg-white">
       <header className="border-b border-gray-300 bg-white">
         <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center space-x-4 mb-2">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center space-x-4">
+              <h1 className="text-3xl font-serif text-black">Study Notes Collection</h1>
+            </div>
             <Button variant="ghost" size="sm" asChild className="text-blue-600 hover:bg-blue-50">
               <Link to="/">
                 <ArrowLeft className="w-4 h-4 mr-1" />
@@ -113,17 +115,16 @@ const Notes = () => {
               </Link>
             </Button>
           </div>
-          <h1 className="text-3xl font-serif text-black">Study Notes Collection</h1>
           <p className="text-gray-600 text-sm mt-1">Comprehensive study materials and quick reference guides for all engineering years</p>
-          <p className="text-blue-600 text-sm mt-2 font-medium">📚 50+ Study Notes | 🎓 1st-4th Year Coverage | ⭐ High-Quality Content</p>
+          <p className="text-blue-600 text-sm mt-2 font-medium">50+ Study Notes | 1st-4th Year Coverage | High-Quality Content</p>
         </div>
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="mb-8 bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg border border-green-200">
-          <h2 className="text-xl font-semibold text-black mb-3">📝 Complete Study Notes Library</h2>
+          <h2 className="text-xl font-semibold text-black mb-3">Complete Study Notes Library</h2>
           <p className="text-gray-700 leading-relaxed mb-4">
-            Access <strong>50+ comprehensive study notes</strong> covering all major engineering subjects 
+            Access 50+ comprehensive study notes covering all major engineering subjects 
             from first year to final year. Each note is carefully prepared by experts and regularly updated 
             to match current academic standards and industry requirements.
           </p>
@@ -165,11 +166,15 @@ const Notes = () => {
                     <div className="flex justify-between items-start mb-3">
                       <h3 className="font-semibold text-black text-base leading-tight">{note.title}</h3>
                       <div className="flex gap-1 ml-2">
-                        <Button variant="outline" size="sm" className="text-xs p-1 h-7 w-7">
-                          <Eye className="w-3 h-3" />
+                        <Button variant="outline" size="sm" className="text-xs p-1 h-7 w-7" asChild>
+                          <Link to={`/notes/${note.id}/preview`}>
+                            <Eye className="w-3 h-3" />
+                          </Link>
                         </Button>
-                        <Button variant="outline" size="sm" className="text-xs p-1 h-7 w-7">
-                          <Download className="w-3 h-3" />
+                        <Button variant="outline" size="sm" className="text-xs p-1 h-7 w-7" asChild>
+                          <Link to={`/notes/${note.id}`}>
+                            <Download className="w-3 h-3" />
+                          </Link>
                         </Button>
                       </div>
                     </div>
@@ -188,8 +193,8 @@ const Notes = () => {
                       
                       <div className="flex justify-between items-center text-xs text-gray-600">
                         <div className="flex items-center gap-3">
-                          <span>📄 {note.pages} pages</span>
-                          <span>⬇️ {note.downloads.toLocaleString()}</span>
+                          <span>{note.pages} pages</span>
+                          <span>{note.downloads.toLocaleString()} downloads</span>
                         </div>
                         <div className="flex items-center">
                           <Clock className="w-3 h-3 mr-1" />
@@ -212,16 +217,16 @@ const Notes = () => {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
               <div>
-                <h4 className="font-medium mb-3 text-black">📚 Study Strategy</h4>
+                <h4 className="font-medium mb-3 text-black">Study Strategy</h4>
                 <ul className="text-gray-700 space-y-2">
-                  <li>• <strong>Preview:</strong> Read through notes before lectures</li>
-                  <li>• <strong>Review:</strong> Go through notes after each class</li>
-                  <li>• <strong>Practice:</strong> Solve problems and examples provided</li>
-                  <li>• <strong>Summarize:</strong> Create your own summary notes</li>
+                  <li>• Preview: Read through notes before lectures</li>
+                  <li>• Review: Go through notes after each class</li>
+                  <li>• Practice: Solve problems and examples provided</li>
+                  <li>• Summarize: Create your own summary notes</li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-medium mb-3 text-black">💡 Study Tips</h4>
+                <h4 className="font-medium mb-3 text-black">Study Tips</h4>
                 <ul className="text-gray-700 space-y-2">
                   <li>• Use active recall and spaced repetition techniques</li>
                   <li>• Form study groups to discuss complex topics</li>
@@ -235,7 +240,7 @@ const Notes = () => {
 
         <div className="mt-12 pt-6 border-t border-gray-200 text-center">
           <p className="text-gray-500 text-sm">
-            📊 All notes are peer-reviewed and updated regularly based on latest curriculum changes. 
+            All notes are peer-reviewed and updated regularly based on latest curriculum changes. 
             Total downloads: <span className="font-semibold text-blue-600">50,000+</span> • 
             Average rating: <span className="font-semibold text-green-600">4.7/5.0</span>
           </p>
