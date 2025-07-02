@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -233,8 +232,116 @@ const Roadmaps = () => {
     }
   ];
 
+  const webDev4MonthRoadmap = [
+    {
+      month: "Month 1",
+      title: "Web Fundamentals + HTML/CSS + Git",
+      topics: [
+        { id: "web4-1-1", name: "How the web works (HTTP, DNS, Browsers, Hosting)", hours: "8-10", difficulty: "Beginner" },
+        { id: "web4-1-2", name: "Difference between frontend, backend, and full stack", hours: "4-6", difficulty: "Beginner" },
+        { id: "web4-1-3", name: "HTML5 - Semantic tags, Forms, Tables, Media elements", hours: "15-20", difficulty: "Beginner" },
+        { id: "web4-1-4", name: "CSS3 - Box model, Flexbox, Grid, Responsive design", hours: "20-25", difficulty: "Beginner" },
+        { id: "web4-1-5", name: "Git & GitHub - Git basics, branches, commits, pushing code", hours: "10-12", difficulty: "Beginner" },
+        { id: "web4-1-6", name: "Hosting static websites on GitHub Pages", hours: "4-6", difficulty: "Beginner" }
+      ],
+      projects: ["Personal portfolio", "Responsive landing page"],
+      goals: "Master web fundamentals, HTML/CSS, and version control with Git"
+    },
+    {
+      month: "Month 2",
+      title: "JavaScript + DOM + Advanced JS",
+      topics: [
+        { id: "web4-2-1", name: "JavaScript Basics - Variables, Functions, Loops, Arrays, Objects", hours: "15-20", difficulty: "Beginner" },
+        { id: "web4-2-2", name: "ES6+ Features (arrow functions, destructuring)", hours: "10-12", difficulty: "Intermediate" },
+        { id: "web4-2-3", name: "DOM Manipulation - Event listeners, querySelector, DOM traversal", hours: "12-15", difficulty: "Intermediate" },
+        { id: "web4-2-4", name: "Advanced JavaScript - Callbacks, Promises, Async/Await", hours: "15-18", difficulty: "Intermediate" },
+        { id: "web4-2-5", name: "Fetch API, Error Handling", hours: "8-10", difficulty: "Intermediate" }
+      ],
+      projects: ["Calculator", "To-Do App", "Weather App", "Modal Popup"],
+      goals: "Master JavaScript fundamentals and DOM manipulation"
+    },
+    {
+      month: "Month 3",
+      title: "React.js + Frontend Projects",
+      topics: [
+        { id: "web4-3-1", name: "React Basics - JSX, Components, Props, State", hours: "15-18", difficulty: "Intermediate" },
+        { id: "web4-3-2", name: "React Hooks - useState, useEffect, Component Lifecycle", hours: "12-15", difficulty: "Intermediate" },
+        { id: "web4-3-3", name: "Routing and State Management - React Router, Context API", hours: "10-12", difficulty: "Intermediate" }
+      ],
+      projects: ["React Blog App", "Notes App", "Weather UI in React"],
+      goals: "Master React.js and build dynamic frontend applications"
+    },
+    {
+      month: "Month 4",
+      title: "Backend (Node.js, Express, MongoDB) + Deployment",
+      topics: [
+        { id: "web4-4-1", name: "Node.js + Express - Node.js basics, npm, Express routes and middleware", hours: "15-18", difficulty: "Intermediate" },
+        { id: "web4-4-2", name: "MongoDB + Mongoose - MongoDB CRUD, Atlas setup, Mongoose models", hours: "12-15", difficulty: "Intermediate" },
+        { id: "web4-4-3", name: "Authentication + Full Stack Integration - JWT, bcrypt, API integration with React", hours: "15-20", difficulty: "Advanced" },
+        { id: "web4-4-4", name: "Deployment + Final Project", hours: "10-12", difficulty: "Advanced" }
+      ],
+      projects: ["Full Stack Blog", "E-commerce App", "Auth App"],
+      goals: "Master backend development and full-stack integration with deployment"
+    }
+  ];
+
+  const webDev2MonthRoadmap = [
+    {
+      month: "Month 1",
+      title: "Frontend Development",
+      topics: [
+        { id: "web2-1-1", name: "Web Basics + HTML + CSS", hours: "20-25", difficulty: "Beginner" },
+        { id: "web2-1-2", name: "Understand how the web works (HTTP, DNS, hosting)", hours: "6-8", difficulty: "Beginner" },
+        { id: "web2-1-3", name: "HTML5: Structure, forms, tables, semantic tags", hours: "10-12", difficulty: "Beginner" },
+        { id: "web2-1-4", name: "CSS3: Box model, Flexbox, Grid, media queries", hours: "15-20", difficulty: "Beginner" },
+        { id: "web2-1-5", name: "JavaScript (Core + DOM)", hours: "25-30", difficulty: "Intermediate" },
+        { id: "web2-1-6", name: "JavaScript basics: Variables, functions, loops, arrays, objects, ES6", hours: "15-18", difficulty: "Intermediate" },
+        { id: "web2-1-7", name: "DOM Manipulation: Events, querySelector, innerHTML", hours: "10-12", difficulty: "Intermediate" },
+        { id: "web2-1-8", name: "JavaScript Advanced + Git & GitHub", hours: "15-18", difficulty: "Intermediate" },
+        { id: "web2-1-9", name: "Async JS: Callbacks, Promises, Async/Await, Fetch API", hours: "12-15", difficulty: "Intermediate" },
+        { id: "web2-1-10", name: "Git & GitHub: git init, add, commit, push, pull requests", hours: "8-10", difficulty: "Beginner" },
+        { id: "web2-1-11", name: "React.js", hours: "20-25", difficulty: "Intermediate" },
+        { id: "web2-1-12", name: "React fundamentals: JSX, Components, Props, State", hours: "12-15", difficulty: "Intermediate" },
+        { id: "web2-1-13", name: "React Hooks: useState, useEffect", hours: "8-10", difficulty: "Intermediate" },
+        { id: "web2-1-14", name: "React Router for navigation", hours: "6-8", difficulty: "Intermediate" }
+      ],
+      projects: ["Portfolio page", "Responsive landing page", "Calculator", "To-Do App", "Dark/Light Toggle", "Weather App using API", "React To-Do App", "Blog UI"],
+      goals: "Master frontend development from basics to React"
+    },
+    {
+      month: "Month 2",
+      title: "Backend + Full Stack",
+      topics: [
+        { id: "web2-2-1", name: "Node.js + Express.js", hours: "15-18", difficulty: "Intermediate" },
+        { id: "web2-2-2", name: "Node.js basics, fs module, npm", hours: "8-10", difficulty: "Intermediate" },
+        { id: "web2-2-3", name: "Express.js: Routing, Middleware", hours: "10-12", difficulty: "Intermediate" },
+        { id: "web2-2-4", name: "REST APIs, Postman for testing", hours: "8-10", difficulty: "Intermediate" },
+        { id: "web2-2-5", name: "MongoDB + Mongoose", hours: "12-15", difficulty: "Intermediate" },
+        { id: "web2-2-6", name: "MongoDB: Collections, queries, Atlas setup", hours: "8-10", difficulty: "Intermediate" },
+        { id: "web2-2-7", name: "Mongoose: Schemas, models, CRUD", hours: "8-10", difficulty: "Intermediate" },
+        { id: "web2-2-8", name: "Connect MongoDB with Express.js", hours: "6-8", difficulty: "Intermediate" },
+        { id: "web2-2-9", name: "Authentication + Integration", hours: "15-20", difficulty: "Advanced" },
+        { id: "web2-2-10", name: "JWT Auth, bcrypt for password hashing", hours: "10-12", difficulty: "Advanced" },
+        { id: "web2-2-11", name: "Connect React frontend to Express backend", hours: "8-10", difficulty: "Advanced" },
+        { id: "web2-2-12", name: "API calls with Axios, handle CORS", hours: "6-8", difficulty: "Intermediate" },
+        { id: "web2-2-13", name: "Deployment + Final Project", hours: "10-15", difficulty: "Advanced" },
+        { id: "web2-2-14", name: "Frontend: Deploy on Netlify/Vercel", hours: "4-6", difficulty: "Intermediate" },
+        { id: "web2-2-15", name: "Backend: Render/Railway", hours: "4-6", difficulty: "Intermediate" },
+        { id: "web2-2-16", name: "MongoDB: Atlas cloud database", hours: "4-6", difficulty: "Intermediate" }
+      ],
+      projects: ["Basic CRUD Blog API", "Notes App with Login/Register", "Full Stack Job Portal or MERN Blog"],
+      goals: "Master backend development and full-stack integration with deployment"
+    }
+  ];
+
   const getCurrentRoadmap = () => {
-    return selectedRoadmap === "dsa" ? dsaRoadmap : webDevRoadmap;
+    switch (selectedRoadmap) {
+      case "dsa": return dsaRoadmap;
+      case "webdev": return webDevRoadmap;
+      case "webdev-4month": return webDev4MonthRoadmap;
+      case "webdev-2month": return webDev2MonthRoadmap;
+      default: return dsaRoadmap;
+    }
   };
 
   const getCompletionPercentage = (roadmap: any[]) => {
@@ -279,14 +386,22 @@ const Roadmaps = () => {
       <main className="max-w-6xl mx-auto px-4 py-8">
         {/* Roadmap Selection */}
         <Tabs value={selectedRoadmap} onValueChange={setSelectedRoadmap} className="mb-8">
-          <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto">
+          <TabsList className="grid w-full grid-cols-4 max-w-4xl mx-auto">
             <TabsTrigger value="dsa" className="flex items-center gap-2">
               <Brain className="w-4 h-4" />
-              DSA Roadmap
+              DSA (8M)
             </TabsTrigger>
             <TabsTrigger value="webdev" className="flex items-center gap-2">
               <Globe className="w-4 h-4" />
-              Web Dev Roadmap
+              Web Dev (8M)
+            </TabsTrigger>
+            <TabsTrigger value="webdev-4month" className="flex items-center gap-2">
+              <Zap className="w-4 h-4" />
+              Web Dev (4M)
+            </TabsTrigger>
+            <TabsTrigger value="webdev-2month" className="flex items-center gap-2">
+              <Target className="w-4 h-4" />
+              Web Dev (2M)
             </TabsTrigger>
           </TabsList>
 
@@ -307,7 +422,12 @@ const Roadmaps = () => {
               <CardContent>
                 <Progress value={getCompletionPercentage(getCurrentRoadmap())} className="w-full h-3" />
                 <p className="text-sm text-gray-600 mt-2">
-                  Track your progress through the {selectedRoadmap === "dsa" ? "DSA" : "Web Development"} learning path
+                  Track your progress through the {
+                    selectedRoadmap === "dsa" ? "DSA" : 
+                    selectedRoadmap === "webdev" ? "Web Development (8-Month)" :
+                    selectedRoadmap === "webdev-4month" ? "Web Development (4-Month)" :
+                    "Web Development (2-Month)"
+                  } learning path
                 </p>
               </CardContent>
             </Card>
@@ -315,7 +435,7 @@ const Roadmaps = () => {
 
           <TabsContent value="dsa">
             <div className="mb-6">
-              <h2 className="text-xl font-serif text-black mb-3">Data Structures & Algorithms Roadmap</h2>
+              <h2 className="text-xl font-serif text-black mb-3">Data Structures & Algorithms Roadmap (8 Months)</h2>
               <p className="text-gray-600 text-sm mb-4">
                 An 8-month comprehensive journey to master DSA concepts, from basic arrays to advanced algorithms.
                 Perfect for technical interviews and competitive programming.
@@ -325,10 +445,30 @@ const Roadmaps = () => {
 
           <TabsContent value="webdev">
             <div className="mb-6">
-              <h2 className="text-xl font-serif text-black mb-3">Web Development Roadmap</h2>
+              <h2 className="text-xl font-serif text-black mb-3">Web Development Roadmap (8 Months)</h2>
               <p className="text-gray-600 text-sm mb-4">
                 An 8-month full-stack web development journey from HTML/CSS basics to deploying production applications.
                 Build real projects and master modern web technologies.
+              </p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="webdev-4month">
+            <div className="mb-6">
+              <h2 className="text-xl font-serif text-black mb-3">Web Development Roadmap (4 Months)</h2>
+              <p className="text-gray-600 text-sm mb-4">
+                An intensive 4-month web development program covering frontend to full-stack development.
+                Perfect for those who want to learn web development quickly with hands-on projects.
+              </p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="webdev-2month">
+            <div className="mb-6">
+              <h2 className="text-xl font-serif text-black mb-3">Web Development Roadmap (2 Months)</h2>
+              <p className="text-gray-600 text-sm mb-4">
+                An accelerated 2-month intensive bootcamp-style web development course.
+                Fast-paced learning from frontend basics to full-stack deployment. Requires 4-6 hours daily commitment.
               </p>
             </div>
           </TabsContent>
