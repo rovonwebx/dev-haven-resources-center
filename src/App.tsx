@@ -23,6 +23,10 @@ import StudentProjects from "./pages/StudentProjects";
 import Events from "./pages/Events";
 import Roadmaps from "./pages/Roadmaps";
 import InterviewQuestions from "./pages/InterviewQuestions";
+import DocumentReader from "./pages/DocumentReader";
+import NotesViewer from "./pages/NotesViewer";
+import TheoryReader from "./pages/TheoryReader";
+import AnyoneCanDevelop from "./pages/AnyoneCanDevelop";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,12 +51,17 @@ const App = () => (
             <Route path="/coding-challenges" element={<CodingChallenges />} />
             <Route path="/internships" element={<Internships />} />
             <Route path="/notes" element={<Notes />} />
+            <Route path="/notes/:id" element={<NotesViewer />} />
+            <Route path="/notes/:id/preview" element={<NotesViewer />} />
             <Route path="/documents" element={<Documents />} />
+            <Route path="/documents/:id" element={<DocumentReader />} />
             <Route path="/theories" element={<Theories />} />
+            <Route path="/theories/:id" element={<TheoryReader />} />
             <Route path="/student-projects" element={<StudentProjects />} />
             <Route path="/events" element={<Events />} />
             <Route path="/roadmaps" element={<Roadmaps />} />
             <Route path="/interview-questions" element={<InterviewQuestions />} />
+            <Route path="/anyone-can-develop" element={<AnyoneCanDevelop />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

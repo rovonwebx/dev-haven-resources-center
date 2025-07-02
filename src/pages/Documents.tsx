@@ -1,236 +1,765 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ExternalLink, Clock, BookOpen, Code, Database, Globe, Shield, Cpu } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { 
+  ArrowLeft, 
+  FileText, 
+  Search, 
+  Filter, 
+  Download, 
+  Eye, 
+  Star,
+  BookOpen,
+  GraduationCap,
+  Users,
+  TrendingUp
+} from "lucide-react";
 
 const Documents = () => {
-  const documentCategories = [
-    {
-      category: "First Year - Programming Fundamentals",
-      icon: Code,
-      documents: [
-        { id: "c-programming-guide", title: "C Programming Complete Guide", description: "Comprehensive guide to C programming covering basics to advanced concepts", lastUpdated: "Jan 2025", type: "Tutorial", difficulty: "Beginner", readTime: "3 hours" },
-        { id: "python-beginners", title: "Python for Beginners", description: "Step-by-step Python programming tutorial with examples and exercises", lastUpdated: "Jan 2025", type: "Guide", difficulty: "Beginner", readTime: "2.5 hours" },
-        { id: "oop-concepts", title: "Object-Oriented Programming Concepts", description: "Understanding OOP principles with practical implementations", lastUpdated: "Dec 2024", type: "Theory", difficulty: "Intermediate", readTime: "2 hours" },
-        { id: "java-fundamentals", title: "Java Fundamentals Documentation", description: "Complete Java programming guide from basics to advanced topics", lastUpdated: "Jan 2025", type: "Reference", difficulty: "Beginner", readTime: "4 hours" },
-        { id: "html-css-basics", title: "HTML & CSS Basics", description: "Web development fundamentals for beginners", lastUpdated: "Dec 2024", type: "Tutorial", difficulty: "Beginner", readTime: "1.5 hours" },
-        { id: "javascript-es6", title: "JavaScript ES6+ Features", description: "Modern JavaScript features and best practices", lastUpdated: "Jan 2025", type: "Guide", difficulty: "Intermediate", readTime: "2 hours" },
-        { id: "git-version-control", title: "Git Version Control Guide", description: "Complete guide to Git for collaborative development", lastUpdated: "Dec 2024", type: "Tutorial", difficulty: "Beginner", readTime: "1 hour" },
-        { id: "linux-command-line", title: "Linux Command Line Basics", description: "Essential Linux commands for developers", lastUpdated: "Jan 2025", type: "Reference", difficulty: "Beginner", readTime: "1.5 hours" }
-      ]
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("All");
+
+  const allDocuments = [
+    // 1st Year Documents
+    { 
+      id: 1, 
+      title: "Engineering Mathematics I", 
+      description: "Calculus, differential equations, and linear algebra fundamentals",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 120,
+      downloadCount: 2500
+    },
+    { 
+      id: 2, 
+      title: "Physics for Engineers", 
+      description: "Mechanics, thermodynamics, and wave theory",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 95,
+      downloadCount: 2100
+    },
+    { 
+      id: 3, 
+      title: "Chemistry Fundamentals", 
+      description: "Organic, inorganic, and physical chemistry basics",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 85,
+      downloadCount: 1800
+    },
+    { 
+      id: 4, 
+      title: "Engineering Graphics", 
+      description: "Technical drawing, orthographic projections, and CAD basics",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 110,
+      downloadCount: 2200
+    },
+    { 
+      id: 5, 
+      title: "Programming in C", 
+      description: "C programming language fundamentals and problem solving",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 140,
+      downloadCount: 3200
+    },
+    { 
+      id: 6, 
+      title: "Environmental Studies", 
+      description: "Environmental science and sustainability principles",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 75,
+      downloadCount: 1500
+    },
+    { 
+      id: 7, 
+      title: "Workshop Technology", 
+      description: "Manufacturing processes and workshop practices",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 90,
+      downloadCount: 1900
+    },
+    { 
+      id: 8, 
+      title: "English Communication", 
+      description: "Technical writing and communication skills",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 60,
+      downloadCount: 1400
+    },
+    { 
+      id: 9, 
+      title: "Engineering Mathematics II", 
+      description: "Vector calculus, Fourier series, and complex analysis",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 125,
+      downloadCount: 2300
+    },
+    { 
+      id: 10, 
+      title: "Basic Electronics", 
+      description: "Electronic devices, circuits, and digital fundamentals",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 105,
+      downloadCount: 2000
+    },
+    { 
+      id: 11, 
+      title: "Computer Fundamentals", 
+      description: "Computer architecture, operating systems, and basics",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 80,
+      downloadCount: 1700
+    },
+    { 
+      id: 12, 
+      title: "Engineering Mechanics", 
+      description: "Statics, dynamics, and strength of materials",
+      category: "1st Year",
+      difficulty: "Beginner",
+      pages: 130,
+      downloadCount: 2400
+    },
+
+    // 2nd Year Documents
+    { 
+      id: 13, 
+      title: "Data Structures and Algorithms", 
+      description: "Comprehensive guide to DSA concepts and implementations",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 180,
+      downloadCount: 4200
+    },
+    { 
+      id: 14, 
+      title: "Object-Oriented Programming", 
+      description: "OOP concepts using Java and C++",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 160,
+      downloadCount: 3800
+    },
+    { 
+      id: 15, 
+      title: "Database Management Systems", 
+      description: "SQL, database design, and management principles",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 145,
+      downloadCount: 3500
+    },
+    { 
+      id: 16, 
+      title: "Computer Networks", 
+      description: "Network protocols, architecture, and security",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 170,
+      downloadCount: 3200
+    },
+    { 
+      id: 17, 
+      title: "Operating Systems", 
+      description: "Process management, memory, and file systems",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 155,
+      downloadCount: 3600
+    },
+    { 
+      id: 18, 
+      title: "Digital Logic Design", 
+      description: "Boolean algebra, logic gates, and circuit design",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 120,
+      downloadCount: 2800
+    },
+    { 
+      id: 19, 
+      title: "Discrete Mathematics", 
+      description: "Set theory, graph theory, and combinatorics",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 135,
+      downloadCount: 2600
+    },
+    { 
+      id: 20, 
+      title: "Software Engineering", 
+      description: "SDLC, project management, and testing methodologies",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 165,
+      downloadCount: 3100
+    },
+    { 
+      id: 21, 
+      title: "Web Technologies", 
+      description: "HTML, CSS, JavaScript, and web development basics",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 140,
+      downloadCount: 3900
+    },
+    { 
+      id: 22, 
+      title: "Computer Architecture", 
+      description: "CPU design, memory hierarchy, and system organization",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 150,
+      downloadCount: 2900
+    },
+    { 
+      id: 23, 
+      title: "Statistics and Probability", 
+      description: "Statistical analysis and probability theory for engineers",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 115,
+      downloadCount: 2400
+    },
+    { 
+      id: 24, 
+      title: "Linear Algebra Applications", 
+      description: "Matrix operations and applications in engineering",
+      category: "2nd Year",
+      difficulty: "Intermediate",
+      pages: 125,
+      downloadCount: 2200
+    },
+
+    // 3rd Year Documents
+    { 
+      id: 25, 
+      title: "Machine Learning Fundamentals", 
+      description: "ML algorithms, supervised and unsupervised learning",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 220,
+      downloadCount: 5200
+    },
+    { 
+      id: 26, 
+      title: "Artificial Intelligence", 
+      description: "AI concepts, search algorithms, and expert systems",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 195,
+      downloadCount: 4800
+    },
+    { 
+      id: 27, 
+      title: "Compiler Design", 
+      description: "Lexical analysis, parsing, and code generation",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 185,
+      downloadCount: 3400
+    },
+    { 
+      id: 28, 
+      title: "Advanced Database Systems", 
+      description: "Distributed databases, NoSQL, and big data",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 175,
+      downloadCount: 3800
+    },
+    { 
+      id: 29, 
+      title: "Network Security", 
+      description: "Cryptography, security protocols, and ethical hacking",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 190,
+      downloadCount: 4100
+    },
+    { 
+      id: 30, 
+      title: "Mobile App Development", 
+      description: "Android and iOS development frameworks",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 165,
+      downloadCount: 4500
+    },
+    { 
+      id: 31, 
+      title: "Cloud Computing", 
+      description: "AWS, Azure, and cloud architecture patterns",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 180,
+      downloadCount: 4200
+    },
+    { 
+      id: 32, 
+      title: "DevOps and CI/CD", 
+      description: "Docker, Kubernetes, and deployment automation",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 155,
+      downloadCount: 3900
+    },
+    { 
+      id: 33, 
+      title: "Advanced Algorithms", 
+      description: "Graph algorithms, dynamic programming, and optimization",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 200,
+      downloadCount: 3600
+    },
+    { 
+      id: 34, 
+      title: "Computer Graphics", 
+      description: "2D/3D graphics, rendering, and game development",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 170,
+      downloadCount: 3300
+    },
+    { 
+      id: 35, 
+      title: "Human-Computer Interaction", 
+      description: "UX design principles and usability testing",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 140,
+      downloadCount: 2800
+    },
+    { 
+      id: 36, 
+      title: "Distributed Systems", 
+      description: "Microservices, distributed algorithms, and fault tolerance",
+      category: "3rd Year",
+      difficulty: "Advanced",
+      pages: 195,
+      downloadCount: 3500
+    },
+
+    // 4th Year Documents
+    { 
+      id: 37, 
+      title: "Deep Learning and Neural Networks", 
+      description: "Advanced ML, CNNs, RNNs, and transformer models",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 250,
+      downloadCount: 6200
+    },
+    { 
+      id: 38, 
+      title: "Blockchain Technology", 
+      description: "Cryptocurrency, smart contracts, and DeFi",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 185,
+      downloadCount: 4600
+    },
+    { 
+      id: 39, 
+      title: "Internet of Things (IoT)", 
+      description: "Sensor networks, embedded systems, and edge computing",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 175,
+      downloadCount: 4100
+    },
+    { 
+      id: 40, 
+      title: "Quantum Computing", 
+      description: "Quantum algorithms and quantum machine learning",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 165,
+      downloadCount: 3200
+    },
+    { 
+      id: 41, 
+      title: "Advanced Software Architecture", 
+      description: "System design, scalability, and architectural patterns",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 210,
+      downloadCount: 4800
+    },
+    { 
+      id: 42, 
+      title: "Research Methodology", 
+      description: "Research techniques and academic writing",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 145,
+      downloadCount: 3400
+    },
+    { 
+      id: 43, 
+      title: "Entrepreneurship in Tech", 
+      description: "Startup fundamentals and technology commercialization",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 130,
+      downloadCount: 2900
+    },
+    { 
+      id: 44, 
+      title: "Ethics in Technology", 
+      description: "AI ethics, privacy, and responsible computing",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 120,
+      downloadCount: 2600
+    },
+    { 
+      id: 45, 
+      title: "Advanced Project Management", 
+      description: "Agile, Scrum, and large-scale project coordination",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 155,
+      downloadCount: 3500
+    },
+    { 
+      id: 46, 
+      title: "Industry 4.0 Technologies", 
+      description: "Automation, robotics, and smart manufacturing",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 180,
+      downloadCount: 3800
+    },
+    { 
+      id: 47, 
+      title: "Advanced Data Analytics", 
+      description: "Big data processing, data mining, and visualization",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 195,
+      downloadCount: 4300
+    },
+    { 
+      id: 48, 
+      title: "Capstone Project Guide", 
+      description: "Final year project planning and execution",
+      category: "4th Year",
+      difficulty: "Expert",
+      pages: 170,
+      downloadCount: 5100
+    },
+
+    // Special Documents
+    { 
+      id: 49, 
+      title: "Interview Preparation Guide", 
+      description: "Technical interviews and coding challenges",
+      category: "Career",
+      difficulty: "All Levels",
+      pages: 160,
+      downloadCount: 7200
+    },
+    { 
+      id: 50, 
+      title: "Industry Certification Guide", 
+      description: "Professional certifications and career paths",
+      category: "Career",
+      difficulty: "All Levels",
+      pages: 140,
+      downloadCount: 5800
     },
     {
-      category: "Second Year - Data Structures & Algorithms",
-      icon: Database,
-      documents: [
-        { id: "arrays-strings", title: "Arrays and Strings Masterclass", description: "Complete guide to array and string data structures with problem solving", lastUpdated: "Jan 2025", type: "Tutorial", difficulty: "Intermediate", readTime: "3 hours" },
-        { id: "linked-lists", title: "Linked Lists Implementation Guide", description: "Comprehensive linked list operations and applications", lastUpdated: "Dec 2024", type: "Guide", difficulty: "Intermediate", readTime: "2.5 hours" },
-        { id: "stack-queue", title: "Stack and Queue Data Structures", description: "Understanding LIFO and FIFO structures with real-world examples", lastUpdated: "Jan 2025", type: "Tutorial", difficulty: "Intermediate", readTime: "2 hours" },
-        { id: "binary-trees", title: "Binary Trees and BST", description: "Tree data structures, traversals, and binary search trees", lastUpdated: "Dec 2024", type: "Guide", difficulty: "Advanced", readTime: "4 hours" },
-        { id: "graph-algorithms", title: "Graph Algorithms Handbook", description: "BFS, DFS, shortest path algorithms, and graph applications", lastUpdated: "Jan 2025", type: "Reference", difficulty: "Advanced", readTime: "5 hours" },
-        { id: "sorting-algorithms", title: "Sorting Algorithms Analysis", description: "Comparison of sorting techniques with time complexity analysis", lastUpdated: "Dec 2024", type: "Analysis", difficulty: "Intermediate", readTime: "2.5 hours" },
-        { id: "dynamic-programming", title: "Dynamic Programming Patterns", description: "Common DP patterns and problem-solving strategies", lastUpdated: "Jan 2025", type: "Guide", difficulty: "Advanced", readTime: "4 hours" },
-        { id: "hashing-tables", title: "Hashing and Hash Tables", description: "Hash functions, collision resolution, and applications", lastUpdated: "Dec 2024", type: "Tutorial", difficulty: "Intermediate", readTime: "2 hours" },
-        { id: "algorithm-complexity", title: "Algorithm Complexity Analysis", description: "Big O notation and algorithmic complexity evaluation", lastUpdated: "Jan 2025", type: "Theory", difficulty: "Intermediate", readTime: "1.5 hours" }
-      ]
-    },
-    {
-      category: "Third Year - Software Engineering & Databases",
-      icon: Globe,
-      documents: [
-        { id: "sdlc-guide", title: "Software Development Life Cycle", description: "Complete SDLC methodologies including Agile and Waterfall", lastUpdated: "Jan 2025", type: "Guide", difficulty: "Intermediate", readTime: "3 hours" },
-        { id: "database-design", title: "Database Design Principles", description: "Normalization, ER diagrams, and database optimization", lastUpdated: "Dec 2024", type: "Tutorial", difficulty: "Intermediate", readTime: "3.5 hours" },
-        { id: "sql-comprehensive", title: "SQL Comprehensive Guide", description: "From basic queries to advanced database operations", lastUpdated: "Jan 2025", type: "Reference", difficulty: "Intermediate", readTime: "4 hours" },
-        { id: "nosql-databases", title: "NoSQL Databases Overview", description: "MongoDB, Redis, and other NoSQL solutions", lastUpdated: "Dec 2024", type: "Guide", difficulty: "Advanced", readTime: "2.5 hours" },
-        { id: "restful-api", title: "RESTful API Design", description: "Best practices for designing and implementing REST APIs", lastUpdated: "Jan 2025", type: "Tutorial", difficulty: "Intermediate", readTime: "2 hours" },
-        { id: "web-frameworks", title: "Web Framework Documentation", description: "React, Angular, Vue.js framework comparisons and guides", lastUpdated: "Dec 2024", type: "Guide", difficulty: "Advanced", readTime: "5 hours" },
-        { id: "testing-strategies", title: "Testing Strategies & Frameworks", description: "Unit testing, integration testing, and TDD approaches", lastUpdated: "Jan 2025", type: "Tutorial", difficulty: "Intermediate", readTime: "3 hours" },
-        { id: "design-patterns", title: "Design Patterns in Software Engineering", description: "Common design patterns with implementation examples", lastUpdated: "Dec 2024", type: "Reference", difficulty: "Advanced", readTime: "4 hours" },
-        { id: "microservices", title: "Microservices Architecture", description: "Building scalable distributed systems", lastUpdated: "Jan 2025", type: "Guide", difficulty: "Advanced", readTime: "3.5 hours" }
-      ]
-    },
-    {
-      category: "Fourth Year - Advanced Topics & Specialization",
-      icon: Cpu,
-      documents: [
-        { id: "machine-learning", title: "Machine Learning Fundamentals", description: "Introduction to ML algorithms and implementation", lastUpdated: "Jan 2025", type: "Tutorial", difficulty: "Advanced", readTime: "6 hours" },
-        { id: "cloud-computing", title: "Cloud Computing Architecture", description: "AWS, Azure, GCP services and cloud-native development", lastUpdated: "Dec 2024", type: "Guide", difficulty: "Advanced", readTime: "4 hours" },
-        { id: "devops-cicd", title: "DevOps and CI/CD Pipelines", description: "Automation, containerization, and deployment strategies", lastUpdated: "Jan 2025", type: "Tutorial", difficulty: "Advanced", readTime: "3.5 hours" },
-        { id: "cybersecurity", title: "Cybersecurity Best Practices", description: "Security principles and threat mitigation strategies", lastUpdated: "Dec 2024", type: "Guide", difficulty: "Advanced", readTime: "3 hours" },
-        { id: "mobile-development", title: "Mobile App Development", description: "Native and cross-platform mobile development", lastUpdated: "Jan 2025", type: "Tutorial", difficulty: "Intermediate", readTime: "5 hours" },
-        { id: "blockchain-guide", title: "Blockchain Technology Guide", description: "Distributed ledgers, smart contracts, and Web3", lastUpdated: "Dec 2024", type: "Guide", difficulty: "Advanced", readTime: "4 hours" },
-        { id: "system-design", title: "System Design Principles", description: "Scalable system architecture and design patterns", lastUpdated: "Jan 2025", type: "Reference", difficulty: "Advanced", readTime: "5 hours" },
-        { id: "big-data", title: "Big Data Technologies", description: "Hadoop, Spark, and data processing frameworks", lastUpdated: "Dec 2024", type: "Guide", difficulty: "Advanced", readTime: "4.5 hours" },
-        { id: "artificial-intelligence", title: "Artificial Intelligence Concepts", description: "AI algorithms, neural networks, and deep learning", lastUpdated: "Jan 2025", type: "Tutorial", difficulty: "Advanced", readTime: "6 hours" }
-      ]
-    },
-    {
-      category: "Industry Standards & Best Practices",
-      icon: Shield,
-      documents: [
-        { id: "code-review", title: "Code Review Guidelines", description: "Best practices for conducting effective code reviews", lastUpdated: "Jan 2025", type: "Standards", difficulty: "Intermediate", readTime: "1.5 hours" },
-        { id: "documentation-standards", title: "Documentation Standards", description: "Technical writing and API documentation best practices", lastUpdated: "Dec 2024", type: "Guide", difficulty: "Beginner", readTime: "2 hours" },
-        { id: "agile-methodology", title: "Agile Development Methodology", description: "Scrum, Kanban, and agile project management", lastUpdated: "Jan 2025", type: "Guide", difficulty: "Intermediate", readTime: "2.5 hours" },
-        { id: "performance-optimization", title: "Performance Optimization Techniques", description: "Code optimization and system performance tuning", lastUpdated: "Dec 2024", type: "Tutorial", difficulty: "Advanced", readTime: "3 hours" },
-        { id: "web-accessibility", title: "Accessibility in Web Development", description: "Creating inclusive and accessible web applications", lastUpdated: "Jan 2025", type: "Guide", difficulty: "Intermediate", readTime: "2 hours" },
-        { id: "open-source", title: "Open Source Contribution Guide", description: "How to contribute to open source projects effectively", lastUpdated: "Dec 2024", type: "Guide", difficulty: "Beginner", readTime: "1.5 hours" }
-      ]
+      id: 51,
+      title: "Anyone Can Develop",
+      description: "Complete Guide to Creating a Webpage with AI: From Planning to Development",
+      category: "Special",
+      difficulty: "All Levels",
+      pages: 200,
+      downloadCount: 8500,
+      isSpecial: true
     }
   ];
 
-  const getDifficultyColor = (difficulty: string) => {
+  const categories = ["All", "1st Year", "2nd Year", "3rd Year", "4th Year", "Career", "Special"];
+  const difficulties = ["All", "Beginner", "Intermediate", "Advanced", "Expert", "All Levels"];
+
+  const filteredDocuments = allDocuments.filter(doc => {
+    const matchesSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         doc.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === "All" || doc.category === selectedCategory;
+    const matchesDifficulty = selectedDifficulty === "All" || doc.difficulty === selectedDifficulty;
+    
+    return matchesSearch && matchesCategory && matchesDifficulty;
+  });
+
+  const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
       case "Beginner": return "bg-green-100 text-green-800";
-      case "Intermediate": return "bg-yellow-100 text-yellow-800";
-      case "Advanced": return "bg-red-100 text-red-800";
+      case "Intermediate": return "bg-blue-100 text-blue-800";
+      case "Advanced": return "bg-orange-100 text-orange-800";
+      case "Expert": return "bg-red-100 text-red-800";
+      case "All Levels": return "bg-purple-100 text-purple-800";
       default: return "bg-gray-100 text-gray-800";
     }
   };
 
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case "Tutorial": return "bg-blue-100 text-blue-800";
-      case "Guide": return "bg-purple-100 text-purple-800";
-      case "Reference": return "bg-indigo-100 text-indigo-800";
-      case "Theory": return "bg-pink-100 text-pink-800";
-      case "Standards": return "bg-gray-100 text-gray-800";
-      default: return "bg-gray-100 text-gray-800";
+  const getCategoryIcon = (category) => {
+    switch (category) {
+      case "1st Year": return <GraduationCap className="w-4 h-4" />;
+      case "2nd Year": return <BookOpen className="w-4 h-4" />;
+      case "3rd Year": return <Users className="w-4 h-4" />;
+      case "4th Year": return <TrendingUp className="w-4 h-4" />;
+      case "Career": return <Star className="w-4 h-4" />;
+      case "Special": return <Star className="w-4 h-4" />;
+      default: return <FileText className="w-4 h-4" />;
     }
   };
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="border-b border-gray-300 bg-white">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center space-x-4">
-              <h1 className="text-3xl font-serif text-black">Technical Documentation</h1>
-            </div>
+      <header className="border-b border-gray-300 bg-white sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
             <Button variant="ghost" size="sm" asChild className="text-blue-600 hover:bg-blue-50">
               <Link to="/">
                 <ArrowLeft className="w-4 h-4 mr-1" />
-                Main Page
+                Back to Home
               </Link>
             </Button>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm">
+                <Filter className="w-4 h-4 mr-1" />
+                Filter
+              </Button>
+              <Button variant="outline" size="sm">
+                <Download className="w-4 h-4 mr-1" />
+                Bulk Download
+              </Button>
+            </div>
           </div>
-          <p className="text-gray-600 text-sm mt-1">Comprehensive technical documentation for engineering students (1st-4th Year)</p>
-          <p className="text-blue-600 text-sm mt-2 font-medium">50+ Resources | Year-wise Organization | Updated Content</p>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-200">
-          <h2 className="text-xl font-semibold text-black mb-3">Complete Engineering Documentation Hub</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            This comprehensive documentation covers all four years of engineering education, 
-            from basic programming concepts to advanced industry technologies. Each document is carefully 
-            curated to provide practical knowledge and hands-on learning experience.
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <div className="bg-white p-3 rounded border">
-              <div className="font-semibold text-blue-600">Year 1</div>
-              <div className="text-gray-600">Programming Basics</div>
-            </div>
-            <div className="bg-white p-3 rounded border">
-              <div className="font-semibold text-green-600">Year 2</div>
-              <div className="text-gray-600">DSA & Algorithms</div>
-            </div>
-            <div className="bg-white p-3 rounded border">
-              <div className="font-semibold text-purple-600">Year 3</div>
-              <div className="text-gray-600">Software Engineering</div>
-            </div>
-            <div className="bg-white p-3 rounded border">
-              <div className="font-semibold text-red-600">Year 4</div>
-              <div className="text-gray-600">Advanced Topics</div>
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {/* Hero Section */}
+        <div className="text-center mb-8">
+          <div className="flex justify-center mb-4">
+            <div className="w-16 h-16 bg-blue-600 rounded-lg flex items-center justify-center">
+              <FileText className="w-8 h-8 text-white" />
             </div>
           </div>
+          <h1 className="text-4xl font-bold text-black mb-4">Technical Documents</h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Comprehensive collection of engineering documents, guides, and reference materials for all academic years
+          </p>
         </div>
 
-        {documentCategories.map((category, categoryIndex) => {
-          const IconComponent = category.icon;
-          return (
-            <section key={categoryIndex} className="mb-12">
-              <div className="flex items-center mb-6">
-                <IconComponent className="w-6 h-6 text-blue-600 mr-3" />
-                <h2 className="text-2xl font-serif text-black border-b-2 border-blue-200 pb-1">
-                  {category.category}
-                </h2>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {category.documents.map((doc, docIndex) => (
-                  <Card key={docIndex} className="border border-gray-200 hover:shadow-md transition-all duration-200 hover:border-blue-300">
-                    <CardContent className="p-5">
-                      <div className="flex justify-between items-start mb-3">
-                        <h3 className="font-semibold text-black text-lg leading-tight">{doc.title}</h3>
-                        <Button variant="outline" size="sm" className="text-xs ml-3 shrink-0" asChild>
-                          <Link to={`/document/${doc.id}`}>
-                            <ExternalLink className="w-3 h-3 mr-1" />
-                            Read
-                          </Link>
-                        </Button>
-                      </div>
-                      <p className="text-gray-700 text-sm leading-relaxed mb-4">{doc.description}</p>
-                      <div className="flex flex-wrap items-center gap-2 text-xs">
-                        <span className={`px-2 py-1 rounded-full ${getDifficultyColor(doc.difficulty)}`}>
-                          {doc.difficulty}
-                        </span>
-                        <span className={`px-2 py-1 rounded-full ${getTypeColor(doc.type)}`}>
-                          {doc.type}
-                        </span>
-                        <div className="flex items-center text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {doc.readTime}
-                        </div>
-                        <span className="text-gray-500 ml-auto">Updated {doc.lastUpdated}</span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </section>
-          );
-        })}
-
-        <Card className="mt-12 border-2 border-blue-200 bg-blue-50">
+        {/* Table of Contents */}
+        <Card className="mb-8 border border-gray-200 bg-gray-50">
           <CardContent className="p-6">
-            <h3 className="font-semibold text-black mb-4 flex items-center">
-              <BookOpen className="w-5 h-5 mr-2 text-blue-600" />
-              How to Use This Documentation
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-              <div>
-                <h4 className="font-medium mb-3 text-black">Academic Progression</h4>
-                <ul className="text-gray-700 space-y-2">
-                  <li>• First Year: Start with programming fundamentals</li>
-                  <li>• Second Year: Master data structures and algorithms</li>
-                  <li>• Third Year: Learn software engineering practices</li>
-                  <li>• Fourth Year: Explore advanced technologies and specializations</li>
-                </ul>
+            <h2 className="text-xl font-serif text-black mb-4 pb-2 border-b border-gray-300">Contents</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {/* Special Section */}
+              <div className="md:col-span-2 lg:col-span-3 mb-4">
+                <h3 className="font-semibold text-gray-800 mb-2">Featured Guide</h3>
+                <div className="flex items-center py-2 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg px-3">
+                  <span className="text-purple-700 font-medium mr-3 min-w-[24px]">★</span>
+                  <Link 
+                    to="/anyone-can-develop" 
+                    className="text-purple-700 hover:text-purple-900 hover:underline text-sm font-medium transition-colors flex-1"
+                  >
+                    Anyone Can Develop - Complete AI Web Development Guide
+                  </Link>
+                  <Badge className="bg-purple-100 text-purple-800 text-xs ml-2">Featured</Badge>
+                </div>
               </div>
-              <div>
-                <h4 className="font-medium mb-3 text-black">Learning Strategy</h4>
-                <ul className="text-gray-700 space-y-2">
-                  <li>• Follow the difficulty progression: Beginner → Intermediate → Advanced</li>
-                  <li>• Practice with hands-on examples and projects</li>
-                  <li>• Join study groups and discussion forums</li>
-                  <li>• Build projects to apply theoretical knowledge</li>
-                </ul>
-              </div>
+
+              {/* Existing categories */}
+              {["1st Year", "2nd Year", "3rd Year", "4th Year", "Career"].map((category) => {
+                const categoryDocs = allDocuments.filter(doc => doc.category === category && !doc.isSpecial);
+                return (
+                  <div key={category}>
+                    <h3 className="font-semibold text-gray-800 mb-2">{category}</h3>
+                    {categoryDocs.slice(0, 5).map((doc, index) => (
+                      <div key={doc.id} className="flex items-center py-1">
+                        <span className="text-blue-700 font-medium mr-3 min-w-[24px]">{index + 1}.</span>
+                        <Link 
+                          to={`/documents/${doc.id}`} 
+                          className="text-blue-700 hover:text-blue-900 hover:underline text-sm font-medium transition-colors"
+                        >
+                          {doc.title}
+                        </Link>
+                      </div>
+                    ))}
+                    {categoryDocs.length > 5 && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        +{categoryDocs.length - 5} more documents...
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </CardContent>
         </Card>
 
-        <div className="mt-12 pt-6 border-t border-gray-200 text-center">
-          <p className="text-gray-500 text-sm">
-            Documentation updated regularly with industry trends and academic requirements. 
-            Total: <span className="font-semibold text-blue-600">50+ comprehensive resources</span> • 
-            Last major update: January 2025
-          </p>
-          <p className="text-xs text-gray-400 mt-2">
-            For additional resources, visit the main <Link to="/" className="text-blue-600 hover:underline">Engineering Resources Hub</Link>
-          </p>
+        {/* Search and Filter Section */}
+        <Card className="mb-8">
+          <CardContent className="p-6">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Input
+                  placeholder="Search documents..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {categories.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+              <select
+                value={selectedDifficulty}
+                onChange={(e) => setSelectedDifficulty(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {difficulties.map(difficulty => (
+                  <option key={difficulty} value={difficulty}>{difficulty}</option>
+                ))}
+              </select>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Documents Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredDocuments.map((doc) => (
+            <Card key={doc.id} className={`border-2 hover:shadow-lg transition-all duration-200 ${doc.isSpecial ? 'border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50' : 'border-gray-200 hover:border-blue-300'}`}>
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center space-x-2">
+                    {getCategoryIcon(doc.category)}
+                    <Badge variant="outline" className="text-xs">
+                      {doc.category}
+                    </Badge>
+                  </div>
+                  {doc.isSpecial && (
+                    <Badge className="bg-purple-100 text-purple-800 text-xs">Featured</Badge>
+                  )}
+                </div>
+                <CardTitle className="text-lg font-bold text-black leading-tight">
+                  {doc.isSpecial ? (
+                    <Link to="/anyone-can-develop" className="hover:text-purple-600 transition-colors">
+                      {doc.title}
+                    </Link>
+                  ) : (
+                    <Link to={`/documents/${doc.id}`} className="hover:text-blue-600 transition-colors">
+                      {doc.title}
+                    </Link>
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                  {doc.description}
+                </p>
+                
+                <div className="flex items-center justify-between mb-4">
+                  <Badge className={getDifficultyColor(doc.difficulty) + " text-xs"}>
+                    {doc.difficulty}
+                  </Badge>
+                  <div className="flex items-center text-xs text-gray-500 space-x-3">
+                    <span>{doc.pages} pages</span>
+                    <span>{doc.downloadCount.toLocaleString()} downloads</span>
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  {doc.isSpecial ? (
+                    <Button asChild className="flex-1 bg-purple-600 hover:bg-purple-700">
+                      <Link to="/anyone-can-develop">
+                        <Eye className="w-4 h-4 mr-1" />
+                        View Guide
+                      </Link>
+                    </Button>
+                  ) : (
+                    <>
+                      <Button asChild variant="outline" className="flex-1">
+                        <Link to={`/documents/${doc.id}`}>
+                          <Eye className="w-4 h-4 mr-1" />
+                          Read
+                        </Link>
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        <Download className="w-4 h-4" />
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
+
+        {filteredDocuments.length === 0 && (
+          <Card className="text-center py-12">
+            <CardContent>
+              <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-600 mb-2">No documents found</h3>
+              <p className="text-gray-500">Try adjusting your search terms or filters</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Statistics */}
+        <Card className="mt-8 bg-blue-50 border-blue-200">
+          <CardContent className="p-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <div className="text-2xl font-bold text-blue-600">{allDocuments.length}</div>
+                <div className="text-sm text-blue-800">Total Documents</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-blue-600">
+                  {allDocuments.reduce((sum, doc) => sum + doc.downloadCount, 0).toLocaleString()}
+                </div>
+                <div className="text-sm text-blue-800">Total Downloads</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-blue-600">
+                  {allDocuments.reduce((sum, doc) => sum + doc.pages, 0).toLocaleString()}
+                </div>
+                <div className="text-sm text-blue-800">Total Pages</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-blue-600">5</div>
+                <div className="text-sm text-blue-800">Categories</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </main>
     </div>
   );
