@@ -482,20 +482,10 @@ const Documents = () => {
       difficulty: "All Levels",
       pages: 140,
       downloadCount: 5800
-    },
-    {
-      id: 51,
-      title: "Anyone Can Develop",
-      description: "Complete Guide to Creating a Webpage with AI: From Planning to Development",
-      category: "Special",
-      difficulty: "All Levels",
-      pages: 200,
-      downloadCount: 8500,
-      isSpecial: true
     }
   ];
 
-  const categories = ["All", "1st Year", "2nd Year", "3rd Year", "4th Year", "Career", "Special"];
+  const categories = ["All", "1st Year", "2nd Year", "3rd Year", "4th Year", "Career"];
   const difficulties = ["All", "Beginner", "Intermediate", "Advanced", "Expert", "All Levels"];
 
   const filteredDocuments = allDocuments.filter(doc => {
@@ -574,24 +564,8 @@ const Documents = () => {
           <CardContent className="p-6">
             <h2 className="text-xl font-serif text-black mb-4 pb-2 border-b border-gray-300">Contents</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {/* Special Section */}
-              <div className="md:col-span-2 lg:col-span-3 mb-4">
-                <h3 className="font-semibold text-gray-800 mb-2">Featured Guide</h3>
-                <div className="flex items-center py-2 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg px-3">
-                  <span className="text-purple-700 font-medium mr-3 min-w-[24px]">★</span>
-                  <Link 
-                    to="/anyone-can-develop" 
-                    className="text-purple-700 hover:text-purple-900 hover:underline text-sm font-medium transition-colors flex-1"
-                  >
-                    Anyone Can Develop - Complete AI Web Development Guide
-                  </Link>
-                  <Badge className="bg-purple-100 text-purple-800 text-xs ml-2">Featured</Badge>
-                </div>
-              </div>
-
-              {/* Existing categories */}
               {["1st Year", "2nd Year", "3rd Year", "4th Year", "Career"].map((category) => {
-                const categoryDocs = allDocuments.filter(doc => doc.category === category && !doc.isSpecial);
+                const categoryDocs = allDocuments.filter(doc => doc.category === category);
                 return (
                   <div key={category}>
                     <h3 className="font-semibold text-gray-800 mb-2">{category}</h3>

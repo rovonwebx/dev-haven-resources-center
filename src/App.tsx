@@ -17,6 +17,7 @@ import DSA from "./pages/DSA";
 import CodingChallenges from "./pages/CodingChallenges";
 import Internships from "./pages/Internships";
 import Notes from "./pages/Notes";
+import CampusNotes from "./pages/CampusNotes";
 import Documents from "./pages/Documents";
 import Theories from "./pages/Theories";
 import StudentProjects from "./pages/StudentProjects";
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/notes" element={<Notes />} />
             <Route path="/notes/:id" element={<NotesViewer />} />
             <Route path="/notes/:id/preview" element={<NotesViewer />} />
+            <Route path="/campus-notes" element={<CampusNotes />} />
             <Route path="/documents" element={<Documents />} />
             <Route path="/documents/:id" element={<DocumentReader />} />
             <Route path="/theories" element={<Theories />} />
