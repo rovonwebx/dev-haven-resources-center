@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,7 +18,9 @@ import {
   Bot,
   Zap,
   ArrowRight,
-  HelpCircle
+  HelpCircle,
+  School,
+  Rocket
 } from "lucide-react";
 import Chatbot from "@/components/Chatbot";
 
@@ -74,6 +75,12 @@ const Index = () => {
       path: "/notes",
     },
     {
+      title: "Campus Notes",
+      description: "Collaborative study notes and campus resources",
+      icon: School,
+      path: "/campus-notes",
+    },
+    {
       title: "Documents",
       description: "Technical documentation and manuals",
       icon: File,
@@ -108,6 +115,12 @@ const Index = () => {
       description: "Comprehensive SQL interview questions and answers",
       icon: HelpCircle,
       path: "/interview-questions",
+    },
+    {
+      title: "Anyone Can Develop",
+      description: "Complete guide to creating webpages with AI assistance",
+      icon: Rocket,
+      path: "/anyone-can-develop",
     }
   ];
 

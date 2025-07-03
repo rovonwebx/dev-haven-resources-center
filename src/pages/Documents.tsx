@@ -15,7 +15,9 @@ import {
   BookOpen,
   GraduationCap,
   Users,
-  TrendingUp
+  TrendingUp,
+  School,
+  Rocket
 } from "lucide-react";
 
 const Documents = () => {
@@ -522,6 +524,7 @@ const Documents = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Header */}
       <header className="border-b border-gray-300 bg-white sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -594,6 +597,31 @@ const Documents = () => {
                   </div>
                 );
               })}
+              
+              {/* Additional Pages Section */}
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-2">Additional Resources</h3>
+                <div className="flex items-center py-1">
+                  <span className="text-blue-700 font-medium mr-3 min-w-[24px]">1.</span>
+                  <Link 
+                    to="/campus-notes" 
+                    className="text-blue-700 hover:text-blue-900 hover:underline text-sm font-medium transition-colors flex items-center"
+                  >
+                    <School className="w-3 h-3 mr-1" />
+                    Campus Notes
+                  </Link>
+                </div>
+                <div className="flex items-center py-1">
+                  <span className="text-blue-700 font-medium mr-3 min-w-[24px]">2.</span>
+                  <Link 
+                    to="/anyone-can-develop" 
+                    className="text-blue-700 hover:text-blue-900 hover:underline text-sm font-medium transition-colors flex items-center"
+                  >
+                    <Rocket className="w-3 h-3 mr-1" />
+                    Anyone Can Develop
+                  </Link>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
