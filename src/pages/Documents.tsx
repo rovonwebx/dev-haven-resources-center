@@ -17,7 +17,8 @@ import {
   Users,
   TrendingUp,
   School,
-  Rocket
+  Rocket,
+  ExternalLink
 } from "lucide-react";
 
 const Documents = () => {
@@ -34,7 +35,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 120,
-      downloadCount: 2500
+      downloadCount: 2500,
+      resourceLinks: [
+        { platform: "Khan Academy", url: "https://www.khanacademy.org/math/calculus-1" },
+        { platform: "MIT OpenCourseWare", url: "https://ocw.mit.edu/courses/mathematics/18-01-single-variable-calculus-fall-2006/" }
+      ]
     },
     { 
       id: 2, 
@@ -43,7 +48,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 95,
-      downloadCount: 2100
+      downloadCount: 2100,
+      resourceLinks: [
+        { platform: "Coursera", url: "https://www.coursera.org/learn/physics-intro" },
+        { platform: "edX", url: "https://www.edx.org/course/introduction-to-mechanics" }
+      ]
     },
     { 
       id: 3, 
@@ -52,7 +61,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 85,
-      downloadCount: 1800
+      downloadCount: 1800,
+      resourceLinks: [
+        { platform: "Khan Academy", url: "https://www.khanacademy.org/science/chemistry" },
+        { platform: "Coursera", url: "https://www.coursera.org/learn/general-chemistry" }
+      ]
     },
     { 
       id: 4, 
@@ -61,7 +74,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 110,
-      downloadCount: 2200
+      downloadCount: 2200,
+      resourceLinks: [
+        { platform: "AutoCAD Learning", url: "https://www.autodesk.com/education/free-software/autocad" },
+        { platform: "YouTube", url: "https://www.youtube.com/playlist?list=PLZHx5heVfgEspzxKI7l7VZa0e1vg6aHB8" }
+      ]
     },
     { 
       id: 5, 
@@ -70,7 +87,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 140,
-      downloadCount: 3200
+      downloadCount: 3200,
+      resourceLinks: [
+        { platform: "Codecademy", url: "https://www.codecademy.com/learn/learn-c" },
+        { platform: "CS50", url: "https://cs50.harvard.edu/x/2024/weeks/1/" }
+      ]
     },
     { 
       id: 6, 
@@ -79,7 +100,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 75,
-      downloadCount: 1500
+      downloadCount: 1500,
+      resourceLinks: [
+        { platform: "Coursera", url: "https://www.coursera.org/learn/environmental-science" },
+        { platform: "edX", url: "https://www.edx.org/course/environmental-science" }
+      ]
     },
     { 
       id: 7, 
@@ -88,7 +113,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 90,
-      downloadCount: 1900
+      downloadCount: 1900,
+      resourceLinks: [
+        { platform: "NPTEL", url: "https://nptel.ac.in/courses/112/105/112105125/" },
+        { platform: "YouTube", url: "https://www.youtube.com/playlist?list=PLbMVogVj5nJS5Y0N_v8xBfAfC6EL0KDKs" }
+      ]
     },
     { 
       id: 8, 
@@ -97,7 +126,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 60,
-      downloadCount: 1400
+      downloadCount: 1400,
+      resourceLinks: [
+        { platform: "Coursera", url: "https://www.coursera.org/learn/technical-writing" },
+        { platform: "edX", url: "https://www.edx.org/course/effective-communication" }
+      ]
     },
     { 
       id: 9, 
@@ -106,7 +139,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 125,
-      downloadCount: 2300
+      downloadCount: 2300,
+      resourceLinks: [
+        { platform: "Khan Academy", url: "https://www.khanacademy.org/math/multivariable-calculus" },
+        { platform: "MIT OCW", url: "https://ocw.mit.edu/courses/mathematics/18-02-multivariable-calculus-fall-2007/" }
+      ]
     },
     { 
       id: 10, 
@@ -115,7 +152,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 105,
-      downloadCount: 2000
+      downloadCount: 2000,
+      resourceLinks: [
+        { platform: "NPTEL", url: "https://nptel.ac.in/courses/117/105/117105081/" },
+        { platform: "All About Circuits", url: "https://www.allaboutcircuits.com/textbook/" }
+      ]
     },
     { 
       id: 11, 
@@ -124,7 +165,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 80,
-      downloadCount: 1700
+      downloadCount: 1700,
+      resourceLinks: [
+        { platform: "Coursera", url: "https://www.coursera.org/learn/computer-science-programming-with-a-purpose" },
+        { platform: "Khan Academy", url: "https://www.khanacademy.org/computing/computer-science" }
+      ]
     },
     { 
       id: 12, 
@@ -133,7 +178,11 @@ const Documents = () => {
       category: "1st Year",
       difficulty: "Beginner",
       pages: 130,
-      downloadCount: 2400
+      downloadCount: 2400,
+      resourceLinks: [
+        { platform: "NPTEL", url: "https://nptel.ac.in/courses/112/103/112103004/" },
+        { platform: "MIT OCW", url: "https://ocw.mit.edu/courses/mechanical-engineering/2-001-mechanics-materials-i-fall-2006/" }
+      ]
     },
 
     // 2nd Year Documents
@@ -144,7 +193,12 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 180,
-      downloadCount: 4200
+      downloadCount: 4200,
+      resourceLinks: [
+        { platform: "LeetCode", url: "https://leetcode.com/explore/learn/" },
+        { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/data-structures/" },
+        { platform: "Coursera", url: "https://www.coursera.org/specializations/algorithms" }
+      ]
     },
     { 
       id: 14, 
@@ -153,7 +207,11 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 160,
-      downloadCount: 3800
+      downloadCount: 3800,
+      resourceLinks: [
+        { platform: "Oracle Java Tutorials", url: "https://docs.oracle.com/javase/tutorial/java/concepts/" },
+        { platform: "Codecademy", url: "https://www.codecademy.com/learn/learn-java" }
+      ]
     },
     { 
       id: 15, 
@@ -162,7 +220,12 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 145,
-      downloadCount: 3500
+      downloadCount: 3500,
+      resourceLinks: [
+        { platform: "W3Schools", url: "https://www.w3schools.com/sql/" },
+        { platform: "SQLBolt", url: "https://sqlbolt.com/" },
+        { platform: "Coursera", url: "https://www.coursera.org/learn/intro-sql" }
+      ]
     },
     { 
       id: 16, 
@@ -171,7 +234,11 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 170,
-      downloadCount: 3200
+      downloadCount: 3200,
+      resourceLinks: [
+        { platform: "Cisco Networking Academy", url: "https://www.netacad.com/courses/networking" },
+        { platform: "Coursera", url: "https://www.coursera.org/learn/computer-networking" }
+      ]
     },
     { 
       id: 17, 
@@ -180,7 +247,11 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 155,
-      downloadCount: 3600
+      downloadCount: 3600,
+      resourceLinks: [
+        { platform: "MIT OCW", url: "https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-828-operating-system-engineering-fall-2012/" },
+        { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/operating-systems/" }
+      ]
     },
     { 
       id: 18, 
@@ -189,7 +260,11 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 120,
-      downloadCount: 2800
+      downloadCount: 2800,
+      resourceLinks: [
+        { platform: "NPTEL", url: "https://nptel.ac.in/courses/106/105/106105165/" },
+        { platform: "All About Circuits", url: "https://www.allaboutcircuits.com/textbook/digital/" }
+      ]
     },
     { 
       id: 19, 
@@ -198,7 +273,11 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 135,
-      downloadCount: 2600
+      downloadCount: 2600,
+      resourceLinks: [
+        { platform: "MIT OCW", url: "https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-042j-mathematics-for-computer-science-spring-2015/" },
+        { platform: "Khan Academy", url: "https://www.khanacademy.org/computing/computer-science/algorithms" }
+      ]
     },
     { 
       id: 20, 
@@ -207,7 +286,11 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 165,
-      downloadCount: 3100
+      downloadCount: 3100,
+      resourceLinks: [
+        { platform: "Coursera", url: "https://www.coursera.org/specializations/software-engineering" },
+        { platform: "edX", url: "https://www.edx.org/course/software-engineering" }
+      ]
     },
     { 
       id: 21, 
@@ -216,7 +299,12 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 140,
-      downloadCount: 3900
+      downloadCount: 3900,
+      resourceLinks: [
+        { platform: "MDN Web Docs", url: "https://developer.mozilla.org/en-US/docs/Learn" },
+        { platform: "freeCodeCamp", url: "https://www.freecodecamp.org/learn/responsive-web-design/" },
+        { platform: "W3Schools", url: "https://www.w3schools.com/html/" }
+      ]
     },
     { 
       id: 22, 
@@ -225,7 +313,11 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 150,
-      downloadCount: 2900
+      downloadCount: 2900,
+      resourceLinks: [
+        { platform: "NPTEL", url: "https://nptel.ac.in/courses/106/105/106105163/" },
+        { platform: "Coursera", url: "https://www.coursera.org/learn/comparch" }
+      ]
     },
     { 
       id: 23, 
@@ -234,7 +326,11 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 115,
-      downloadCount: 2400
+      downloadCount: 2400,
+      resourceLinks: [
+        { platform: "Khan Academy", url: "https://www.khanacademy.org/math/statistics-probability" },
+        { platform: "Coursera", url: "https://www.coursera.org/learn/probability-intro" }
+      ]
     },
     { 
       id: 24, 
@@ -243,7 +339,11 @@ const Documents = () => {
       category: "2nd Year",
       difficulty: "Intermediate",
       pages: 125,
-      downloadCount: 2200
+      downloadCount: 2200,
+      resourceLinks: [
+        { platform: "MIT OCW", url: "https://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/" },
+        { platform: "Khan Academy", url: "https://www.khanacademy.org/math/linear-algebra" }
+      ]
     },
 
     // 3rd Year Documents
@@ -254,7 +354,12 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 220,
-      downloadCount: 5200
+      downloadCount: 5200,
+      resourceLinks: [
+        { platform: "Coursera", url: "https://www.coursera.org/learn/machine-learning" },
+        { platform: "edX", url: "https://www.edx.org/course/introduction-to-machine-learning" },
+        { platform: "Kaggle Learn", url: "https://www.kaggle.com/learn/intro-to-machine-learning" }
+      ]
     },
     { 
       id: 26, 
@@ -263,7 +368,11 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 195,
-      downloadCount: 4800
+      downloadCount: 4800,
+      resourceLinks: [
+        { platform: "MIT OCW", url: "https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-034-artificial-intelligence-fall-2010/" },
+        { platform: "Coursera", url: "https://www.coursera.org/learn/ai-for-everyone" }
+      ]
     },
     { 
       id: 27, 
@@ -272,7 +381,11 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 185,
-      downloadCount: 3400
+      downloadCount: 3400,
+      resourceLinks: [
+        { platform: "NPTEL", url: "https://nptel.ac.in/courses/106/105/106105186/" },
+        { platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/compiler-design-tutorials/" }
+      ]
     },
     { 
       id: 28, 
@@ -281,7 +394,11 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 175,
-      downloadCount: 3800
+      downloadCount: 3800,
+      resourceLinks: [
+        { platform: "MongoDB University", url: "https://university.mongodb.com/" },
+        { platform: "Coursera", url: "https://www.coursera.org/learn/nosql-databases" }
+      ]
     },
     { 
       id: 29, 
@@ -290,7 +407,11 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 190,
-      downloadCount: 4100
+      downloadCount: 4100,
+      resourceLinks: [
+        { platform: "Cybrary", url: "https://www.cybrary.it/course/ethical-hacking/" },
+        { platform: "Coursera", url: "https://www.coursera.org/learn/crypto" }
+      ]
     },
     { 
       id: 30, 
@@ -299,7 +420,12 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 165,
-      downloadCount: 4500
+      downloadCount: 4500,
+      resourceLinks: [
+        { platform: "Android Developers", url: "https://developer.android.com/courses" },
+        { platform: "Apple Developer", url: "https://developer.apple.com/tutorials/swiftui" },
+        { platform: "Flutter", url: "https://flutter.dev/learn" }
+      ]
     },
     { 
       id: 31, 
@@ -308,7 +434,12 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 180,
-      downloadCount: 4200
+      downloadCount: 4200,
+      resourceLinks: [
+        { platform: "AWS Training", url: "https://aws.amazon.com/training/" },
+        { platform: "Microsoft Learn", url: "https://docs.microsoft.com/en-us/learn/azure/" },
+        { platform: "Google Cloud Skills", url: "https://cloud.google.com/training" }
+      ]
     },
     { 
       id: 32, 
@@ -317,7 +448,12 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 155,
-      downloadCount: 3900
+      downloadCount: 3900,
+      resourceLinks: [
+        { platform: "Docker", url: "https://docs.docker.com/get-started/" },
+        { platform: "Kubernetes", url: "https://kubernetes.io/training/" },
+        { platform: "GitLab Learn", url: "https://about.gitlab.com/learn/" }
+      ]
     },
     { 
       id: 33, 
@@ -326,7 +462,11 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 200,
-      downloadCount: 3600
+      downloadCount: 3600,
+      resourceLinks: [
+        { platform: "MIT OCW", url: "https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/" },
+        { platform: "HackerRank", url: "https://www.hackerrank.com/domains/algorithms" }
+      ]
     },
     { 
       id: 34, 
@@ -335,7 +475,11 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 170,
-      downloadCount: 3300
+      downloadCount: 3300,
+      resourceLinks: [
+        { platform: "Unity Learn", url: "https://learn.unity.com/" },
+        { platform: "OpenGL Tutorial", url: "https://learnopengl.com/" }
+      ]
     },
     { 
       id: 35, 
@@ -344,7 +488,11 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 140,
-      downloadCount: 2800
+      downloadCount: 2800,
+      resourceLinks: [
+        { platform: "Coursera", url: "https://www.coursera.org/learn/ui-ux-design" },
+        { platform: "Interaction Design Foundation", url: "https://www.interaction-design.org/" }
+      ]
     },
     { 
       id: 36, 
@@ -353,7 +501,11 @@ const Documents = () => {
       category: "3rd Year",
       difficulty: "Advanced",
       pages: 195,
-      downloadCount: 3500
+      downloadCount: 3500,
+      resourceLinks: [
+        { platform: "MIT OCW", url: "https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-824-distributed-computer-systems-engineering-spring-2006/" },
+        { platform: "High Scalability", url: "http://highscalability.com/" }
+      ]
     },
 
     // 4th Year Documents
@@ -364,7 +516,12 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 250,
-      downloadCount: 6200
+      downloadCount: 6200,
+      resourceLinks: [
+        { platform: "Deep Learning AI", url: "https://www.deeplearning.ai/" },
+        { platform: "Fast.ai", url: "https://www.fast.ai/" },
+        { platform: "TensorFlow", url: "https://www.tensorflow.org/learn" }
+      ]
     },
     { 
       id: 38, 
@@ -373,7 +530,11 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 185,
-      downloadCount: 4600
+      downloadCount: 4600,
+      resourceLinks: [
+        { platform: "Ethereum", url: "https://ethereum.org/en/developers/tutorials/" },
+        { platform: "Coursera", url: "https://www.coursera.org/learn/blockchain-basics" }
+      ]
     },
     { 
       id: 39, 
@@ -382,7 +543,11 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 175,
-      downloadCount: 4100
+      downloadCount: 4100,
+      resourceLinks: [
+        { platform: "Arduino", url: "https://www.arduino.cc/en/Tutorial/HomePage" },
+        { platform: "Coursera", url: "https://www.coursera.org/specializations/iot" }
+      ]
     },
     { 
       id: 40, 
@@ -391,7 +556,11 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 165,
-      downloadCount: 3200
+      downloadCount: 3200,
+      resourceLinks: [
+        { platform: "IBM Quantum", url: "https://qiskit.org/textbook/" },
+        { platform: "Microsoft Quantum", url: "https://docs.microsoft.com/en-us/quantum/" }
+      ]
     },
     { 
       id: 41, 
@@ -400,7 +569,11 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 210,
-      downloadCount: 4800
+      downloadCount: 4800,
+      resourceLinks: [
+        { platform: "System Design Interview", url: "https://github.com/donnemartin/system-design-primer" },
+        { platform: "High Scalability", url: "http://highscalability.com/" }
+      ]
     },
     { 
       id: 42, 
@@ -409,7 +582,11 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 145,
-      downloadCount: 3400
+      downloadCount: 3400,
+      resourceLinks: [
+        { platform: "Coursera", url: "https://www.coursera.org/learn/research-methods" },
+        { platform: "MIT Writing", url: "https://cmsw.mit.edu/writing-and-communication-center/" }
+      ]
     },
     { 
       id: 43, 
@@ -418,7 +595,11 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 130,
-      downloadCount: 2900
+      downloadCount: 2900,
+      resourceLinks: [
+        { platform: "Stanford Entrepreneurship", url: "https://online.stanford.edu/courses/som-y0003-technology-entrepreneurship" },
+        { platform: "Coursera", url: "https://www.coursera.org/learn/entrepreneurship" }
+      ]
     },
     { 
       id: 44, 
@@ -427,7 +608,11 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 120,
-      downloadCount: 2600
+      downloadCount: 2600,
+      resourceLinks: [
+        { platform: "MIT Ethics", url: "https://ethics.mit.edu/" },
+        { platform: "edX", url: "https://www.edx.org/course/artificial-intelligence-ethics-and-society" }
+      ]
     },
     { 
       id: 45, 
@@ -436,7 +621,11 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 155,
-      downloadCount: 3500
+      downloadCount: 3500,
+      resourceLinks: [
+        { platform: "Scrum.org", url: "https://www.scrum.org/learn-about-scrum" },
+        { platform: "PMI", url: "https://www.pmi.org/learning" }
+      ]
     },
     { 
       id: 46, 
@@ -445,7 +634,11 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 180,
-      downloadCount: 3800
+      downloadCount: 3800,
+      resourceLinks: [
+        { platform: "Coursera", url: "https://www.coursera.org/learn/industry-4-0" },
+        { platform: "edX", url: "https://www.edx.org/course/introduction-to-industry-4-0" }
+      ]
     },
     { 
       id: 47, 
@@ -454,7 +647,11 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 195,
-      downloadCount: 4300
+      downloadCount: 4300,
+      resourceLinks: [
+        { platform: "Kaggle Learn", url: "https://www.kaggle.com/learn/data-visualization" },
+        { platform: "Coursera", url: "https://www.coursera.org/specializations/data-science" }
+      ]
     },
     { 
       id: 48, 
@@ -463,7 +660,11 @@ const Documents = () => {
       category: "4th Year",
       difficulty: "Expert",
       pages: 170,
-      downloadCount: 5100
+      downloadCount: 5100,
+      resourceLinks: [
+        { platform: "IEEE Xplore", url: "https://ieeexplore.ieee.org/browse/conferences/title/" },
+        { platform: "GitHub", url: "https://github.com/topics/final-year-project" }
+      ]
     },
 
     // Special Documents
@@ -474,7 +675,12 @@ const Documents = () => {
       category: "Career",
       difficulty: "All Levels",
       pages: 160,
-      downloadCount: 7200
+      downloadCount: 7200,
+      resourceLinks: [
+        { platform: "LeetCode", url: "https://leetcode.com/explore/interview/" },
+        { platform: "InterviewBit", url: "https://www.interviewbit.com/" },
+        { platform: "Pramp", url: "https://www.pramp.com/" }
+      ]
     },
     { 
       id: 50, 
@@ -483,7 +689,12 @@ const Documents = () => {
       category: "Career",
       difficulty: "All Levels",
       pages: 140,
-      downloadCount: 5800
+      downloadCount: 5800,
+      resourceLinks: [
+        { platform: "AWS Certification", url: "https://aws.amazon.com/certification/" },
+        { platform: "Google Cloud Certification", url: "https://cloud.google.com/certification" },
+        { platform: "Microsoft Certification", url: "https://docs.microsoft.com/en-us/learn/certifications/" }
+      ]
     }
   ];
 
@@ -692,6 +903,30 @@ const Documents = () => {
                   <div className="flex items-center text-xs text-gray-500 space-x-3">
                     <span>{doc.pages} pages</span>
                     <span>{doc.downloadCount.toLocaleString()} downloads</span>
+                  </div>
+                </div>
+
+                {/* Learning Resources Section */}
+                <div className="mb-4">
+                  <h4 className="text-xs font-semibold text-gray-700 mb-2">Learn from:</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {doc.resourceLinks.slice(0, 2).map((link, index) => (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-2 py-1 text-xs bg-blue-50 text-blue-700 rounded-md hover:bg-blue-100 transition-colors"
+                      >
+                        {link.platform}
+                        <ExternalLink className="w-2 h-2 ml-1" />
+                      </a>
+                    ))}
+                    {doc.resourceLinks.length > 2 && (
+                      <span className="inline-flex items-center px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-md">
+                        +{doc.resourceLinks.length - 2} more
+                      </span>
+                    )}
                   </div>
                 </div>
 
