@@ -525,12 +525,12 @@ const Documents = () => {
       <header className="border-b border-gray-300 bg-white sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Button variant="ghost" size="sm" asChild className="text-blue-600 hover:bg-blue-50">
-              <Link to="/">
-                <ArrowLeft className="w-4 h-4 mr-1" />
-                Back to Home
-              </Link>
-            </Button>
+            <div className="flex items-center space-x-4">
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <FileText className="w-6 h-6 text-white" />
+              </div>
+              <h1 className="text-xl font-bold text-black">Technical Documents</h1>
+            </div>
             <div className="flex gap-2">
               <Button variant="outline" size="sm">
                 <Filter className="w-4 h-4 mr-1" />
@@ -539,6 +539,12 @@ const Documents = () => {
               <Button variant="outline" size="sm">
                 <Download className="w-4 h-4 mr-1" />
                 Bulk Download
+              </Button>
+              <Button variant="ghost" size="sm" asChild className="text-blue-600 hover:bg-blue-50">
+                <Link to="/">
+                  <ArrowLeft className="w-4 h-4 mr-1" />
+                  Back to Home
+                </Link>
               </Button>
             </div>
           </div>
@@ -630,7 +636,7 @@ const Documents = () => {
         {/* Documents Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredDocuments.map((doc) => (
-            <Card key={doc.id} className={`border-2 hover:shadow-lg transition-all duration-200 ${doc.isSpecial ? 'border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50' : 'border-gray-200 hover:border-blue-300'}`}>
+            <Card key={doc.id} className="border-2 hover:shadow-lg transition-all duration-200 border-gray-200 hover:border-blue-300">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-2">
@@ -639,20 +645,11 @@ const Documents = () => {
                       {doc.category}
                     </Badge>
                   </div>
-                  {doc.isSpecial && (
-                    <Badge className="bg-purple-100 text-purple-800 text-xs">Featured</Badge>
-                  )}
                 </div>
                 <CardTitle className="text-lg font-bold text-black leading-tight">
-                  {doc.isSpecial ? (
-                    <Link to="/anyone-can-develop" className="hover:text-purple-600 transition-colors">
-                      {doc.title}
-                    </Link>
-                  ) : (
-                    <Link to={`/documents/${doc.id}`} className="hover:text-blue-600 transition-colors">
-                      {doc.title}
-                    </Link>
-                  )}
+                  <Link to={`/documents/${doc.id}`} className="hover:text-blue-600 transition-colors">
+                    {doc.title}
+                  </Link>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -671,26 +668,15 @@ const Documents = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  {doc.isSpecial ? (
-                    <Button asChild className="flex-1 bg-purple-600 hover:bg-purple-700">
-                      <Link to="/anyone-can-develop">
-                        <Eye className="w-4 h-4 mr-1" />
-                        View Guide
-                      </Link>
-                    </Button>
-                  ) : (
-                    <>
-                      <Button asChild variant="outline" className="flex-1">
-                        <Link to={`/documents/${doc.id}`}>
-                          <Eye className="w-4 h-4 mr-1" />
-                          Read
-                        </Link>
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Download className="w-4 h-4" />
-                      </Button>
-                    </>
-                  )}
+                  <Button asChild variant="outline" className="flex-1">
+                    <Link to={`/documents/${doc.id}`}>
+                      <Eye className="w-4 h-4 mr-1" />
+                      Read
+                    </Link>
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <Download className="w-4 h-4" />
+                  </Button>
                 </div>
               </CardContent>
             </Card>
