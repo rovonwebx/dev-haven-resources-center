@@ -138,7 +138,7 @@ const Index = () => {
       <header 
         className="border-b border-gray-300 bg-white relative overflow-hidden"
         style={{
-          backgroundImage: `url('public/lovable-uploads/lates banner.png')`,
+          backgroundImage: `url('/lovable-uploads/lates banner.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
