@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
   Award, 
   Code, 
@@ -21,7 +22,9 @@ import {
   ArrowRight,
   HelpCircle,
   School,
-  Rocket
+  Rocket,
+  MessageSquare,
+  Sparkles
 } from "lucide-react";
 import Chatbot from "@/components/Chatbot";
 
@@ -162,6 +165,28 @@ const Index = () => {
           </div>
         </div>
       </header>
+
+      {/* Alert for Chatter Box */}
+      <div className="max-w-7xl mx-auto px-4 py-4">
+        <Alert className="border-red-200 bg-red-50">
+          <MessageSquare className="h-4 w-4 text-red-600" />
+          <AlertDescription className="text-red-800">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Sparkles className="w-4 h-4" />
+                <span className="font-medium">New: DHRC Chatter Box is now available!</span>
+                <span>Chat with our AI assistant powered by Gemini for instant help with your queries.</span>
+              </div>
+              <Link to="/chatter-box">
+                <Button variant="outline" size="sm" className="border-red-300 text-red-700 hover:bg-red-100">
+                  Try Now
+                  <ArrowRight className="w-3 h-3 ml-1" />
+                </Button>
+              </Link>
+            </div>
+          </AlertDescription>
+        </Alert>
+      </div>
 
       {/* Main Content with Side Banners */}
       <div className="max-w-7xl mx-auto px-4 py-8">

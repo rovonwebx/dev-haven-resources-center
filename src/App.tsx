@@ -28,6 +28,7 @@ import DocumentReader from "./pages/DocumentReader";
 import NotesViewer from "./pages/NotesViewer";
 import TheoryReader from "./pages/TheoryReader";
 import AnyoneCanDevelop from "./pages/AnyoneCanDevelop";
+import ChatterBox from "./pages/ChatterBox";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -64,6 +65,7 @@ const App = () => (
             <Route path="/roadmaps" element={<Roadmaps />} />
             <Route path="/interview-questions" element={<InterviewQuestions />} />
             <Route path="/anyone-can-develop" element={<AnyoneCanDevelop />} />
+            <Route path="/chatter-box" element={<ChatterBox />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

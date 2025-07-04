@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,45 +24,6 @@ const Chatbot = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const predefinedQuestions = [
-    {
-      question: "What resources are available in DHRC?",
-      shortText: "Available resources"
-    },
-    {
-      question: "Tell me about the DSA section and LeetCode problems",
-      shortText: "DSA & LeetCode"
-    },
-    {
-      question: "How can I find internship opportunities?",
-      shortText: "Internship opportunities"
-    },
-    {
-      question: "What kind of projects can I build for my portfolio?",
-      shortText: "Portfolio projects"
-    },
-    {
-      question: "Show me the learning roadmaps available",
-      shortText: "Learning roadmaps"
-    },
-    {
-      question: "What certificates and courses do you recommend?",
-      shortText: "Certificates & courses"
-    },
-    {
-      question: "Help me with technical interview preparation",
-      shortText: "Interview prep"
-    },
-    {
-      question: "Tell me about upcoming tech events and competitions",
-      shortText: "Tech events"
-    }
-  ];
-
-  const handleQuestionClick = async (question: string) => {
-    await sendMessage(question);
-  };
 
   const sendMessage = async (messageText: string) => {
     if (!messageText.trim() || isLoading) return;
@@ -138,7 +100,7 @@ const Chatbot = () => {
         </Button>
       </div>
 
-      {/* Chat Window - Increased size for better viewing */}
+      {/* Chat Window */}
       {isOpen && (
         <div className="fixed bottom-28 right-6 w-[480px] max-w-[95vw] max-h-[80vh] z-40">
           <Card className="shadow-2xl border-gray-200 h-full">
@@ -152,8 +114,8 @@ const Chatbot = () => {
               </div>
             </CardHeader>
             
-            <CardContent className="p-0 flex flex-col h-[600px]">
-              {/* Messages - Increased height */}
+            <CardContent className="p-0 flex flex-col h-[500px]">
+              {/* Messages */}
               <div className="flex-1 overflow-y-auto p-5 space-y-4">
                 {messages.map((message) => (
                   <div
@@ -185,26 +147,9 @@ const Chatbot = () => {
                         <Loader2 className="w-5 h-5 animate-spin" />
                         <span className="text-sm">Thinking...</span>
                       </div>
-                    </div>
+                    </div>  
                   </div>
                 )}
-              </div>
-
-              {/* Predefined Questions */}
-              <div className="border-t p-5">
-                <p className="text-sm text-gray-600 mb-3 font-medium">Quick questions:</p>
-                <div className="space-y-2 max-h-40 overflow-y-auto">
-                  {predefinedQuestions.map((item, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleQuestionClick(item.question)}
-                      disabled={isLoading}
-                      className="w-full text-left text-sm p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed border border-gray-200"
-                    >
-                      {item.shortText}
-                    </button>
-                  ))}
-                </div>
               </div>
 
               {/* Input */}
