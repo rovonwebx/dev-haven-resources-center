@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, X, Send, Bot, User } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Message {
   id: string;
@@ -16,89 +17,111 @@ const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hello! I'm your DHRC assistant. I can help you navigate through our resources. What would you like to know about?",
+      text: "Hello! I'm your DHRC AI assistant powered by Gemini. I can help you with any questions about our engineering resources, DSA problems, career guidance, and much more. What would you like to know?",
       isBot: true,
       timestamp: new Date()
     }
   ]);
   const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const predefinedQuestions = [
     {
-      question: "What resources are available?",
-      answer: "DHRC offers 12 main categories: Certificates (industry certifications), Projects (hands-on portfolio ideas), Ideas (innovation concepts), Blogs (technical articles), DSA (data structures & algorithms), Coding Challenges (programming contests), Internships (career opportunities), Notes (study materials), Documents (technical manuals), Theories (fundamental concepts), Student Projects (innovative student work), and Events (tech competitions & conferences)."
+      question: "What resources are available in DHRC?",
+      shortText: "Available resources"
     },
     {
-      question: "Tell me about the DSA section",
-      answer: "Our DSA section contains comprehensive Data Structures and Algorithms resources including a Company Prep section with 150+ LeetCode problems categorized by difficulty and topic (Arrays, Two Pointers, Sliding Window, Stack, Binary Search, Linked Lists, Trees, Graphs, Dynamic Programming, and more). Perfect for technical interview preparation!"
+      question: "Tell me about the DSA section and LeetCode problems",
+      shortText: "DSA & LeetCode"
     },
     {
-      question: "What kind of projects can I find?",
-      answer: "The Projects section offers hands-on project ideas and portfolio suggestions to help you build practical experience. These range from beginner to advanced levels across various technologies and domains."
+      question: "How can I find internship opportunities?",
+      shortText: "Internship opportunities"
     },
     {
-      question: "How can I find internships?",
-      answer: "Our Internships section provides internship opportunities and career guidance, including tips for applications, interview preparation, and career development resources."
+      question: "What kind of projects can I build for my portfolio?",
+      shortText: "Portfolio projects"
     },
     {
-      question: "What are Student Projects?",
-      answer: "Student Projects showcases innovative projects built by students across India. It's a great place to get inspired, see what others are building, and potentially collaborate on interesting ideas."
+      question: "Show me the learning roadmaps available",
+      shortText: "Learning roadmaps"
     },
     {
-      question: "Tell me about Events",
-      answer: "The Events section lists upcoming tech events, programming competitions, hackathons, and conferences. Stay updated with the latest opportunities to network and showcase your skills."
+      question: "What certificates and courses do you recommend?",
+      shortText: "Certificates & courses"
     },
     {
-      question: "What certificates are available?",
-      answer: "Our Certificates section features industry-recognized certifications and online courses from various platforms and institutions to help advance your technical skills and career."
+      question: "Help me with technical interview preparation",
+      shortText: "Interview prep"
     },
     {
-      question: "How do I access study materials?",
-      answer: "Study materials are available in multiple sections: Notes (quick reference guides), Documents (detailed technical documentation), Theories (fundamental concepts), and Blogs (in-depth technical articles and insights)."
+      question: "Tell me about upcoming tech events and competitions",
+      shortText: "Tech events"
     }
   ];
 
-  const handleQuestionClick = (question: string, answer: string) => {
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      text: question,
-      isBot: false,
-      timestamp: new Date()
-    };
-
-    const botResponse: Message = {
-      id: (Date.now() + 1).toString(),
-      text: answer,
-      isBot: true,
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, userMessage, botResponse]);
+  const handleQuestionClick = async (question: string) => {
+    await sendMessage(question);
   };
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+  const sendMessage = async (messageText: string) => {
+    if (!messageText.trim() || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      text: inputValue,
+      text: messageText,
       isBot: false,
       timestamp: new Date()
     };
 
-    const botResponse: Message = {
-      id: (Date.now() + 1).toString(),
-      text: "Thanks for your question! For specific queries, please explore our resource sections or contact our support team. You can also try the predefined questions above for quick answers.",
-      isBot: true,
-      timestamp: new Date()
-    };
+    setMessages(prev => [...prev, userMessage]);
+    setIsLoading(true);
 
-    setMessages(prev => [...prev, userMessage, botResponse]);
+    try {
+      console.log('Sending message to Gemini:', messageText);
+      
+      const { data, error } = await supabase.functions.invoke('gemini-chat', {
+        body: { message: messageText }
+      });
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
+
+      const botResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        text: data.response || "I apologize, but I couldn't process your request at the moment. Please try again.",
+        isBot: true,
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, botResponse]);
+    } catch (error) {
+      console.error('Error calling Gemini chat:', error);
+      
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "I'm sorry, I'm having trouble connecting right now. Please try again in a moment, or you can browse our resource sections directly from the main page.",
+        isBot: true,
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSendMessage = async () => {
+    const message = inputValue.trim();
     setInputValue('');
+    await sendMessage(message);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       handleSendMessage();
     }
   };
@@ -120,10 +143,13 @@ const Chatbot = () => {
       {isOpen && (
         <div className="fixed bottom-24 right-6 w-96 max-w-[90vw] z-40">
           <Card className="shadow-2xl border-gray-200">
-            <CardHeader className="bg-blue-600 text-white rounded-t-lg py-3">
+            <CardHeader className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg py-3">
               <div className="flex items-center space-x-2">
                 <Bot className="w-5 h-5" />
-                <h3 className="font-semibold">DHRC Assistant</h3>
+                <div>
+                  <h3 className="font-semibold">DHRC AI Assistant</h3>
+                  <p className="text-xs text-blue-100">Powered by Gemini AI</p>
+                </div>
               </div>
             </CardHeader>
             
@@ -136,7 +162,7 @@ const Chatbot = () => {
                     className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
                   >
                     <div
-                      className={`max-w-[80%] p-3 rounded-lg ${
+                      className={`max-w-[85%] p-3 rounded-lg ${
                         message.isBot
                           ? 'bg-gray-100 text-gray-800'
                           : 'bg-blue-600 text-white'
@@ -144,12 +170,25 @@ const Chatbot = () => {
                     >
                       <div className="flex items-start space-x-2">
                         {message.isBot && <Bot className="w-4 h-4 mt-0.5 flex-shrink-0" />}
-                        <p className="text-sm">{message.text}</p>
+                        <p className="text-sm whitespace-pre-wrap">{message.text}</p>
                         {!message.isBot && <User className="w-4 h-4 mt-0.5 flex-shrink-0" />}
                       </div>
                     </div>
                   </div>
                 ))}
+                
+                {/* Loading indicator */}
+                {isLoading && (
+                  <div className="flex justify-start">
+                    <div className="bg-gray-100 text-gray-800 p-3 rounded-lg max-w-[85%]">
+                      <div className="flex items-center space-x-2">
+                        <Bot className="w-4 h-4" />
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span className="text-sm">Thinking...</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Predefined Questions */}
@@ -159,10 +198,11 @@ const Chatbot = () => {
                   {predefinedQuestions.map((item, index) => (
                     <button
                       key={index}
-                      onClick={() => handleQuestionClick(item.question, item.answer)}
-                      className="w-full text-left text-xs p-2 rounded bg-gray-50 hover:bg-gray-100 transition-colors"
+                      onClick={() => handleQuestionClick(item.question)}
+                      disabled={isLoading}
+                      className="w-full text-left text-xs p-2 rounded bg-gray-50 hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {item.question}
+                      {item.shortText}
                     </button>
                   ))}
                 </div>
@@ -171,20 +211,26 @@ const Chatbot = () => {
               {/* Input */}
               <div className="border-t p-4">
                 <div className="flex space-x-2">
-                  <input
-                    type="text"
+                  <textarea
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder="Ask me anything..."
-                    className="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Ask me anything about DHRC resources..."
+                    className="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                    rows={1}
+                    disabled={isLoading}
                   />
                   <Button
                     onClick={handleSendMessage}
                     size="sm"
                     className="bg-blue-600 hover:bg-blue-700"
+                    disabled={isLoading || !inputValue.trim()}
                   >
-                    <Send className="w-4 h-4" />
+                    {isLoading ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Send className="w-4 h-4" />
+                    )}
                   </Button>
                 </div>
               </div>
