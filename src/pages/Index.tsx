@@ -134,37 +134,43 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header with blended background image */}
+      {/* Header with new responsive background image */}
       <header 
-        className="border-b border-gray-300 bg-white relative"
+        className="border-b border-gray-300 bg-white relative overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://i.ibb.co/zWCZYk4M/DHRC.png')`,
+          backgroundImage: `url('/lovable-uploads/a5d3ce57-d515-4e09-97e0-133d9bf36488.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex-1">
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-white/20"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 lg:py-12 relative z-10">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between">
+            <div className="flex-1 max-w-2xl">
               {/* Logo Section */}
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-4">
-                  <Lock className="w-6 h-6 text-white" />
+              <div className="flex items-center mb-4 sm:mb-6">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0">
+                  <Lock className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-black mb-1">DHRC</h1>
-                  <p className="text-sm text-gray-600">by Launch Layer R1</p>
+                  <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">DHRC</h1>
+                  <p className="text-xs sm:text-sm text-white/80">by Launch Layer R1</p>
                 </div>
               </div>
               
-              <h1 className="text-3xl font-serif text-black mb-2">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-white mb-2 sm:mb-3 leading-tight">
                 Dev Haven Resources Center
               </h1>
-              <p className="text-gray-600 text-sm">
+              <p className="text-white/90 text-sm sm:text-base max-w-lg leading-relaxed">
                 A comprehensive collection of engineering knowledge and resources
               </p>
             </div>
+            
+            {/* Optional space for future header content */}
+            <div className="hidden lg:block w-32"></div>
           </div>
         </div>
       </header>
@@ -174,14 +180,16 @@ const Index = () => {
         <Alert className="border-red-200 bg-red-50">
           <MessageSquare className="h-4 w-4 text-red-600" />
           <AlertDescription className="text-red-800">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="flex items-center space-x-2">
-                <Sparkles className="w-4 h-4" />
-                <span className="font-medium">New: DHRC Chatter Box is now available!</span>
-                <span>Chat with our AI assistant powered by Gemini for instant help with your queries.</span>
+                <Sparkles className="w-4 h-4 flex-shrink-0" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
+                  <span className="font-medium">New: DHRC Chatter Box is now available!</span>
+                  <span className="text-sm">Chat with our AI assistant powered by Gemini for instant help with your queries.</span>
+                </div>
               </div>
-              <Link to="/chatter-box">
-                <Button variant="outline" size="sm" className="border-red-300 text-red-700 hover:bg-red-100">
+              <Link to="/chatter-box" className="flex-shrink-0">
+                <Button variant="outline" size="sm" className="border-red-300 text-red-700 hover:bg-red-100 w-full sm:w-auto">
                   Try Now
                   <ArrowRight className="w-3 h-3 ml-1" />
                 </Button>
