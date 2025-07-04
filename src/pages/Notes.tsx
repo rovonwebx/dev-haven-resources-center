@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen, Clock, Star, Download, Eye, ExternalLink } from "lucide-react";
+import { ArrowLeft, BookOpen, Clock, Star, ExternalLink } from "lucide-react";
 
 const Notes = () => {
   const noteCategories = [
@@ -707,19 +707,11 @@ const Notes = () => {
                 <Card key={noteIndex} className={`${category.color} hover:shadow-lg transition-all duration-200 hover:scale-105`}>
                   <CardContent className="p-5">
                     <div className="flex justify-between items-start mb-3">
-                      <h3 className="font-semibold text-black text-base leading-tight">{note.title}</h3>
-                      <div className="flex gap-1 ml-2">
-                        <Button variant="outline" size="sm" className="text-xs p-1 h-7 w-7" asChild>
-                          <Link to={`/notes/${note.id}/preview`}>
-                            <Eye className="w-3 h-3" />
-                          </Link>
-                        </Button>
-                        <Button variant="outline" size="sm" className="text-xs p-1 h-7 w-7" asChild>
-                          <Link to={`/notes/${note.id}`}>
-                            <Download className="w-3 h-3" />
-                          </Link>
-                        </Button>
-                      </div>
+                      <Link to={`/notes/${note.id}`} className="flex-1">
+                        <h3 className="font-semibold text-black text-base leading-tight hover:text-blue-600 transition-colors">
+                          {note.title}
+                        </h3>
+                      </Link>
                     </div>
                     <p className="text-gray-700 text-sm leading-relaxed mb-4">{note.description}</p>
                     

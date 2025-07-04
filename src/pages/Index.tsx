@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { 
   Award, 
   Code, 
@@ -59,6 +60,7 @@ const Index = () => {
       description: "Data Structures and Algorithms resources",
       icon: Brain,
       path: "/dsa",
+      isNew: true,
     },
     {
       title: "Coding Challenges",
@@ -83,6 +85,7 @@ const Index = () => {
       description: "Collaborative study notes and campus resources",
       icon: School,
       path: "/campus-notes",
+      isNew: true,
     },
     {
       title: "Documents",
@@ -125,13 +128,22 @@ const Index = () => {
       description: "Complete guide to creating webpages with AI assistance",
       icon: Rocket,
       path: "/anyone-can-develop",
+      isNew: true,
     }
   ];
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b border-gray-300 bg-white">
+      {/* Header with blended background image */}
+      <header 
+        className="border-b border-gray-300 bg-white relative"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://i.ibb.co/zWCZYk4M/DHRC.png')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex-1">
@@ -152,15 +164,6 @@ const Index = () => {
               <p className="text-gray-600 text-sm">
                 A comprehensive collection of engineering knowledge and resources
               </p>
-            </div>
-            
-            {/* Header Image */}
-            <div className="hidden md:block ml-8">
-              <img 
-                src="https://i.ibb.co/zWCZYk4M/DHRC.png"
-                alt="Development Resources"
-                className="w-64 h-32 object-cover rounded-lg shadow-md"
-              />
             </div>
           </div>
         </div>
@@ -243,9 +246,14 @@ const Index = () => {
                       <span className="text-blue-700 font-medium mr-3 min-w-[24px]">{index + 1}.</span>
                       <Link 
                         to={category.path} 
-                        className="text-blue-700 hover:text-blue-900 hover:underline text-sm font-medium transition-colors"
+                        className="text-blue-700 hover:text-blue-900 hover:underline text-sm font-medium transition-colors flex items-center"
                       >
                         {category.title}
+                        {category.isNew && (
+                          <Badge className="ml-2 bg-red-500 text-white text-xs px-1.5 py-0.5 animate-pulse">
+                            New
+                          </Badge>
+                        )}
                       </Link>
                     </div>
                   ))}
@@ -262,13 +270,18 @@ const Index = () => {
                     <div className="flex items-start space-x-3">
                       <IconComponent className="w-5 h-5 text-gray-600 mt-1 flex-shrink-0" />
                       <div className="flex-1">
-                        <h2 className="text-xl font-serif text-black mb-2">
+                        <h2 className="text-xl font-serif text-black mb-2 flex items-center">
                           <Link 
                             to={category.path} 
                             className="text-blue-600 hover:underline"
                           >
                             {category.title}
                           </Link>
+                          {category.isNew && (
+                            <Badge className="ml-3 bg-red-500 text-white text-xs px-2 py-1 animate-pulse">
+                              New
+                            </Badge>
+                          )}
                         </h2>
                         <p className="text-gray-700 leading-relaxed text-sm mb-3">
                           {category.description}
