@@ -1,360 +1,348 @@
-
-import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
+import React from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Award, 
-  Code, 
-  Lightbulb, 
-  BookOpen, 
-  Brain, 
-  Trophy, 
-  Briefcase, 
-  FileText, 
-  File, 
-  GraduationCap,
-  Lock,
-  Users,
-  Calendar,
-  Bot,
-  Zap,
-  ArrowRight,
-  HelpCircle,
-  School,
-  Rocket,
-  MessageSquare,
-  Sparkles,
-  Layout
-} from "lucide-react";
-import Chatbot from "@/components/Chatbot";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import Footer from "@/components/Footer";
+import {
+  Brain,
+  Calendar,
+  Award,
+  Code,
+  Lightbulb,
+  BookOpen,
+  FileText,
+  Briefcase,
+  Building2,
+  Users,
+  Target,
+  MessageSquare,
+  Layout,
+  School,
+  ChevronRight,
+  Zap,
+  Star,
+  Trophy
+} from "lucide-react";
 
 const Index = () => {
-  const resourceCategories = [
-    {
-      title: "Certificates",
-      description: "Industry-recognized certifications and online courses",
-      icon: Award,
-      path: "/certificates",
-    },
-    {
-      title: "Projects",
-      description: "Hands-on projects and portfolio ideas",
-      icon: Code,
-      path: "/projects",
-    },
-    {
-      title: "Ideas",
-      description: "Innovation concepts and startup ideas",
-      icon: Lightbulb,
-      path: "/ideas",
-    },
-    {
-      title: "Blogs",
-      description: "Technical articles and engineering insights",
-      icon: BookOpen,
-      path: "/blogs",
-    },
-    {
-      title: "DSA",
-      description: "Data Structures and Algorithms resources",
-      icon: Brain,
-      path: "/dsa",
-      isNew: true,
-    },
-    {
-      title: "Coding Challenges",
-      description: "Programming contests and practice problems",
-      icon: Trophy,
-      path: "/coding-challenges",
-    },
-    {
-      title: "Internships",
-      description: "Internship opportunities and career guidance",
-      icon: Briefcase,
-      path: "/internships",
-    },
-    {
-      title: "Notes",
-      description: "Study materials and quick reference guides",
-      icon: FileText,
-      path: "/notes",
-    },
-    {
-      title: "Campus Notes",
-      description: "Collaborative study notes and campus resources",
-      icon: School,
-      path: "/campus-notes",
-      isNew: true,
-    },
-    {
-      title: "Documents",
-      description: "Technical documentation and manuals",
-      icon: File,
-      path: "/documents",
-    },
-    {
-      title: "Theories",
-      description: "Fundamental concepts and theoretical knowledge",
-      icon: GraduationCap,
-      path: "/theories",
-    },
-    {
-      title: "Roadmaps",
-      description: "Structured learning paths for DSA and Web Development",
-      icon: Calendar,
-      path: "/roadmaps",
-    },
-    {
-      title: "Student Projects",
-      description: "Innovative projects built by students across India",
-      icon: Users,
-      path: "/student-projects",
-    },
-    {
-      title: "Events",
-      description: "Tech events, competitions, and conferences",
-      icon: Calendar,
-      path: "/events",
-    },
-    {
-      title: "Interview Questions",
-      description: "Comprehensive SQL interview questions and answers",
-      icon: HelpCircle,
-      path: "/interview-questions",
-    },
-    {
-      title: "Anyone Can Develop",
-      description: "Complete guide to creating webpages with AI assistance",
-      icon: Rocket,
-      path: "/anyone-can-develop",
-      isNew: true,
-    },
-    {
-      title: "Templates",
-      description: "Ready-to-use web templates and design resources",
-      icon: Layout,
-      path: "/templates",
-      isNew: true,
-    }
-  ];
+  const { user } = useAuth();
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header with responsive background image */}
-      <header 
-        className="border-b border-gray-300 bg-white relative overflow-hidden"
-        style={{
-          backgroundImage: `url('/lovable-uploads/a5d3ce57-d515-4e09-97e0-133d9bf36488.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        <div className="absolute inset-0 bg-black/40"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 lg:py-12 relative z-10">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between">
-            <div className="flex-1 max-w-2xl">
-              <div className="flex items-center mb-4 sm:mb-6">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0">
-                  <Lock className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">DHRC</h1>
-                  <p className="text-xs sm:text-sm text-white/80">by Rishi Rohan Kalapala</p>
-                </div>
-              </div>
-              
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-white mb-2 sm:mb-3 leading-tight">
-                Dev Haven Resources Center
-              </h1>
-              <p className="text-white/90 text-sm sm:text-base max-w-lg leading-relaxed">
-                A comprehensive collection of engineering knowledge and resources
-              </p>
-            </div>
-            
-            <div className="hidden lg:block w-32"></div>
-          </div>
+      {/* Hero Section with Background Image */}
+      <div className="relative min-h-screen flex items-center">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/lovable-uploads/a5d3ce57-d515-4e09-97e0-133d9bf36488.png')`,
+          }}
+        >
+          <div className="absolute inset-0 bg-black/40"></div>
         </div>
-      </header>
-
-      {/* Alert for Chatter Box */}
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        <Alert className="border-red-200 bg-red-50">
-          <MessageSquare className="h-4 w-4 text-red-600" />
-          <AlertDescription className="text-red-800">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="flex items-center space-x-2">
-                <Sparkles className="w-4 h-4 flex-shrink-0" />
-                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
-                  <span className="font-medium">New: DHRC Chatter Box is now available!</span>
-                  <span className="text-sm">Chat with our AI assistant powered by Gemini for instant help with your queries.</span>
-                </div>
-              </div>
-              <Link to="/chatter-box" className="flex-shrink-0">
-                <Button variant="outline" size="sm" className="border-red-300 text-red-700 hover:bg-red-100 w-full sm:w-auto">
-                  Try Now
-                  <ArrowRight className="w-3 h-3 ml-1" />
-                </Button>
-              </Link>
-            </div>
-          </AlertDescription>
-        </Alert>
-      </div>
-
-      {/* Main Content with Side Banners */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-12 gap-6">
-          {/* Left Banner - AI Interviews */}
-          <div className="col-span-2 hidden lg:block">
-            <div className="sticky top-8">
-              <Card className="border border-gray-200 bg-gradient-to-br from-blue-50 to-indigo-100 overflow-hidden">
-                <div className="relative">
-                  <img 
-                    src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
-                    alt="AI Interviews"
-                    className="w-full h-32 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-2 left-2 right-2">
-                    <Bot className="w-6 h-6 text-white mb-1" />
-                    <h3 className="text-white font-semibold text-sm">AI Interviews</h3>
-                  </div>
-                </div>
-                <CardContent className="p-3">
-                  <p className="text-xs text-gray-600 mb-3">
-                    Practice coding interviews with AI-powered mock sessions
-                  </p>
-                  <Link to="/auth?service=ai-interviews">
-                    <Button size="sm" className="w-full text-xs">
-                      Start Practice
-                      <ArrowRight className="w-3 h-3 ml-1" />
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+              Dev Haven
+              <span className="block text-blue-400">Resources Center</span>
+            </h1>
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed">
+              Your ultimate destination for engineering resources, coding challenges, 
+              career guidance, and professional development tools
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {user ? (
+                <>
+                  <Link to="/organizer">
+                    <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
+                      Go to Organizer
+                      <ChevronRight className="ml-2 w-5 h-5" />
                     </Button>
                   </Link>
-                </CardContent>
-              </Card>
+                  <Link to="/chatter-box">
+                    <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black px-8 py-4 text-lg">
+                      Try AI Assistant
+                      <MessageSquare className="ml-2 w-5 h-5" />
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/auth">
+                    <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
+                      Get Started
+                      <ChevronRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  </Link>
+                  <Link to="/chatter-box">
+                    <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black px-8 py-4 text-lg">
+                      Try AI Assistant
+                      <MessageSquare className="ml-2 w-5 h-5" />
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Main Content */}
-          <main className="col-span-12 lg:col-span-8">
-            {/* Introduction */}
-            <div className="mb-8">
-              <p className="text-gray-700 leading-relaxed mb-4">
-                The <strong> Dev Haven Resources Center</strong> is a comprehensive platform designed to support engineers 
-                at every stage of their career. From foundational concepts to advanced theories, this hub provides 
-                structured access to essential learning materials, practical projects, and career development resources.
-              </p>
+      {/* Banner Section */}
+      <div className="py-16 bg-gradient-to-r from-blue-50 to-indigo-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Organizer Banner */}
+            <div className="relative bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-8 text-white overflow-hidden">
+              <div className="absolute top-4 right-4">
+                <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  POPULAR
+                </span>
+              </div>
+              <div className="relative z-10">
+                <Calendar className="w-12 h-12 mb-4 text-green-100" />
+                <h3 className="text-2xl font-bold mb-3">Personal Organizer</h3>
+                <p className="text-green-100 mb-6 leading-relaxed">
+                  Boost your productivity with our comprehensive task management, 
+                  project tracking, and time organization tools.
+                </p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center">
+                      <Star className="w-4 h-4 text-yellow-300 mr-1" />
+                      <span className="text-sm">4.8/5</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Users className="w-4 h-4 text-green-200 mr-1" />
+                      <span className="text-sm">5K+ users</span>
+                    </div>
+                  </div>
+                  <Link to="/organizer">
+                    <Button className="bg-white text-green-600 hover:bg-green-50">
+                      Organize Now
+                      <ChevronRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-white/10 rounded-full"></div>
+              <div className="absolute -top-4 -left-4 w-16 h-16 bg-white/10 rounded-full"></div>
             </div>
 
-            {/* Table of Contents */}
-            <Card className="mb-8 border border-gray-200 bg-gray-50">
-              <CardContent className="p-6">
-                <h2 className="text-xl font-serif text-black mb-4 pb-2 border-b border-gray-300">Contents</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {resourceCategories.map((category, index) => (
-                    <div key={category.title} className="flex items-center py-1">
-                      <span className="text-blue-700 font-medium mr-3 min-w-[24px]">{index + 1}.</span>
-                      <Link 
-                        to={category.path} 
-                        className="text-blue-700 hover:text-blue-900 hover:underline text-sm font-medium transition-colors flex items-center"
-                      >
-                        {category.title}
-                        {category.isNew && (
-                          <Badge className="ml-2 bg-red-500 text-white text-xs px-1.5 py-0.5 animate-pulse">
-                            New
-                          </Badge>
-                        )}
-                      </Link>
+            {/* Templates Banner */}
+            <div className="relative bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-8 text-white overflow-hidden">
+              <div className="absolute top-4 right-4">
+                <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  NEW
+                </span>
+              </div>
+              <div className="relative z-10">
+                <Layout className="w-12 h-12 mb-4 text-purple-100" />
+                <h3 className="text-2xl font-bold mb-3">Web Templates</h3>
+                <p className="text-purple-100 mb-6 leading-relaxed">
+                  Discover beautiful, responsive web templates with source code, 
+                  demos, and GitHub repositories for your next project.
+                </p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center">
+                      <Trophy className="w-4 h-4 text-yellow-300 mr-1" />
+                      <span className="text-sm">Premium Quality</span>
                     </div>
-                  ))}
+                    <div className="flex items-center">
+                      <Code className="w-4 h-4 text-purple-200 mr-1" />
+                      <span className="text-sm">50+ Templates</span>
+                    </div>
+                  </div>
+                  <Link to="/templates">
+                    <Button className="bg-white text-purple-600 hover:bg-purple-50">
+                      Browse Templates
+                      <ChevronRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </Link>
                 </div>
+              </div>
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-white/10 rounded-full"></div>
+              <div className="absolute -top-4 -left-4 w-16 h-16 bg-white/10 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Grid */}
+      <div className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Everything You Need to Succeed</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Comprehensive tools and resources to accelerate your engineering career and projects
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* AI Interviews */}
+            <Card className="hover:shadow-lg transition-shadow border-2 hover:border-blue-200">
+              <CardHeader>
+                <Brain className="w-8 h-8 text-blue-600 mb-2" />
+                <CardTitle className="text-xl">AI Mock Interviews</CardTitle>
+                <CardDescription>
+                  Practice technical interviews with AI-powered questions and real-time feedback
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Link to="/ai-interviews">
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                    Start Interview
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
 
-            {/* Resource Categories */}
-            <div className="space-y-8">
-              {resourceCategories.map((category) => {
-                const IconComponent = category.icon;
-                return (
-                  <section key={category.title} className="border-b border-gray-200 pb-6">
-                    <div className="flex items-start space-x-3">
-                      <IconComponent className="w-5 h-5 text-gray-600 mt-1 flex-shrink-0" />
-                      <div className="flex-1">
-                        <h2 className="text-xl font-serif text-black mb-2 flex items-center">
-                          <Link 
-                            to={category.path} 
-                            className="text-blue-600 hover:underline"
-                          >
-                            {category.title}
-                          </Link>
-                          {category.isNew && (
-                            <Badge className="ml-3 bg-red-500 text-white text-xs px-2 py-1 animate-pulse">
-                              New
-                            </Badge>
-                          )}
-                        </h2>
-                        <p className="text-gray-700 leading-relaxed text-sm mb-3">
-                          {category.description}
-                        </p>
-                        <Link 
-                          to={category.path}
-                          className="text-blue-600 hover:underline text-sm font-medium"
-                        >
-                          Main article: {category.title} →
-                        </Link>
-                      </div>
-                    </div>
-                  </section>
-                );
-              })}
-            </div>
-          </main>
+            {/* Certificates */}
+            <Card className="hover:shadow-lg transition-shadow border-2 hover:border-green-200">
+              <CardHeader>
+                <Award className="w-8 h-8 text-green-600 mb-2" />
+                <CardTitle className="text-xl">Certificates</CardTitle>
+                <CardDescription>
+                  Showcase your achievements with professional certificates and credentials
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Link to="/certificates">
+                  <Button className="w-full bg-green-600 hover:bg-green-700">
+                    View Certificates
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
 
-          {/* Right Banner - Templates */}
-          <div className="col-span-2 hidden lg:block">
-            <div className="sticky top-8">
-              <Card className="border border-gray-200 bg-gradient-to-br from-purple-50 to-violet-100 overflow-hidden">
-                <div className="relative">
-                  <img 
-                    src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
-                    alt="Templates"
-                    className="w-full h-32 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-2 left-2 right-2">
-                    <Layout className="w-6 h-6 text-white mb-1" />
-                    <h3 className="text-white font-semibold text-sm">Templates</h3>
-                    <Badge className="bg-red-500 text-white text-xs px-1.5 py-0.5 animate-pulse mt-1">
-                      New
-                    </Badge>
-                  </div>
-                </div>
-                <CardContent className="p-3">
-                  <p className="text-xs text-gray-600 mb-3">
-                    Ready-to-use web templates and design resources
-                  </p>
-                  <Link to="/templates">
-                    <Button size="sm" variant="outline" className="w-full text-xs">
-                      Explore Templates
-                      <ArrowRight className="w-3 h-3 ml-1" />
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            </div>
+            {/* Projects */}
+            <Card className="hover:shadow-lg transition-shadow border-2 hover:border-purple-200">
+              <CardHeader>
+                <Code className="w-8 h-8 text-purple-600 mb-2" />
+                <CardTitle className="text-xl">Projects</CardTitle>
+                <CardDescription>
+                  Explore coding projects, tutorials, and hands-on learning experiences
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Link to="/projects">
+                  <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                    Explore Projects
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Ideas */}
+            <Card className="hover:shadow-lg transition-shadow border-2 hover:border-orange-200">
+              <CardHeader>
+                <Lightbulb className="w-8 h-8 text-orange-600 mb-2" />
+                <CardTitle className="text-xl">Project Ideas</CardTitle>
+                <CardDescription>
+                  Get inspired with innovative project ideas and implementation guides
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Link to="/ideas">
+                  <Button className="w-full bg-orange-600 hover:bg-orange-700">
+                    Get Ideas
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* DSA */}
+            <Card className="hover:shadow-lg transition-shadow border-2 hover:border-red-200">
+              <CardHeader>
+                <Target className="w-8 h-8 text-red-600 mb-2" />
+                <CardTitle className="text-xl">DSA Practice</CardTitle>
+                <CardDescription>
+                  Master Data Structures and Algorithms with comprehensive problem sets
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Link to="/dsa">
+                  <Button className="w-full bg-red-600 hover:bg-red-700">
+                    Practice DSA
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Notes */}
+            <Card className="hover:shadow-lg transition-shadow border-2 hover:border-indigo-200">
+              <CardHeader>
+                <FileText className="w-8 h-8 text-indigo-600 mb-2" />
+                <CardTitle className="text-xl">Study Notes</CardTitle>
+                <CardDescription>
+                  Access comprehensive study materials and technical documentation
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Link to="/notes">
+                  <Button className="w-full bg-indigo-600 hover:bg-indigo-700">
+                    Browse Notes
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
-      <Footer />
+      {/* Additional Features */}
+      <div className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6">
+                <Briefcase className="w-10 h-10 text-blue-600 mx-auto mb-4" />
+                <h3 className="font-semibold mb-2">Internships</h3>
+                <p className="text-sm text-gray-600 mb-4">Find and apply for internship opportunities</p>
+                <Link to="/internships">
+                  <Button variant="outline" size="sm">Explore</Button>
+                </Link>
+              </CardContent>
+            </Card>
 
-      {/* Chatbot */}
-      <Chatbot />
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6">
+                <Building2 className="w-10 h-10 text-green-600 mx-auto mb-4" />
+                <h3 className="font-semibold mb-2">Events</h3>
+                <p className="text-sm text-gray-600 mb-4">Stay updated with tech events and conferences</p>
+                <Link to="/events">
+                  <Button variant="outline" size="sm">View Events</Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6">
+                <BookOpen className="w-10 h-10 text-purple-600 mx-auto mb-4" />
+                <h3 className="font-semibold mb-2">Blogs</h3>
+                <p className="text-sm text-gray-600 mb-4">Read insightful articles and tutorials</p>
+                <Link to="/blogs">
+                  <Button variant="outline" size="sm">Read Blogs</Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardContent className="pt-6">
+                <School className="w-10 h-10 text-orange-600 mx-auto mb-4" />
+                <h3 className="font-semibold mb-2">Campus Notes</h3>
+                <p className="text-sm text-gray-600 mb-4">Access campus-specific study materials</p>
+                <Link to="/campus-notes">
+                  <Button variant="outline" size="sm">Access Notes</Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+
+      <Footer />
     </div>
   );
 };
