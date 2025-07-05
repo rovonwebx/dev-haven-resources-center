@@ -316,7 +316,8 @@ const Index = () => {
 
           {/* Right Banner - Templates */}
           <div className="col-span-2 hidden lg:block">
-            <div className="sticky top-8">
+            <div className="sticky top-8 space-y-6">
+              {/* Templates Banner */}
               <Card className="border border-gray-200 bg-gradient-to-br from-purple-50 to-violet-100 overflow-hidden">
                 <div className="relative">
                   <img 
@@ -340,6 +341,33 @@ const Index = () => {
                   <Link to="/templates">
                     <Button size="sm" variant="outline" className="w-full text-xs">
                       Explore Templates
+                      <ArrowRight className="w-3 h-3 ml-1" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              {/* Organizer Banner */}
+              <Card className="border border-gray-200 bg-gradient-to-br from-green-50 to-emerald-100 overflow-hidden">
+                <div className="relative">
+                  <img 
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                    alt="Organizer"
+                    className="w-full h-32 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-2 left-2 right-2">
+                    <Calendar className="w-6 h-6 text-white mb-1" />
+                    <h3 className="text-white font-semibold text-sm">Organizer</h3>
+                  </div>
+                </div>
+                <CardContent className="p-3">
+                  <p className="text-xs text-gray-600 mb-3">
+                    Manage tasks, projects, and track your productivity
+                  </p>
+                  <Link to="/organizer">
+                    <Button size="sm" className="w-full text-xs bg-green-600 hover:bg-green-700">
+                      Get Organized
                       <ArrowRight className="w-3 h-3 ml-1" />
                     </Button>
                   </Link>
