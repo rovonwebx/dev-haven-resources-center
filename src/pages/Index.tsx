@@ -25,9 +25,11 @@ import {
   School,
   Rocket,
   MessageSquare,
-  Sparkles
+  Sparkles,
+  Layout
 } from "lucide-react";
 import Chatbot from "@/components/Chatbot";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   const resourceCategories = [
@@ -129,28 +131,33 @@ const Index = () => {
       icon: Rocket,
       path: "/anyone-can-develop",
       isNew: true,
+    },
+    {
+      title: "Templates",
+      description: "Ready-to-use web templates and design resources",
+      icon: Layout,
+      path: "/templates",
+      isNew: true,
     }
   ];
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header with new responsive background image */}
+      {/* Header with responsive background image */}
       <header 
         className="border-b border-gray-300 bg-white relative overflow-hidden"
         style={{
-          backgroundImage: `url('https://i.ibb.co/CpSDhzSV/lates-banner.png')`,
+          backgroundImage: `url('/lovable-uploads/a5d3ce57-d515-4e09-97e0-133d9bf36488.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-white/20"></div>
+        <div className="absolute inset-0 bg-black/40"></div>
         
         <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 lg:py-12 relative z-10">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between">
             <div className="flex-1 max-w-2xl">
-              {/* Logo Section */}
               <div className="flex items-center mb-4 sm:mb-6">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0">
                   <Lock className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -169,7 +176,6 @@ const Index = () => {
               </p>
             </div>
             
-            {/* Optional space for future header content */}
             <div className="hidden lg:block w-32"></div>
           </div>
         </div>
@@ -306,39 +312,34 @@ const Index = () => {
                 );
               })}
             </div>
-
-            {/* Footer */}
-            <div className="mt-12 pt-6 border-t border-gray-200">
-              <p className="text-gray-500 text-xs">
-                Last updated: June 2025 • This page provides an overview of engineering resources available on the platform.
-              </p>
-            </div>
           </main>
 
-          {/* Right Banner - My OS (Organizer) */}
+          {/* Right Banner - Templates */}
           <div className="col-span-2 hidden lg:block">
             <div className="sticky top-8">
-              <Card className="border border-gray-200 bg-gradient-to-br from-green-50 to-emerald-100 overflow-hidden">
+              <Card className="border border-gray-200 bg-gradient-to-br from-purple-50 to-violet-100 overflow-hidden">
                 <div className="relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1721322800607-8c38375eef04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
-                    alt="My OS Organizer"
+                    src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                    alt="Templates"
                     className="w-full h-32 object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <div className="absolute bottom-2 left-2 right-2">
-                    <Zap className="w-6 h-6 text-white mb-1" />
-                    <h3 className="text-white font-semibold text-sm">My OS</h3>
-                    <p className="text-white/80 text-xs">Organizer</p>
+                    <Layout className="w-6 h-6 text-white mb-1" />
+                    <h3 className="text-white font-semibold text-sm">Templates</h3>
+                    <Badge className="bg-red-500 text-white text-xs px-1.5 py-0.5 animate-pulse mt-1">
+                      New
+                    </Badge>
                   </div>
                 </div>
                 <CardContent className="p-3">
                   <p className="text-xs text-gray-600 mb-3">
-                    Organize your development workflow with smart tools
+                    Ready-to-use web templates and design resources
                   </p>
-                  <Link to="/auth?service=organizer">
+                  <Link to="/templates">
                     <Button size="sm" variant="outline" className="w-full text-xs">
-                      Get Organized
+                      Explore Templates
                       <ArrowRight className="w-3 h-3 ml-1" />
                     </Button>
                   </Link>
@@ -348,6 +349,9 @@ const Index = () => {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
 
       {/* Chatbot */}
       <Chatbot />
