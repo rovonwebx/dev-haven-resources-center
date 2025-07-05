@@ -95,30 +95,6 @@ export type Database = {
         }
         Relationships: []
       }
-      chat_history: {
-        Row: {
-          created_at: string
-          id: string
-          is_bot: boolean
-          message: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          is_bot?: boolean
-          message: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          is_bot?: boolean
-          message?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
       organizer_notes: {
         Row: {
           category: string | null
