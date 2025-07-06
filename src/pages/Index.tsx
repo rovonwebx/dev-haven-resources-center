@@ -26,6 +26,7 @@ import {
   Sparkles,
   Layout
 } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 import Chatbot from "@/components/Chatbot";
 import Footer from "@/components/Footer";
 
@@ -141,6 +142,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <Analytics />
+      
       {/* Header with responsive background image */}
       <header 
         className="border-b border-gray-300 bg-white relative overflow-hidden"
