@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,7 +27,7 @@ const CampusNotes = () => {
       description: "Foundation subjects and basic engineering concepts",
       subjects: ["Mathematics", "Physics", "Chemistry", "Programming", "Engineering Drawing", "Environmental Science"],
       resources: [
-        { name: "Lab Notes", icon: Flask, count: 25, description: "Physics, Chemistry & Programming lab experiments" },
+        { name: "Lab Notes", icon: Beaker, count: 25, description: "Physics, Chemistry & Programming lab experiments" },
         { name: "Lab Records", icon: FileText, count: 30, description: "Complete lab record formats and observations" },
         { name: "Assignments", icon: PenTool, count: 40, description: "Solved assignments for all subjects" },
         { name: "Previous Year Papers", icon: Award, count: 80, description: "Last 5 years question papers with solutions" },
@@ -42,7 +43,7 @@ const CampusNotes = () => {
       description: "Core engineering subjects and programming fundamentals",
       subjects: ["Data Structures", "Digital Electronics", "Database Systems", "Computer Organization", "Mathematics II", "OOP"],
       resources: [
-        { name: "Lab Notes", icon: Flask, count: 35, description: "DSA, DBMS & Digital Electronics labs" },
+        { name: "Lab Notes", icon: Beaker, count: 35, description: "DSA, DBMS & Digital Electronics labs" },
         { name: "Lab Records", icon: FileText, count: 42, description: "Programming and circuit lab records" },
         { name: "Assignments", icon: PenTool, count: 55, description: "Coding assignments and problem solving" },
         { name: "Previous Year Papers", icon: Award, count: 95, description: "Exam papers with detailed solutions" },
@@ -58,7 +59,7 @@ const CampusNotes = () => {
       description: "Advanced topics and specialization subjects",
       subjects: ["Software Engineering", "Computer Networks", "Operating Systems", "Web Development", "AI/ML", "System Design"],
       resources: [
-        { name: "Lab Notes", icon: Flask, count: 45, description: "Advanced programming and networking labs" },
+        { name: "Lab Notes", icon: Beaker, count: 45, description: "Advanced programming and networking labs" },
         { name: "Lab Records", icon: FileText, count: 50, description: "System programming and network labs" },
         { name: "Assignments", icon: PenTool, count: 65, description: "Complex programming assignments" },
         { name: "Previous Year Papers", icon: Award, count: 110, description: "Advanced subject question papers" },
@@ -74,7 +75,7 @@ const CampusNotes = () => {
       description: "Final year projects and industry preparation",
       subjects: ["Capstone Project", "Blockchain", "Cloud Computing", "DevOps", "Mobile Development", "Research Methodology"],
       resources: [
-        { name: "Lab Notes", icon: Flask, count: 30, description: "Research and advanced technology labs" },
+        { name: "Lab Notes", icon: Beaker, count: 30, description: "Research and advanced technology labs" },
         { name: "Lab Records", icon: FileText, count: 35, description: "Project development records" },
         { name: "Assignments", icon: PenTool, count: 45, description: "Research-based assignments" },
         { name: "Previous Year Papers", icon: Award, count: 85, description: "Final year examination papers" },
