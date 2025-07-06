@@ -166,7 +166,7 @@ const Index = () => {
                 </div>
                 <div>
                   <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">DHRC</h1>
-                  <p className="text-xs sm:text-sm text-white/80">by Rishi Rohan Kalapala</p>
+                  <p className="text-xs sm:text-sm text-white/80">by Rishi Rohan Kalapala & Team</p>
                 </div>
               </div>
               
