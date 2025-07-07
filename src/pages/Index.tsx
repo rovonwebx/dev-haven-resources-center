@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -144,45 +143,88 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <Analytics />
       
-      {/* Header with responsive background image */}
-      <header 
-        className="border-b border-gray-300 bg-white relative overflow-hidden"
-        style={{
-          backgroundImage: `url('https://i.ibb.co/fYf7pDBk/lates-banner.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        <div className="absolute inset-0 bg-black/40"></div>
+      {/* Redesigned Header */}
+      <header className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="7" cy="7" r="7"/%3E%3Ccircle cx="53" cy="7" r="7"/%3E%3Ccircle cx="7" cy="53" r="7"/%3E%3Ccircle cx="53" cy="53" r="7"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+        </div>
         
-        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 lg:py-12 relative z-10">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between">
-            <div className="flex-1 max-w-2xl">
-              <div className="flex items-center mb-4 sm:mb-6">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0 p-1">
-                  <img 
-                    src="/lovable-uploads/afd18992-2d3f-4720-9839-1637802cd8e4.png" 
-                    alt="DHRC Logo" 
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div>
-                  <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">DHRC</h1>
-                  <p className="text-xs sm:text-sm text-white/80">by DHRC Team</p>
-                </div>
+        {/* Floating Elements */}
+        <div className="absolute top-20 right-20 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse hidden lg:block"></div>
+        <div className="absolute bottom-20 left-20 w-24 h-24 bg-white/5 rounded-full blur-lg animate-pulse hidden lg:block"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 py-12 sm:py-16 lg:py-20 relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            {/* Logo and Brand */}
+            <div className="flex items-center justify-center mb-8">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mr-4 p-2 border border-white/30">
+                <img 
+                  src="/lovable-uploads/afd18992-2d3f-4720-9839-1637802cd8e4.png" 
+                  alt="DHRC Logo" 
+                  className="w-full h-full object-contain"
+                />
               </div>
-              
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-white mb-2 sm:mb-3 leading-tight">
-                Dev Haven Resources Center
-              </h1>
-              <p className="text-white/90 text-sm sm:text-base max-w-lg leading-relaxed">
-                A comprehensive collection of engineering knowledge and resources
-              </p>
+              <div className="text-left">
+                <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">DHRC</h1>
+                <p className="text-white/80 text-sm sm:text-base">by DHRC Team</p>
+              </div>
             </div>
             
-            <div className="hidden lg:block w-32"></div>
+            {/* Main Heading */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+              Dev Haven 
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
+                Resources Center
+              </span>
+            </h1>
+            
+            {/* Subtitle */}
+            <p className="text-xl sm:text-2xl text-white/90 mb-8 leading-relaxed font-light">
+              Your comprehensive hub for engineering knowledge, resources, and career development
+            </p>
+            
+            {/* Stats or Features */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-2">17+</div>
+                <div className="text-white/80 text-sm">Resource Categories</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-2">1000+</div>
+                <div className="text-white/80 text-sm">Study Materials</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-2">24/7</div>
+                <div className="text-white/80 text-sm">AI Assistant</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-2">Free</div>
+                <div className="text-white/80 text-sm">Access</div>
+              </div>
+            </div>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-white/90 font-semibold px-8 py-3 text-lg">
+                Get Started
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+              <Link to="/chatter-box">
+                <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-8 py-3 text-lg">
+                  Try AI Assistant
+                  <Bot className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+            </div>
           </div>
+        </div>
+        
+        {/* Wave Bottom */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden">
+          <svg className="relative block w-full h-12" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="#ffffff"></path>
+          </svg>
         </div>
       </header>
 
