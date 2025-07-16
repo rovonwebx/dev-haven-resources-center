@@ -28,8 +28,10 @@ import {
 import { Analytics } from "@vercel/analytics/react";
 import Chatbot from "@/components/Chatbot";
 import Footer from "@/components/Footer";
+import React, { useState } from "react";
 
 const Index = () => {
+  const [showPopup, setShowPopup] = useState(true);
   const resourceCategories = [
     {
       title: "Certificates",
@@ -140,31 +142,34 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
+      {/* Pop-up Modal */}
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="bg-white rounded-2xl shadow-2xl p-4 max-w-lg w-full relative flex flex-col items-center">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-2xl font-bold focus:outline-none"
+              onClick={() => setShowPopup(false)}
+              aria-label="Close popup"
+            >
+              ×
+            </button>
+            <img
+              src="https://i.ibb.co/9HxdH725/Chat-GPT-Image-Jul-16-2025-11-36-07-PM.png"
+              alt="DHRC Domain Move Announcement"
+              className="w-full h-auto rounded-xl mb-2"
+              style={{maxHeight: '340px'}}
+            />
+          </div>
+        </div>
+      )}
+      <div className="min-h-screen bg-white">
       <Analytics />
       
       {/* Header with solid color and animated geometric outline shapes */}
       <header 
         className="border-b border-gray-300 bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 relative overflow-hidden"
       >
-        {/* Animated SVG outline shapes */}
-        <svg className="absolute top-0 left-0 w-48 h-48 opacity-60 z-0 animate-spin-slow" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="100" cy="100" r="90" fill="none" stroke="#fff" strokeWidth="8" />
-        </svg>
-        <svg className="absolute bottom-0 right-0 w-64 h-64 opacity-40 z-0 animate-float" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="20" width="260" height="260" rx="60" fill="none" stroke="#fff" strokeWidth="10" />
-        </svg>
-        <svg className="absolute top-10 right-1/3 w-32 h-32 opacity-40 z-0 animate-pulse-slow" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="50,10 95,90 5,90" fill="none" stroke="#fff" strokeWidth="6" />
-        </svg>
-        <style>{`
-          @keyframes spin-slow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-          .animate-spin-slow { animation: spin-slow 18s linear infinite; }
-          @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
-          .animate-float { animation: float 7s ease-in-out infinite; }
-          @keyframes pulse-slow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-          .animate-pulse-slow { animation: pulse-slow 5s ease-in-out infinite; }
-        `}</style>
         <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 lg:py-12 relative z-10">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between">
             <div className="flex-1 max-w-2xl">
@@ -188,7 +193,15 @@ const Index = () => {
                 A comprehensive collection of engineering knowledge and resources
               </p>
             </div>
-            <div className="hidden lg:block w-32"></div>
+            {/* Header Image on the right */}
+            <div className="hidden lg:flex items-center justify-end flex-1">
+              <img 
+                src="https://i.ibb.co/7Nkf4tRs/Chat-GPT-Image-Jul-17-2025-12-10-31-AM-removebg-preview.png"
+                alt="Header Banner"
+                className="w-[340px] h-auto object-contain mix-blend-lighten opacity-90 drop-shadow-2xl"
+                style={{maxHeight: '220px'}}
+              />
+            </div>
           </div>
         </div>
       </header>
@@ -488,6 +501,7 @@ const Index = () => {
       {/* Chatbot */}
       <Chatbot />
     </div>
+    </>
   );
 };
 
