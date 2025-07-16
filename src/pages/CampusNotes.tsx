@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,12 +15,13 @@ import {
   GraduationCap,
   Calendar,
   Users,
-  Download
+  Download,
+  ExternalLink
 } from "lucide-react";
 
 const CampusNotes = () => {
   const academicYears = [
-  {
+    {
       year: "First Year",
       color: "from-green-400 to-blue-500",
       description: "Foundation subjects and basic engineering concepts",
@@ -42,6 +42,7 @@ const CampusNotes = () => {
       year: "Second Year",
       color: "from-purple-400 to-pink-500",
       description: "Core engineering subjects and programming fundamentals",
+      driveLink: "https://drive.google.com/drive/folders/second-year-folder",
       subjects: ["Data Structures", "Digital Electronics", "Database Systems", "Computer Organization", "Mathematics II", "OOP"],
       resources: [
         { name: "Lab Notes", icon: Beaker, count: 35, description: "DSA, DBMS & Digital Electronics labs" },
@@ -58,6 +59,7 @@ const CampusNotes = () => {
       year: "Third Year",
       color: "from-orange-400 to-red-500",
       description: "Advanced topics and specialization subjects",
+      driveLink: "https://drive.google.com/drive/folders/third-year-folder",
       subjects: ["Software Engineering", "Computer Networks", "Operating Systems", "Web Development", "AI/ML", "System Design"],
       resources: [
         { name: "Lab Notes", icon: Beaker, count: 45, description: "Advanced programming and networking labs" },
@@ -74,6 +76,7 @@ const CampusNotes = () => {
       year: "Fourth Year",
       color: "from-teal-400 to-cyan-500",
       description: "Final year projects and industry preparation",
+      driveLink: "https://drive.google.com/drive/folders/fourth-year-folder",
       subjects: ["Capstone Project", "Blockchain", "Cloud Computing", "DevOps", "Mobile Development", "Research Methodology"],
       resources: [
         { name: "Lab Notes", icon: Beaker, count: 30, description: "Research and advanced technology labs" },
@@ -164,11 +167,20 @@ const CampusNotes = () => {
                       ))}
                     </div>
                   </div>
-                  <div className="text-right">
+                  <div className="text-right space-y-2">
                     <div className="text-4xl font-bold">
                       {yearData.resources.reduce((total, resource) => total + resource.count, 0)}
                     </div>
                     <div className="text-white/90">Total Resources</div>
+                    <Button
+                      asChild
+                      className="bg-white text-gray-900 hover:bg-gray-100"
+                    >
+                      <a href={yearData.driveLink} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-4 h-4 mr-1" />
+                        Access {yearData.year} Drive
+                      </a>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -199,9 +211,16 @@ const CampusNotes = () => {
                           <p className="text-xs text-gray-600 mb-3 leading-relaxed">
                             {resource.description}
                           </p>
-                          <Button size="sm" variant="outline" className="w-full text-xs hover:bg-blue-50">
-                            <Download className="w-3 h-3 mr-1" />
-                            Access Files
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="w-full text-xs hover:bg-blue-50"
+                            asChild
+                          >
+                            <a href={yearData.driveLink} target="_blank" rel="noopener noreferrer">
+                              <Download className="w-3 h-3 mr-1" />
+                              Access Files
+                            </a>
                           </Button>
                         </CardContent>
                       </Card>
