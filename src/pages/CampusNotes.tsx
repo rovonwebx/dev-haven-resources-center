@@ -21,71 +21,21 @@ import {
 
 const CampusNotes = () => {
   const academicYears = [
-    {
+  {
       year: "First Year",
       color: "from-green-400 to-blue-500",
       description: "Foundation subjects and basic engineering concepts",
+      driveLink: "https://drive.google.com/drive/folders/first-year-folder",
       subjects: ["Mathematics", "Physics", "Chemistry", "Programming", "Engineering Drawing", "Environmental Science"],
       resources: [
-       resources: [
-  { 
-    name: "Lab Notes", 
-    icon: Beaker, 
-    count: 25, 
-    description: "Physics, Chemistry & Programming lab experiments", 
-    link: "https://drive.google.com/your-lab-notes-link"
-  },
-  { 
-    name: "Lab Records", 
-    icon: FileText, 
-    count: 30, 
-    description: "Complete lab record formats and observations", 
-    link: "https://drive.google.com/your-lab-records-link"
-  },
-  {
-    name: "Assignments", 
-    icon: PenTool, 
-    count: 40, 
-    description: "Solved assignments for all subjects", 
-    link: "https://drive.google.com/your-assignments-link"
-  },
-  {
-    name: "Previous Year Papers", 
-    icon: Award, 
-    count: 80, 
-    description: "Last 5 years question papers with solutions", 
-    link: "https://drive.google.com/your-pyq-link"
-  },
-  {
-    name: "Micro Projects", 
-    icon: Code, 
-    count: 15, 
-    description: "Small projects for skill development", 
-    link: "https://drive.google.com/your-micro-projects-link"
-  },
-  {
-    name: "Subject Notes", 
-    icon: BookOpen, 
-    count: 50, 
-    description: "Comprehensive notes for all subjects", 
-    link: "https://drive.google.com/your-subject-notes-link"
-  },
-  {
-    name: "Syllabus Copy", 
-    icon: FileText, 
-    count: 8, 
-    description: "Updated syllabus for all subjects", 
-    link: "https://drive.google.com/your-syllabus-copy-link"
-  },
-  {
-    name: "Projects", 
-    icon: Zap, 
-    count: 12, 
-    description: "Semester projects with documentation", 
-    link: "https://drive.google.com/your-projects-link"
-  }
-]
-
+        { name: "Lab Notes", icon: Beaker, count: 25, description: "Physics, Chemistry & Programming lab experiments" },
+        { name: "Lab Records", icon: FileText, count: 30, description: "Complete lab record formats and observations" },
+        { name: "Assignments", icon: PenTool, count: 40, description: "Solved assignments for all subjects" },
+        { name: "Previous Year Papers", icon: Award, count: 80, description: "Last 5 years question papers with solutions" },
+        { name: "Micro Projects", icon: Code, count: 15, description: "Small projects for skill development" },
+        { name: "Subject Notes", icon: BookOpen, count: 50, description: "Comprehensive notes for all subjects" },
+        { name: "Syllabus Copy", icon: FileText, count: 8, description: "Updated syllabus for all subjects" },
+        { name: "Projects", icon: Zap, count: 12, description: "Semester projects with documentation" }
       ]
     },
     {
