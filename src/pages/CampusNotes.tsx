@@ -25,7 +25,7 @@ const CampusNotes = () => {
       year: "First Year",
       color: "from-green-400 to-blue-500",
       description: "Foundation subjects and basic engineering concepts",
-      driveLink: "https://drive.google.com/drive/folders/first-year-folder",
+      driveLink: "https://drive.google.com/drive/folders/1hvUXtsjpxLre6jtHR5UFbH2IMBAP2ZDT",
       subjects: ["Mathematics", "Physics", "Chemistry", "Programming", "Engineering Drawing", "Environmental Science"],
       resources: [
         { name: "Lab Notes", icon: Beaker, count: 25, description: "Physics, Chemistry & Programming lab experiments" },
@@ -42,7 +42,7 @@ const CampusNotes = () => {
       year: "Second Year",
       color: "from-purple-400 to-pink-500",
       description: "Core engineering subjects and programming fundamentals",
-      driveLink: "https://drive.google.com/drive/folders/second-year-folder",
+      driveLink: "https://drive.google.com/drive/folders/1VuZAozNvWES5agsAdfto2sG8_aBRdKj4",
       subjects: ["Data Structures", "Digital Electronics", "Database Systems", "Computer Organization", "Mathematics II", "OOP"],
       resources: [
         { name: "Lab Notes", icon: Beaker, count: 35, description: "DSA, DBMS & Digital Electronics labs" },
@@ -59,7 +59,7 @@ const CampusNotes = () => {
       year: "Third Year",
       color: "from-orange-400 to-red-500",
       description: "Advanced topics and specialization subjects",
-      driveLink: "https://drive.google.com/drive/folders/third-year-folder",
+      driveLink: "https://drive.google.com/drive/folders/1yYfCuRWI8Jv-MZx9S_5wiScvEqj69kJt",
       subjects: ["Software Engineering", "Computer Networks", "Operating Systems", "Web Development", "AI/ML", "System Design"],
       resources: [
         { name: "Lab Notes", icon: Beaker, count: 45, description: "Advanced programming and networking labs" },
