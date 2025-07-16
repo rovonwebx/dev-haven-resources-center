@@ -321,7 +321,7 @@ const Index = () => {
               <Card className="border border-blue-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-48 mx-auto">
                 <div className="relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                    src="https://blog.talview.com/hs-fs/hubfs/AI_V.png?width=842&name=AI_V.png"
                     alt="AI Interviews"
                     className="w-full h-32 object-cover"
                   />
@@ -434,7 +434,7 @@ const Index = () => {
               <Card className="border border-purple-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-80 mx-auto">
                 <div className="relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                    src="https://weblium.com/blog/wp-content/uploads/2019/05/imgonline-com-ua-Compressed-B8y1EYhpR0m1.jpg"
                     alt="Templates"
                     className="w-full h-32 object-cover"
                   />
@@ -466,7 +466,7 @@ const Index = () => {
               <Card className="border border-green-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-80 mx-auto">
                 <div className="relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                    src="https://thumbs.dreamstime.com/b/task-management-concept-vector-illustration-people-feel-check-boxes-to-do-list-project-software-development-process-164295666.jpg"
                     alt="Organizer"
                     className="w-full h-32 object-cover"
                   />
