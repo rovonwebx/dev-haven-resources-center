@@ -321,7 +321,7 @@ const Index = () => {
               <Card className="border border-blue-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-48 mx-auto">
                 <div className="relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                    src="https://blog.talview.com/hs-fs/hubfs/AI_V.png?width=842&name=AI_V.png"
                     alt="AI Interviews"
                     className="w-full h-32 object-cover"
                   />
@@ -466,7 +466,7 @@ const Index = () => {
               <Card className="border border-green-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-80 mx-auto">
                 <div className="relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                    src="https://sm.pcmag.com/pcmag_au/guide/t/the-best-t/the-best-task-management-apps-for-2025_5rvg.jpg"
                     alt="Organizer"
                     className="w-full h-32 object-cover"
                   />
