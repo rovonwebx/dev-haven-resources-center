@@ -155,7 +155,7 @@ const Index = () => {
               ×
             </button>
             <img
-              src="https://i.ibb.co/9HxdH725/Chat-GPT-Image-Jul-16-2025-11-36-07-PM.png"
+              src="https://i.ibb.co/B2g1Fzhx/Add-a-little-bit-of-body-text.png"
               alt="DHRC Domain Move Announcement"
               className="w-full h-auto rounded-xl mb-2"
               style={{maxHeight: '340px'}}
