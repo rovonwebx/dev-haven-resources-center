@@ -434,7 +434,7 @@ const Index = () => {
               <Card className="border border-purple-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-80 mx-auto">
                 <div className="relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                    src="https://themefisher.com/blog/it-website-templates.webp"
                     alt="Templates"
                     className="w-full h-32 object-cover"
                   />
