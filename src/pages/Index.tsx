@@ -209,6 +209,28 @@ const Index = () => {
           </AlertDescription>
         </Alert>
       </div>
+       <div className="max-w-7xl mx-auto px-4 py-4">
+      <Alert className="border-green-200 bg-green-50">
+        <MessageSquare className="h-4 w-4 text-green-600" />
+        <AlertDescription className="text-green-800">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="flex items-center space-x-2">
+              <Sparkles className="w-4 h-4 flex-shrink-0" />
+              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
+                <span className="font-medium">New: Campus Notes Page Updated!</span>
+                <span className="text-sm">Explore the latest resources and updated content for all academic years.</span>
+              </div>
+            </div>
+            <Link to="/campus-notes" className="flex-shrink-0">
+              <Button variant="outline" size="sm" className="border-green-300 text-green-700 hover:bg-green-100 w-full sm:w-auto">
+                Check Now
+                <ArrowRight className="w-3 h-3 ml-1" />
+              </Button>
+            </Link>
+          </div>
+        </AlertDescription>
+      </Alert>
+    </div>
 
       {/* Main Content with Side Banners */}
       <div className="max-w-7xl mx-auto px-4 py-8">
