@@ -161,7 +161,7 @@ const Index = () => {
               <div className="flex items-center mb-4 sm:mb-6">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0 p-1">
                   <img 
-                    src="/lovable-Uploads/afd18992-2d3f-4720-9839-1637802cd8e4.png" 
+                      src="/lovable-uploads/afd18992-2d3f-4720-9839-1637802cd8e4.png" 
                     alt="DHRC Logo" 
                     className="w-full h-full object-contain"
                   />
