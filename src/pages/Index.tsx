@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -148,7 +147,7 @@ const Index = () => {
       <header 
         className="border-b border-gray-300 bg-white relative overflow-hidden"
         style={{
-          backgroundImage: `url('https://i.ibb.co/fYf7pDBk/lates-banner.png')`,
+          backgroundImage: `url('https://i.ibb.co/fYf7pDB/lates-banner.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -162,7 +161,7 @@ const Index = () => {
               <div className="flex items-center mb-4 sm:mb-6">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0 p-1">
                   <img 
-                    src="/lovable-uploads/afd18992-2d3f-4720-9839-1637802cd8e4.png" 
+                    src="/lovable-Uploads/afd18992-2d3f-4720-9839-1637802cd8e4.png" 
                     alt="DHRC Logo" 
                     className="w-full h-full object-contain"
                   />
@@ -209,28 +208,30 @@ const Index = () => {
           </AlertDescription>
         </Alert>
       </div>
-       <div className="max-w-7xl mx-auto px-4 py-4">
-      <Alert className="border-green-200 bg-green-50">
-        <MessageSquare className="h-4 w-4 text-green-600" />
-        <AlertDescription className="text-green-800">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div className="flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 flex-shrink-0" />
-              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
-                <span className="font-medium">New: Campus Notes Page Updated!</span>
-                <span className="text-sm">Explore the latest resources and updated content for all academic years.</span>
+
+      {/* Alert for Campus Notes Update */}
+      <div className="max-w-7xl mx-auto px-4 py-4">
+        <Alert className="border-green-200 bg-green-50">
+          <MessageSquare className="h-4 w-4 text-green-600" />
+          <AlertDescription className="text-green-800">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-center space-x-2">
+                <Sparkles className="w-4 h-4 flex-shrink-0" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
+                  <span className="font-medium">New: Campus Notes Page Updated!</span>
+                  <span className="text-sm">Explore the latest resources and updated content for all academic years.</span>
+                </div>
               </div>
+              <Link to="/campus-notes" className="flex-shrink-0">
+                <Button variant="outline" size="sm" className="border-green-300 text-green-700 hover:bg-green-100 w-full sm:w-auto">
+                  Check Now
+                  <ArrowRight className="w-3 h-3 ml-1" />
+                </Button>
+              </Link>
             </div>
-            <Link to="/campus-notes" className="flex-shrink-0">
-              <Button variant="outline" size="sm" className="border-green-300 text-green-700 hover:bg-green-100 w-full sm:w-auto">
-                Check Now
-                <ArrowRight className="w-3 h-3 ml-1" />
-              </Button>
-            </Link>
-          </div>
-        </AlertDescription>
-      </Alert>
-    </div>
+          </AlertDescription>
+        </Alert>
+      </div>
 
       {/* Main Content with Side Banners */}
       <div className="max-w-7xl mx-auto px-4 py-8">
