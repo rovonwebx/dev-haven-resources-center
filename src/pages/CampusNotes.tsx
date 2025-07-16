@@ -79,14 +79,14 @@ const CampusNotes = () => {
       driveLink: "https://drive.google.com/drive/folders/fourth-year-folder",
       subjects: ["Capstone Project", "Blockchain", "Cloud Computing", "DevOps", "Mobile Development", "Research Methodology"],
       resources: [
-        { name: "Lab Notes", icon: Beaker, count: 30, description: "Research and advanced technology labs" },
-        { name: "Lab Records", icon: FileText, count: 35, description: "Project development records" },
-        { name: "Assignments", icon: PenTool, count: 45, description: "Research-based assignments" },
-        { name: "Previous Year Papers", icon: Award, count: 85, description: "Final year examination papers" },
-        { name: "Micro Projects", icon: Code, count: 20, description: "Industry-relevant mini projects" },
-        { name: "Subject Notes", icon: BookOpen, count: 60, description: "Advanced technology notes" },
-        { name: "Syllabus Copy", icon: FileText, count: 8, description: "Final year curriculum" },
-        { name: "Projects", icon: Zap, count: 35, description: "Major capstone and research projects" }
+        { name: "Lab Notes", icon: Beaker, count: 0, description: "Research and advanced technology labs" },
+        { name: "Lab Records", icon: FileText, count: 0, description: "Project development records" },
+        { name: "Assignments", icon: PenTool, count: 0, description: "Research-based assignments" },
+        { name: "Previous Year Papers", icon: Award, count: 0, description: "Final year examination papers" },
+        { name: "Micro Projects", icon: Code, count: 0, description: "Industry-relevant mini projects" },
+        { name: "Subject Notes", icon: BookOpen, count: 0, description: "Advanced technology notes" },
+        { name: "Syllabus Copy", icon: FileText, count: 0, description: "Final year curriculum" },
+        { name: "Projects", icon: Zap, count: 0, description: "Major capstone and research projects" }
       ]
     }
   ];
