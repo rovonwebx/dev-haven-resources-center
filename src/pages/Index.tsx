@@ -146,7 +146,7 @@ const Index = () => {
       {/* Pop-up Modal */}
       {showPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="bg-white rounded-2xl shadow-2xl p-4 max-w-lg w-full relative flex flex-col items-center">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-2xl w-full relative flex flex-col items-center">
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-2xl font-bold focus:outline-none"
               onClick={() => setShowPopup(false)}
@@ -158,7 +158,7 @@ const Index = () => {
               src="https://i.ibb.co/B2g1Fzhx/Add-a-little-bit-of-body-text.png"
               alt="DHRC Domain Move Announcement"
               className="w-full h-auto rounded-xl mb-2"
-              style={{maxHeight: '340px'}}
+              style={{maxHeight: '480px'}}
             />
           </div>
         </div>
@@ -321,7 +321,7 @@ const Index = () => {
               <Card className="border border-blue-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-48 mx-auto">
                 <div className="relative">
                   <img 
-                    src="https://blog.talview.com/hs-fs/hubfs/AI_V.png?width=842&name=AI_V.png"
+                    src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
                     alt="AI Interviews"
                     className="w-full h-32 object-cover"
                   />
@@ -434,7 +434,7 @@ const Index = () => {
               <Card className="border border-purple-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-80 mx-auto">
                 <div className="relative">
                   <img 
-                    src="https://themefisher.com/blog/it-website-templates.webp"
+                    src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
                     alt="Templates"
                     className="w-full h-32 object-cover"
                   />
@@ -466,7 +466,7 @@ const Index = () => {
               <Card className="border border-green-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-80 mx-auto">
                 <div className="relative">
                   <img 
-                    src="https://sm.pcmag.com/pcmag_au/guide/t/the-best-t/the-best-task-management-apps-for-2025_5rvg.jpg"
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
                     alt="Organizer"
                     className="w-full h-32 object-cover"
                   />
