@@ -518,52 +518,52 @@ const DSA = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-100">
       {/* Header */}
-      <header className="border-b border-gray-300 bg-white">
-        <div className="max-w-5xl mx-auto px-4 py-6">
+      <header className="border-b-2 border-blue-400 bg-gradient-to-r from-blue-700 via-blue-800 to-purple-800 shadow-lg">
+        <div className="max-w-5xl mx-auto px-4 py-8">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Brain className="w-6 h-6 text-gray-600" />
-              <h1 className="text-2xl font-serif text-black">Data Structures & Algorithms</h1>
+            <div className="flex items-center space-x-4">
+              <span className="bg-white/20 rounded-lg p-2"><Brain className="w-8 h-8 text-white" /></span>
+              <h1 className="text-3xl font-bold text-white tracking-tight drop-shadow">Data Structures & Algorithms</h1>
             </div>
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" size="sm" asChild className="text-white border-white hover:bg-white/10">
               <Link to="/">
                 Back to Hub
                 <ArrowLeft className="w-4 h-4 ml-2" />
               </Link>
             </Button>
           </div>
-          <p className="text-gray-600 text-sm mt-2">Master the fundamentals of computer science</p>
+          <p className="text-blue-100 text-base mt-2">Master the fundamentals of computer science</p>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-5xl mx-auto px-4 py-8">
+      <main className="max-w-5xl mx-auto px-4 py-10">
         {/* Top 100 FAANG DSA Questions */}
         <div className="mb-12">
-          <h2 className="text-xl font-serif text-black mb-6 pb-2 border-b border-gray-300 flex items-center">
-            <Zap className="w-5 h-5 mr-2 text-gray-600" />
+          <h2 className="text-2xl font-bold text-blue-800 mb-6 pb-2 border-b-2 border-blue-200 flex items-center gap-2">
+            <span className="bg-blue-100 p-2 rounded-lg"><Zap className="w-6 h-6 text-blue-600" /></span>
             Top 100 FAANG DSA Questions
           </h2>
-          <p className="text-gray-600 text-sm mb-6">
+          <p className="text-blue-900/80 text-base mb-6">
             Curated list of 100 most important DSA problems frequently asked in FAANG interviews. 
             Master these problems to excel in technical interviews at top tech companies.
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            {Object.entries(faangQuestions).map(([category, problems]) => (
-              <Card key={category} className="border border-gray-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            {Object.entries(faangQuestions).map(([category, problems], idx) => (
+              <Card key={category} className={`border-l-8 ${['border-blue-400','border-purple-400','border-pink-400','border-green-400','border-yellow-400','border-indigo-400'][idx%6]} bg-white/90 shadow-lg hover:shadow-2xl transition-shadow` }>
                 <CardHeader>
-                  <CardTitle className="text-base font-semibold text-gray-900 flex items-center">
-                    <Code className="w-4 h-4 mr-2 text-blue-600" />
-                    {category} ({problems.length})
+                  <CardTitle className="text-lg font-bold text-blue-900 flex items-center gap-2">
+                    <Code className="w-5 h-5 text-blue-500" />
+                    {category} <span className="text-xs font-normal text-gray-500">({problems.length})</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
                     {problems.map((problem, index) => (
-                      <li key={index} className="text-sm text-gray-700 flex items-center">
+                      <li key={index} className="text-sm text-blue-900 flex items-center">
                         <div className="w-2 h-2 bg-blue-400 rounded-full mr-2 flex-shrink-0"></div>
                         {problem}
                       </li>
@@ -575,10 +575,10 @@ const DSA = () => {
           </div>
 
           {/* Important Additions */}
-          <Card className="border border-gray-200 mb-8">
+          <Card className="border-l-8 border-yellow-400 bg-yellow-50/80 mb-8 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-base font-semibold text-gray-900 flex items-center">
-                <Star className="w-4 h-4 mr-2 text-yellow-500" />
+              <CardTitle className="text-lg font-bold text-yellow-900 flex items-center gap-2">
+                <Star className="w-5 h-5 text-yellow-500" />
                 Optional & Important Additions to FAANG DSA List
               </CardTitle>
             </CardHeader>
@@ -586,12 +586,12 @@ const DSA = () => {
               <div className="space-y-4">
                 {importantAdditions.map((section, index) => (
                   <div key={index}>
-                    <h4 className="font-medium text-gray-900 mb-2">{section.category}</h4>
+                    <h4 className="font-semibold text-yellow-900 mb-2">{section.category}</h4>
                     <ul className="space-y-2 ml-4">
                       {section.problems.map((problem, problemIndex) => (
                         <li key={problemIndex} className="text-sm">
-                          <span className="font-medium text-gray-800">{problem.name}</span>
-                          <span className="text-gray-600 ml-2">({problem.note})</span>
+                          <span className="font-semibold text-yellow-800">{problem.name}</span>
+                          <span className="text-yellow-700 ml-2">({problem.note})</span>
                         </li>
                       ))}
                     </ul>
@@ -601,7 +601,7 @@ const DSA = () => {
             </CardContent>
           </Card>
 
-          <div className="text-xs text-gray-500 mb-8">
+          <div className="text-xs text-blue-700 mb-8">
             <p>Source: Top 100 FAANG DSA Questions - Prepared for: Dhanush Reddy</p>
             <p>These questions cover the most frequently asked problems in FAANG company interviews</p>
           </div>
@@ -609,16 +609,16 @@ const DSA = () => {
 
         {/* Company Prep DSA Questions */}
         <div className="mb-12">
-          <h2 className="text-xl font-serif text-black mb-6 pb-2 border-b border-gray-300 flex items-center">
-            <Building2 className="w-5 h-5 mr-2 text-gray-600" />
+          <h2 className="text-2xl font-bold text-purple-800 mb-6 pb-2 border-b-2 border-purple-200 flex items-center gap-2">
+            <span className="bg-purple-100 p-2 rounded-lg"><Building2 className="w-6 h-6 text-purple-600" /></span>
             Company Prep DSA Questions
           </h2>
-          <p className="text-gray-600 text-sm mb-6">
+          <p className="text-purple-900/80 text-base mb-6">
             Comprehensive collection of DSA problems frequently asked in top tech company interviews. 
             Questions are organized by difficulty level and cover all major topics.
           </p>
           
-          <Card className="border border-gray-200 mb-6">
+          <Card className="border-l-8 border-purple-400 bg-purple-50/80 mb-6 shadow-lg">
             <CardContent className="p-0">
               <Table>
                 <TableHeader>
@@ -632,17 +632,17 @@ const DSA = () => {
                 </TableHeader>
                 <TableBody>
                   {companyPrepQuestions.map((question) => (
-                    <TableRow key={question.id}>
-                      <TableCell className="font-medium text-gray-600">{question.id}</TableCell>
+                    <TableRow key={question.id} className="hover:bg-purple-100/60 transition">
+                      <TableCell className="font-medium text-purple-700">{question.id}</TableCell>
                       <TableCell>
-                        <div className="font-medium text-gray-900 hover:text-blue-600">
+                        <div className="font-medium text-purple-900 hover:text-blue-600">
                           <a href={question.url} target="_blank" rel="noopener noreferrer">
                             {question.title}
                           </a>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="outline" className="text-xs">
+                        <Badge className="bg-purple-200 text-purple-800 text-xs">
                           {question.category}
                         </Badge>
                       </TableCell>
@@ -666,7 +666,7 @@ const DSA = () => {
             </CardContent>
           </Card>
           
-          <div className="text-xs text-gray-500 mb-8">
+          <div className="text-xs text-purple-700 mb-8">
             <p>Source: The Ultimate DSA Sheet - Compiled June 27, 2025</p>
             <p>Original reference: <a href="https://whimsical.com/the-ultimate-dsa-sheet-TPhe4bp97NYELVxX9ooD3N" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Ultimate DSA Sheet</a></p>
           </div>
@@ -674,22 +674,22 @@ const DSA = () => {
 
         {/* Top Questions by Difficulty */}
         <div className="mb-12">
-          <h2 className="text-xl font-serif text-black mb-6 pb-2 border-b border-gray-300">Top Practice Questions</h2>
+          <h2 className="text-2xl font-bold text-pink-800 mb-6 pb-2 border-b-2 border-pink-200">Top Practice Questions</h2>
           
           {Object.entries(topQuestions).map(([difficulty, questions]) => (
             <div key={difficulty} className="mb-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <Target className="w-5 h-5 mr-2 text-gray-600" />
+              <h3 className={`text-lg font-bold mb-4 flex items-center gap-2 ${difficulty === 'Easy' ? 'text-green-700' : difficulty === 'Medium' ? 'text-yellow-700' : 'text-red-700'}`}>
+                <Target className={`w-5 h-5 ${difficulty === 'Easy' ? 'text-green-500' : difficulty === 'Medium' ? 'text-yellow-500' : 'text-red-500'}`} />
                 {difficulty} Level
               </h3>
               <div className="grid gap-4">
                 {questions.map((question, index) => (
-                  <Card key={index} className="border border-gray-200 hover:shadow-md transition-shadow">
+                  <Card key={index} className={`border-l-8 ${difficulty === 'Easy' ? 'border-green-400 bg-green-50/80' : difficulty === 'Medium' ? 'border-yellow-400 bg-yellow-50/80' : 'border-red-400 bg-red-50/80'} hover:shadow-lg transition-shadow`}>
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <h4 className="font-medium text-gray-900 hover:text-blue-600">
+                            <h4 className={`font-semibold ${difficulty === 'Easy' ? 'text-green-900' : difficulty === 'Medium' ? 'text-yellow-900' : 'text-red-900'} hover:text-blue-600`}>
                               <a href={question.url} target="_blank" rel="noopener noreferrer">
                                 {question.title}
                               </a>
@@ -697,11 +697,9 @@ const DSA = () => {
                             <Badge className={getDifficultyColor(question.difficulty)}>
                               {question.difficulty}
                             </Badge>
-                            <Badge variant="outline" className="text-xs">
-                              {question.category}
-                            </Badge>
+                            <Badge className={`bg-white/80 text-xs ${difficulty === 'Easy' ? 'text-green-700' : difficulty === 'Medium' ? 'text-yellow-700' : 'text-red-700'}`}>{question.category}</Badge>
                           </div>
-                          <p className="text-sm text-gray-600 mb-2">{question.description}</p>
+                          <p className="text-sm mb-2 text-gray-700">{question.description}</p>
                           <div className="flex items-center gap-4 text-xs text-gray-500">
                             <span>Platform: {question.platform}</span>
                             <span>Acceptance: {question.acceptance}</span>
@@ -709,7 +707,7 @@ const DSA = () => {
                         </div>
                         <Button size="sm" variant="outline" asChild>
                           <a href={question.url} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="w-4 h-4 mr-1" />
+                            <ExternalLink className="w-3 h-3 mr-1" />
                             Solve
                           </a>
                         </Button>
