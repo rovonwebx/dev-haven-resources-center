@@ -23,7 +23,8 @@ import {
   Rocket,
   MessageSquare,
   Sparkles,
-  Layout
+  Layout,
+  AlertTriangle
 } from "lucide-react";
 import { Analytics } from "@vercel/analytics/react";
 import Chatbot from "@/components/Chatbot";
@@ -31,7 +32,7 @@ import Footer from "@/components/Footer";
 import React, { useState } from "react";
 
 const Index = () => {
-  const [showPopup, setShowPopup] = useState(true);
+  const [showAlert, setShowAlert] = useState(true);
   const resourceCategories = [
     {
       title: "Certificates",
@@ -143,24 +144,20 @@ const Index = () => {
 
   return (
     <>
-      {/* Pop-up Modal */}
-      {showPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-2xl w-full relative flex flex-col items-center">
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-2xl font-bold focus:outline-none"
-              onClick={() => setShowPopup(false)}
-              aria-label="Close popup"
-            >
-              ×
-            </button>
-            <img
-              src="https://i.ibb.co/B2g1Fzhx/Add-a-little-bit-of-body-text.png"
-              alt="DHRC Domain Move Announcement"
-              className="w-full h-auto rounded-xl mb-2"
-              style={{maxHeight: '480px'}}
-            />
+      {/* Top Navigation Alert Notification */}
+      {showAlert && (
+        <div className="w-full bg-red-600 text-white flex items-center justify-between py-2 px-4 fixed top-0 left-0 z-50 shadow-lg">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-white" />
+            <span className="font-semibold">This site is in the testing phase.</span>
           </div>
+          <button
+            className="text-white/80 hover:text-white text-xl font-bold focus:outline-none ml-4"
+            onClick={() => setShowAlert(false)}
+            aria-label="Close alert"
+          >
+            ×
+          </button>
         </div>
       )}
       <div className="min-h-screen bg-white">
