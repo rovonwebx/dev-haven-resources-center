@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Analytics } from "@vercel/analytics/react";
 import Chatbot from "@/components/Chatbot";
-import { ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon } from 'lucide-react';
+import { ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon, Download } from 'lucide-react';
 
 // Main navigation links
 const navLinks = [
@@ -19,13 +19,17 @@ const navLinks = [
   { title: "Templates", path: "/templates" },
 ];
 
-// Quick access links
+// Quick access links - updated to handle external links
 const quickLinks = [
     { title: "DSA Roadmap", path: "/roadmaps/dsa" },
     { title: "Web Dev Roadmap", path: "/roadmaps/web-development" },
     { title: "Latest Internships", path: "/internships" },
     { title: "SQL Interview Questions", path: "/interview-questions" },
-    { title: "Submit a Project", path: "/student-projects/submit" },
+    { 
+        title: "Submit a Project", 
+        path: "https://dhrc-tools.vercel.app/student-projects/submit", // Replace with your actual external link
+        external: true 
+    },
 ];
 
 const resourceCards = [
@@ -273,13 +277,25 @@ const Index = () => {
                     <h3 className="text-md font-bold text-gray-700 dark:text-gray-300 flex-shrink-0">Quick Links:</h3>
                     <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2">
                         {quickLinks.map((link) => (
-                            <Link
-                                key={link.title}
-                                to={link.path}
-                                className="text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 hover:underline transition-colors"
-                            >
-                                {link.title}
-                            </Link>
+                            link.external ? (
+                                <a
+                                    key={link.title}
+                                    href={link.path}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 hover:underline transition-colors"
+                                >
+                                    {link.title}
+                                </a>
+                            ) : (
+                                <Link
+                                    key={link.title}
+                                    to={link.path}
+                                    className="text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 hover:underline transition-colors"
+                                >
+                                    {link.title}
+                                </Link>
+                            )
                         ))}
                     </div>
                 </div>
@@ -303,11 +319,31 @@ const Index = () => {
                 </div>
             </section>
 
+            {/* Project Vault Banner - Orange Theme */}
+            <section className="w-full bg-orange-50 dark:bg-orange-900/30">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div className="flex items-center gap-4">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2880/2880009.png" alt="Project Vault Icon" className="w-12 h-12 object-contain" />
+                        <div>
+                            <h2 className="text-xl font-bold text-orange-800 dark:text-orange-300">Explore the Project Vault</h2>
+                            <p className="text-md text-orange-700 dark:text-orange-400">Download, customize, and learn from a collection of pre-built projects.</p>
+                        </div>
+                    </div>
+                    <Link to="/student-projects">
+                        <Button className="bg-orange-600 text-white font-bold px-8 py-3 rounded-full shadow-md hover:bg-orange-700 transition-all transform hover:scale-105">
+                            Browse Projects <Download className="ml-2" size={20} />
+                        </Button>
+                    </Link>
+                </div>
+            </section>
+
             {/* Main Content */}
             <main className="flex-1 w-full py-12 sm:py-16">
                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">Explore Our Resources</h2>
+                        <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 underline decoration-orange-500 underline-offset-4">
+                            Explore Our Resources
+                        </h2>
                         <p className="mt-3 text-lg text-gray-600 dark:text-gray-400">Find everything you need to succeed in your engineering studies and career.</p>
                     </div>
 
