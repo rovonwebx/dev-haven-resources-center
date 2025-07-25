@@ -67,7 +67,7 @@ const App = () => (
             <Route path="/roadmaps" element={<Roadmaps />} />
             <Route path="/interview-questions" element={<InterviewQuestions />} />
             <Route path="/anyone-can-develop" element={<AnyoneCanDevelop />} />
-            <Route path="/chatter-box" element={<ChatterBox />} />
+            <Route path="/chatterbox" element={<ChatterBox />} />
             <Route path="/templates" element={<Templates />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
