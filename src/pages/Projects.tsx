@@ -1,15 +1,23 @@
-import { useState } from "react";
+import React, { useState, useMemo } from 'react';
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, ExternalLink, Github, Star, Users, Search } from "lucide-react";
+import { ArrowLeft, ExternalLink, Github, Star, Users, Search, Code as CodeIcon } from "lucide-react";
 
-const Projects = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+// --- Data and Helper Functions (No changes here) ---
 
-  const projects = [
+const getDifficultyColor = (difficulty: string) => {
+  switch (difficulty) {
+    case "Beginner": return "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300";
+    case "Intermediate": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300";
+    case "Advanced": return "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300";
+    default: return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
+  }
+};
+
+const projects = [ /* ... Your full list of projects remains here ... */ 
     // Web Development
     { title: "React", author: "Facebook", description: "A JavaScript library for building user interfaces", technologies: ["JavaScript", "JSX", "Virtual DOM"], difficulty: "Advanced", duration: "Ongoing", stars: 227000, contributors: 1500, category: "Web Development", githubUrl: "https://github.com/facebook/react", demoUrl: "https://react.dev/" },
     { title: "Vue.js", author: "Evan You", description: "Progressive JavaScript framework for building user interfaces", technologies: ["JavaScript", "TypeScript", "HTML"], difficulty: "Intermediate", duration: "Ongoing", stars: 207000, contributors: 440, category: "Web Development", githubUrl: "https://github.com/vuejs/vue", demoUrl: "https://vuejs.org/" },
@@ -105,133 +113,130 @@ const Projects = () => {
     { title: "Tasmota", author: "Tasmota", description: "Alternative firmware for ESP8266/ESP32 based devices", technologies: ["C++", "Arduino"], difficulty: "Intermediate", duration: "Ongoing", stars: 22000, contributors: 520, category: "IoT", githubUrl: "https://github.com/arendst/Tasmota", demoUrl: "https://tasmota.github.io/" },
     { title: "ESPHome", author: "ESPHome", description: "System to control your ESP8266/ESP32 by simple configuration files", technologies: ["C++", "Python", "YAML"], difficulty: "Intermediate", duration: "Ongoing", stars: 8300, contributors: 680, category: "IoT", githubUrl: "https://github.com/esphome/esphome", demoUrl: "https://esphome.io/" },
     { title: "Blynk", author: "Blynk", description: "Platform for IoT projects", technologies: ["C++", "Java", "JavaScript"], difficulty: "Beginner", duration: "Ongoing", stars: 3700, contributors: 85, category: "IoT", githubUrl: "https://github.com/blynkkk/blynk-library", demoUrl: "https://blynk.io/" },
-  ];
+];
 
-  const filteredProjects = projects.filter(project => 
-    project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    project.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    project.technologies.some(tech => tech.toLowerCase().includes(searchQuery.toLowerCase())) ||
-    project.category.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+const Projects = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "Beginner": return "bg-green-100 text-green-800";
-      case "Intermediate": return "bg-yellow-100 text-yellow-800";
-      case "Advanced": return "bg-red-100 text-red-800";
-      default: return "bg-gray-100 text-gray-800";
-    }
-  };
+  // Get all unique categories for the quick links, memoized for performance
+  const allCategories = useMemo(() => {
+    return ["All", ...Array.from(new Set(projects.map(p => p.category)))];
+  }, []);
 
-  const categories = [...new Set(projects.map(p => p.category))];
+  // Combined filtering logic
+  const filteredProjects = useMemo(() => {
+    return projects.filter(project => {
+      const matchesCategory = !selectedCategory || selectedCategory === "All" || project.category === selectedCategory;
+      const matchesSearch =
+        searchQuery === "" ||
+        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.technologies.some(tech => tech.toLowerCase().includes(searchQuery.toLowerCase()));
+      
+      return matchesCategory && matchesSearch;
+    });
+  }, [searchQuery, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
+      <header className="bg-white dark:bg-gray-800/50 border-b-2 border-orange-500 shadow-sm sticky top-0 z-20">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <CodeIcon className="w-10 h-10 text-orange-500" />
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Projects</h1>
-              <p className="text-gray-600 text-sm">80 real open-source projects to explore and contribute</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">Open Source Projects</h1>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Explore and contribute to real-world projects.</p>
             </div>
-            <Button variant="ghost" size="sm" asChild>
-              <Link to="/">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Hub
-              </Link>
-            </Button>
           </div>
+          <Button variant="ghost" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
+          </Button>
         </div>
       </header>
-
+      
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-6">
-        {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-              type="text"
-              placeholder="Search projects..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <p className="text-sm text-gray-500 mt-2">
-            Showing {filteredProjects.length} of {projects.length} projects
-          </p>
-        </div>
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredProjects.map((project, index) => (
-            <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardHeader className="pb-3">
-                <div className="flex justify-between items-start mb-2">
-                  <CardTitle className="text-lg font-semibold text-gray-900 flex-1">
-                    {project.title}
-                  </CardTitle>
-                  <Badge className={getDifficultyColor(project.difficulty)}>
-                    {project.difficulty}
-                  </Badge>
+          {/* --- Category Filters (Quick Links) --- */}
+          <aside className="md:col-span-1 h-fit md:sticky top-28">
+            <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Categories</h3>
+                <div className="space-y-2">
+                    {allCategories.map(category => (
+                        <button
+                            key={category}
+                            onClick={() => setSelectedCategory(category)}
+                            className={`w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                                selectedCategory === category
+                                ? 'bg-orange-500 text-white'
+                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            }`}
+                        >
+                            {category}
+                        </button>
+                    ))}
                 </div>
-                <p className="text-sm text-gray-600 mb-1">by {project.author}</p>
-                <p className="text-gray-700 text-sm">{project.description}</p>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-1 mb-3">
-                  {project.technologies.map((tech, techIndex) => (
-                    <Badge key={techIndex} variant="secondary" className="text-xs">
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
+            </div>
+          </aside>
 
-                <div className="flex items-center justify-between text-sm text-gray-600 mb-3">
-                  <div className="flex items-center space-x-3">
-                    <div className="flex items-center">
-                      <Star className="w-3 h-3 mr-1 text-yellow-500" />
-                      {project.stars.toLocaleString()}
+          {/* --- Projects Grid --- */}
+          <main className="md:col-span-3">
+            <div className="relative mb-6">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Input
+                type="text"
+                placeholder="Search projects by title, author, or technology..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-full text-base focus:ring-orange-500 focus:border-orange-500"
+              />
+            </div>
+
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+              Showing {filteredProjects.length} of {projects.length} projects in <span className='font-semibold text-orange-500'>{selectedCategory || 'All'}</span>.
+            </p>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {filteredProjects.map((project, index) => (
+                <Card key={index} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                  <CardContent className="p-6 flex flex-col flex-grow">
+                    <div className="mb-3">
+                      <h2 className="font-bold text-lg text-gray-900 dark:text-gray-100 leading-tight">{project.title}</h2>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">by {project.author}</p>
                     </div>
-                    <div className="flex items-center">
-                      <Users className="w-3 h-3 mr-1" />
-                      {project.contributors}
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow line-clamp-3">{project.description}</p>
+                    
+                    <div className="mb-4">
+                        <Badge className={getDifficultyColor(project.difficulty)}>{project.difficulty}</Badge>
                     </div>
-                  </div>
-                  <span className="text-blue-600 font-medium text-xs">{project.category}</span>
-                </div>
 
-                <div className="flex space-x-2">
-                  <Button size="sm" variant="outline" className="flex-1 text-xs" asChild>
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Github className="w-3 h-3 mr-1" />
-                      Code
-                    </a>
-                  </Button>
-                  <Button size="sm" className="flex-1 text-xs" asChild>
-                    <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-3 h-3 mr-1" />
-                      Demo
-                    </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {project.technologies.slice(0, 3).map((tech, i) => <Badge key={i} variant="outline" className="text-xs">{tech}</Badge>)}
+                    </div>
+                    
+                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 py-3 border-y border-gray-100 dark:border-gray-700">
+                        <div className="flex items-center gap-1.5"><Star className="w-4 h-4 text-yellow-500" /> {project.stars.toLocaleString()}</div>
+                        <div className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {project.contributors.toLocaleString()}</div>
+                    </div>
+
+                    <div className="mt-4 flex items-center gap-2">
+                        <Button asChild size="sm" className="w-full bg-gray-800 dark:bg-gray-200 text-white dark:text-black hover:bg-gray-700 dark:hover:bg-gray-300 rounded-full font-semibold">
+                          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"><Github className="w-4 h-4 mr-2" /> GitHub</a>
+                        </Button>
+                        <Button asChild size="sm" className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-full font-semibold">
+                          <a href={project.demoUrl} target="_blank" rel="noopener noreferrer"><ExternalLink className="w-4 h-4 mr-2" /> Live Demo</a>
+                        </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </main>
         </div>
-
-        {/* No Results */}
-        {filteredProjects.length === 0 && (
-          <div className="text-center py-12">
-            <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No projects found</h3>
-            <p className="text-gray-500">Try adjusting your search terms</p>
-          </div>
-        )}
-      </main>
+      </div>
     </div>
   );
 };
