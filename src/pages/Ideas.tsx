@@ -1,15 +1,15 @@
+import React, { useState, useMemo } from 'react';
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Lightbulb, TrendingUp, Clock, Users, Search } from "lucide-react";
-import { useState, useMemo } from "react";
+import { ArrowLeft, Lightbulb, TrendingUp, Clock, Users, Search, MessageSquare, BrainCircuit } from "lucide-react";
+import placeholder from '/public/placeholder.svg'; // Assuming placeholder.svg is in the public folder
 
-const Ideas = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+// --- Data and Helper Functions (No changes here) ---
 
-  const ideas = [
+const ideas = [ /* ... Your full list of ideas remains here ... */ 
     {
       title: "Smart Home Energy Optimizer",
       description: "AI-powered system that learns usage patterns and automatically optimizes energy consumption",
@@ -510,186 +510,155 @@ const Ideas = () => {
       timeToMarket: "5-8 months",
       targetAudience: "Travelers",
     }
-  ];
+];
 
-  const filteredIdeas = useMemo(() => {
-    if (!searchTerm) return ideas;
-    return ideas.filter(idea =>
-      idea.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      idea.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      idea.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      idea.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
-  }, [searchTerm]);
-
-  const getMarketPotentialColor = (potential: string) => {
+const getMarketPotentialColor = (potential: string) => {
     switch (potential) {
-      case "Very High": return "bg-green-100 text-green-800";
-      case "High": return "bg-yellow-100 text-yellow-800";
-      case "Medium": return "bg-orange-100 text-orange-800";
-      case "Low": return "bg-red-100 text-red-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "Very High": return "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300";
+      case "High": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300";
+      case "Medium": return "bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300";
+      case "Low": return "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300";
+      default: return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
     }
-  };
+};
 
-  const getComplexityColor = (complexity: string) => {
+const getComplexityColor = (complexity: string) => {
     switch (complexity) {
-      case "Low": return "bg-green-100 text-green-800";
-      case "Medium": return "bg-yellow-100 text-yellow-800";
-      case "High": return "bg-red-100 text-red-800";
-      case "Very High": return "bg-purple-100 text-purple-800";
-      default: return "bg-gray-100 text-gray-800";
+        case "Low": return "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300";
+        case "Medium": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300";
+        case "High": return "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300";
+        case "Very High": return "bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300";
+        default: return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
     }
-  };
+};
+
+const Ideas = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const allCategories = useMemo(() => {
+    return ["All", ...Array.from(new Set(ideas.map(idea => idea.category)))];
+  }, []);
+  
+  const filteredIdeas = useMemo(() => {
+    return ideas.filter(idea => {
+      const matchesCategory = !selectedCategory || selectedCategory === "All" || idea.category === selectedCategory;
+      const matchesSearch =
+        searchTerm === "" ||
+        idea.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        idea.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        idea.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      
+      return matchesCategory && matchesSearch;
+    });
+  }, [searchTerm, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                <Lightbulb className="w-6 h-6 inline mr-2 text-blue-600" />
-                Innovative Ideas
-              </h1>
-              <p className="text-gray-600 text-sm">50 creative project concepts waiting to be built</p>
+      <header className="bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border-b border-orange-200 dark:border-gray-700 shadow-sm sticky top-0 z-20">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-lg">
+                <Lightbulb className="w-8 h-8 text-orange-500" />
             </div>
-            <Button variant="ghost" size="sm" asChild>
-              <Link to="/">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Hub
-              </Link>
-            </Button>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Project Ideas</h1>
+              <p className="text-gray-500 dark:text-gray-400">A launchpad for your next innovation.</p>
+            </div>
           </div>
+          <Button variant="outline" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
+            <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
+          </Button>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-6">
-        {/* Search */}
-        <div className="mb-6">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-              type="text"
-              placeholder="Search ideas by title, category, or tags..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <p className="text-sm text-gray-500 mt-2">
-            Showing {filteredIdeas.length} of {ideas.length} ideas
-          </p>
-        </div>
-
-        {/* Ideas Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredIdeas.map((idea, index) => (
-            <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardHeader className="pb-3">
-                <div className="flex justify-between items-start mb-2">
-                  <CardTitle className="text-lg font-semibold text-gray-900 flex-1">
-                    {idea.title}
-                  </CardTitle>
-                  <Badge variant="secondary" className="text-xs">
-                    {idea.category}
-                  </Badge>
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          
+          {/* --- Filter Sidebar (Quick Links) --- */}
+          <aside className="md:col-span-1 h-fit md:sticky top-28">
+            <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Categories</h3>
+                <div className="space-y-1.5">
+                    {allCategories.map(category => (
+                        <button
+                            key={category}
+                            onClick={() => setSelectedCategory(category)}
+                            className={`w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                                selectedCategory === category
+                                ? 'bg-orange-500 text-white shadow-sm'
+                                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            }`}
+                        >
+                            {category}
+                        </button>
+                    ))}
                 </div>
-                <p className="text-gray-700 text-sm">{idea.description}</p>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-1 mb-4">
-                  {idea.tags.slice(0, 3).map((tag, tagIndex) => (
-                    <Badge key={tagIndex} variant="outline" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                  {idea.tags.length > 3 && (
-                    <Badge variant="outline" className="text-xs">
-                      +{idea.tags.length - 3}
-                    </Badge>
-                  )}
-                </div>
+            </div>
+          </aside>
 
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                  <div>
-                    <div className="flex items-center mb-1">
-                      <TrendingUp className="w-3 h-3 mr-1 text-gray-500" />
-                      <span className="text-xs font-medium text-gray-600">Market</span>
+          {/* --- Ideas Grid --- */}
+          <main className="md:col-span-3">
+            <div className="relative mb-6">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Input
+                type="text"
+                placeholder="Search ideas by title, tag, or description..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-full text-base focus:ring-orange-500 focus:border-orange-500"
+              />
+            </div>
+
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+              Showing {filteredIdeas.length} of {ideas.length} ideas in <span className='font-semibold text-orange-500'>{selectedCategory || 'All'}</span>.
+            </p>
+
+            {/* --- ChatterBox CTA --- */}
+            <Card className="mb-8 bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-lg">
+                <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                        <BrainCircuit size={40} />
+                        <div>
+                            <h3 className="font-bold text-lg">Want to brainstorm?</h3>
+                            <p className="text-sm opacity-90">Discuss these concepts, get more details, or generate new ideas with our AI assistant.</p>
+                        </div>
                     </div>
-                    <Badge className={`${getMarketPotentialColor(idea.marketPotential)} text-xs`}>
-                      {idea.marketPotential}
-                    </Badge>
-                  </div>
-                  <div>
-                    <div className="flex items-center mb-1">
-                      <Clock className="w-3 h-3 mr-1 text-gray-500" />
-                      <span className="text-xs font-medium text-gray-600">Complexity</span>
-                    </div>
-                    <Badge className={`${getComplexityColor(idea.complexity)} text-xs`}>
-                      {idea.complexity}
-                    </Badge>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between text-xs text-gray-600">
-                  <div className="flex items-center">
-                    <Clock className="w-3 h-3 mr-1" />
-                    {idea.timeToMarket}
-                  </div>
-                  <div className="flex items-center">
-                    <Users className="w-3 h-3 mr-1" />
-                    {idea.targetAudience}
-                  </div>
-                </div>
-              </CardContent>
+                    <Button asChild className="bg-white text-orange-600 hover:bg-orange-50 font-bold rounded-full w-full sm:w-auto flex-shrink-0">
+                        <Link to="/chatterbox"><MessageSquare className="w-4 h-4 mr-2"/> Start Chatting</Link>
+                    </Button>
+                </CardContent>
             </Card>
-          ))}
-        </div>
 
-        {/* Idea Generation Tips */}
-        <div className="mt-12">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-xl">Idea Generation Framework</CardTitle>
-              <p className="text-gray-600">Turn concepts into reality with this structured approach</p>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-gray-900">Problem Identification</h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
-                    <li>• Look for everyday frustrations</li>
-                    <li>• Identify market gaps</li>
-                    <li>• Study emerging technologies</li>
-                    <li>• Analyze user feedback</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-gray-900">Solution Development</h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
-                    <li>• Start with MVP concepts</li>
-                    <li>• Validate with potential users</li>
-                    <li>• Research competition</li>
-                    <li>• Plan monetization strategy</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-gray-900">Execution Strategy</h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
-                    <li>• Create detailed roadmap</li>
-                    <li>• Build prototype quickly</li>
-                    <li>• Test with real users</li>
-                    <li>• Iterate based on feedback</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {filteredIdeas.map((idea, index) => (
+                <Card key={index} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                  <CardContent className="p-6 flex flex-col flex-grow">
+                    <div className="mb-3">
+                        <Badge className="bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 mb-2">{idea.category}</Badge>
+                        <h2 className="font-bold text-lg text-gray-900 dark:text-gray-100 leading-tight">{idea.title}</h2>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow line-clamp-3">{idea.description}</p>
+                    
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {idea.tags.slice(0, 4).map((tag, i) => <Badge key={i} variant="outline" className="text-xs">{tag}</Badge>)}
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+                        <div className="flex items-center gap-2"><TrendingUp className="w-4 h-4 text-green-500" /><span className='font-medium text-gray-700 dark:text-gray-300'>Potential:</span><span className={getMarketPotentialColor(idea.marketPotential) + " px-2 py-0.5 rounded-full text-xs"}>{idea.marketPotential}</span></div>
+                        <div className="flex items-center gap-2"><BrainCircuit className="w-4 h-4 text-purple-500" /><span className='font-medium text-gray-700 dark:text-gray-300'>Complexity:</span><span className={getComplexityColor(idea.complexity) + " px-2 py-0.5 rounded-full text-xs"}>{idea.complexity}</span></div>
+                        <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-blue-500" /><span className='font-medium text-gray-700 dark:text-gray-300'>Timeline:</span><span className='text-gray-600 dark:text-gray-400'>{idea.timeToMarket}</span></div>
+                        <div className="flex items-center gap-2"><Users className="w-4 h-4 text-yellow-500" /><span className='font-medium text-gray-700 dark:text-gray-300'>Audience:</span><span className='text-gray-600 dark:text-gray-400'>{idea.targetAudience}</span></div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </main>
         </div>
-      </main>
+      </div>
     </div>
   );
 };
