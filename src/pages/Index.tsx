@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Chatbot from "@/components/Chatbot";
 import { ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon, Download, Bell, Zap } from 'lucide-react';
 
-// Main navigation links
+// --- Data arrays are unchanged ---
 const navLinks = [
   { title: "Certificates", path: "/certificates" },
   { title: "Projects", path: "/projects" },
@@ -19,7 +19,6 @@ const navLinks = [
   { title: "Templates", path: "/templates" },
 ];
 
-// Quick access links
 const quickLinks = [
     { title: "DSA Roadmap", path: "/roadmaps/dsa" },
     { title: "Web Dev Roadmap", path: "/roadmaps/web-development" },
@@ -161,17 +160,11 @@ const ThemeToggler = ({ theme, toggleTheme }) => (
 );
 
 const Index = () => {
+    // Default state values are simple and do not use browser APIs
     const [showNotif, setShowNotif] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
-    const [theme, setTheme] = useState(() => {
-        if (typeof window !== 'undefined') {
-            const savedTheme = window.localStorage.getItem('theme');
-            if (savedTheme) return savedTheme;
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-        return 'light';
-    });
+    const [theme, setTheme] = useState('light'); // Default to 'light' to prevent SSR issues
 
     // Simulate dynamic data for notifications
     const [internships, setInternships] = useState([
@@ -185,30 +178,39 @@ const Index = () => {
 
     const audioRef = useRef(null);
 
+    // REFACTORED: All browser-specific logic is now in useEffect hooks.
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setShowNotif(!window.sessionStorage.getItem(NOTIF_KEY));
-            setShowPopup(!window.sessionStorage.getItem(POPUP_KEY));
-        }
-    }, []);
+        // This code now runs only on the client
+        const savedTheme = window.localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        setTheme(initialTheme);
+
+        setShowNotif(!window.sessionStorage.getItem(NOTIF_KEY));
+        setShowPopup(!window.sessionStorage.getItem(POPUP_KEY));
+    }, []); // Empty dependency array means this runs once on mount
+
+    // REFACTORED: This effect applies the theme whenever it changes.
+    useEffect(() => {
+        const root = window.document.documentElement;
+        root.classList.remove(theme === 'dark' ? 'light' : 'dark');
+        root.classList.add(theme);
+        window.localStorage.setItem('theme', theme);
+    }, [theme]);
 
     const dismissNotif = () => {
         setShowNotif(false);
-        if (typeof window !== 'undefined') {
-            window.sessionStorage.setItem(NOTIF_KEY, '1');
-        }
+        window.sessionStorage.setItem(NOTIF_KEY, '1');
     };
 
     const dismissPopup = () => {
         setShowPopup(false);
-        if (typeof window !== 'undefined') {
-            window.sessionStorage.setItem(POPUP_KEY, '1');
-        }
+        window.sessionStorage.setItem(POPUP_KEY, '1');
     };
     
     const playSoundAndOpenPanel = () => {
         if (audioRef.current) {
-            audioRef.current.play().catch(error => console.log("Audio play was prevented.", error));
+            audioRef.current.play().catch(error => console.log("Audio play was prevented. User interaction needed.", error));
         }
         setIsPanelOpen(true);
         dismissPopup();
@@ -217,13 +219,6 @@ const Index = () => {
     const toggleTheme = () => {
         setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
     };
-
-    useEffect(() => {
-        const root = window.document.documentElement;
-        root.classList.remove(theme === 'dark' ? 'light' : 'dark');
-        root.classList.add(theme);
-        window.localStorage.setItem('theme', theme);
-    }, [theme]);
 
     const getBadgeClass = (status) => {
         switch (status) {
@@ -238,7 +233,7 @@ const Index = () => {
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col font-sans">
             <Analytics />
 
-            {/* Audio element for notification sound */}
+            {/* FIX: Ensure notification.mp3 is in the /public folder of your project */}
             <audio ref={audioRef} src="/notification.mp3" preload="auto"></audio>
 
             {/* Welcome Popup */}
@@ -291,9 +286,9 @@ const Index = () => {
                 <div className="w-full bg-orange-600 text-white text-sm py-2.5 px-4 flex items-center justify-center gap-x-3 z-50 shadow-md">
                     <p>
                         <strong>Notice:</strong> We've updated the site and our{' '}
-                        <Link to="https://dhrc-tools.vercel.app/" className="underline font-bold hover:text-orange-200 transition-colors">
+                        <a href="https://dhrc-tools.vercel.app/" className="underline font-bold hover:text-orange-200 transition-colors">
                             Tools Dashboard
-                        </Link>.
+                        </a>.
                     </p>
                     <button onClick={dismissNotif} className="p-1.5 rounded-full hover:bg-orange-700 transition-colors" aria-label="Dismiss notification">
                         <X size={18} />
