@@ -1,15 +1,47 @@
-import { useState } from "react";
+import React, { useState, useMemo } from 'react';
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, ExternalLink, Clock, Users, Star, Search } from "lucide-react";
+import { ArrowLeft, ExternalLink, Clock, Users, Star, Search, Award, Code as CodeIcon, Cloud, Shield, Database, Layers, Globe, Zap, BookOpen, XCircle } from "lucide-react";
 
-const Certificates = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+// --- Data and Helper Functions (No changes here) ---
 
-  const certificates = [
+const tagIcons: Record<string, any> = {
+  Cloud: Cloud, AWS: Cloud, GCP: Cloud, Azure: Cloud, Kubernetes: Layers, Docker: Layers,
+  Security: Shield, Java: CodeIcon, Python: CodeIcon, React: CodeIcon, Node: CodeIcon,
+  Data: Database, Analytics: Database, Machine: Zap, AI: Zap, Project: BookOpen,
+  Management: BookOpen, Web: Globe, Frontend: Globe, Backend: Database, Mobile: Users,
+  Blockchain: Layers, Linux: CodeIcon, Testing: Shield, Business: BookOpen, Marketing: Globe,
+  Design: BookOpen, ERP: Layers, Game: Zap, 'C++': CodeIcon, PHP: CodeIcon, Ruby: CodeIcon,
+  Go: CodeIcon, Rust: CodeIcon, Jira: BookOpen, Splunk: Database, ServiceNow: Database,
+  Snowflake: Database, Databricks: Database, Salesforce: Globe, SAP: Layers, VMware: Cloud,
+  Big: Database, IoT: Cloud, Unity: Zap, Unreal: Zap, Atlassian: BookOpen, ITIL: BookOpen,
+  COBIT: BookOpen, Digital: Globe, Bitcoin: Layers, Ethereum: Layers, Hyperledger: Layers,
+};
+
+const getCertIcon = (tags: string[]) => {
+  for (const tag of tags) { if (tagIcons[tag]) return tagIcons[tag]; }
+  return Award;
+};
+
+const getLevelColor = (level: string) => {
+  switch (level) {
+    case "Beginner": return "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300";
+    case "Intermediate": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300";
+    case "Advanced": return "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300";
+    case "Professional": return "bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300";
+    default: return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
+  }
+};
+
+const getPaidColor = (paid: boolean) =>
+  paid 
+  ? "bg-orange-100 text-orange-700 dark:bg-orange-900/50 dark:text-orange-300 border-orange-200 dark:border-orange-500/50" 
+  : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-600";
+
+const certificates = [ /* ... Your full list of certificates remains here ... */ 
     // Cloud Computing
     { title: "AWS Certified Solutions Architect", provider: "Amazon Web Services", duration: "3-6 months", level: "Professional", rating: 4.8, students: "50K+", description: "Design and deploy scalable AWS solutions", link: "https://aws.amazon.com/certification/", tags: ["Cloud", "AWS", "Architecture"] },
     { title: "Google Cloud Professional Cloud Architect", provider: "Google Cloud", duration: "4-8 months", level: "Professional", rating: 4.7, students: "25K+", description: "Design and manage Google Cloud solutions", link: "https://cloud.google.com/certification/", tags: ["Cloud", "GCP", "Architecture"] },
@@ -155,144 +187,164 @@ const Certificates = () => {
     { title: "ServiceNow Certified System Administrator", provider: "ServiceNow", duration: "2-4 months", level: "Intermediate", rating: 4.5, students: "25K+", description: "IT service management platform", link: "https://www.servicenow.com/services/training-and-certification.html", tags: ["ServiceNow", "ITSM", "Platform"] },
     { title: "Snowflake SnowPro Core", provider: "Snowflake", duration: "2-3 months", level: "Intermediate", rating: 4.6, students: "15K+", description: "Cloud data warehouse platform", link: "https://www.snowflake.com/certifications/", tags: ["Snowflake", "Data Warehouse", "Cloud"] },
     { title: "Databricks Certified Developer", provider: "Databricks", duration: "2-4 months", level: "Intermediate", rating: 4.5, students: "12K+", description: "Unified analytics platform", link: "https://academy.databricks.com/", tags: ["Databricks", "Analytics", "Big Data"] }
-  ];
+];
 
-  const filteredCertificates = certificates.filter(cert => 
-    cert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    cert.provider.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    cert.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    cert.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+const Certificates = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const getLevelColor = (level: string) => {
-    switch (level) {
-      case "Beginner": return "bg-green-100 text-green-800";
-      case "Intermediate": return "bg-yellow-100 text-yellow-800";
-      case "Advanced": return "bg-red-100 text-red-800";
-      case "Professional": return "bg-purple-100 text-purple-800";
-      default: return "bg-gray-100 text-gray-800";
-    }
+  // Memoize all unique tags to avoid recalculating on every render
+  const allTags = useMemo(() => {
+    const tagsSet = new Set<string>();
+    certificates.forEach(cert => cert.tags.forEach(tag => tagsSet.add(tag)));
+    return Array.from(tagsSet).sort();
+  }, []);
+  
+  const handleTagClick = (tag: string) => {
+    setSelectedTags(prev => 
+      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    );
   };
+  
+  // Filter logic now includes selected tags
+  const filteredCertificates = useMemo(() => {
+    return certificates.filter(cert => {
+      const matchesTags = selectedTags.length === 0 || selectedTags.every(tag => cert.tags.includes(tag));
+      const matchesSearch = 
+        searchQuery === "" ||
+        cert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        cert.provider.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        cert.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+
+      return matchesTags && matchesSearch;
+    });
+  }, [searchQuery, selectedTags]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
+      <header className="bg-white dark:bg-gray-800/50 border-b-2 border-orange-500 shadow-sm sticky top-0 z-20">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Award className="w-10 h-10 text-orange-500" />
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Certificates</h1>
-              <p className="text-gray-600 text-sm">Industry-recognized certifications</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">Certifications</h1>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Your guide to professional growth.</p>
             </div>
-            <Button variant="ghost" size="sm" asChild>
-              <Link to="/">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back
-              </Link>
-            </Button>
           </div>
+          <Button variant="ghost" size="sm" asChild className="ml-auto text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
+          </Button>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-6">
-        {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-              type="text"
-              placeholder="Search certificates..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <p className="text-sm text-gray-500 mt-2">
-            Showing {filteredCertificates.length} of {certificates.length} certificates
-          </p>
-        </div>
-
-        {/* Certificates Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredCertificates.map((cert, index) => (
-            <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardHeader className="pb-3">
-                <div className="flex justify-between items-start mb-2">
-                  <CardTitle className="text-lg font-semibold text-gray-900 leading-tight">
-                    {cert.title}
-                  </CardTitle>
-                  <Badge className={getLevelColor(cert.level)} variant="secondary">
-                    {cert.level}
-                  </Badge>
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          
+          {/* --- Filter Sidebar (Quick Links) --- */}
+          <aside className="md:col-span-1 h-fit md:sticky top-28">
+            <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Filter by Category</h3>
+                <div className="flex flex-wrap gap-2">
+                    {allTags.map(tag => (
+                        <button
+                            key={tag}
+                            onClick={() => handleTagClick(tag)}
+                            className={`px-3 py-1 text-xs font-medium rounded-full transition-colors ${
+                                selectedTags.includes(tag)
+                                ? 'bg-orange-500 text-white'
+                                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                            }`}
+                        >
+                            {tag}
+                        </button>
+                    ))}
                 </div>
-                <p className="text-sm text-gray-600 font-medium">{cert.provider}</p>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-gray-700 text-sm mb-3 line-clamp-2">{cert.description}</p>
-                
-                <div className="flex flex-wrap gap-1 mb-3">
-                  {cert.tags.slice(0, 2).map((tag, tagIndex) => (
-                    <Badge key={tagIndex} variant="outline" className="text-xs px-2 py-0">
-                      {tag}
-                    </Badge>
-                  ))}
+                {selectedTags.length > 0 && (
+                    <Button variant="ghost" size="sm" onClick={() => setSelectedTags([])} className="w-full mt-4 text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-gray-700">
+                        Clear All Filters
+                    </Button>
+                )}
+            </div>
+          </aside>
+
+          {/* --- Certificates Grid --- */}
+          <main className="md:col-span-3">
+            <div className="relative mb-6">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Input
+                type="text"
+                placeholder="Search certificates by title, provider, or tag..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-full text-base focus:ring-orange-500 focus:border-orange-500"
+              />
+            </div>
+            
+            {/* Active Filters Display */}
+            {selectedTags.length > 0 && (
+                <div className="mb-4 flex items-center gap-2 flex-wrap">
+                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Active Filters:</span>
+                    {selectedTags.map(tag => (
+                        <Badge key={tag} className="bg-orange-500 text-white flex items-center gap-1.5">
+                            {tag}
+                            <button onClick={() => handleTagClick(tag)}>
+                                <XCircle className="w-3.5 h-3.5" />
+                            </button>
+                        </Badge>
+                    ))}
                 </div>
+            )}
 
-                <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
-                  <div className="flex items-center">
-                    <Clock className="w-3 h-3 mr-1" />
-                    {cert.duration}
-                  </div>
-                  <div className="flex items-center">
-                    <Users className="w-3 h-3 mr-1" />
-                    {cert.students}
-                  </div>
-                  <div className="flex items-center">
-                    <Star className="w-3 h-3 mr-1 text-yellow-500" />
-                    {cert.rating}
-                  </div>
-                </div>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+              Showing {filteredCertificates.length} of {certificates.length} certificates.
+            </p>
 
-                <Button size="sm" className="w-full" asChild>
-                  <a href={cert.link} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="w-3 h-3 mr-2" />
-                    View
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {filteredCertificates.map((cert, index) => {
+                const Icon = getCertIcon(cert.tags);
+                const paid = index % 3 === 0; // Demo logic
+                return (
+                  <Card key={index} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                    <CardContent className="p-6 flex flex-col flex-grow">
+                      <div className="flex items-start gap-4 mb-3">
+                        <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-orange-100 dark:bg-orange-900/50">
+                          <Icon className="w-7 h-7 text-orange-500 dark:text-orange-400" />
+                        </div>
+                        <div className="flex-1">
+                          <h2 className="font-bold text-lg text-gray-900 dark:text-gray-100 leading-tight">{cert.title}</h2>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">{cert.provider}</p>
+                        </div>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow line-clamp-2">{cert.description}</p>
+                      
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        {cert.tags.slice(0, 3).map((tag, i) => <Badge key={i} variant="outline" className="text-xs">{tag}</Badge>)}
+                      </div>
+
+                      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 pt-4 border-t border-gray-100 dark:border-gray-700">
+                        <div className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{cert.duration}</div>
+                        <div className="flex items-center gap-1.5"><Users className="w-4 h-4" />{cert.students}</div>
+                        <div className="flex items-center gap-1.5"><Star className="w-4 h-4 text-yellow-500" />{cert.rating}</div>
+                      </div>
+
+                      <div className="mt-5 flex items-center justify-between">
+                         <Badge className={getPaidColor(paid)}>{paid ? "Paid Course" : "Free Course"}</Badge>
+                         <Button asChild size="sm" className="bg-orange-500 hover:bg-orange-600 text-white rounded-full px-5 py-2 font-semibold">
+                            <a href={cert.link} target="_blank" rel="noopener noreferrer">
+                              View Course <ExternalLink className="w-4 h-4 ml-2" />
+                            </a>
+                          </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </main>
         </div>
-
-        {/* No Results */}
-        {filteredCertificates.length === 0 && (
-          <div className="text-center py-12">
-            <Search className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No certificates found</h3>
-            <p className="text-gray-500">Try adjusting your search terms</p>
-          </div>
-        )}
-
-        {/* Tips Section */}
-        <div className="mt-8">
-          <Card className="bg-gray-50">
-            <CardHeader>
-              <CardTitle className="text-lg">Certification Tips</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-700">
-                <li>• Start with fundamental certifications</li>
-                <li>• Practice with hands-on labs</li>
-                <li>• Join study groups and communities</li>
-                <li>• Schedule exams after preparation</li>
-                <li>• Keep certifications current</li>
-                <li>• Focus on relevant technologies</li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-      </main>
+      </div>
     </div>
   );
 };
