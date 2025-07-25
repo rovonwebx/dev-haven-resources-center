@@ -26,7 +26,7 @@ const quickLinks = [
     { title: "SQL Interview Questions", path: "/interview-questions" },
     {
         title: "Submit a Project",
-        path: "https://dhrc-tools.vercel.app/student-projects/submit",
+        path: "https://ckr-projectvault.vercel.app/",
         external: true
     },
 ];
@@ -402,7 +402,7 @@ const Index = () => {
                             Explore the Project Vault: Download and customize from our collection of pre-built projects.
                         </p>
                     </div>
-                    <Link to="/student-projects" className="flex-shrink-0">
+                    <Link to="https://ckr-projectvault.vercel.app/" className="flex-shrink-0">
                         <Button variant="link" className="h-auto p-0 text-sm font-bold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">
                             Browse Projects <ArrowRight className="ml-1" size={16} />
                         </Button>
