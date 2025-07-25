@@ -403,23 +403,22 @@ const Index = () => {
                 </div>
             </section>
 
-            {/* Project Vault Banner */}
-            <section className="w-full bg-orange-50 dark:bg-orange-900/30">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-                    <div className="flex items-center gap-4">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2880/2880009.png" alt="Project Vault Icon" className="w-12 h-12 object-contain" />
-                        <div>
-                            <h2 className="text-xl font-bold text-orange-800 dark:text-orange-300">Explore the Project Vault</h2>
-                            <p className="text-md text-orange-700 dark:text-orange-400">Download, customize, and learn from a collection of pre-built projects.</p>
-                        </div>
+            {/* Project Vault Alert Bar */}
+            <div className="w-full bg-orange-100 dark:bg-orange-900/50 border-y border-orange-200 dark:border-orange-700">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-col sm:flex-row items-center justify-center text-center sm:text-left gap-4">
+                    <div className="flex items-center gap-2">
+                        <Zap size={18} className="text-orange-600 dark:text-orange-400 flex-shrink-0" />
+                        <p className="text-sm font-semibold text-orange-800 dark:text-orange-300">
+                            Explore the Project Vault: Download and customize from our collection of pre-built projects.
+                        </p>
                     </div>
-                    <Link to="/student-projects">
-                        <Button className="bg-orange-600 text-white font-bold px-8 py-3 rounded-full shadow-md hover:bg-orange-700 transition-all transform hover:scale-105">
-                            Browse Projects <Download className="ml-2" size={20} />
+                    <Link to="/student-projects" className="flex-shrink-0">
+                        <Button variant="link" className="h-auto p-0 text-sm font-bold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">
+                            Browse Projects <ArrowRight className="ml-1" size={16} />
                         </Button>
                     </Link>
                 </div>
-            </section>
+            </div>
 
             {/* Main Content */}
             <main className="flex-1 w-full py-12 sm:py-16">
