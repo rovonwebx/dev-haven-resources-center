@@ -1,10 +1,10 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Send, Bot, User, Loader2, ArrowLeft, MessageSquare } from "lucide-react";
+import { Send, Bot, User, Loader2, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import clsx from 'clsx'; // Using clsx for cleaner conditional classes
 
 interface Message {
   id: string;
@@ -17,7 +17,7 @@ const ChatterBox = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Welcome to DHRC Chatter Box! 🚀 I'm your AI assistant powered by Gemini. I'm here to help you with everything about DHRC resources, engineering topics, DSA problems, career guidance, project ideas, and much more. What would you like to explore today?",
+      text: "Welcome to CKR ChatterBox! 🚀 I'm your AI assistant powered by Gemini. I'm here to help with DHRC resources, engineering topics, DSA, career guidance, and much more. How can I assist you today?",
       isBot: true,
       timestamp: new Date()
     }
@@ -25,6 +25,7 @@ const ChatterBox = () => {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null); // Ref for auto-growing textarea
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -34,6 +35,15 @@ const ChatterBox = () => {
     scrollToBottom();
   }, [messages]);
 
+  // useEffect for auto-growing textarea
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = 'auto'; // Reset height to recalculate
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; // Set to content height
+    }
+  }, [inputValue]);
+
+  // --- Core sendMessage function remains unchanged ---
   const sendMessage = async (messageText: string) => {
     if (!messageText.trim() || isLoading) return;
 
@@ -48,16 +58,11 @@ const ChatterBox = () => {
     setIsLoading(true);
 
     try {
-      console.log('Sending message to Gemini:', messageText);
-      
       const { data, error } = await supabase.functions.invoke('gemini-chat', {
         body: { message: messageText }
       });
 
-      if (error) {
-        console.error('Supabase function error:', error);
-        throw error;
-      }
+      if (error) throw error;
 
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
@@ -68,15 +73,13 @@ const ChatterBox = () => {
 
       setMessages(prev => [...prev, botResponse]);
     } catch (error) {
-      console.error('Error calling Gemini chat:', error);
-      
+      console.error("ChatterBox Error:", error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I'm sorry, I'm having trouble connecting right now. Please try again in a moment.",
+        text: "I'm sorry, I'm having trouble connecting right now. Please check your internet connection and try again.",
         isBot: true,
         timestamp: new Date()
       };
-
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
@@ -85,6 +88,7 @@ const ChatterBox = () => {
 
   const handleSendMessage = async () => {
     const message = inputValue.trim();
+    if (!message) return;
     setInputValue('');
     await sendMessage(message);
   };
@@ -97,114 +101,105 @@ const ChatterBox = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Link to="/" className="text-blue-600 hover:text-blue-800">
-                <ArrowLeft className="w-6 h-6" />
-              </Link>
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                  <MessageSquare className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-900">DHRC - Chatter Box</h1>
-                  <p className="text-sm text-gray-600">Powered by Gemini AI</p>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div className="flex flex-col h-screen bg-white dark:bg-gray-900 font-sans">
+      
+      {/* --- Top Notification --- */}
+      <div className="bg-orange-100 dark:bg-orange-900/50 p-3 text-center text-sm text-orange-800 dark:text-orange-200">
+        <p>
+          To test the full potential of the ChatterBox, please{" "}
+          <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer" className="font-semibold underline hover:text-orange-600 dark:hover:text-orange-300">
+            log in
+          </a>
+          .
+        </p>
+      </div>
+
+      {/* --- Header --- */}
+      <header className="flex items-center p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 flex-shrink-0">
+        <Link to="/" className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+          <ArrowLeft className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+        </Link>
+        <div className="flex items-center gap-3 mx-auto">
+            <img src="https://cdn-icons-png.flaticon.com/512/1055/1055672.png" alt="ChatterBox Icon" className="w-8 h-8"/>
+            <h1 className="text-lg font-bold text-gray-800 dark:text-gray-100">CKR ChatterBox</h1>
         </div>
+        <div className="w-9 h-9"></div> {/* Spacer to balance the back button */}
       </header>
 
-      {/* Chat Container */}
-      <div className="max-w-4xl mx-auto px-4 py-6">
-        <Card className="h-[calc(100vh-200px)] flex flex-col shadow-lg">
-          {/* Messages Area */}
-          <CardContent className="flex-1 overflow-y-auto p-6 space-y-6">
-            {messages.map((message) => (
+      {/* --- Chat Messages Area --- */}
+      <main className="flex-1 overflow-y-auto p-4 md:p-6">
+        <div className="max-w-3xl mx-auto space-y-6">
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              className={clsx('flex items-start gap-3 w-full animate-fade-in', {
+                'justify-end': !message.isBot,
+              })}
+            >
+              {message.isBot && (
+                <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0">
+                  <Bot size={20} className="text-white" />
+                </div>
+              )}
               <div
-                key={message.id}
-                className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
-              >
-                <div
-                  className={`max-w-[80%] p-4 rounded-2xl ${
-                    message.isBot
-                      ? 'bg-white border border-gray-200 text-gray-800 rounded-bl-sm'
-                      : 'bg-blue-600 text-white rounded-br-sm'
-                  }`}
-                >
-                  <div className="flex items-start space-x-3">
-                    {message.isBot && (
-                      <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Bot className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                    <div className="flex-1">
-                      <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
-                      <p className="text-xs opacity-70 mt-2">
-                        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </p>
-                    </div>
-                    {!message.isBot && (
-                      <div className="w-8 h-8 bg-blue-800 rounded-full flex items-center justify-center flex-shrink-0">
-                        <User className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-            
-            {/* Loading indicator */}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-white border border-gray-200 p-4 rounded-2xl rounded-bl-sm max-w-[80%]">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                      <Bot className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
-                      <span className="text-sm text-gray-600">AI is thinking...</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </CardContent>
-
-          {/* Input Area */}
-          <div className="border-t border-gray-200 p-6">
-            <div className="flex space-x-4">
-              <textarea
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Ask me anything about DHRC resources, programming, DSA, career advice..."
-                className="flex-1 text-sm border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none min-h-[50px] max-h-32"
-                rows={2}
-                disabled={isLoading}
-              />
-              <Button
-                onClick={handleSendMessage}
-                className="bg-blue-600 hover:bg-blue-700 rounded-xl px-6 py-3 h-auto"
-                disabled={isLoading || !inputValue.trim()}
-              >
-                {isLoading ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                ) : (
-                  <Send className="w-5 h-5" />
+                className={clsx(
+                  'max-w-[85%] px-4 py-3 rounded-2xl leading-relaxed break-words',
+                  message.isBot
+                    ? 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
+                    : 'bg-orange-500 text-white'
                 )}
-              </Button>
+              >
+                <p>{message.text}</p>
+                <div className="text-xs opacity-70 mt-2 text-right">
+                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </div>
+              </div>
             </div>
-          </div>
-        </Card>
-      </div>
+          ))}
+
+          {isLoading && (
+            <div className="flex items-start gap-3 w-full animate-fade-in">
+                <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0">
+                  <Bot size={20} className="text-white" />
+                </div>
+                <div className="px-4 py-3 rounded-2xl bg-gray-100 dark:bg-gray-700">
+                    <Loader2 className="w-5 h-5 animate-spin text-orange-500" />
+                </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+      </main>
+
+      {/* --- Chat Input Form Area --- */}
+      <footer className="p-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div className="max-w-3xl mx-auto">
+          <form
+            onSubmit={(e) => { e.preventDefault(); handleSendMessage(); }}
+            className="relative flex items-center"
+          >
+            <textarea
+              ref={textAreaRef}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Ask anything..."
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-2xl py-3 pl-4 pr-14 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none max-h-40"
+              rows={1}
+              disabled={isLoading}
+            />
+            <Button
+              type="submit"
+              size="icon"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full bg-orange-500 text-white disabled:bg-gray-400 dark:disabled:bg-gray-600 hover:bg-orange-600 transition-all"
+              disabled={isLoading || !inputValue.trim()}
+              aria-label="Send message"
+            >
+              {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
+            </Button>
+          </form>
+        </div>
+      </footer>
     </div>
   );
 };
