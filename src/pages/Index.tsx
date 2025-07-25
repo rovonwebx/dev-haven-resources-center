@@ -1,505 +1,404 @@
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Award, 
-  Code, 
-  Lightbulb, 
-  BookOpen, 
-  Brain, 
-  Trophy, 
-  Briefcase, 
-  FileText, 
-  File, 
-  GraduationCap,
-  Users,
-  Calendar,
-  Bot,
-  ArrowRight,
-  HelpCircle,
-  School,
-  Rocket,
-  MessageSquare,
-  Sparkles,
-  Layout,
-  AlertTriangle
-} from "lucide-react";
 import { Analytics } from "@vercel/analytics/react";
 import Chatbot from "@/components/Chatbot";
-import Footer from "@/components/Footer";
-import React, { useState } from "react";
+import { ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon } from 'lucide-react';
+
+// Main navigation links
+const navLinks = [
+  { title: "Certificates", path: "/certificates" },
+  { title: "Projects", path: "/projects" },
+  { title: "Notes", path: "/notes" },
+  { title: "Campus Notes", path: "/campus-notes" },
+  { title: "Roadmaps", path: "/roadmaps" },
+  { title: "Student Projects", path: "/student-projects" },
+  { title: "Events", path: "/events" },
+  { title: "Templates", path: "/templates" },
+];
+
+// Quick access links
+const quickLinks = [
+    { title: "DSA Roadmap", path: "/roadmaps/dsa" },
+    { title: "Web Dev Roadmap", path: "/roadmaps/web-development" },
+    { title: "Latest Internships", path: "/internships" },
+    { title: "SQL Interview Questions", path: "/interview-questions" },
+    { title: "Submit a Project", path: "/student-projects/submit" },
+];
+
+const resourceCards = [
+    // ... (resourceCards data remains the same)
+    {
+        title: "Certificates",
+        description: "Industry-recognized certifications and online courses.",
+        path: "/certificates",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135755.png",
+        status: 'Updated'
+    },
+    {
+        title: "Projects",
+        description: "Hands-on projects and portfolio ideas.",
+        path: "/projects",
+        img: "https://cdn-icons-png.flaticon.com/512/1055/1055687.png"
+    },
+    {
+        title: "Ideas",
+        description: "Innovation concepts and startup ideas.",
+        path: "/ideas",
+        img: "https://cdn-icons-png.flaticon.com/512/2721/2721297.png"
+    },
+    {
+        title: "Blogs",
+        description: "Technical articles and engineering insights.",
+        path: "/blogs",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+    },
+    {
+        title: "DSA",
+        description: "Data Structures and Algorithms resources.",
+        path: "/dsa",
+        img: "https://cdn-icons-png.flaticon.com/512/2721/2721298.png"
+    },
+    {
+        title: "Coding Challenges",
+        description: "Programming contests and practice problems.",
+        path: "/coding-challenges",
+        img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png"
+    },
+    {
+        title: "Internships",
+        description: "Internship opportunities and career guidance.",
+        path: "/internships",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135768.png",
+        status: 'Updated'
+    },
+    {
+        title: "Notes",
+        description: "Study materials and quick reference guides.",
+        path: "/notes",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135773.png"
+    },
+    {
+        title: "Campus Notes",
+        description: "Collaborative study notes and campus resources.",
+        path: "/campus-notes",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135772.png"
+    },
+    {
+        title: "Documents",
+        description: "Technical documentation and manuals.",
+        path: "/documents",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135766.png",
+        status: 'Coming Soon'
+    },
+    {
+        title: "Theories",
+        description: "Fundamental concepts and theoretical knowledge.",
+        path: "/theories",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135762.png",
+        status: 'Coming Soon'
+    },
+    {
+        title: "Roadmaps",
+        description: "Structured learning paths for DSA and Web Development.",
+        path: "/roadmaps",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135757.png"
+    },
+    {
+        title: "Student Projects",
+        description: "Innovative projects built by students across India.",
+        path: "/student-projects",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135758.png"
+    },
+    {
+        title: "Events",
+        description: "Tech events, competitions, and conferences.",
+        path: "/events",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135760.png"
+    },
+    {
+        title: "Interview Questions",
+        description: "Comprehensive SQL interview questions and answers.",
+        path: "/interview-questions",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135764.png"
+    },
+    {
+        title: "Anyone Can Develop",
+        description: "Complete guide to creating webpages with AI assistance.",
+        path: "/anyone-can-develop",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135770.png",
+        status: 'On Working'
+    },
+    {
+        title: "Templates",
+        description: "Ready-to-use web templates and design resources.",
+        path: "/templates",
+        img: "https://cdn-icons-png.flaticon.com/512/3135/3135769.png",
+        status: 'On Working'
+    }
+];
+
+const NOTIF_KEY = 'dhrc_tos_update_dismissed';
+
+// Theme Toggler Component
+const ThemeToggler = ({ theme, toggleTheme }) => (
+    <Button
+        variant="ghost"
+        size="icon"
+        onClick={toggleTheme}
+        className="rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+        aria-label="Toggle theme"
+    >
+        {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+    </Button>
+);
 
 const Index = () => {
-  const [showAlert, setShowAlert] = useState(true);
-  const resourceCategories = [
-    {
-      title: "Certificates",
-      description: "Industry-recognized certifications and online courses",
-      icon: Award,
-      path: "/certificates",
-    },
-    {
-      title: "Projects",
-      description: "Hands-on projects and portfolio ideas",
-      icon: Code,
-      path: "/projects",
-    },
-    {
-      title: "Ideas",
-      description: "Innovation concepts and startup ideas",
-      icon: Lightbulb,
-      path: "/ideas",
-    },
-    {
-      title: "Blogs",
-      description: "Technical articles and engineering insights",
-      icon: BookOpen,
-      path: "/blogs",
-    },
-    {
-      title: "DSA",
-      description: "Data Structures and Algorithms resources",
-      icon: Brain,
-      path: "/dsa",
-      isNew: true,
-    },
-    {
-      title: "Coding Challenges",
-      description: "Programming contests and practice problems",
-      icon: Trophy,
-      path: "/coding-challenges",
-    },
-    {
-      title: "Internships",
-      description: "Internship opportunities and career guidance",
-      icon: Briefcase,
-      path: "/internships",
-    },
-    {
-      title: "Notes",
-      description: "Study materials and quick reference guides",
-      icon: FileText,
-      path: "/notes",
-    },
-    {
-      title: "Campus Notes",
-      description: "Collaborative study notes and campus resources",
-      icon: School,
-      path: "/campus-notes",
-      isNew: true,
-    },
-    {
-      title: "Documents",
-      description: "Technical documentation and manuals",
-      icon: File,
-      path: "/documents",
-    },
-    {
-      title: "Theories",
-      description: "Fundamental concepts and theoretical knowledge",
-      icon: GraduationCap,
-      path: "/theories",
-    },
-    {
-      title: "Roadmaps",
-      description: "Structured learning paths for DSA and Web Development",
-      icon: Calendar,
-      path: "/roadmaps",
-    },
-    {
-      title: "Student Projects",
-      description: "Innovative projects built by students across India",
-      icon: Users,
-      path: "/student-projects",
-    },
-    {
-      title: "Events",
-      description: "Tech events, competitions, and conferences",
-      icon: Calendar,
-      path: "/events",
-    },
-    {
-      title: "Interview Questions",
-      description: "Comprehensive SQL interview questions and answers",
-      icon: HelpCircle,
-      path: "/interview-questions",
-    },
-    {
-      title: "Anyone Can Develop",
-      description: "Complete guide to creating webpages with AI assistance",
-      icon: Rocket,
-      path: "/anyone-can-develop",
-      isNew: true,
-    },
-    {
-      title: "Templates",
-      description: "Ready-to-use web templates and design resources",
-      icon: Layout,
-      path: "/templates",
-      isNew: true,
-    }
-  ];
+    const [showNotif, setShowNotif] = useState(true);
+    const [theme, setTheme] = useState(() => {
+        // Check for saved theme in localStorage or default to system preference
+        if (typeof window !== 'undefined') {
+            const savedTheme = window.localStorage.getItem('theme');
+            if (savedTheme) return savedTheme;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        return 'light';
+    });
 
-  return (
-    <>
-      {/* Top Navigation Alert Notification */}
-      {showAlert && (
-        <div className="w-full bg-red-600 text-white flex items-center justify-between py-2 px-4 fixed top-0 left-0 z-50 shadow-lg">
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-white" />
-            <span className="font-semibold">This site is in the testing phase.</span>
-          </div>
-          <button
-            className="text-white/80 hover:text-white text-xl font-bold focus:outline-none ml-4"
-            onClick={() => setShowAlert(false)}
-            aria-label="Close alert"
-          >
-            ×
-          </button>
-        </div>
-      )}
-      <div className="min-h-screen bg-white">
-      <Analytics />
-      
-      {/* Header with solid color and animated geometric outline shapes */}
-      <header 
-        className="border-b border-gray-300 bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 relative overflow-hidden"
-      >
-        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 lg:py-12 relative z-10">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between">
-            <div className="flex-1 max-w-2xl">
-              <div className="flex items-center mb-4 sm:mb-6">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0 p-1 shadow-lg">
-                  <img 
-                      src="/lovable-uploads/afd18992-2d3f-4720-9839-1637802cd8e4.png" 
-                    alt="DHRC Logo" 
-                    className="w-full h-full object-contain"
-                  />
+    useEffect(() => {
+        // Apply the theme to the root HTML element
+        const root = window.document.documentElement;
+        root.classList.remove(theme === 'dark' ? 'light' : 'dark');
+        root.classList.add(theme);
+        window.localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setShowNotif(!window.sessionStorage.getItem(NOTIF_KEY));
+        }
+    }, []);
+
+    const dismissNotif = () => {
+        setShowNotif(false);
+        if (typeof window !== 'undefined') {
+            window.sessionStorage.setItem(NOTIF_KEY, '1');
+        }
+    };
+    
+    const toggleTheme = () => {
+        setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
+
+    const getBadgeClass = (status) => {
+        switch (status) {
+            case 'Updated': return 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300';
+            case 'Coming Soon': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300';
+            case 'On Working': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300';
+            default: return '';
+        }
+    };
+
+    return (
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col font-sans">
+            <Analytics />
+
+            {/* Top Notification Bar */}
+            {showNotif && (
+                <div className="w-full bg-orange-600 text-white text-sm py-2.5 px-4 flex items-center justify-center gap-x-3 z-50 shadow-md">
+                    <p>
+                        <strong>Notice:</strong> We've updated the site and our{' '}
+                        <Link to="https://dhrc-tools.vercel.app/" className="underline font-bold hover:text-orange-200 transition-colors">
+                            Tools Dashboard
+                        </Link>.
+                    </p>
+                    <button onClick={dismissNotif} className="p-1.5 rounded-full hover:bg-orange-700 transition-colors" aria-label="Dismiss notification">
+                        <X size={18} />
+                    </button>
                 </div>
-                <div>
-                  <h1 className="text-xl sm:text-2xl font-bold text-white mb-1 drop-shadow">DHRC</h1>
-                  <p className="text-xs sm:text-sm text-white/80">by DHRC Team & CMRIT AIML-A Resource HQ</p>
-                </div>
-              </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-white mb-2 sm:mb-3 leading-tight drop-shadow">
-                Dev Haven Resources Center
-              </h1>
-              <p className="text-white/90 text-sm sm:text-base max-w-lg leading-relaxed">
-                A comprehensive collection of engineering knowledge and resources
-              </p>
-            </div>
-            {/* Header Image on the right */}
-            <div className="hidden lg:flex items-center justify-end flex-1">
-              <img 
-                src="https://i.ibb.co/7Nkf4tRs/Chat-GPT-Image-Jul-17-2025-12-10-31-AM-removebg-preview.png"
-                alt="Header Banner"
-                className="w-[340px] h-auto object-contain mix-blend-lighten opacity-90 drop-shadow-2xl"
-                style={{maxHeight: '220px'}}
-              />
-            </div>
-          </div>
-        </div>
-      </header>
+            )}
 
-      {/* Responsive Navbar for Important/Updated Contents */}
-      <nav className="w-full bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-14">
-            <span className="font-semibold text-gray-700 text-base hidden sm:inline-block">What's New</span>
-            {/* Hamburger for mobile */}
-            <div className="sm:hidden">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-                aria-controls="navbar-menu"
-                aria-expanded="false"
-                onClick={() => {
-                  const menu = document.getElementById('navbar-menu');
-                  if (menu) menu.classList.toggle('hidden');
-                }}
-              >
-                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
-            {/* Desktop links */}
-            <div className="hidden sm:flex space-x-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-              {resourceCategories.filter(c => c.isNew).map((category) => (
-                <Link
-                  key={category.title}
-                  to={category.path}
-                  className="px-3 py-1 rounded-md text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 hover:text-blue-900 transition whitespace-nowrap flex items-center"
-                >
-                  {category.title}
-                  <span className="ml-2 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded animate-pulse">New</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-          {/* Mobile dropdown */}
-          <div id="navbar-menu" className="sm:hidden hidden flex-col space-y-1 pb-3 pt-2">
-            {resourceCategories.filter(c => c.isNew).map((category) => (
-              <Link
-                key={category.title}
-                to={category.path}
-                className="block px-4 py-2 rounded-md text-base font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 hover:text-blue-900 transition"
-              >
-                {category.title}
-                <span className="ml-2 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded animate-pulse">New</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </nav>
-
-      {/* Alert for Chatter Box */}
-      <div className="max-w-4xl mx-auto px-4 py-3">
-        <div className="relative flex items-center gap-4 rounded-xl shadow-lg backdrop-blur-md bg-white/70 border border-red-200 overflow-hidden">
-          <div className="h-full w-2 bg-gradient-to-b from-red-400 to-red-600 absolute left-0 top-0" />
-          <div className="flex items-center justify-center bg-red-100 rounded-full w-12 h-12 ml-4 my-3">
-            <MessageSquare className="h-6 w-6 text-red-600" />
-          </div>
-          <div className="flex-1 py-4 pr-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="flex items-center space-x-2">
-                <Sparkles className="w-5 h-5 flex-shrink-0 text-red-500" />
-                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
-                  <span className="font-semibold text-red-800">New: DHRC Chatter Box is now available!</span>
-                  <span className="text-sm text-red-700">Chat with our AI assistant powered by Gemini for instant help with your queries.</span>
-                </div>
-              </div>
-              <Link to="/chatter-box" className="flex-shrink-0">
-                <Button variant="outline" size="sm" className="border-red-300 text-red-700 hover:bg-red-100 w-full sm:w-auto">
-                  Try Now
-                  <ArrowRight className="w-3 h-3 ml-1" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Alert for Campus Notes Update */}
-      <div className="max-w-4xl mx-auto px-4 py-3">
-        <div className="relative flex items-center gap-4 rounded-xl shadow-lg backdrop-blur-md bg-white/70 border border-green-200 overflow-hidden">
-          <div className="h-full w-2 bg-gradient-to-b from-green-400 to-green-600 absolute left-0 top-0" />
-          <div className="flex items-center justify-center bg-green-100 rounded-full w-12 h-12 ml-4 my-3">
-            <MessageSquare className="h-6 w-6 text-green-600" />
-          </div>
-          <div className="flex-1 py-4 pr-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="flex items-center space-x-2">
-                <Sparkles className="w-5 h-5 flex-shrink-0 text-green-500" />
-                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
-                  <span className="font-semibold text-green-800">New: Campus Notes Page Updated!</span>
-                  <span className="text-sm text-green-700">Explore the latest resources and updated content for all academic years.</span>
-                </div>
-              </div>
-              <Link to="/campus-notes" className="flex-shrink-0">
-                <Button variant="outline" size="sm" className="border-green-300 text-green-700 hover:bg-green-100 w-full sm:w-auto">
-                  Check Now
-                  <ArrowRight className="w-3 h-3 ml-1" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content with Side Banners */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-12 gap-6">
-          {/* Left Banner - AI Interviews */}
-          <div className="col-span-2 hidden lg:block">
-            <div className="sticky top-8">
-              <Card className="border border-blue-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-48 mx-auto">
-                <div className="relative">
-                  <img 
-                    src="https://blog.talview.com/hs-fs/hubfs/AI_V.png?width=842&name=AI_V.png"
-                    alt="AI Interviews"
-                    className="w-full h-32 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-700/70 via-transparent to-transparent" />
-                  <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                    <div className="bg-white/80 rounded-full p-2 shadow">
-                      <Bot className="w-6 h-6 text-blue-700" />
-                    </div>
-                    <h3 className="text-white font-semibold text-base drop-shadow">AI Interviews</h3>
-                  </div>
-                </div>
-                <CardContent className="p-4">
-                  <p className="text-sm text-gray-700 mb-4 font-medium">
-                    Practice coding interviews with AI-powered mock sessions
-                  </p>
-                  <Link to="/auth?service=ai-interviews">
-                    <Button size="sm" className="w-full text-base font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow">
-                      Start Practice
-                      <ArrowRight className="w-4 h-4 ml-1" />
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <main className="col-span-12 lg:col-span-8">
-            <div className="backdrop-blur-md bg-white/60 rounded-2xl shadow-2xl px-6 sm:px-10 py-10 mb-10 border border-white/40">
-            {/* Introduction */}
-            <div className="mb-8">
-                <p className="text-gray-700 leading-relaxed mb-4 text-lg font-medium text-center">
-                The <strong> Dev Haven Resources Center</strong> is a comprehensive platform designed to support engineers 
-                at every stage of their career. From foundational concepts to advanced theories, this hub provides 
-                structured access to essential learning materials, practical projects, and career development resources.
-              </p>
-            </div>
-
-            {/* Table of Contents */}
-              <Card className="mb-8 border border-gray-200 bg-white/80 shadow-md rounded-xl">
-              <CardContent className="p-6">
-                  <h2 className="text-xl font-serif text-black mb-4 pb-2 border-b border-gray-200 text-center">Contents</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {resourceCategories.map((category, index) => (
-                    <div key={category.title} className="flex items-center py-1">
-                      <span className="text-blue-700 font-medium mr-3 min-w-[24px]">{index + 1}.</span>
-                      <Link 
-                        to={category.path} 
-                        className="text-blue-700 hover:text-blue-900 hover:underline text-sm font-medium transition-colors flex items-center"
-                      >
-                        {category.title}
-                        {category.isNew && (
-                          <Badge className="ml-2 bg-red-500 text-white text-xs px-1.5 py-0.5 animate-pulse">
-                            New
-                          </Badge>
-                        )}
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Resource Categories */}
-              <div className="space-y-10">
-              {resourceCategories.map((category) => {
-                const IconComponent = category.icon;
-                return (
-                    <section key={category.title} className="border-b border-gray-100 pb-8 last:border-b-0 last:pb-0">
-                      <div className="flex items-start space-x-4">
-                        <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-blue-100 to-indigo-100 shadow">
-                          <IconComponent className="w-6 h-6 text-blue-700" />
+            {/* Header */}
+            <header className="sticky top-0 w-full border-b-2 border-orange-500 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-40">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+                    <Link to="/" className="flex items-center gap-3">
+                        <img
+                            src="https://i.ibb.co/PGDSpW4p/Screenshot-2025-07-20-at-3-09-38-AM.png"
+                            alt="DHRC Logo"
+                            className="w-16 h-16 object-contain"
+                        />
+                        <div>
+                            <h1 className="text-xl sm:text-2xl font-extrabold text-gray-800 dark:text-gray-100">
+                                Center for Knowledge & Resources
+                            </h1>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium tracking-wider">DATA-HUB & RESOURCE CENTER</p>
                         </div>
-                      <div className="flex-1">
-                        <h2 className="text-xl font-serif text-black mb-2 flex items-center">
-                          <Link 
-                            to={category.path} 
-                            className="text-blue-600 hover:underline"
-                          >
-                            {category.title}
-                          </Link>
-                          {category.isNew && (
-                            <Badge className="ml-3 bg-red-500 text-white text-xs px-2 py-1 animate-pulse">
-                              New
-                            </Badge>
-                          )}
-                        </h2>
-                          <p className="text-gray-700 leading-relaxed text-base mb-3">
-                          {category.description}
-                        </p>
-                        <Link 
-                          to={category.path}
-                          className="text-blue-600 hover:underline text-sm font-medium"
-                        >
-                          Main article: {category.title} →
+                    </Link>
+                    <div className="flex items-center gap-2 sm:gap-4">
+                        <ThemeToggler theme={theme} toggleTheme={toggleTheme} />
+                        <Link to="/resume-generator">
+                            <Button variant="outline" className="border-orange-500 text-orange-600 hover:bg-orange-50 hover:text-orange-700 dark:text-orange-400 dark:border-orange-400 dark:hover:bg-gray-800 dark:hover:text-orange-300 font-bold px-4 sm:px-6 py-2.5 rounded-full shadow-sm transition-all transform hover:scale-105">
+                                Resume Generator
+                            </Button>
                         </Link>
-                      </div>
+                        <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer">
+                            <Button className="bg-orange-500 text-white hover:bg-orange-600 font-bold px-6 py-2.5 rounded-full shadow-sm transition-all transform hover:scale-105">
+                                Sign In
+                            </Button>
+                        </a>
                     </div>
-                  </section>
-                );
-              })}
-              </div>
-            </div>
-          </main>
-
-          {/* Right Banner - Templates */}
-          <div className="col-span-2 hidden lg:block">
-            <div className="sticky top-8 space-y-6">
-              {/* Templates Banner */}
-              <Card className="border border-purple-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-80 mx-auto">
-                <div className="relative">
-                  <img 
-                    src="https://weblium.com/blog/wp-content/uploads/2019/05/imgonline-com-ua-Compressed-B8y1EYhpR0m1.jpg"
-                    alt="Templates"
-                    className="w-full h-32 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-purple-700/70 via-transparent to-transparent" />
-                  <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                    <div className="bg-white/80 rounded-full p-2 shadow">
-                      <Layout className="w-6 h-6 text-purple-700" />
-                    </div>
-                    <h3 className="text-white font-semibold text-base drop-shadow">Templates</h3>
-                    <Badge className="bg-red-500 text-white text-xs px-1.5 py-0.5 animate-pulse mt-1 ml-2">
-                      New
-                    </Badge>
-                  </div>
                 </div>
-                <CardContent className="p-4">
-                  <p className="text-sm text-gray-700 mb-4 font-medium">
-                    Ready-to-use web templates and design resources
-                  </p>
-                  <Link to="/templates">
-                    <Button size="sm" variant="outline" className="w-full text-base font-semibold border-purple-300 text-purple-700 hover:bg-purple-100 shadow">
-                      Explore Templates
-                      <ArrowRight className="w-4 h-4 ml-1" />
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-
-              {/* Organizer Banner */}
-              <Card className="border border-green-100 bg-white/60 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden w-80 mx-auto">
-                <div className="relative">
-                  <img 
-                    src="https://thumbs.dreamstime.com/b/task-management-concept-vector-illustration-people-feel-check-boxes-to-do-list-project-software-development-process-164295666.jpg"
-                    alt="Organizer"
-                    className="w-full h-32 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-green-700/70 via-transparent to-transparent" />
-                  <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                    <div className="bg-white/80 rounded-full p-2 shadow">
-                      <Calendar className="w-6 h-6 text-green-700" />
-                    </div>
-                    <h3 className="text-white font-semibold text-base drop-shadow">Organizer</h3>
-                  </div>
+            </header>
+            
+            {/* Primary Navigation Bar */}
+            <nav className="w-full bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-center gap-2">
+                    {navLinks.map((link) => (
+                        <Link
+                            key={link.title}
+                            to={link.path}
+                            className="px-5 py-2 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-200"
+                        >
+                            {link.title}
+                        </Link>
+                    ))}
                 </div>
-                <CardContent className="p-4">
-                  <p className="text-sm text-gray-700 mb-4 font-medium">
-                    Manage tasks, projects, and track your productivity
-                  </p>
-                  <Link to="/organizer">
-                    <Button size="sm" className="w-full text-base font-semibold bg-green-600 hover:bg-green-700 text-white shadow">
-                      Get Organized
-                      <ArrowRight className="w-4 h-4 ml-1" />
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+            </nav>
+
+            {/* Quick Links Bar */}
+            <section className="w-full bg-gray-100 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center gap-4">
+                    <h3 className="text-md font-bold text-gray-700 dark:text-gray-300 flex-shrink-0">Quick Links:</h3>
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2">
+                        {quickLinks.map((link) => (
+                            <Link
+                                key={link.title}
+                                to={link.path}
+                                className="text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 hover:underline transition-colors"
+                            >
+                                {link.title}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ChatterBox Access Banner */}
+            <section className="w-full bg-blue-50 dark:bg-blue-900/30">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div className="flex items-center gap-4">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055672.png" alt="ChatterBox Icon" className="w-12 h-12 object-contain" />
+                        <div>
+                            <h2 className="text-xl font-bold text-blue-800 dark:text-blue-300">Engage with ChatterBox</h2>
+                            <p className="text-md text-blue-700 dark:text-blue-400">Ask questions, find solutions, and collaborate with peers in our community forum.</p>
+                        </div>
+                    </div>
+                    <Link to="/chatterbox">
+                        <Button className="bg-blue-600 text-white font-bold px-8 py-3 rounded-full shadow-md hover:bg-blue-700 transition-all transform hover:scale-105">
+                            Access ChatterBox <ArrowRight className="ml-2" size={20} />
+                        </Button>
+                    </Link>
+                </div>
+            </section>
+
+            {/* Main Content */}
+            <main className="flex-1 w-full py-12 sm:py-16">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">Explore Our Resources</h2>
+                        <p className="mt-3 text-lg text-gray-600 dark:text-gray-400">Find everything you need to succeed in your engineering studies and career.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {resourceCards.map(card => (
+                            <Card key={card.title} className="group bg-white dark:bg-gray-800 overflow-hidden rounded-xl shadow-md hover:shadow-xl dark:border-gray-700 transition-all duration-300 transform hover:-translate-y-1">
+                                <CardContent className="p-5 flex flex-col items-center text-center">
+                                    {card.status && (
+                                        <Badge className={`absolute top-3 right-3 text-xs font-bold py-1 px-3 rounded-full ${getBadgeClass(card.status)}`}>
+                                            {card.status}
+                                        </Badge>
+                                    )}
+                                    <img src={card.img} alt={`${card.title} icon`} className="w-20 h-20 object-contain mb-4 transition-transform duration-300 group-hover:scale-110" />
+                                    <h3 className="font-bold text-lg text-gray-800 dark:text-gray-200 mb-2">{card.title}</h3>
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 flex-grow">{card.description}</p>
+                                    <Link to={card.path}>
+                                        <Button variant="ghost" className="text-orange-600 dark:text-orange-400 font-bold hover:bg-orange-100 dark:hover:bg-gray-700 dark:hover:text-orange-300 rounded-full">
+                                            Explore <ArrowRight className="ml-2 transition-transform duration-300 group-hover:translate-x-1" size={18} />
+                                        </Button>
+                                    </Link>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+                </div>
+            </main>
+
+            {/* Redesigned Footer */}
+            <footer className="bg-gray-800 dark:bg-gray-900/70 text-white">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+                        {/* Column 1: Branding */}
+                        <div className="md:col-span-1">
+                            <Link to="/" className="flex items-center gap-3 mb-4">
+                                <img src="https://i.ibb.co/PGDSpW4p/Screenshot-2025-07-20-at-3-09-38-AM.png" alt="DHRC Logo" className="w-12 h-12 bg-white rounded-full p-1" />
+                                <span className="text-lg font-extrabold text-gray-100">CKR</span>
+                            </Link>
+                            <p className="text-gray-400 dark:text-gray-500 text-sm">
+                                Your central hub for engineering knowledge, projects, and career resources.
+                            </p>
+                        </div>
+
+                        {/* Column 2: Resources */}
+                        <div>
+                            <h3 className="font-bold text-gray-200 tracking-wider uppercase mb-4">Resources</h3>
+                            <ul className="space-y-3">
+                                <li><Link to="/certificates" className="text-gray-400 hover:text-orange-400 transition-colors">Certificates</Link></li>
+                                <li><Link to="/projects" className="text-gray-400 hover:text-orange-400 transition-colors">Projects</Link></li>
+                                <li><Link to="/roadmaps" className="text-gray-400 hover:text-orange-400 transition-colors">Roadmaps</Link></li>
+                                <li><Link to="/notes" className="text-gray-400 hover:text-orange-400 transition-colors">Notes</Link></li>
+                            </ul>
+                        </div>
+
+                        {/* Column 3: Community */}
+                        <div>
+                            <h3 className="font-bold text-gray-200 tracking-wider uppercase mb-4">Community</h3>
+                            <ul className="space-y-3">
+                                <li><Link to="/student-projects" className="text-gray-400 hover:text-orange-400 transition-colors">Student Projects</Link></li>
+                                <li><Link to="/events" className="text-gray-400 hover:text-orange-400 transition-colors">Events</Link></li>
+                                <li><Link to="/chatterbox" className="text-gray-400 hover:text-orange-400 transition-colors">ChatterBox</Link></li>
+                                <li><Link to="/internships" className="text-gray-400 hover:text-orange-400 transition-colors">Internships</Link></li>
+                            </ul>
+                        </div>
+
+                        {/* Column 4: Social Links */}
+                        <div>
+                            <h3 className="font-bold text-gray-200 tracking-wider uppercase mb-4">Connect With Us</h3>
+                            <div className="flex space-x-4">
+                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-400 transition-colors"><Github size={24} /></a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-400 transition-colors"><Linkedin size={24} /></a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-400 transition-colors"><Twitter size={24} /></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Bottom Bar */}
+                    <div className="mt-10 pt-8 border-t border-gray-700 dark:border-gray-800 flex flex-col sm:flex-row justify-between items-center">
+                        <p className="text-sm text-gray-500 dark:text-gray-600 mb-4 sm:mb-0">
+                            © {new Date().getFullYear()} CKR - Center for Knowledge & Resources. All Rights Reserved.
+                        </p>
+                        <div className="flex space-x-4 text-sm">
+                            <Link to="/terms-of-service" className="text-gray-500 dark:text-gray-600 hover:text-orange-400">Terms of Service</Link>
+                            <Link to="/privacy-policy" className="text-gray-500 dark:text-gray-600 hover:text-orange-400">Privacy Policy</Link>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <Chatbot />
         </div>
-      </div>
-
-      {/* Footer */}
-      <Footer />
-
-      {/* Chatbot */}
-      <Chatbot />
-    </div>
-    </>
-  );
+    );
 };
 
 export default Index;
