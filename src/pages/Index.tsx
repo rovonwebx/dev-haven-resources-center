@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Chatbot from "@/components/Chatbot";
 import { ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon, Download, Bell, Zap } from 'lucide-react';
 
-// --- Data arrays are unchanged ---
+// Main navigation links
 const navLinks = [
   { title: "Certificates", path: "/certificates" },
   { title: "Projects", path: "/projects" },
@@ -19,6 +19,7 @@ const navLinks = [
   { title: "Templates", path: "/templates" },
 ];
 
+// Quick access links
 const quickLinks = [
     { title: "DSA Roadmap", path: "/roadmaps/dsa" },
     { title: "Web Dev Roadmap", path: "/roadmaps/web-development" },
@@ -143,7 +144,6 @@ const resourceCards = [
     }
 ];
 
-
 const NOTIF_KEY = 'dhrc_tos_update_dismissed';
 const POPUP_KEY = 'dhrc_popup_dismissed';
 
@@ -164,7 +164,14 @@ const Index = () => {
     const [showNotif, setShowNotif] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
-    const [theme, setTheme] = useState('light'); // Default to 'light' for SSR safety
+    const [theme, setTheme] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const savedTheme = window.localStorage.getItem('theme');
+            if (savedTheme) return savedTheme;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        return 'light';
+    });
 
     // Simulate dynamic data for notifications
     const [internships, setInternships] = useState([
@@ -176,37 +183,33 @@ const Index = () => {
         { id: 2, title: "Hackathon Challenge", date: "2025-11-01" },
     ]);
 
-    // This useEffect hook handles all client-side logic after the component mounts
-    useEffect(() => {
-        const savedTheme = window.localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-        setTheme(initialTheme);
+    const audioRef = useRef(null);
 
-        setShowNotif(!window.sessionStorage.getItem(NOTIF_KEY));
-        setShowPopup(!window.sessionStorage.getItem(POPUP_KEY));
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setShowNotif(!window.sessionStorage.getItem(NOTIF_KEY));
+            setShowPopup(!window.sessionStorage.getItem(POPUP_KEY));
+        }
     }, []);
-
-    // This effect handles theme changes
-    useEffect(() => {
-        const root = window.document.documentElement;
-        root.classList.remove(theme === 'dark' ? 'light' : 'dark');
-        root.classList.add(theme);
-        window.localStorage.setItem('theme', theme);
-    }, [theme]);
 
     const dismissNotif = () => {
         setShowNotif(false);
-        window.sessionStorage.setItem(NOTIF_KEY, '1');
+        if (typeof window !== 'undefined') {
+            window.sessionStorage.setItem(NOTIF_KEY, '1');
+        }
     };
 
     const dismissPopup = () => {
         setShowPopup(false);
-        window.sessionStorage.setItem(POPUP_KEY, '1');
+        if (typeof window !== 'undefined') {
+            window.sessionStorage.setItem(POPUP_KEY, '1');
+        }
     };
-
-    // REMOVED: Sound logic is gone from this function
-    const openPanelAndDismissPopup = () => {
+    
+    const playSoundAndOpenPanel = () => {
+        if (audioRef.current) {
+            audioRef.current.play().catch(error => console.log("Audio play was prevented.", error));
+        }
         setIsPanelOpen(true);
         dismissPopup();
     };
@@ -214,6 +217,13 @@ const Index = () => {
     const toggleTheme = () => {
         setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
     };
+
+    useEffect(() => {
+        const root = window.document.documentElement;
+        root.classList.remove(theme === 'dark' ? 'light' : 'dark');
+        root.classList.add(theme);
+        window.localStorage.setItem('theme', theme);
+    }, [theme]);
 
     const getBadgeClass = (status) => {
         switch (status) {
@@ -228,7 +238,8 @@ const Index = () => {
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col font-sans">
             <Analytics />
 
-            {/* REMOVED: Audio element is gone */}
+            {/* Audio element for notification sound */}
+            <audio ref={audioRef} src="/notification.mp3" preload="auto"></audio>
 
             {/* Welcome Popup */}
             {showPopup && (
@@ -242,8 +253,7 @@ const Index = () => {
                     <p className="text-gray-600 dark:text-gray-400 mb-4">
                         We have new updates for events and internships. Check them out!
                     </p>
-                    {/* UPDATED: OnClick handler calls the new function */}
-                    <Button onClick={openPanelAndDismissPopup} className="w-full bg-orange-500 hover:bg-orange-600">
+                    <Button onClick={playSoundAndOpenPanel} className="w-full bg-orange-500 hover:bg-orange-600">
                         Show Me
                     </Button>
                 </div>
@@ -281,9 +291,9 @@ const Index = () => {
                 <div className="w-full bg-orange-600 text-white text-sm py-2.5 px-4 flex items-center justify-center gap-x-3 z-50 shadow-md">
                     <p>
                         <strong>Notice:</strong> We've updated the site and our{' '}
-                        <a href="https://dhrc-tools.vercel.app/" className="underline font-bold hover:text-orange-200 transition-colors">
+                        <Link to="https://dhrc-tools.vercel.app/" className="underline font-bold hover:text-orange-200 transition-colors">
                             Tools Dashboard
-                        </a>.
+                        </Link>.
                     </p>
                     <button onClick={dismissNotif} className="p-1.5 rounded-full hover:bg-orange-700 transition-colors" aria-label="Dismiss notification">
                         <X size={18} />
