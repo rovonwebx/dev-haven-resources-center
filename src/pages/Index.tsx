@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Analytics } from "@vercel/analytics/react";
 import Chatbot from "@/components/Chatbot";
-import { ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon, Download } from 'lucide-react';
+import { ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon, Download, Bell, Zap } from 'lucide-react';
 
-// Main navigation links
+// --- Data arrays are unchanged ---
 const navLinks = [
   { title: "Certificates", path: "/certificates" },
   { title: "Projects", path: "/projects" },
@@ -19,7 +19,6 @@ const navLinks = [
   { title: "Templates", path: "/templates" },
 ];
 
-// Quick access links - updated to handle external links
 const quickLinks = [
     { title: "DSA Roadmap", path: "/roadmaps/dsa" },
     { title: "Web Dev Roadmap", path: "/roadmaps/web-development" },
@@ -27,7 +26,7 @@ const quickLinks = [
     { title: "SQL Interview Questions", path: "/interview-questions" },
     {
         title: "Submit a Project",
-        path: "https://dhrc-tools.vercel.app/student-projects/submit", // Replace with your actual external link
+        path: "https://dhrc-tools.vercel.app/student-projects/submit",
         external: true
     },
 ];
@@ -144,7 +143,9 @@ const resourceCards = [
     }
 ];
 
+
 const NOTIF_KEY = 'dhrc_tos_update_dismissed';
+const POPUP_KEY = 'dhrc_popup_dismissed';
 
 // Theme Toggler Component
 const ThemeToggler = ({ theme, toggleTheme }) => (
@@ -155,41 +156,59 @@ const ThemeToggler = ({ theme, toggleTheme }) => (
         className="rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
         aria-label="Toggle theme"
     >
-        {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5" />}
+        {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
     </Button>
 );
 
 const Index = () => {
     const [showNotif, setShowNotif] = useState(true);
-    const [theme, setTheme] = useState(() => {
-        // Check for saved theme in localStorage or default to system preference
-        if (typeof window !== 'undefined') {
-            const savedTheme = window.localStorage.getItem('theme');
-            if (savedTheme) return savedTheme;
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-        return 'light';
-    });
+    const [showPopup, setShowPopup] = useState(false);
+    const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const [theme, setTheme] = useState('light'); // Default to 'light' for SSR safety
 
+    // Simulate dynamic data for notifications
+    const [internships, setInternships] = useState([
+        { id: 1, title: "Frontend Developer Intern", company: "Vercel" },
+        { id: 2, title: "Backend Developer Intern", company: "Google" },
+    ]);
+    const [events, setEvents] = useState([
+        { id: 1, title: "Tech Conference 2025", date: "2025-10-15" },
+        { id: 2, title: "Hackathon Challenge", date: "2025-11-01" },
+    ]);
+
+    // This useEffect hook handles all client-side logic after the component mounts
     useEffect(() => {
-        // Apply the theme to the root HTML element
+        const savedTheme = window.localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        setTheme(initialTheme);
+
+        setShowNotif(!window.sessionStorage.getItem(NOTIF_KEY));
+        setShowPopup(!window.sessionStorage.getItem(POPUP_KEY));
+    }, []);
+
+    // This effect handles theme changes
+    useEffect(() => {
         const root = window.document.documentElement;
         root.classList.remove(theme === 'dark' ? 'light' : 'dark');
         root.classList.add(theme);
         window.localStorage.setItem('theme', theme);
     }, [theme]);
 
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setShowNotif(!window.sessionStorage.getItem(NOTIF_KEY));
-        }
-    }, []);
-
     const dismissNotif = () => {
         setShowNotif(false);
-        if (typeof window !== 'undefined') {
-            window.sessionStorage.setItem(NOTIF_KEY, '1');
-        }
+        window.sessionStorage.setItem(NOTIF_KEY, '1');
+    };
+
+    const dismissPopup = () => {
+        setShowPopup(false);
+        window.sessionStorage.setItem(POPUP_KEY, '1');
+    };
+
+    // REMOVED: Sound logic is gone from this function
+    const openPanelAndDismissPopup = () => {
+        setIsPanelOpen(true);
+        dismissPopup();
     };
 
     const toggleTheme = () => {
@@ -209,16 +228,64 @@ const Index = () => {
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col font-sans">
             <Analytics />
 
+            {/* REMOVED: Audio element is gone */}
+
+            {/* Welcome Popup */}
+            {showPopup && (
+                <div className="fixed bottom-5 right-5 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 w-96 z-50">
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">Welcome!</h3>
+                        <button onClick={dismissPopup} className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                            <X size={18} />
+                        </button>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                        We have new updates for events and internships. Check them out!
+                    </p>
+                    {/* UPDATED: OnClick handler calls the new function */}
+                    <Button onClick={openPanelAndDismissPopup} className="w-full bg-orange-500 hover:bg-orange-600">
+                        Show Me
+                    </Button>
+                </div>
+            )}
+            
+            {/* Notification Panel */}
+            <div className={`fixed top-0 right-0 h-full bg-white dark:bg-gray-800 shadow-lg z-50 w-80 transform transition-transform duration-300 ${isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                <div className="p-4 border-b dark:border-gray-700 flex justify-between items-center">
+                    <h3 className="font-bold text-lg">Notifications</h3>
+                    <button onClick={() => setIsPanelOpen(false)} className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                        <X size={18} />
+                    </button>
+                </div>
+                <div className="p-4 space-y-4">
+                    <h4 className="font-semibold text-gray-500 dark:text-gray-400">Latest Internships</h4>
+                    {internships.map(internship => (
+                        <div key={internship.id} className="p-3 bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <p className="font-bold">{internship.title}</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-300">{internship.company}</p>
+                        </div>
+                    ))}
+                    <h4 className="font-semibold text-gray-500 dark:text-gray-400">Upcoming Events</h4>
+                    {events.map(event => (
+                        <div key={event.id} className="p-3 bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <p className="font-bold">{event.title}</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-300">{event.date}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+
             {/* Top Notification Bar */}
             {showNotif && (
-                <div className="w-full bg-orange-600 text-white text-sm py-2 px-4 flex items-center justify-center gap-x-3 z-50 shadow-md">
+                <div className="w-full bg-orange-600 text-white text-sm py-2.5 px-4 flex items-center justify-center gap-x-3 z-50 shadow-md">
                     <p>
                         <strong>Notice:</strong> We've updated the site and our{' '}
-                        <Link to="https://dhrc-tools.vercel.app/" className="underline font-bold hover:text-orange-200 transition-colors">
+                        <a href="https://dhrc-tools.vercel.app/" className="underline font-bold hover:text-orange-200 transition-colors">
                             Tools Dashboard
-                        </Link>.
+                        </a>.
                     </p>
-                    <button onClick={dismissNotif} className="p-1 rounded-full hover:bg-orange-700 transition-colors" aria-label="Dismiss notification">
+                    <button onClick={dismissNotif} className="p-1.5 rounded-full hover:bg-orange-700 transition-colors" aria-label="Dismiss notification">
                         <X size={18} />
                     </button>
                 </div>
@@ -226,12 +293,12 @@ const Index = () => {
 
             {/* Header */}
             <header className="sticky top-0 w-full border-b-2 border-orange-500 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-40">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
                     <Link to="/" className="flex items-center gap-3">
                         <img
                             src="https://i.ibb.co/PGDSpW4p/Screenshot-2025-07-20-at-3-09-38-AM.png"
                             alt="DHRC Logo"
-                            className="w-14 h-14 object-contain"
+                            className="w-16 h-16 object-contain"
                         />
                         <div>
                             <h1 className="text-xl sm:text-2xl font-extrabold text-gray-800 dark:text-gray-100">
@@ -242,20 +309,27 @@ const Index = () => {
                     </Link>
                     <div className="flex items-center gap-2 sm:gap-4">
                         <ThemeToggler theme={theme} toggleTheme={toggleTheme} />
+                        <Button onClick={() => setIsPanelOpen(true)} variant="ghost" size="icon" className="relative">
+                            <Bell className="h-6 w-6" />
+                            <span className="absolute top-0 right-0 flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                            </span>
+                        </Button>
                         <Link to="/resume-generator">
-                            <Button variant="outline" className="border-orange-500 text-orange-600 hover:bg-orange-50 hover:text-orange-700 dark:text-orange-400 dark:border-orange-400 dark:hover:bg-gray-800 dark:hover:text-orange-300 font-bold px-4 sm:px-6 py-2 rounded-full shadow-sm transition-all transform hover:scale-105">
+                            <Button variant="outline" className="border-orange-500 text-orange-600 hover:bg-orange-50 hover:text-orange-700 dark:text-orange-400 dark:border-orange-400 dark:hover:bg-gray-800 dark:hover:text-orange-300 font-bold px-4 sm:px-6 py-2.5 rounded-full shadow-sm transition-all transform hover:scale-105">
                                 Resume Generator
                             </Button>
                         </Link>
                         <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer">
-                            <Button className="bg-orange-500 text-white hover:bg-orange-600 font-bold px-6 py-2 rounded-full shadow-sm transition-all transform hover:scale-105">
+                            <Button className="bg-orange-500 text-white hover:bg-orange-600 font-bold px-6 py-2.5 rounded-full shadow-sm transition-all transform hover:scale-105">
                                 Sign In
                             </Button>
                         </a>
                     </div>
                 </div>
             </header>
-
+            
             {/* Primary Navigation Bar */}
             <nav className="w-full bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-center gap-2">
@@ -263,7 +337,7 @@ const Index = () => {
                         <Link
                             key={link.title}
                             to={link.path}
-                            className="px-4 py-2 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-200"
+                            className="px-5 py-2 rounded-full text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white transition-all duration-200"
                         >
                             {link.title}
                         </Link>
@@ -273,9 +347,9 @@ const Index = () => {
 
             {/* Quick Links Bar */}
             <section className="w-full bg-gray-100 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-col md:flex-row items-center gap-3">
-                    <h3 className="text-sm font-bold text-gray-700 dark:text-gray-300 flex-shrink-0">Quick Links:</h3>
-                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center gap-4">
+                    <h3 className="text-md font-bold text-gray-700 dark:text-gray-300 flex-shrink-0">Quick Links:</h3>
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2">
                         {quickLinks.map((link) => (
                             link.external ? (
                                 <a
@@ -283,7 +357,7 @@ const Index = () => {
                                     href={link.path}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-xs font-medium text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 hover:underline transition-colors"
+                                    className="text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 hover:underline transition-colors"
                                 >
                                     {link.title}
                                 </a>
@@ -291,7 +365,7 @@ const Index = () => {
                                 <Link
                                     key={link.title}
                                     to={link.path}
-                                    className="text-xs font-medium text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 hover:underline transition-colors"
+                                    className="text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 hover:underline transition-colors"
                                 >
                                     {link.title}
                                 </Link>
@@ -303,39 +377,38 @@ const Index = () => {
 
             {/* ChatterBox Access Banner */}
             <section className="w-full bg-blue-50 dark:bg-blue-900/30">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-4">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055672.png" alt="ChatterBox Icon" className="w-10 h-10 object-contain" />
+                        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055672.png" alt="ChatterBox Icon" className="w-12 h-12 object-contain" />
                         <div>
-                            <h2 className="text-lg font-bold text-blue-800 dark:text-blue-300">Engage with ChatterBox</h2>
-                            <p className="text-sm text-blue-700 dark:text-blue-400">Ask questions, find solutions, and collaborate with peers in our community forum.</p>
+                            <h2 className="text-xl font-bold text-blue-800 dark:text-blue-300">Engage with ChatterBox</h2>
+                            <p className="text-md text-blue-700 dark:text-blue-400">Ask questions, find solutions, and collaborate with peers in our community forum.</p>
                         </div>
                     </div>
                     <Link to="/chatterbox">
-                        <Button className="bg-blue-600 text-white font-bold px-6 py-2.5 rounded-full shadow-md hover:bg-blue-700 transition-all transform hover:scale-105">
-                            Access ChatterBox <ArrowRight className="ml-2" size={18} />
+                        <Button className="bg-blue-600 text-white font-bold px-8 py-3 rounded-full shadow-md hover:bg-blue-700 transition-all transform hover:scale-105">
+                            Access ChatterBox <ArrowRight className="ml-2" size={20} />
                         </Button>
                     </Link>
                 </div>
             </section>
 
-            {/* Project Vault Alert */}
-            <section className="w-full bg-orange-50 dark:bg-orange-900/30 border-t border-b border-orange-200 dark:border-orange-800/50">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2880/2880009.png" alt="Project Vault Icon" className="w-8 h-8 object-contain" />
+            {/* Project Vault Alert Bar */}
+            <div className="w-full bg-orange-100 dark:bg-orange-900/50 border-y border-orange-200 dark:border-orange-700">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-col sm:flex-row items-center justify-center text-center sm:text-left gap-4">
+                    <div className="flex items-center gap-2">
+                        <Zap size={18} className="text-orange-600 dark:text-orange-400 flex-shrink-0" />
                         <p className="text-sm font-semibold text-orange-800 dark:text-orange-300">
-                            Explore the Project Vault: Download, customize, and learn from a collection of pre-built projects.
+                            Explore the Project Vault: Download and customize from our collection of pre-built projects.
                         </p>
                     </div>
-                    <Link to="/student-projects">
-                        <Button size="sm" className="bg-orange-600 text-white font-bold px-5 py-2 rounded-full shadow hover:bg-orange-700 transition-all transform hover:scale-105">
-                            Browse Projects <Download className="ml-1.5" size={16} />
+                    <Link to="/student-projects" className="flex-shrink-0">
+                        <Button variant="link" className="h-auto p-0 text-sm font-bold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">
+                            Browse Projects <ArrowRight className="ml-1" size={16} />
                         </Button>
                     </Link>
                 </div>
-            </section>
-
+            </div>
 
             {/* Main Content */}
             <main className="flex-1 w-full py-12 sm:py-16">
@@ -352,16 +425,16 @@ const Index = () => {
                             <Card key={card.title} className="group bg-white dark:bg-gray-800 overflow-hidden rounded-xl shadow-md hover:shadow-xl dark:border-gray-700 transition-all duration-300 transform hover:-translate-y-1">
                                 <CardContent className="p-5 flex flex-col items-center text-center">
                                     {card.status && (
-                                        <Badge className={`absolute top-3 right-3 text-xs font-bold py-1 px-2.5 rounded-full ${getBadgeClass(card.status)}`}>
+                                        <Badge className={`absolute top-3 right-3 text-xs font-bold py-1 px-3 rounded-full ${getBadgeClass(card.status)}`}>
                                             {card.status}
                                         </Badge>
                                     )}
-                                    <img src={card.img} alt={`${card.title} icon`} className="w-16 h-16 object-contain mb-4 transition-transform duration-300 group-hover:scale-110" />
-                                    <h3 className="font-bold text-md text-gray-800 dark:text-gray-200 mb-2">{card.title}</h3>
-                                    <p className="text-gray-600 dark:text-gray-400 text-xs mb-4 flex-grow">{card.description}</p>
+                                    <img src={card.img} alt={`${card.title} icon`} className="w-20 h-20 object-contain mb-4 transition-transform duration-300 group-hover:scale-110" />
+                                    <h3 className="font-bold text-lg text-gray-800 dark:text-gray-200 mb-2">{card.title}</h3>
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 flex-grow">{card.description}</p>
                                     <Link to={card.path}>
-                                        <Button variant="ghost" size="sm" className="text-orange-600 dark:text-orange-400 font-bold hover:bg-orange-100 dark:hover:bg-gray-700 dark:hover:text-orange-300 rounded-full">
-                                            Explore <ArrowRight className="ml-1.5 transition-transform duration-300 group-hover:translate-x-1" size={16} />
+                                        <Button variant="ghost" className="text-orange-600 dark:text-orange-400 font-bold hover:bg-orange-100 dark:hover:bg-gray-700 dark:hover:text-orange-300 rounded-full">
+                                            Explore <ArrowRight className="ml-2 transition-transform duration-300 group-hover:translate-x-1" size={18} />
                                         </Button>
                                     </Link>
                                 </CardContent>
@@ -373,58 +446,58 @@ const Index = () => {
 
             {/* Redesigned Footer */}
             <footer className="bg-gray-800 dark:bg-gray-900/70 text-white">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
                         {/* Column 1: Branding */}
                         <div className="md:col-span-1">
-                            <Link to="/" className="flex items-center gap-3 mb-3">
-                                <img src="https://i.ibb.co/PGDSpW4p/Screenshot-2025-07-20-at-3-09-38-AM.png" alt="DHRC Logo" className="w-10 h-10 bg-white rounded-full p-1" />
+                            <Link to="/" className="flex items-center gap-3 mb-4">
+                                <img src="https://i.ibb.co/PGDSpW4p/Screenshot-2025-07-20-at-3-09-38-AM.png" alt="DHRC Logo" className="w-12 h-12 bg-white rounded-full p-1" />
                                 <span className="text-lg font-extrabold text-gray-100">CKR</span>
                             </Link>
-                            <p className="text-gray-400 dark:text-gray-500 text-xs">
+                            <p className="text-gray-400 dark:text-gray-500 text-sm">
                                 Your central hub for engineering knowledge, projects, and career resources.
                             </p>
                         </div>
 
                         {/* Column 2: Resources */}
                         <div>
-                            <h3 className="font-bold text-gray-200 tracking-wider uppercase mb-3 text-sm">Resources</h3>
-                            <ul className="space-y-2">
-                                <li><Link to="/certificates" className="text-xs text-gray-400 hover:text-orange-400 transition-colors">Certificates</Link></li>
-                                <li><Link to="/projects" className="text-xs text-gray-400 hover:text-orange-400 transition-colors">Projects</Link></li>
-                                <li><Link to="/roadmaps" className="text-xs text-gray-400 hover:text-orange-400 transition-colors">Roadmaps</Link></li>
-                                <li><Link to="/notes" className="text-xs text-gray-400 hover:text-orange-400 transition-colors">Notes</Link></li>
+                            <h3 className="font-bold text-gray-200 tracking-wider uppercase mb-4">Resources</h3>
+                            <ul className="space-y-3">
+                                <li><Link to="/certificates" className="text-gray-400 hover:text-orange-400 transition-colors">Certificates</Link></li>
+                                <li><Link to="/projects" className="text-gray-400 hover:text-orange-400 transition-colors">Projects</Link></li>
+                                <li><Link to="/roadmaps" className="text-gray-400 hover:text-orange-400 transition-colors">Roadmaps</Link></li>
+                                <li><Link to="/notes" className="text-gray-400 hover:text-orange-400 transition-colors">Notes</Link></li>
                             </ul>
                         </div>
 
                         {/* Column 3: Community */}
                         <div>
-                            <h3 className="font-bold text-gray-200 tracking-wider uppercase mb-3 text-sm">Community</h3>
-                            <ul className="space-y-2">
-                                <li><Link to="/student-projects" className="text-xs text-gray-400 hover:text-orange-400 transition-colors">Student Projects</Link></li>
-                                <li><Link to="/events" className="text-xs text-gray-400 hover:text-orange-400 transition-colors">Events</Link></li>
-                                <li><Link to="/chatterbox" className="text-xs text-gray-400 hover:text-orange-400 transition-colors">ChatterBox</Link></li>
-                                <li><Link to="/internships" className="text-xs text-gray-400 hover:text-orange-400 transition-colors">Internships</Link></li>
+                            <h3 className="font-bold text-gray-200 tracking-wider uppercase mb-4">Community</h3>
+                            <ul className="space-y-3">
+                                <li><Link to="/student-projects" className="text-gray-400 hover:text-orange-400 transition-colors">Student Projects</Link></li>
+                                <li><Link to="/events" className="text-gray-400 hover:text-orange-400 transition-colors">Events</Link></li>
+                                <li><Link to="/chatterbox" className="text-gray-400 hover:text-orange-400 transition-colors">ChatterBox</Link></li>
+                                <li><Link to="/internships" className="text-gray-400 hover:text-orange-400 transition-colors">Internships</Link></li>
                             </ul>
                         </div>
 
                         {/* Column 4: Social Links */}
                         <div>
-                            <h3 className="font-bold text-gray-200 tracking-wider uppercase mb-3 text-sm">Connect With Us</h3>
-                            <div className="flex space-x-3">
-                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-400 transition-colors"><Github size={20} /></a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-400 transition-colors"><Linkedin size={20} /></a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-400 transition-colors"><Twitter size={20} /></a>
+                            <h3 className="font-bold text-gray-200 tracking-wider uppercase mb-4">Connect With Us</h3>
+                            <div className="flex space-x-4">
+                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-400 transition-colors"><Github size={24} /></a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-400 transition-colors"><Linkedin size={24} /></a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-400 transition-colors"><Twitter size={24} /></a>
                             </div>
                         </div>
                     </div>
 
                     {/* Bottom Bar */}
-                    <div className="mt-8 pt-6 border-t border-gray-700 dark:border-gray-800 flex flex-col sm:flex-row justify-between items-center">
-                        <p className="text-xs text-gray-500 dark:text-gray-600 mb-3 sm:mb-0">
+                    <div className="mt-10 pt-8 border-t border-gray-700 dark:border-gray-800 flex flex-col sm:flex-row justify-between items-center">
+                        <p className="text-sm text-gray-500 dark:text-gray-600 mb-4 sm:mb-0">
                             © {new Date().getFullYear()} CKR - Center for Knowledge & Resources. All Rights Reserved.
                         </p>
-                        <div className="flex space-x-3 text-xs">
+                        <div className="flex space-x-4 text-sm">
                             <Link to="/terms-of-service" className="text-gray-500 dark:text-gray-600 hover:text-orange-400">Terms of Service</Link>
                             <Link to="/privacy-policy" className="text-gray-500 dark:text-gray-600 hover:text-orange-400">Privacy Policy</Link>
                         </div>
