@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -143,6 +143,7 @@ const resourceCards = [
     }
 ];
 
+
 const NOTIF_KEY = 'dhrc_tos_update_dismissed';
 const POPUP_KEY = 'dhrc_popup_dismissed';
 
@@ -160,11 +161,10 @@ const ThemeToggler = ({ theme, toggleTheme }) => (
 );
 
 const Index = () => {
-    // Default state values are simple and do not use browser APIs
     const [showNotif, setShowNotif] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
-    const [theme, setTheme] = useState('light'); // Default to 'light' to prevent SSR issues
+    const [theme, setTheme] = useState('light'); // Default to 'light' for SSR safety
 
     // Simulate dynamic data for notifications
     const [internships, setInternships] = useState([
@@ -176,11 +176,8 @@ const Index = () => {
         { id: 2, title: "Hackathon Challenge", date: "2025-11-01" },
     ]);
 
-    const audioRef = useRef(null);
-
-    // REFACTORED: All browser-specific logic is now in useEffect hooks.
+    // This useEffect hook handles all client-side logic after the component mounts
     useEffect(() => {
-        // This code now runs only on the client
         const savedTheme = window.localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
@@ -188,9 +185,9 @@ const Index = () => {
 
         setShowNotif(!window.sessionStorage.getItem(NOTIF_KEY));
         setShowPopup(!window.sessionStorage.getItem(POPUP_KEY));
-    }, []); // Empty dependency array means this runs once on mount
+    }, []);
 
-    // REFACTORED: This effect applies the theme whenever it changes.
+    // This effect handles theme changes
     useEffect(() => {
         const root = window.document.documentElement;
         root.classList.remove(theme === 'dark' ? 'light' : 'dark');
@@ -207,11 +204,9 @@ const Index = () => {
         setShowPopup(false);
         window.sessionStorage.setItem(POPUP_KEY, '1');
     };
-    
-    const playSoundAndOpenPanel = () => {
-        if (audioRef.current) {
-            audioRef.current.play().catch(error => console.log("Audio play was prevented. User interaction needed.", error));
-        }
+
+    // REMOVED: Sound logic is gone from this function
+    const openPanelAndDismissPopup = () => {
         setIsPanelOpen(true);
         dismissPopup();
     };
@@ -233,8 +228,7 @@ const Index = () => {
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col font-sans">
             <Analytics />
 
-            {/* FIX: Ensure notification.mp3 is in the /public folder of your project */}
-            <audio ref={audioRef} src="/notification.mp3" preload="auto"></audio>
+            {/* REMOVED: Audio element is gone */}
 
             {/* Welcome Popup */}
             {showPopup && (
@@ -248,7 +242,8 @@ const Index = () => {
                     <p className="text-gray-600 dark:text-gray-400 mb-4">
                         We have new updates for events and internships. Check them out!
                     </p>
-                    <Button onClick={playSoundAndOpenPanel} className="w-full bg-orange-500 hover:bg-orange-600">
+                    {/* UPDATED: OnClick handler calls the new function */}
+                    <Button onClick={openPanelAndDismissPopup} className="w-full bg-orange-500 hover:bg-orange-600">
                         Show Me
                     </Button>
                 </div>
