@@ -1,15 +1,13 @@
-
+import React, { useState, useMemo } from 'react';
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { ArrowLeft, BookOpen, Clock, User, ExternalLink, Search } from "lucide-react";
-import { useState } from "react";
 
-const Blogs = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const blogPosts = [
+// --- Data and Helper Functions (No changes here) ---
+const blogPosts = [
     {
       title: "React 19 Features That Will Change How You Code",
       author: "Dan Abramov",
@@ -110,98 +108,145 @@ const Blogs = () => {
       tags: ["JavaScript", "Frameworks", "Vue", "React"],
       url: "https://blog.vuejs.org/"
     }
-  ];
+];
 
-  const filteredPosts = blogPosts.filter(post =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+const Blogs = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // Get all unique categories for the quick links, memoized for performance
+  const allCategories = useMemo(() => {
+    return ["All", ...Array.from(new Set(blogPosts.map(p => p.category)))];
+  }, []);
+
+  // Combined filtering logic
+  const filteredPosts = useMemo(() => {
+    return blogPosts.filter(post => {
+      const matchesCategory = !selectedCategory || selectedCategory === "All" || post.category === selectedCategory;
+      const matchesSearch =
+        searchTerm === "" ||
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      
+      return matchesCategory && matchesSearch;
+    });
+  }, [searchTerm, selectedCategory]);
+  
+  const featuredPost = filteredPosts.length > 0 ? filteredPosts[0] : null;
+  const regularPosts = filteredPosts.length > 1 ? filteredPosts.slice(1) : [];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="border-b border-gray-300 bg-white">
-        <div className="max-w-5xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <BookOpen className="w-6 h-6 text-gray-600" />
-              <h1 className="text-2xl font-serif text-black">Engineering Blogs</h1>
+      <header className="bg-white dark:bg-gray-800/50 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-20">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-lg">
+                <BookOpen className="w-8 h-8 text-orange-500" />
             </div>
-            <Button variant="ghost" size="sm" asChild>
-              <Link to="/">
-                Back to Hub
-                <ArrowLeft className="w-4 h-4 ml-2" />
-              </Link>
-            </Button>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Engineering Blogs</h1>
+              <p className="text-gray-500 dark:text-gray-400">Insights and analysis from industry experts.</p>
+            </div>
           </div>
-          <p className="text-gray-600 text-sm mt-2">Latest insights from industry experts</p>
-          
-          {/* Search Bar */}
-          <div className="mt-4 relative max-w-md">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search blogs..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
+          <Button variant="outline" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
+            <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
+          </Button>
         </div>
       </header>
-
+      
       {/* Main Content */}
-      <main className="max-w-5xl mx-auto px-4 py-8">
-        <div className="space-y-6">
-          {filteredPosts.map((post, index) => (
-            <Card key={index} className="border border-gray-200 hover:shadow-md transition-shadow">
-              <CardHeader className="pb-4">
-                <div className="flex justify-between items-start mb-2">
-                  <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                    {post.category}
-                  </Badge>
-                  <span className="text-sm text-gray-500">{post.date}</span>
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+          {/* --- Category Filters (Quick Links) --- */}
+          <aside className="md:col-span-1 h-fit md:sticky top-28">
+            <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Categories</h3>
+                <div className="space-y-1.5">
+                    {allCategories.map(category => (
+                        <button
+                            key={category}
+                            onClick={() => setSelectedCategory(category)}
+                            className={`w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                                selectedCategory === category
+                                ? 'bg-orange-500 text-white shadow-sm'
+                                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            }`}
+                        >
+                            {category}
+                        </button>
+                    ))}
                 </div>
-                <CardTitle className="text-xl text-gray-900 hover:text-blue-600 transition-colors">
-                  <a href={post.url} target="_blank" rel="noopener noreferrer">
-                    {post.title}
-                  </a>
-                </CardTitle>
-                <p className="text-gray-700 text-sm leading-relaxed">{post.description}</p>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {post.tags.map((tag, tagIndex) => (
-                    <Badge key={tagIndex} variant="outline" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4 text-sm text-gray-600">
-                    <div className="flex items-center">
-                      <User className="w-4 h-4 mr-1" />
-                      <span>{post.author}</span>
+            </div>
+          </aside>
+
+          {/* --- Blog Posts Grid --- */}
+          <main className="md:col-span-3">
+            <div className="relative mb-6">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Input
+                type="text"
+                placeholder="Search articles by title, author, or tag..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-full text-base focus:ring-orange-500 focus:border-orange-500"
+              />
+            </div>
+
+            {/* Featured Post */}
+            {featuredPost && (
+                <Card className="mb-8 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300">
+                    <CardContent className="p-6">
+                        <div className="flex justify-between items-center mb-2">
+                            <Badge className="bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300">Featured Article</Badge>
+                            <span className="text-sm text-gray-500 dark:text-gray-400">{featuredPost.date}</span>
+                        </div>
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2 hover:text-orange-600 transition-colors">
+                            <a href={featuredPost.url} target="_blank" rel="noopener noreferrer">{featuredPost.title}</a>
+                        </h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">{featuredPost.description}</p>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                                <div className="flex items-center gap-1.5"><User className="w-4 h-4 text-orange-500" /> {featuredPost.author}</div>
+                                <div className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-blue-500" /> {featuredPost.readTime}</div>
+                            </div>
+                            <Button asChild size="sm" className="bg-orange-500 hover:bg-orange-600 text-white rounded-full font-semibold">
+                                <a href={featuredPost.url} target="_blank" rel="noopener noreferrer"><ExternalLink className="w-4 h-4 mr-2" /> Read Now</a>
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {regularPosts.map((post, index) => (
+                <Card key={index} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                  <CardContent className="p-6 flex flex-col flex-grow">
+                    <div className="mb-3">
+                        <Badge className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 mb-2">{post.category}</Badge>
+                        <h2 className="font-bold text-lg text-gray-900 dark:text-gray-100 leading-tight hover:text-orange-600 transition-colors">
+                          <a href={post.url} target="_blank" rel="noopener noreferrer">{post.title}</a>
+                        </h2>
                     </div>
-                    <div className="flex items-center">
-                      <Clock className="w-4 h-4 mr-1" />
-                      {post.readTime}
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow line-clamp-2">{post.description}</p>
+                    
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {post.tags.slice(0, 3).map((tag, i) => <Badge key={i} variant="outline" className="text-xs">{tag}</Badge>)}
                     </div>
-                  </div>
-                  <Button size="sm" variant="outline" asChild>
-                    <a href={post.url} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Read Article
-                    </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                    
+                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 pt-4 border-t border-gray-100 dark:border-gray-700">
+                        <div className="flex items-center gap-1.5"><User className="w-4 h-4" /> {post.author}</div>
+                        <div className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {post.readTime}</div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </main>
         </div>
-      </main>
+      </div>
     </div>
   );
 };
