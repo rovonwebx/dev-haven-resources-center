@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Analytics } from "@vercel/analytics/react";
 import Chatbot from "@/components/Chatbot";
-import { ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon, Download } from 'lucide-react';
+import { ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon, Download, Bell, Zap } from 'lucide-react';
 
 // Main navigation links
 const navLinks = [
@@ -19,16 +19,16 @@ const navLinks = [
   { title: "Templates", path: "/templates" },
 ];
 
-// Quick access links - updated to handle external links
+// Quick access links
 const quickLinks = [
     { title: "DSA Roadmap", path: "/roadmaps/dsa" },
     { title: "Web Dev Roadmap", path: "/roadmaps/web-development" },
     { title: "Latest Internships", path: "/internships" },
     { title: "SQL Interview Questions", path: "/interview-questions" },
-    { 
-        title: "Submit a Project", 
-        path: "https://dhrc-tools.vercel.app/student-projects/submit", // Replace with your actual external link
-        external: true 
+    {
+        title: "Submit a Project",
+        path: "https://dhrc-tools.vercel.app/student-projects/submit",
+        external: true
     },
 ];
 
@@ -145,6 +145,7 @@ const resourceCards = [
 ];
 
 const NOTIF_KEY = 'dhrc_tos_update_dismissed';
+const POPUP_KEY = 'dhrc_popup_dismissed';
 
 // Theme Toggler Component
 const ThemeToggler = ({ theme, toggleTheme }) => (
@@ -161,8 +162,9 @@ const ThemeToggler = ({ theme, toggleTheme }) => (
 
 const Index = () => {
     const [showNotif, setShowNotif] = useState(true);
+    const [showPopup, setShowPopup] = useState(false);
+    const [isPanelOpen, setIsPanelOpen] = useState(false);
     const [theme, setTheme] = useState(() => {
-        // Check for saved theme in localStorage or default to system preference
         if (typeof window !== 'undefined') {
             const savedTheme = window.localStorage.getItem('theme');
             if (savedTheme) return savedTheme;
@@ -171,17 +173,22 @@ const Index = () => {
         return 'light';
     });
 
-    useEffect(() => {
-        // Apply the theme to the root HTML element
-        const root = window.document.documentElement;
-        root.classList.remove(theme === 'dark' ? 'light' : 'dark');
-        root.classList.add(theme);
-        window.localStorage.setItem('theme', theme);
-    }, [theme]);
+    // Simulate dynamic data for notifications
+    const [internships, setInternships] = useState([
+        { id: 1, title: "Frontend Developer Intern", company: "Vercel" },
+        { id: 2, title: "Backend Developer Intern", company: "Google" },
+    ]);
+    const [events, setEvents] = useState([
+        { id: 1, title: "Tech Conference 2025", date: "2025-10-15" },
+        { id: 2, title: "Hackathon Challenge", date: "2025-11-01" },
+    ]);
+
+    const audioRef = useRef(null);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setShowNotif(!window.sessionStorage.getItem(NOTIF_KEY));
+            setShowPopup(!window.sessionStorage.getItem(POPUP_KEY));
         }
     }, []);
 
@@ -191,10 +198,32 @@ const Index = () => {
             window.sessionStorage.setItem(NOTIF_KEY, '1');
         }
     };
+
+    const dismissPopup = () => {
+        setShowPopup(false);
+        if (typeof window !== 'undefined') {
+            window.sessionStorage.setItem(POPUP_KEY, '1');
+        }
+    };
     
+    const playSoundAndOpenPanel = () => {
+        if (audioRef.current) {
+            audioRef.current.play().catch(error => console.log("Audio play was prevented.", error));
+        }
+        setIsPanelOpen(true);
+        dismissPopup();
+    };
+
     const toggleTheme = () => {
         setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
     };
+
+    useEffect(() => {
+        const root = window.document.documentElement;
+        root.classList.remove(theme === 'dark' ? 'light' : 'dark');
+        root.classList.add(theme);
+        window.localStorage.setItem('theme', theme);
+    }, [theme]);
 
     const getBadgeClass = (status) => {
         switch (status) {
@@ -208,6 +237,54 @@ const Index = () => {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col font-sans">
             <Analytics />
+
+            {/* Audio element for notification sound */}
+            <audio ref={audioRef} src="/notification.mp3" preload="auto"></audio>
+
+            {/* Welcome Popup */}
+            {showPopup && (
+                <div className="fixed bottom-5 right-5 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 w-96 z-50">
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">Welcome!</h3>
+                        <button onClick={dismissPopup} className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                            <X size={18} />
+                        </button>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                        We have new updates for events and internships. Check them out!
+                    </p>
+                    <Button onClick={playSoundAndOpenPanel} className="w-full bg-orange-500 hover:bg-orange-600">
+                        Show Me
+                    </Button>
+                </div>
+            )}
+            
+            {/* Notification Panel */}
+            <div className={`fixed top-0 right-0 h-full bg-white dark:bg-gray-800 shadow-lg z-50 w-80 transform transition-transform duration-300 ${isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                <div className="p-4 border-b dark:border-gray-700 flex justify-between items-center">
+                    <h3 className="font-bold text-lg">Notifications</h3>
+                    <button onClick={() => setIsPanelOpen(false)} className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                        <X size={18} />
+                    </button>
+                </div>
+                <div className="p-4 space-y-4">
+                    <h4 className="font-semibold text-gray-500 dark:text-gray-400">Latest Internships</h4>
+                    {internships.map(internship => (
+                        <div key={internship.id} className="p-3 bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <p className="font-bold">{internship.title}</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-300">{internship.company}</p>
+                        </div>
+                    ))}
+                    <h4 className="font-semibold text-gray-500 dark:text-gray-400">Upcoming Events</h4>
+                    {events.map(event => (
+                        <div key={event.id} className="p-3 bg-gray-100 dark:bg-gray-900 rounded-lg">
+                            <p className="font-bold">{event.title}</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-300">{event.date}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
 
             {/* Top Notification Bar */}
             {showNotif && (
@@ -242,6 +319,13 @@ const Index = () => {
                     </Link>
                     <div className="flex items-center gap-2 sm:gap-4">
                         <ThemeToggler theme={theme} toggleTheme={toggleTheme} />
+                        <Button onClick={() => setIsPanelOpen(true)} variant="ghost" size="icon" className="relative">
+                            <Bell className="h-6 w-6" />
+                            <span className="absolute top-0 right-0 flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                            </span>
+                        </Button>
                         <Link to="/resume-generator">
                             <Button variant="outline" className="border-orange-500 text-orange-600 hover:bg-orange-50 hover:text-orange-700 dark:text-orange-400 dark:border-orange-400 dark:hover:bg-gray-800 dark:hover:text-orange-300 font-bold px-4 sm:px-6 py-2.5 rounded-full shadow-sm transition-all transform hover:scale-105">
                                 Resume Generator
@@ -319,7 +403,7 @@ const Index = () => {
                 </div>
             </section>
 
-            {/* Project Vault Banner - Orange Theme */}
+            {/* Project Vault Banner */}
             <section className="w-full bg-orange-50 dark:bg-orange-900/30">
                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-4">
