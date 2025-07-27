@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Database, Code, Brain, Target, User } from "lucide-react";
+import { ArrowLeft, Database, Code, Brain, Target, User, ChevronDown } from "lucide-react";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import clsx from 'clsx';
 
-// --- COMPLETE, UNABRIDGED QUESTION DATA ---
-
+// --- QUESTION DATA (Remains Unchanged) ---
 const sqlQuestions = [
     { id: 1, question: "What is SQL?", answer: "SQL (Structured Query Language) is a standard programming language used for managing and manipulating relational databases.", category: "Basics" },
     { id: 2, question: "What is a primary key?", answer: "A primary key is a field (or combination of fields) that uniquely identifies each record in a table. It cannot contain NULL values and must have unique entries.", category: "Keys" },
@@ -58,81 +56,137 @@ const hrQuestions = [
 ];
 
 const tabs = [
-    { id: 'sql', name: 'SQL', icon: Database },
-    { id: 'coding', name: 'Coding & DSA', icon: Code },
-    { id: 'system', name: 'System Design', icon: Brain },
-    { id: 'hr', name: 'HR & Behavioral', icon: User },
+    { id: 'sql', name: 'SQL', icon: Database, questions: sqlQuestions },
+    { id: 'coding', name: 'Coding & DSA', icon: Code, questions: codingQuestions },
+    { id: 'system', name: 'System Design', icon: Brain, questions: systemDesignQuestions },
+    { id: 'hr', name: 'HR & Behavioral', icon: User, questions: hrQuestions },
 ];
+
+// --- NEW Collapsible Question Component ---
+const QuestionModule = ({ item, index, lang }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const contentRef = useRef(null);
+
+    return (
+        <div className="border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex justify-between items-center w-full py-4 text-left"
+            >
+                <h3 className="text-base font-semibold text-gray-800 dark:text-gray-200">
+                    <span className="text-orange-500 mr-2">{index + 1}.</span>{item.question}
+                </h3>
+                <ChevronDown className={clsx("w-5 h-5 text-gray-500 transition-transform duration-300", { "rotate-180": isOpen })} />
+            </button>
+            <div
+                ref={contentRef}
+                className="overflow-hidden transition-[height] duration-300 ease-in-out"
+                style={{ height: isOpen ? contentRef.current.scrollHeight : 0 }}
+            >
+                <div className="pb-4 prose prose-sm dark:prose-invert max-w-none text-gray-600 dark:text-gray-400">
+                    <p>{item.answer}</p>
+                    {item.code && (
+                        <SyntaxHighlighter language={lang} style={vscDarkPlus} customStyle={{ borderRadius: '0.5rem', margin: '0' }}>
+                            {item.code}
+                        </SyntaxHighlighter>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
 
 const InterviewQuestions = () => {
   const [tab, setTab] = useState('sql');
   
-  const dataMap = { sql: sqlQuestions, coding: codingQuestions, system: systemDesignQuestions, hr: hrQuestions };
-  const currentQuestions = dataMap[tab];
+  const currentTab = tabs.find(t => t.id === tab);
+  const categories = [...new Set(currentTab.questions.map(q => q.category))];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <header className="bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-20">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 font-sans">
+      <header className="bg-white/80 dark:bg-gray-900/50 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-20">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
             <div className="flex items-center gap-4">
-                <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-lg"><Target className="w-8 h-8 text-orange-500" /></div>
+                <div className="p-2 bg-orange-100 dark:bg-orange-800/50 rounded-lg hidden sm:block">
+                    <Target className="w-7 h-7 text-orange-500" />
+                </div>
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Interview Questions Hub</h1>
-                    <p className="text-gray-500 dark:text-gray-400">Your one-stop destination for interview preparation.</p>
+                    <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100">Interview Prep: {currentTab.name}</h1>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">A curated collection of essential questions.</p>
                 </div>
             </div>
-            <Button variant="outline" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
-                <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
+            <Button variant="ghost" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
+                <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Home</Link>
             </Button>
         </div>
       </header>
       
-      <main className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">Ace Your Next Interview</h2>
-            <p className="mt-3 text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                Practice with a curated list of questions covering SQL, Data Structures, System Design, and Behavioral rounds.
-            </p>
-        </div>
-
-        <div className="flex justify-center border-b border-gray-200 dark:border-gray-700 mb-12">
-            {tabs.map(t => (
-                <button
-                    key={t.id}
-                    onClick={() => setTab(t.id)}
-                    className={clsx(
-                        'flex items-center gap-2 px-4 py-3 text-sm font-semibold transition-colors duration-200 focus:outline-none',
-                        tab === t.id
-                        ? 'border-b-2 border-orange-500 text-orange-600 dark:text-orange-400'
-                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'
-                    )}
-                >
-                    <t.icon className="w-4 h-4"/> {t.name}
-                </button>
-            ))}
-        </div>
-
-        <div className="space-y-6 max-w-4xl mx-auto">
-          {currentQuestions.map((item, index) => (
-            <Card key={item.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm">
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 flex-1 pr-4">{index + 1}. {item.question}</h3>
-                  <Badge variant="secondary">{item.category}</Badge>
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+          
+          {/* Main Content */}
+          <main className="lg:col-span-9">
+            <div className="flex justify-center border-b border-gray-200 dark:border-gray-700 mb-8">
+                {tabs.map(t => (
+                    <button
+                        key={t.id}
+                        onClick={() => setTab(t.id)}
+                        className={clsx(
+                            'flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 sm:px-4 py-3 text-sm font-semibold transition-colors duration-200 focus:outline-none -mb-px',
+                            tab === t.id
+                            ? 'border-b-2 border-orange-500 text-orange-600 dark:text-orange-400'
+                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 border-b-2 border-transparent'
+                        )}
+                    >
+                        <t.icon className="w-4 h-4"/> {t.name}
+                    </button>
+                ))}
+            </div>
+            
+            <div className="bg-white dark:bg-gray-900/50 p-6 sm:p-8 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
+                {categories.map(category => (
+                    <section key={category} id={category.replace(/\s+/g, '-').toLowerCase()} className="mb-10 last:mb-0">
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 pb-2 border-b border-gray-200 dark:border-gray-700 mb-4">
+                           {category}
+                        </h2>
+                        <div className="space-y-2">
+                           {currentTab.questions.filter(q => q.category === category).map((item, index) => (
+                               <QuestionModule 
+                                   key={item.id} 
+                                   item={item} 
+                                   index={currentTab.questions.findIndex(q => q.id === item.id)} 
+                                   lang={tab === 'sql' ? 'sql' : 'javascript'}
+                               />
+                           ))}
+                        </div>
+                    </section>
+                ))}
+            </div>
+          </main>
+          
+          {/* Sidebar */}
+          <aside className="hidden lg:block lg:col-span-3">
+            <div className="sticky top-24">
+                <div className="p-4 bg-gray-100 dark:bg-gray-800/60 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-3">Contents</h3>
+                    <ul className="space-y-2 text-sm">
+                        {categories.map(category => (
+                            <li key={category}>
+                                <a 
+                                    href={`#${category.replace(/\s+/g, '-').toLowerCase()}`}
+                                    className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+                                >
+                                    {category}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                    <hr className="my-4 border-gray-200 dark:border-gray-700" />
+                    <a href="#" className="text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400">Back to Top</a>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="prose prose-sm dark:prose-invert max-w-none">
-                  <p>{item.answer}</p>
-                  {item.code && (
-                    <SyntaxHighlighter language={tab === 'sql' ? 'sql' : 'javascript'} style={vscDarkPlus} customStyle={{ borderRadius: '0.5rem', margin: '0' }}>
-                      {item.code}
-                    </SyntaxHighlighter>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+            </div>
+          </aside>
         </div>
       </main>
     </div>
