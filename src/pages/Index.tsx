@@ -33,7 +33,7 @@ const MaintenancePage = () => {
 
                     <div className="bg-orange-100 dark:bg-gray-800 border-l-4 border-orange-500 text-orange-700 dark:text-orange-300 p-4 rounded-md mb-8 text-left">
                         <p className="font-bold">Estimated Completion:</p>
-                        <p>We expect to be back online within the next few hours.</p>
+                        <p>We expect to be back online within the next few Weeks.</p>
                     </div>
                     
                     <div>
