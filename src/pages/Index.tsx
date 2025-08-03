@@ -314,7 +314,7 @@ const Index = () => {
                             <Server className="w-6 h-6 text-white" />
                         </div>
                         <div className="hidden sm:block">
-                            <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Engineering Data Center</h1>
+                            <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Center of Knowledge & Resources</h1>
                             <p className="text-xs text-neutral-400 font-medium tracking-wider uppercase">Professional Resource Hub</p>
                         </div>
                     </Link>
