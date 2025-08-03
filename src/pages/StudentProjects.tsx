@@ -90,7 +90,7 @@ const StudentProjectsPage = () => {
         )}
         
         {/* The StudentProjects component renders the actual grid of projects */}
-        <StudentProjects selectedCategory={selectedCategory} />
+        <StudentProjects />
 
         {/* --- Call-to-Action Sections --- */}
         <section className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">

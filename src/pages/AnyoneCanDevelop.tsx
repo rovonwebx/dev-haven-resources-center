@@ -103,7 +103,7 @@ const AnyoneCanDevelop = () => {
             <li key={link.href}>
               <a
                 href={link.href}
-                className={`block font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm ${link.isSubItem ? 'pl-4 border-l-2 ml-1 dark:border-slate-600' : ''}`}
+                className={`block font-medium text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm ${'isSubItem' in link && link.isSubItem ? 'pl-4 border-l-2 ml-1 dark:border-slate-600' : ''}`}
                 onClick={() => setSidebarOpen(false)}
               >
                 {link.title}
@@ -117,7 +117,7 @@ const AnyoneCanDevelop = () => {
 
   return (
     <>
-      <style jsx global>{`
+      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
         h1, h2, h3, .font-serif { font-family: 'Lora', serif; }

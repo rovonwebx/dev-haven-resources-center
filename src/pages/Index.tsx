@@ -297,7 +297,7 @@ const Index = () => {
             </div>
 
             {showNotif && (
-                <div className="w-full bg-orange-600 text-white text-xs sm:text-sm py-2 px-4 flex items-center justify-center text-center gap-x-3 z-50">
+                <div className="w-full bg-orange-600 text-white text-xs sm:text-sm py-2 px-4 flex items-center justify-center text-center gap-x-3 z-50 animate-slide-up">
                     <p><strong>Notice:</strong> We've updated the site and our <a href="https://dhrc-tools.vercel.app/" className="underline font-bold hover:text-orange-200 transition-colors">Tools Dashboard</a>.</p>
                     <button onClick={dismissNotif} className="p-1.5 rounded-full hover:bg-orange-700/80 transition-colors flex-shrink-0" aria-label="Dismiss notification"><X size={18} /></button>
                 </div>
@@ -356,23 +356,23 @@ const Index = () => {
             
             <div className="w-full bg-neutral-900 border-y border-neutral-800">
                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 grid grid-cols-1 md:grid-cols-3 gap-2">
-                     <div className="flex items-center justify-center text-center gap-2">
-                        <Zap className="h-5 w-5 text-orange-400 flex-shrink-0" />
+                     <div className="flex items-center justify-center text-center gap-2 animate-slide-up">
+                        <Zap className="h-5 w-5 text-orange-400 flex-shrink-0 animate-pulse-subtle" />
                         <p className="text-xs sm:text-sm font-semibold text-neutral-300">
                             Explore the Project Vault: Download pre-built projects.
                         </p>
                          <Link to="/student-projects" className="flex-shrink-0">
-                            <Button variant="link" className="h-auto p-0 text-xs sm:text-sm font-bold text-orange-400 hover:text-orange-300">
+                            <Button variant="link" className="h-auto p-0 text-xs sm:text-sm font-bold text-orange-400 hover:text-orange-300 story-link">
                                 Browse <ArrowRight className="ml-1 h-3.5 w-3.5" />
                             </Button>
                         </Link>
                     </div>
-                    <div className="flex items-center justify-center text-center gap-2 border-x-0 md:border-x border-neutral-800">
-                        <MessageSquare className="h-5 w-5 text-teal-400 flex-shrink-0" />
+                    <div className="flex items-center justify-center text-center gap-2 border-x-0 md:border-x border-neutral-800 animate-slide-up" style={{animationDelay: '0.1s'}}>
+                        <MessageSquare className="h-5 w-5 text-teal-400 flex-shrink-0 animate-pulse-subtle" />
                         <p className="text-xs sm:text-sm font-semibold text-neutral-300">
                             Try our new feature: Chat with your Mates!
                         </p>
-                        <Badge className="bg-teal-500 text-white text-[10px] font-bold py-0.5 px-2 rounded-full">BETA</Badge>
+                        <Badge className="bg-teal-500 text-white text-[10px] font-bold py-0.5 px-2 rounded-full animate-glow">BETA</Badge>
                          <Button
                             variant="link"
                             onClick={handleChatFeatureClick}
@@ -395,29 +395,29 @@ const Index = () => {
 
             <main className="flex-1 w-full pt-10 pb-12 sm:pt-12 sm:pb-16">
                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-10 sm:mb-12">
-                        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    <div className="text-center mb-10 sm:mb-12 animate-slide-up">
+                        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight gradient-text animate-pulse-subtle">
                             Explore Our Resources
                         </h2>
-                        <p className="mt-3 text-base sm:text-lg text-neutral-400 max-w-3xl mx-auto">
+                        <p className="mt-3 text-base sm:text-lg text-neutral-400 max-w-3xl mx-auto animate-float">
                             Find everything you need to succeed in your engineering studies and career, from project templates to interview preparation.
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                        {resourceCards.map(card => (
-                            <Card key={card.title} className="group bg-neutral-900 overflow-hidden rounded-xl border border-neutral-800 hover:border-orange-500/50 hover:shadow-2xl hover:shadow-orange-500/5 transition-all duration-300 transform hover:-translate-y-1">
+                        {resourceCards.map((card, index) => (
+                            <Card key={card.title} className="group card-dynamic bg-neutral-900 overflow-hidden rounded-xl border border-neutral-800 hover:border-orange-500/50 hover:shadow-2xl hover:shadow-orange-500/5 transition-all duration-300 transform hover:-translate-y-1 hover-lift animate-scale-bounce" style={{animationDelay: `${index * 0.05}s`}}>
                                 <CardContent className="p-5 flex flex-col items-center text-center">
                                     {card.status && (
-                                        <Badge className={`absolute top-3 right-3 text-xs font-bold py-1 px-2.5 rounded-full ${getBadgeClass(card.status)}`}>
+                                        <Badge className={`absolute top-3 right-3 text-xs font-bold py-1 px-2.5 rounded-full animate-glow ${getBadgeClass(card.status)}`}>
                                             {card.status}
                                         </Badge>
                                     )}
-                                    <img src={card.img} alt={`${card.title} icon`} className="w-16 h-16 sm:w-20 sm:h-20 object-contain mb-4 transition-transform duration-300 group-hover:scale-110" />
-                                    <h3 className="font-bold text-lg text-white mb-2">{card.title}</h3>
+                                    <img src={card.img} alt={`${card.title} icon`} className="w-16 h-16 sm:w-20 sm:h-20 object-contain mb-4 transition-transform duration-300 group-hover:scale-110 animate-float" style={{animationDelay: `${index * 0.1}s`}} />
+                                    <h3 className="font-bold text-lg text-white mb-2 story-link">{card.title}</h3>
                                     <p className="text-neutral-400 text-sm mb-5 flex-grow">{card.description}</p>
                                     <Link to={card.path}>
-                                        <Button variant="outline" className="text-orange-400 border-orange-500/50 font-bold hover:bg-orange-500 hover:text-white rounded-full text-sm px-6 py-2 transition-all duration-300">
+                                        <Button variant="outline" className="btn-glow text-orange-400 border-orange-500/50 font-bold hover:bg-orange-500 hover:text-white rounded-full text-sm px-6 py-2 transition-all duration-300">
                                             Explore 
                                             <ArrowRight className="ml-2 transition-transform duration-300 group-hover:translate-x-1 h-4 w-4" />
                                         </Button>
