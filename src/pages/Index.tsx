@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Analytics } from "@vercel/analytics/react";
 import Chatbot from "@/components/Chatbot";
-import { ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon, Bell, Zap, MessageSquare, Menu, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon, Bell, Zap, MessageSquare, Menu, ChevronLeft, ChevronRight, Database, Server, Code, FileText, BookOpen, Users } from 'lucide-react';
 
 // --- Data arrays (no changes) ---
 const navLinks = [
@@ -126,8 +126,8 @@ const ChatTutorialPopup = ({ onDismiss }) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 animate-fade-in">
-            <Card className="w-full max-w-md bg-neutral-900 border border-neutral-700 rounded-2xl shadow-2xl transform animate-scale-in">
+        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+            <Card className="w-full max-w-md bg-neutral-900 border border-neutral-700 rounded-lg shadow-2xl">
                 <CardContent className="p-6 text-center relative">
                     <button onClick={onDismiss} className="absolute top-3 right-3 p-1.5 rounded-full text-neutral-400 hover:bg-neutral-700 transition-colors">
                         <X size={18} />
@@ -139,7 +139,7 @@ const ChatTutorialPopup = ({ onDismiss }) => {
                         className="w-full max-w-[200px] h-auto mx-auto mb-5"
                     />
 
-                    <h3 className="text-xl font-bold text-white mb-2">
+                    <h3 className="text-xl font-semibold text-white mb-2">
                         {tutorialSteps[step].title}
                     </h3>
                     <p className="text-neutral-400 mb-6 min-h-[40px]">
@@ -152,15 +152,15 @@ const ChatTutorialPopup = ({ onDismiss }) => {
                         </Button>
                         <div className="flex items-center space-x-2">
                             {tutorialSteps.map((_, index) => (
-                                <div key={index} className={`h-2 w-2 rounded-full transition-colors ${step === index ? 'bg-orange-500' : 'bg-neutral-600'}`}></div>
+                                <div key={index} className={`h-2 w-2 rounded-full transition-colors ${step === index ? 'bg-blue-500' : 'bg-neutral-600'}`}></div>
                             ))}
                         </div>
                         {step < tutorialSteps.length - 1 ? (
-                            <Button onClick={handleNext} className="bg-orange-500 hover:bg-orange-600 text-white">
+                            <Button onClick={handleNext} className="bg-blue-600 hover:bg-blue-700 text-white">
                                 Next <ChevronRight size={20} className="ml-1" />
                             </Button>
                         ) : (
-                            <Button onClick={handleGetStarted} className="bg-green-500 hover:bg-green-600 text-white">
+                            <Button onClick={handleGetStarted} className="bg-blue-600 hover:bg-blue-700 text-white">
                                 Get Started
                             </Button>
                         )}
@@ -236,22 +236,23 @@ const Index = () => {
     
     const getBadgeClass = (status) => {
         switch (status) {
-            case 'Updated': return 'bg-green-900/50 text-green-300 border border-green-500/30';
-            case 'Coming Soon': return 'bg-yellow-900/50 text-yellow-300 border border-yellow-500/30';
-            case 'On Working': return 'bg-blue-900/50 text-blue-300 border border-blue-500/30';
-            case 'New': return 'bg-purple-900/50 text-purple-300 border border-purple-500/30';
+            case 'Updated': return 'bg-emerald-900/90 text-emerald-100 border border-emerald-600/50 font-medium';
+            case 'Coming Soon': return 'bg-amber-900/90 text-amber-100 border border-amber-600/50 font-medium';
+            case 'On Working': return 'bg-blue-900/90 text-blue-100 border border-blue-600/50 font-medium';
+            case 'New': return 'bg-purple-900/90 text-purple-100 border border-purple-600/50 font-medium';
             default: return '';
         }
     };
 
     const OpportunityList = ({ title, data }) => (
         <div>
-            <h4 className="font-semibold text-neutral-300 mb-2 px-4">{title}</h4>
+            <h4 className="font-semibold text-neutral-200 mb-3 px-4 text-sm uppercase tracking-wide">{title}</h4>
             <div className="space-y-1">
                 {data.map((item) => (
-                    <a href={item.link} key={item.source} target="_blank" rel="noopener noreferrer" className="block p-3 mx-2 rounded-lg hover:bg-neutral-700/60 transition-colors">
-                        <p className="font-bold text-sm text-white">{item.source}</p>
-                        <p className="text-xs text-neutral-400">{item.focus} - <span className="italic">{item.relevance}</span></p>
+                    <a href={item.link} key={item.source} target="_blank" rel="noopener noreferrer" className="block p-3 mx-2 rounded-md hover:bg-neutral-800/60 transition-all duration-200 border-l-2 border-transparent hover:border-blue-500">
+                        <p className="font-semibold text-sm text-white">{item.source}</p>
+                        <p className="text-xs text-neutral-400 mt-1">{item.focus}</p>
+                        <p className="text-xs text-neutral-500 italic">{item.relevance}</p>
                     </a>
                 ))}
             </div>
@@ -259,166 +260,186 @@ const Index = () => {
     );
 
     return (
-        <div className="min-h-screen bg-black flex flex-col font-sans text-white">
+        <div className="min-h-screen bg-neutral-950 flex flex-col font-sans text-white">
             <Analytics />
             <NotificationSound play={playNotificationSound} />
             {showChatTutorial && <ChatTutorialPopup onDismiss={dismissChatTutorial} />}
 
             {showPopup && (
-                <div className="fixed top-5 right-5 z-50 w-[calc(100%-2.5rem)] max-w-md bg-neutral-900/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-neutral-700 animate-fade-in-down">
-                    <div className="p-4">
-                        <div className="flex items-start justify-between">
+                <div className="fixed top-5 right-5 z-50 w-[calc(100%-2.5rem)] max-w-md bg-neutral-900/95 backdrop-blur-xl rounded-lg shadow-2xl border border-neutral-700">
+                    <div className="p-5">
+                        <div className="flex items-start justify-between mb-4">
                             <div className="flex items-center gap-3">
-                                <span className="bg-orange-500 p-2 rounded-lg inline-flex"><Bell className="text-white" size={20} /></span>
+                                <span className="bg-blue-600 p-2.5 rounded-lg inline-flex"><Bell className="text-white" size={20} /></span>
                                 <div>
-                                    <h3 className="font-bold text-white">New Opportunities</h3>
-                                    <p className="text-sm text-neutral-400">July 2025 Edition</p>
+                                    <h3 className="font-semibold text-white">Engineering Opportunities</h3>
+                                    <p className="text-sm text-neutral-400">July 2025 Update</p>
                                 </div>
                             </div>
-                            <Button onClick={dismissPopup} variant="ghost" size="icon" className="h-8 w-8 rounded-full text-neutral-400 hover:bg-neutral-700"><X size={18} /></Button>
+                            <Button onClick={dismissPopup} variant="ghost" size="icon" className="h-8 w-8 rounded-full text-neutral-400 hover:bg-neutral-800"><X size={18} /></Button>
                         </div>
-                        <div className="mt-3 space-y-3 max-h-[60vh] overflow-y-auto pr-2">
-                            <OpportunityList title="Latest Hackathons" data={hackathonsData} />
-                            <OpportunityList title="Summer 2025 Internships" data={internshipsData} />
+                        <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                            <OpportunityList title="Technical Hackathons" data={hackathonsData} />
+                            <OpportunityList title="Professional Internships" data={internshipsData} />
                         </div>
                     </div>
                 </div>
             )}
             
-            <div className={`fixed top-0 right-0 h-full bg-neutral-900 shadow-lg z-50 w-full max-w-sm transform transition-transform duration-300 ${isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-                <div className="p-4 border-b border-neutral-800 flex justify-between items-center sticky top-0 bg-neutral-900/90 backdrop-blur-sm">
-                    <h3 className="font-bold text-lg text-white">Notifications</h3>
-                    <button onClick={() => setIsPanelOpen(false)} className="p-1.5 rounded-full text-neutral-400 hover:bg-neutral-700"><X size={18} /></button>
+            <div className={`fixed top-0 right-0 h-full bg-neutral-900/95 backdrop-blur-xl shadow-2xl z-50 w-full max-w-md transform transition-transform duration-300 border-l border-neutral-700 ${isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                <div className="p-5 border-b border-neutral-800 flex justify-between items-center sticky top-0 bg-neutral-900/90 backdrop-blur-sm">
+                    <h3 className="font-semibold text-lg text-white">Engineering Hub Updates</h3>
+                    <button onClick={() => setIsPanelOpen(false)} className="p-2 rounded-full text-neutral-400 hover:bg-neutral-800 transition-colors"><X size={18} /></button>
                 </div>
-                <div className="py-4 space-y-6 overflow-y-auto h-[calc(100%-4.5rem)]">
-                    <OpportunityList title="Latest Hackathons" data={hackathonsData} />
-                    <OpportunityList title="Summer 2025 Internships" data={internshipsData} />
+                <div className="py-4 space-y-6 overflow-y-auto h-[calc(100%-5rem)]">
+                    <OpportunityList title="Technical Hackathons" data={hackathonsData} />
+                    <OpportunityList title="Professional Internships" data={internshipsData} />
                 </div>
             </div>
 
             {showNotif && (
-                <div className="w-full bg-orange-600 text-white text-xs sm:text-sm py-2 px-4 flex items-center justify-center text-center gap-x-3 z-50 animate-slide-up">
-                    <p><strong>Notice:</strong> We've updated the site and our <a href="https://dhrc-tools.vercel.app/" className="underline font-bold hover:text-orange-200 transition-colors">Tools Dashboard</a>.</p>
-                    <button onClick={dismissNotif} className="p-1.5 rounded-full hover:bg-orange-700/80 transition-colors flex-shrink-0" aria-label="Dismiss notification"><X size={18} /></button>
+                <div className="w-full bg-blue-600 text-white text-sm py-3 px-4 flex items-center justify-center text-center gap-x-4 z-50">
+                    <div className="flex items-center gap-2">
+                        <Database className="h-4 w-4" />
+                        <p><strong>System Update:</strong> Enhanced data center and <a href="https://dhrc-tools.vercel.app/" className="underline font-semibold hover:text-blue-200 transition-colors">Engineering Tools</a> now available.</p>
+                    </div>
+                    <button onClick={dismissNotif} className="p-1.5 rounded-full hover:bg-blue-700/80 transition-colors flex-shrink-0" aria-label="Dismiss notification"><X size={18} /></button>
                 </div>
             )}
 
-            <header className="sticky top-0 w-full border-b-2 border-orange-500 bg-black/80 backdrop-blur-md z-40">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between">
-                    <Link to="/" className="flex items-center gap-2">
-                        <img src="https://i.ibb.co/PGDSpW4p/Screenshot-2025-07-20-at-3-09-38-AM.png" alt="DHRC Logo" className="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
+            <header className="sticky top-0 w-full border-b border-neutral-800 bg-neutral-950/90 backdrop-blur-xl z-40">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+                    <Link to="/" className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center shadow-lg">
+                            <Server className="w-6 h-6 text-white" />
+                        </div>
                         <div className="hidden sm:block">
-                            <h1 className="text-lg sm:text-2xl font-extrabold text-white">Knowledge & Resource Hub</h1>
-                            <p className="text-xs text-neutral-400 font-medium tracking-wider">DATA-HUB & RESOURCE CENTER</p>
+                            <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Engineering Data Center</h1>
+                            <p className="text-xs text-neutral-400 font-medium tracking-wider uppercase">Professional Resource Hub</p>
                         </div>
                     </Link>
-                    <div className="flex items-center gap-1">
-                        {/* <ThemeToggler theme={theme} toggleTheme={toggleTheme} /> */}
-                        <a href="https://github.com/RishiRohanKalapala/dhrc-bugs-beacon-form/issues/new" target="_blank" rel="noopener noreferrer" aria-label="Report an issue">
-                            <Button variant="ghost" size="icon" className="rounded-full text-neutral-400 hover:bg-neutral-800 hover:text-white"><MessageSquare className="h-5 w-5" /></Button>
+                    <div className="flex items-center gap-2">
+                        <a href="https://github.com/RishiRohanKalapala/dhrc-bugs-beacon-form/issues/new" target="_blank" rel="noopener noreferrer" aria-label="Report technical issue">
+                            <Button variant="ghost" size="icon" className="rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white"><MessageSquare className="h-5 w-5" /></Button>
                         </a>
-                        <Button onClick={() => setIsPanelOpen(true)} variant="ghost" size="icon" className="relative rounded-full text-neutral-300 hover:bg-neutral-800 hover:text-white">
-                            <Bell className="h-5 w-5 sm:h-6 sm:w-6" />
-                            <span className="absolute top-1 right-1 flex h-2.5 w-2.5"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-orange-500"></span></span>
+                        <Button onClick={() => setIsPanelOpen(true)} variant="ghost" size="icon" className="relative rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white">
+                            <Bell className="h-5 w-5" />
+                            <span className="absolute top-1 right-1 flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span></span>
                         </Button>
                         <Link to="/resume-generator" className="hidden md:block">
-                            <Button variant="outline" className="border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-white font-bold px-4 py-2 rounded-full shadow-sm transition-all transform hover:scale-105">Resume Generator</Button>
+                            <Button variant="outline" className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white font-semibold px-4 py-2 rounded-lg transition-all">Resume Generator</Button>
                         </Link>
                         <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer">
-                            <Button className="bg-orange-500 text-white hover:bg-orange-600 font-bold px-3 sm:px-5 py-2 rounded-full shadow-sm transition-all transform hover:scale-105 text-xs sm:text-sm">Sign In</Button>
+                            <Button className="bg-blue-600 text-white hover:bg-blue-700 font-semibold px-4 py-2 rounded-lg transition-all">Access Portal</Button>
                         </a>
                     </div>
                 </div>
             </header>
             
-            <nav className="w-full bg-neutral-900 border-b border-neutral-800 shadow-sm">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1">
+            <nav className="w-full bg-neutral-900 border-b border-neutral-800">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-center gap-x-2 gap-y-2">
                     {navLinks.map((link) => (
-                        <Link key={link.title} to={link.path} className="px-3 py-1.5 sm:px-4 sm:py-1 rounded-full text-xs sm:text-sm font-semibold text-neutral-300 hover:bg-orange-500 hover:text-white transition-all duration-200">{link.title}</Link>
+                        <Link key={link.title} to={link.path} className="px-4 py-2 rounded-lg text-sm font-medium text-neutral-300 hover:bg-blue-600 hover:text-white transition-all duration-200">{link.title}</Link>
                     ))}
                 </div>
             </nav>
 
-            <section className="w-full bg-black border-b border-neutral-800">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-col md:flex-row items-center gap-2 md:gap-4">
-                    <h3 className="text-sm md:text-md font-bold text-neutral-300 flex-shrink-0">Quick Links:</h3>
-                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1">
+            <section className="w-full bg-neutral-900 border-b border-neutral-800">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center gap-2 md:gap-4">
+                    <h3 className="text-sm md:text-base font-semibold text-neutral-200 flex-shrink-0 flex items-center gap-2">
+                        <Code className="h-4 w-4" />
+                        Quick Access:
+                    </h3>
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1">
                         {quickLinks.map((link) => (
                             link.external ? (
-                                <a key={link.title} href={link.path} target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm font-medium text-orange-400 hover:text-orange-300 hover:underline transition-colors">{link.title}</a>
+                                <a key={link.title} href={link.path} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline transition-colors">{link.title}</a>
                             ) : (
-                                <Link key={link.title} to={link.path} className="text-xs sm:text-sm font-medium text-orange-400 hover:text-orange-300 hover:underline transition-colors">{link.title}</Link>
+                                <Link key={link.title} to={link.path} className="text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline transition-colors">{link.title}</Link>
                             )
                         ))}
                     </div>
                 </div>
             </section>
             
-            <div className="w-full bg-neutral-900 border-y border-neutral-800">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 grid grid-cols-1 md:grid-cols-3 gap-2">
-                     <div className="flex items-center justify-center text-center gap-2 animate-slide-up">
-                        <Zap className="h-5 w-5 text-orange-400 flex-shrink-0 animate-pulse-subtle" />
-                        <p className="text-xs sm:text-sm font-semibold text-neutral-300">
-                            Explore the Project Vault: Download pre-built projects.
-                        </p>
+            <div className="w-full bg-neutral-900 border-b border-neutral-800">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                     <div className="flex items-center justify-center text-center gap-3 p-3 rounded-lg bg-neutral-800/50">
+                        <Database className="h-5 w-5 text-blue-400 flex-shrink-0" />
+                        <div>
+                            <p className="text-sm font-semibold text-neutral-200">
+                                Project Repository Access
+                            </p>
+                            <p className="text-xs text-neutral-400">Download enterprise-grade projects</p>
+                        </div>
                          <Link to="/student-projects" className="flex-shrink-0">
-                            <Button variant="link" className="h-auto p-0 text-xs sm:text-sm font-bold text-orange-400 hover:text-orange-300 story-link">
-                                Browse <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                            <Button variant="outline" size="sm" className="text-xs font-medium text-blue-400 border-blue-600 hover:bg-blue-600 hover:text-white">
+                                Browse <ArrowRight className="ml-1 h-3 w-3" />
                             </Button>
                         </Link>
                     </div>
-                    <div className="flex items-center justify-center text-center gap-2 border-x-0 md:border-x border-neutral-800 animate-slide-up" style={{animationDelay: '0.1s'}}>
-                        <MessageSquare className="h-5 w-5 text-teal-400 flex-shrink-0 animate-pulse-subtle" />
-                        <p className="text-xs sm:text-sm font-semibold text-neutral-300">
-                            Try our new feature: Chat with your Mates!
-                        </p>
-                        <Badge className="bg-teal-500 text-white text-[10px] font-bold py-0.5 px-2 rounded-full animate-glow">BETA</Badge>
+                    <div className="flex items-center justify-center text-center gap-3 p-3 rounded-lg bg-neutral-800/50 border-x-0 md:border-x border-neutral-700">
+                        <MessageSquare className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                        <div>
+                            <p className="text-sm font-semibold text-neutral-200">
+                                Professional Collaboration
+                            </p>
+                            <p className="text-xs text-neutral-400">Team communication platform</p>
+                        </div>
+                        <Badge className="bg-emerald-600 text-white text-[10px] font-semibold py-1 px-2 rounded">BETA</Badge>
                          <Button
-                            variant="link"
+                            variant="outline"
+                            size="sm"
                             onClick={handleChatFeatureClick}
-                            className="flex-shrink-0 h-auto p-0 text-xs sm:text-sm font-bold text-teal-400 hover:text-teal-300"
+                            className="flex-shrink-0 text-xs font-medium text-emerald-400 border-emerald-600 hover:bg-emerald-600 hover:text-white"
                         >
-                            Learn More
-                            <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                            Access
+                            <ArrowRight className="ml-1 h-3 w-3" />
                         </Button>
                     </div>
-                    <div className="flex items-center justify-center text-center gap-4">
-                        <h2 className="text-sm font-bold text-blue-300">Engage with ChatterBox</h2>
+                    <div className="flex items-center justify-center text-center gap-3 p-3 rounded-lg bg-neutral-800/50">
+                        <Users className="h-5 w-5 text-purple-400 flex-shrink-0" />
+                        <div>
+                            <p className="text-sm font-semibold text-neutral-200">Collaboration Hub</p>
+                            <p className="text-xs text-neutral-400">Connect with engineering professionals</p>
+                        </div>
                          <Link to="/chatterbox">
-                            <Button className="bg-blue-600 text-white font-bold px-4 py-1.5 rounded-full shadow-md hover:bg-blue-700 transition-all transform hover:scale-105 text-xs">
-                                Access Now <ArrowRight className="ml-2 hidden sm:inline-block" size={16} />
+                            <Button size="sm" className="bg-purple-600 text-white font-medium hover:bg-purple-700 transition-all text-xs">
+                                Enter Hub <ArrowRight className="ml-1 hidden sm:inline-block" size={14} />
                             </Button>
                         </Link>
                     </div>
                 </div>
             </div>
 
-            <main className="flex-1 w-full pt-10 pb-12 sm:pt-12 sm:pb-16">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-10 sm:mb-12 animate-slide-up">
-                        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight gradient-text animate-pulse-subtle">
-                            Explore Our Resources
+            <main className="flex-1 w-full pt-12 pb-16">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+                            Engineering Resource Center
                         </h2>
-                        <p className="mt-3 text-base sm:text-lg text-neutral-400 max-w-3xl mx-auto animate-float">
-                            Find everything you need to succeed in your engineering studies and career, from project templates to interview preparation.
+                        <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
+                            Professional-grade resources, tools, and documentation for software engineers and developers.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {resourceCards.map((card, index) => (
-                            <Card key={card.title} className="group card-dynamic bg-neutral-900 overflow-hidden rounded-xl border border-neutral-800 hover:border-orange-500/50 hover:shadow-2xl hover:shadow-orange-500/5 transition-all duration-300 transform hover:-translate-y-1 hover-lift animate-scale-bounce" style={{animationDelay: `${index * 0.05}s`}}>
-                                <CardContent className="p-5 flex flex-col items-center text-center">
+                            <Card key={card.title} className="group bg-neutral-900 overflow-hidden rounded-lg border border-neutral-800 hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 transform hover:-translate-y-1">
+                                <CardContent className="p-6 flex flex-col items-center text-center relative">
                                     {card.status && (
-                                        <Badge className={`absolute top-3 right-3 text-xs font-bold py-1 px-2.5 rounded-full animate-glow ${getBadgeClass(card.status)}`}>
+                                        <Badge className={`absolute top-4 right-4 text-xs font-medium py-1 px-3 rounded ${getBadgeClass(card.status)}`}>
                                             {card.status}
                                         </Badge>
                                     )}
-                                    <img src={card.img} alt={`${card.title} icon`} className="w-16 h-16 sm:w-20 sm:h-20 object-contain mb-4 transition-transform duration-300 group-hover:scale-110 animate-float" style={{animationDelay: `${index * 0.1}s`}} />
-                                    <h3 className="font-bold text-lg text-white mb-2 story-link">{card.title}</h3>
-                                    <p className="text-neutral-400 text-sm mb-5 flex-grow">{card.description}</p>
-                                    <Link to={card.path}>
-                                        <Button variant="outline" className="btn-glow text-orange-400 border-orange-500/50 font-bold hover:bg-orange-500 hover:text-white rounded-full text-sm px-6 py-2 transition-all duration-300">
-                                            Explore 
+                                    <div className="w-16 h-16 bg-neutral-800 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors duration-300">
+                                        <img src={card.img} alt={`${card.title} icon`} className="w-10 h-10 object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+                                    </div>
+                                    <h3 className="font-semibold text-lg text-white mb-2">{card.title}</h3>
+                                    <p className="text-neutral-400 text-sm mb-6 flex-grow leading-relaxed">{card.description}</p>
+                                    <Link to={card.path} className="w-full">
+                                        <Button variant="outline" className="w-full text-blue-400 border-blue-600/50 font-medium hover:bg-blue-600 hover:text-white hover:border-blue-600 rounded-lg text-sm px-6 py-2.5 transition-all duration-300 group-hover:shadow-md">
+                                            Access Resource
                                             <ArrowRight className="ml-2 transition-transform duration-300 group-hover:translate-x-1 h-4 w-4" />
                                         </Button>
                                     </Link>
@@ -429,56 +450,58 @@ const Index = () => {
                 </div>
             </main>
 
-            <footer className="bg-neutral-900">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <footer className="bg-neutral-900 border-t border-neutral-800">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center sm:text-left">
                         <div className="md:col-span-1 flex flex-col items-center sm:items-start">
-                            <Link to="/" className="flex items-center gap-3 mb-3">
-                                <img src="https://i.ibb.co/PGDSpW4p/Screenshot-2025-07-20-at-3-09-38-AM.png" alt="DHRC Logo" className="w-10 h-10 bg-white rounded-full p-0.5" />
-                                <span className="text-xl font-extrabold text-white">CKR</span>
+                            <Link to="/" className="flex items-center gap-3 mb-4">
+                                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                                    <Server className="w-5 h-5 text-white" />
+                                </div>
+                                <span className="text-xl font-bold text-white">EDC</span>
                             </Link>
-                            <p className="text-neutral-500 text-sm">
-                                Your central hub for engineering knowledge, projects, and career resources.
+                            <p className="text-neutral-500 text-sm leading-relaxed">
+                                Professional engineering data center providing enterprise-grade resources and tools.
                             </p>
                         </div>
 
                         <div>
-                            <h3 className="font-bold text-neutral-200 tracking-wider uppercase mb-4 text-sm">Resources</h3>
+                            <h3 className="font-semibold text-neutral-200 tracking-wider uppercase mb-4 text-sm">Technical Resources</h3>
                             <ul className="space-y-2.5">
-                                <li><Link to="/certificates" className="text-neutral-400 hover:text-orange-400 transition-colors text-sm">Certificates</Link></li>
-                                <li><Link to="/projects" className="text-neutral-400 hover:text-orange-400 transition-colors text-sm">Projects</Link></li>
-                                <li><Link to="/roadmaps" className="text-neutral-400 hover:text-orange-400 transition-colors text-sm">Roadmaps</Link></li>
-                                <li><Link to="/notes" className="text-neutral-400 hover:text-orange-400 transition-colors text-sm">Notes</Link></li>
+                                <li><Link to="/certificates" className="text-neutral-400 hover:text-blue-400 transition-colors text-sm">Certifications</Link></li>
+                                <li><Link to="/projects" className="text-neutral-400 hover:text-blue-400 transition-colors text-sm">Projects</Link></li>
+                                <li><Link to="/roadmaps" className="text-neutral-400 hover:text-blue-400 transition-colors text-sm">Learning Paths</Link></li>
+                                <li><Link to="/notes" className="text-neutral-400 hover:text-blue-400 transition-colors text-sm">Documentation</Link></li>
                             </ul>
                         </div>
 
                         <div>
-                            <h3 className="font-bold text-neutral-200 tracking-wider uppercase mb-4 text-sm">Community</h3>
+                            <h3 className="font-semibold text-neutral-200 tracking-wider uppercase mb-4 text-sm">Professional Network</h3>
                             <ul className="space-y-2.5">
-                                <li><Link to="/student-projects" className="text-neutral-400 hover:text-orange-400 transition-colors text-sm">Student Projects</Link></li>
-                                <li><Link to="/events" className="text-neutral-400 hover:text-orange-400 transition-colors text-sm">Events</Link></li>
-                                <li><Link to="/chatterbox" className="text-neutral-400 hover:text-orange-400 transition-colors text-sm">ChatterBox</Link></li>
-                                <li><Link to="/internships" className="text-neutral-400 hover:text-orange-400 transition-colors text-sm">Internships</Link></li>
+                                <li><Link to="/student-projects" className="text-neutral-400 hover:text-blue-400 transition-colors text-sm">Project Showcase</Link></li>
+                                <li><Link to="/events" className="text-neutral-400 hover:text-blue-400 transition-colors text-sm">Tech Events</Link></li>
+                                <li><Link to="/chatterbox" className="text-neutral-400 hover:text-blue-400 transition-colors text-sm">Collaboration Hub</Link></li>
+                                <li><Link to="/internships" className="text-neutral-400 hover:text-blue-400 transition-colors text-sm">Career Opportunities</Link></li>
                             </ul>
                         </div>
 
                         <div>
-                            <h3 className="font-bold text-neutral-200 tracking-wider uppercase mb-4 text-sm">Connect With Us</h3>
+                            <h3 className="font-semibold text-neutral-200 tracking-wider uppercase mb-4 text-sm">Connect</h3>
                             <div className="flex space-x-4 justify-center sm:justify-start">
-                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-orange-400 transition-colors"><Github size={22} /></a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-orange-400 transition-colors"><Linkedin size={22} /></a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-orange-400 transition-colors"><Twitter size={22} /></a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-neutral-800"><Github size={20} /></a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-neutral-800"><Linkedin size={20} /></a>
+                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-neutral-800"><Twitter size={20} /></a>
                             </div>
                         </div>
                     </div>
 
                     <div className="mt-8 pt-6 border-t border-neutral-800 flex flex-col sm:flex-row justify-between items-center text-center">
                         <p className="text-sm text-neutral-500 mb-4 sm:mb-0">
-                            © {new Date().getFullYear()} CKR - All Rights Reserved.
+                            © {new Date().getFullYear()} Engineering Data Center - All Rights Reserved.
                         </p>
-                        <div className="flex space-x-4 text-sm">
-                            <Link to="/terms-of-service" className="text-neutral-500 hover:text-orange-400">Terms of Service</Link>
-                            <Link to="/privacy-policy" className="text-neutral-500 hover:text-orange-400">Privacy Policy</Link>
+                        <div className="flex space-x-6 text-sm">
+                            <Link to="/terms-of-service" className="text-neutral-500 hover:text-blue-400 transition-colors">Terms of Service</Link>
+                            <Link to="/privacy-policy" className="text-neutral-500 hover:text-blue-400 transition-colors">Privacy Policy</Link>
                         </div>
                     </div>
                 </div>
