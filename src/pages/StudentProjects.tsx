@@ -22,20 +22,22 @@ const StudentProjectsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       {/* Header */}
-      <header className="bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-20">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <header className="bg-background/80 backdrop-blur-md border-b border-border/50 shadow-lg sticky top-0 z-20">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
             <div className="flex items-center gap-4">
-                <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-lg">
-                    <Users className="w-8 h-8 text-orange-500" />
+                <div className="p-3 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl border border-primary/20 shadow-md">
+                    <Users className="w-8 h-8 text-primary" />
                 </div>
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Student Projects</h1>
-                    <p className="text-gray-500 dark:text-gray-400">Innovate, build, and get inspired.</p>
+                    <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tight">
+                      Student Projects
+                    </h1>
+                    <p className="text-muted-foreground">Innovative projects built by students across India.</p>
                 </div>
             </div>
-            <Button variant="outline" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
+            <Button variant="outline" size="sm" asChild className="rounded-full hover:scale-105 transition-transform">
                 <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
             </Button>
         </div>
@@ -43,24 +45,26 @@ const StudentProjectsPage = () => {
       
       {/* Main Content */}
       <main className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">Project Showcase</h2>
-            <p className="mt-3 text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+        <div className="text-center mb-12 animate-fade-in">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tight">
+              Project Showcase
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
                 Discover innovative projects built by students and developers. Use the filters to find your next inspiration!
             </p>
         </div>
 
         {/* --- Quick Links Filter Tabs --- */}
-        <div className="flex justify-center border-b border-gray-200 dark:border-gray-700 mb-12">
+        <div className="flex justify-center border-b border-border/50 mb-12 animate-fade-in">
             {categories.map(category => (
                 <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
                     className={clsx(
-                        'px-4 py-3 text-sm font-semibold transition-colors duration-200 focus:outline-none',
+                        'px-6 py-4 text-sm font-semibold transition-all duration-300 focus:outline-none hover:scale-105',
                         selectedCategory === category
-                        ? 'border-b-2 border-orange-500 text-orange-600 dark:text-orange-400'
-                        : 'text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'
+                        ? 'border-b-2 border-primary text-primary bg-primary/5'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                     )}
                 >
                     {category}

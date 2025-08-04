@@ -16,20 +16,22 @@ const EventsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       {/* Header */}
-      <header className="bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-20">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <header className="bg-background/80 backdrop-blur-md border-b border-border/50 shadow-lg sticky top-0 z-20">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-lg">
-              <Calendar className="w-8 h-8 text-orange-500" />
+            <div className="p-3 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl border border-primary/20 shadow-md">
+              <Calendar className="w-8 h-8 text-primary" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Tech Events</h1>
-              <p className="text-gray-500 dark:text-gray-400">Competitions, conferences, and workshops.</p>
+              <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tight">
+                Tech Events
+              </h1>
+              <p className="text-muted-foreground">Tech events, competitions, and conferences.</p>
             </div>
           </div>
-          <Button variant="outline" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
+          <Button variant="outline" size="sm" asChild className="rounded-full hover:scale-105 transition-transform">
             <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
           </Button>
         </div>
@@ -38,21 +40,23 @@ const EventsPage = () => {
       {/* Main Content */}
       <main className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Featured Event Section */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">Featured Event</h2>
-          <Card className="bg-white dark:bg-gray-800 overflow-hidden shadow-lg rounded-2xl md:grid md:grid-cols-2">
+        <section className="mb-12 animate-fade-in">
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-8 text-center">
+            Featured Event
+          </h2>
+          <Card className="bg-card/50 backdrop-blur-sm overflow-hidden shadow-xl rounded-2xl md:grid md:grid-cols-2 border border-border/50 hover:scale-105 transition-transform duration-300">
             <div className="p-8 flex flex-col justify-center">
-              <Badge className="w-fit mb-2">Hackathon</Badge>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{featuredEvent.title}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{featuredEvent.date}</p>
-              <p className="mt-4 text-gray-600 dark:text-gray-300">{featuredEvent.description}</p>
-              <div className="mt-6 flex gap-2">
-                <Button asChild className="rounded-full" aria-label="Register for the featured event">
+              <Badge className="w-fit mb-3 bg-gradient-to-r from-primary to-accent text-primary-foreground">Hackathon</Badge>
+              <h3 className="text-2xl font-bold text-foreground">{featuredEvent.title}</h3>
+              <p className="text-sm text-muted-foreground mt-2">{featuredEvent.date}</p>
+              <p className="mt-4 text-muted-foreground leading-relaxed">{featuredEvent.description}</p>
+              <div className="mt-6 flex gap-3">
+                <Button asChild className="rounded-full hover:scale-105 transition-transform bg-gradient-to-r from-primary to-accent" aria-label="Register for the featured event">
                   <a href={featuredEvent.url} target="_blank" rel="noopener noreferrer">
                     <Ticket className="w-4 h-4 mr-2" /> Register Now
                   </a>
                 </Button>
-                <Button asChild variant="outline" className="rounded-full" aria-label="Learn more about the featured event">
+                <Button asChild variant="outline" className="rounded-full hover:scale-105 transition-transform" aria-label="Learn more about the featured event">
                   <a href={featuredEvent.url} target="_blank" rel="noopener noreferrer">Learn More</a>
                 </Button>
               </div>
@@ -67,8 +71,10 @@ const EventsPage = () => {
         </section>
 
         {/* Upcoming Events List */}
-        <section>
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8 text-center">Upcoming Events</h2>
+        <section className="animate-fade-in">
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-8 text-center">
+            Upcoming Events
+          </h2>
           <Events />
         </section>
 

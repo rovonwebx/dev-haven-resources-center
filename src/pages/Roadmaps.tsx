@@ -94,17 +94,21 @@ const Roadmaps = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <header className="bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-20">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
+      <header className="bg-background/80 backdrop-blur-md border-b border-border/50 shadow-lg sticky top-0 z-20">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
             <div className="flex items-center gap-4">
-                <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-lg"><Target className="w-8 h-8 text-orange-500" /></div>
+                <div className="p-3 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl border border-primary/20 shadow-md">
+                  <Target className="w-8 h-8 text-primary" />
+                </div>
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Learning Roadmaps</h1>
-                    <p className="text-gray-500 dark:text-gray-400">Your structured path to mastering new skills.</p>
+                    <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tight">
+                      Learning Roadmaps
+                    </h1>
+                    <p className="text-muted-foreground">Structured learning paths for DSA and Web Development.</p>
                 </div>
             </div>
-            <Button variant="outline" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
+            <Button variant="outline" size="sm" asChild className="rounded-full hover:scale-105 transition-transform">
                 <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
             </Button>
         </div>
@@ -113,20 +117,39 @@ const Roadmaps = () => {
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <aside className="md:col-span-1 h-fit md:sticky top-28">
-            <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Roadmaps</h3>
-                <div className="space-y-1.5">
-                    {Object.keys(roadmapsData).map(key => (
-                        <button key={key} onClick={() => { setSelectedRoadmap(key); handleNav(roadmapsRef); }} className={clsx('w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-all duration-200', selectedRoadmap === key ? 'bg-orange-500 text-white shadow-sm' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700')}>
-                            {roadmapsData[key].title}
-                        </button>
-                    ))}
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-4">Resources</h3>
-                <div className="space-y-1.5">
-                    <button onClick={() => handleNav(projectsRef)} className="w-full text-left px-3 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                        Example Projects
+            <div className="bg-card/50 backdrop-blur-sm p-6 rounded-2xl border border-border/50 shadow-lg animate-fade-in">
+                <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                  Roadmaps
+                </h3>
+                <div className="space-y-2">
+                  {Object.entries(roadmapsData).map(([key, { title, icon: Icon, description }]) => (
+                    <button
+                      key={key}
+                      onClick={() => setSelectedRoadmap(key)}
+                      className={clsx(
+                        "w-full text-left p-4 rounded-xl transition-all duration-300 group hover:scale-105",
+                        selectedRoadmap === key
+                          ? "bg-gradient-to-r from-primary/20 to-accent/20 border border-primary/30 shadow-md"
+                          : "hover:bg-muted/50 border border-transparent"
+                      )}
+                    >
+                      <div className="flex items-center gap-3 mb-2">
+                        <Icon className={clsx("w-5 h-5", selectedRoadmap === key ? "text-primary" : "text-muted-foreground")} />
+                        <span className={clsx("font-semibold", selectedRoadmap === key ? "text-primary" : "text-foreground")}>{title}</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{description}</p>
                     </button>
+                  ))}
+                </div>
+                
+                <div className="mt-8 p-4 bg-gradient-to-br from-accent/10 to-primary/10 rounded-xl border border-accent/20">
+                  <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                    <Trophy className="w-4 h-4 text-accent" />
+                    Progress
+                  </h4>
+                  <Progress value={getCompletionPercentage} className="mb-2" />
+                  <p className="text-sm text-muted-foreground">{getCompletionPercentage}% completed</p>
                 </div>
             </div>
           </aside>
