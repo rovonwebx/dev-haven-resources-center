@@ -1,16 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, BookOpen, FileText, Beaker, PenTool, Award, Code, Zap, Users, Download, ExternalLink } from "lucide-react";
+import { Home, ArrowLeft, BookOpen, FileText, Beaker, PenTool, Award, Code, Users, Download, ArrowUp } from "lucide-react";
 
-// --- Data (No changes here, assuming it's correct) ---
+// --- Data (No changes here) ---
 const academicYears = [
     {
       year: "First Year",
       refId: "first-year",
-      color: "from-green-500 to-teal-500",
+      accentColor: "border-emerald-500",
       description: "Foundation subjects and basic engineering concepts",
       driveLink: "https://drive.google.com/drive/folders/1hvUXtsjpxLre6jtHR5UFbH2IMBAP2ZDT",
       subjects: ["Mathematics", "Physics", "Chemistry", "Programming", "Engineering Drawing"],
@@ -26,7 +26,7 @@ const academicYears = [
     {
       year: "Second Year",
       refId: "second-year",
-      color: "from-blue-500 to-indigo-500",
+      accentColor: "border-blue-500",
       description: "Core engineering subjects and programming fundamentals",
       driveLink: "https://drive.google.com/drive/folders/1VuZAozNvWES5agsAdfto2sG8_aBRdKj4",
       subjects: ["Data Structures", "Digital Electronics", "DBMS", "Computer Organization", "OOP"],
@@ -42,7 +42,7 @@ const academicYears = [
     {
       year: "Third Year",
       refId: "third-year",
-      color: "from-purple-500 to-pink-500",
+      accentColor: "border-purple-500",
       description: "Advanced topics and specialization subjects",
       driveLink: "https://drive.google.com/drive/folders/1yYfCuRWI8Jv-MZx9S_5wiScvEqj69kJt",
       subjects: ["Software Engineering", "Computer Networks", "OS", "Web Dev", "AI/ML"],
@@ -58,7 +58,7 @@ const academicYears = [
     {
       year: "Fourth Year",
       refId: "fourth-year",
-      color: "from-red-500 to-orange-500",
+      accentColor: "border-red-500",
       description: "Final year projects and industry preparation",
       driveLink: "#",
       subjects: ["Capstone Project", "Blockchain", "Cloud Computing", "DevOps"],
@@ -71,103 +71,184 @@ const academicYears = [
     }
 ];
 
-const CampusNotes = () => {
+// --- Custom Hook for observing section visibility ---
+const useIntersectionObserver = (setActiveId) => {
+    const observer = useRef<IntersectionObserver | null>(null);
+    useEffect(() => {
+        observer.current = new IntersectionObserver((entries) => {
+            const visibleSection = entries.find((entry) => entry.isIntersecting)?.target;
+            if (visibleSection) setActiveId(visibleSection.id);
+        }, { rootMargin: '-20% 0px -80% 0px' });
+        return () => observer.current?.disconnect();
+    }, [setActiveId]);
+    return observer;
+};
+
+const CampusNotesPage = () => {
+  const [activeId, setActiveId] = useState(academicYears[0].refId);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  
   const sectionRefs = academicYears.reduce((acc, value) => {
     acc[value.refId] = useRef<HTMLDivElement>(null);
     return acc;
   }, {} as Record<string, React.RefObject<HTMLDivElement>>);
 
+  const observer = useIntersectionObserver(setActiveId);
+
+  useEffect(() => {
+      Object.values(sectionRefs).forEach(ref => {
+          if (ref.current && observer.current) observer.current.observe(ref.current);
+      });
+      return () => {
+          Object.values(sectionRefs).forEach(ref => {
+              if (ref.current && observer.current) observer.current.unobserve(ref.current);
+          });
+      };
+  }, [sectionRefs, observer]);
+
   const handleNav = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
+  
+  useEffect(() => {
+    const checkScrollTop = () => setShowBackToTop(window.pageYOffset > 400);
+    window.addEventListener('scroll', checkScrollTop);
+    return () => window.removeEventListener('scroll', checkScrollTop);
+  }, []);
 
-  const getTotalResources = () => {
-    return academicYears.reduce((total, year) => total + year.resources.reduce((yearTotal, resource) => yearTotal + resource.count, 0), 0);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <header className="bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-20">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-                <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-lg"><BookOpen className="w-8 h-8 text-orange-500" /></div>
-                <div>
-                    <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Campus Notes</h1>
-                    <p className="text-gray-500 dark:text-gray-400">All subjects, all years, all in one place.</p>
-                </div>
-            </div>
-            <Button variant="outline" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
-                <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
-            </Button>
+  const Breadcrumb = () => (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <div className="flex items-center gap-2 text-sm text-neutral-400">
+            <Link to="/" className="flex items-center gap-1 hover:text-blue-400 transition-colors">
+                <Home className="w-4 h-4" />
+                Home
+            </Link>
+            <span>/</span>
+            <span className="text-white font-medium">Campus Notes</span>
         </div>
-      </header>
-      
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          
-          <aside className="md:col-span-1 h-fit md:sticky top-28">
-            <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Quick Navigation</h3>
-                <div className="space-y-1.5">
-                    {academicYears.map(year => (
-                        <button
-                            key={year.refId}
-                            onClick={() => handleNav(sectionRefs[year.refId])}
-                            className="w-full text-left px-3 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                        >
-                            {year.year}
-                        </button>
-                    ))}
-                </div>
-            </div>
-          </aside>
+    </div>
+  );
 
-          <main className="md:col-span-3">
-            <div className="space-y-12">
-              {academicYears.map((yearData) => (
-                <section key={yearData.refId} ref={sectionRefs[yearData.refId]} className="scroll-mt-28">
-                  <div className={`bg-gradient-to-r ${yearData.color} p-6 rounded-t-2xl text-white shadow-lg`}>
-                    <div className="flex flex-col sm:flex-row justify-between sm:items-center">
-                        <div>
-                            <h2 className="text-3xl font-bold mb-1">{yearData.year}</h2>
-                            <p className="text-white/90 max-w-md">{yearData.description}</p>
-                        </div>
-                        <Button asChild className="bg-white text-gray-900 hover:bg-gray-100 mt-4 sm:mt-0 font-bold rounded-full">
-                            <a href={yearData.driveLink} target="_blank" rel="noopener noreferrer"><Download className="w-4 h-4 mr-2" /> Access Drive</a>
-                        </Button>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-4">
-                        {yearData.subjects.map((subject, index) => (
-                            <Badge key={index} className="bg-white/20 text-white border-white/30">{subject}</Badge>
-                        ))}
-                    </div>
-                  </div>
-                  <div className="bg-white dark:bg-gray-800 border border-t-0 border-gray-200 dark:border-gray-700 rounded-b-2xl p-6 shadow-lg">
-                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                      {yearData.resources.map((resource) => {
-                        const IconComponent = resource.icon;
-                        return (
-                          <div key={resource.name} className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg flex items-center gap-4">
-                            <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-md">
-                                <IconComponent className="w-6 h-6 text-orange-500" />
-                            </div>
-                            <div>
-                                <p className="font-semibold text-gray-800 dark:text-gray-200">{resource.name}</p>
-                                <p className="text-xs text-gray-500 dark:text-gray-400">{resource.count > 0 ? `${resource.count}+ files` : 'View resources'}</p>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </section>
-              ))}
-            </div>
-          </main>
+  return (
+    <div className="min-h-screen bg-neutral-950 text-white font-sans">
+      {/* CSS for Print/Screenshot Protection */}
+      <style>{`
+        @media print {
+          .prevent-print-content {
+            display: none;
+          }
+          .print-warning {
+            display: block !important;
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: black;
+          }
+        }
+      `}</style>
+
+      {/* <Header /> */}
+      <main className="flex-1 w-full pt-12 pb-16">
+        <div className="text-center mb-8">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+              Campus Notes Archive
+            </h2>
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
+              All subjects, all years, all in one place. Your complete academic repository.
+            </p>
         </div>
-      </div>
+        
+        <Breadcrumb />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <aside className="md:col-span-1 h-fit md:sticky top-24">
+              <div className="bg-neutral-900 p-5 rounded-lg border border-neutral-800">
+                  <h3 className="text-lg font-semibold text-white mb-4">Quick Navigation</h3>
+                  <div className="space-y-2">
+                      {academicYears.map(year => (
+                          <button
+                              key={year.refId}
+                              onClick={() => handleNav(sectionRefs[year.refId])}
+                              className={`w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                                  activeId === year.refId ? 'bg-blue-600 text-white' : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
+                              }`}
+                          >
+                              {year.year}
+                          </button>
+                      ))}
+                  </div>
+              </div>
+            </aside>
+
+            <main className="md:col-span-3">
+              {/* This wrapper will hide content on print/screenshot */}
+              <div className="prevent-print-content space-y-16">
+                {academicYears.map((yearData) => (
+                  <section key={yearData.refId} id={yearData.refId} ref={sectionRefs[yearData.refId]} className="scroll-mt-24">
+                    <Card className={`bg-neutral-900 border border-neutral-800 rounded-lg shadow-lg border-l-4 ${yearData.accentColor}`}>
+                      <CardContent className="p-6">
+                          <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-4">
+                              <div>
+                                  <h2 className="text-3xl font-bold mb-1 text-white">{yearData.year}</h2>
+                                  <p className="text-neutral-400 max-w-md">{yearData.description}</p>
+                              </div>
+                              <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white mt-4 sm:mt-0 font-bold">
+                                  <a href={yearData.driveLink} target="_blank" rel="noopener noreferrer"><Download className="w-4 h-4 mr-2" /> Access Drive</a>
+                              </Button>
+                          </div>
+                          <div className="flex flex-wrap gap-2 mb-6">
+                              {yearData.subjects.map((subject, index) => (
+                                  <Badge key={index} variant="secondary" className="bg-neutral-800 text-neutral-300">{subject}</Badge>
+                              ))}
+                          </div>
+                          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                            {yearData.resources.map((resource) => {
+                              const IconComponent = resource.icon;
+                              return (
+                                <Card key={resource.name} className="bg-neutral-800/50 border border-neutral-700/50 p-4 hover:border-blue-500/50 transition-colors">
+                                  <div className="flex items-center gap-4">
+                                      <IconComponent className="w-6 h-6 text-blue-400 flex-shrink-0" />
+                                      <div>
+                                          <p className="font-semibold text-neutral-200">{resource.name}</p>
+                                          <p className="text-xs text-neutral-400">{resource.count > 0 ? `${resource.count}+ files` : 'View resources'}</p>
+                                      </div>
+                                  </div>
+                                </Card>
+                              );
+                            })}
+                          </div>
+                      </CardContent>
+                    </Card>
+                  </section>
+                ))}
+              </div>
+              
+              {/* This message will appear only on print/screenshot */}
+              <div className="print-warning" style={{ display: 'none' }}>
+                Content from this page is protected and cannot be printed or copied. Please access resources directly through the website.
+              </div>
+            </main>
+          </div>
+        </div>
+      </main>
+
+       {showBackToTop && (
+        <Button 
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 h-12 w-12 rounded-full bg-blue-600/90 p-3 text-white shadow-lg transition-transform duration-200 ease-in-out hover:bg-blue-600 hover:scale-110"
+          aria-label="Go to top"
+        >
+          <ArrowUp className="h-6 w-6" />
+        </Button>
+      )}
+      {/* <Footer /> */}
     </div>
   );
 };
 
-export default CampusNotes;
+export default CampusNotesPage;
