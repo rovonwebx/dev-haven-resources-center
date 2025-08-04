@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, BookOpen, Clock, Star, ExternalLink, Download, FileText } from "lucide-react";
+import { ArrowLeft, BookOpen, Clock, Star, ExternalLink, Download, FileText, Home, ArrowUp } from "lucide-react";
 
-// --- Data (No changes here, assuming it's correct) ---
+// --- Data ---
 const noteCategories = [
     {
       category: "First Year - Foundation Subjects",
@@ -59,101 +59,186 @@ const noteCategories = [
     }
 ];
 
-const Notes = () => {
-  // Create refs for each category
+// --- Custom Hook for observing section visibility ---
+const useIntersectionObserver = (setActiveId) => {
+    const observer = useRef<IntersectionObserver | null>(null);
+
+    useEffect(() => {
+        observer.current = new IntersectionObserver((entries) => {
+            const visibleSection = entries.find((entry) => entry.isIntersecting)?.target;
+            if (visibleSection) {
+                setActiveId(visibleSection.id);
+            }
+        }, { rootMargin: '-20% 0px -80% 0px' }); // Trigger when section is in the middle of the screen
+
+        return () => {
+            if (observer.current) {
+                observer.current.disconnect();
+            }
+        };
+    }, [setActiveId]);
+
+    return observer;
+};
+
+
+const NotesPage = () => {
+  const [activeId, setActiveId] = useState(noteCategories[0].refId);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  
   const sectionRefs = noteCategories.reduce((acc, value) => {
     acc[value.refId] = useRef<HTMLDivElement>(null);
     return acc;
   }, {} as Record<string, React.RefObject<HTMLDivElement>>);
 
+  const observer = useIntersectionObserver(setActiveId);
+
+  useEffect(() => {
+      Object.values(sectionRefs).forEach((ref) => {
+          if (ref.current && observer.current) {
+              observer.current.observe(ref.current);
+          }
+      });
+      return () => {
+          Object.values(sectionRefs).forEach((ref) => {
+              if (ref.current && observer.current) {
+                  observer.current.unobserve(ref.current);
+              }
+          });
+      };
+  }, [sectionRefs, observer]);
+
   const handleNav = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
+  
+  // Back to Top Logic
+  useEffect(() => {
+    const checkScrollTop = () => {
+      setShowBackToTop(window.pageYOffset > 400);
+    };
+    window.addEventListener('scroll', checkScrollTop);
+    return () => window.removeEventListener('scroll', checkScrollTop);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const Breadcrumb = () => (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <div className="flex items-center gap-2 text-sm text-neutral-400">
+            <Link to="/" className="flex items-center gap-1 hover:text-blue-400 transition-colors">
+                <Home className="w-4 h-4" />
+                Home
+            </Link>
+            <span>/</span>
+            <span className="text-white font-medium">Notes</span>
+        </div>
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <header className="bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-20">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-                <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-lg"><BookOpen className="w-8 h-8 text-orange-500" /></div>
-                <div>
-                    <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Study Notes</h1>
-                    <p className="text-gray-500 dark:text-gray-400">Your comprehensive library for every subject.</p>
-                </div>
-            </div>
-            <Button variant="outline" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
-                <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
-            </Button>
+    <div className="min-h-screen bg-neutral-950 text-white font-sans">
+      {/* <Header /> */}
+      <main className="flex-1 w-full pt-12 pb-16">
+        <div className="text-center mb-8">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                Comprehensive Study Notes
+            </h2>
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
+                Your complete library of curated notes for every subject and exam.
+            </p>
         </div>
-      </header>
+        
+        <Breadcrumb />
 
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          
-          {/* --- Quick Links Sidebar --- */}
-          <aside className="md:col-span-1 h-fit md:sticky top-28">
-            <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Quick Navigation</h3>
-                <div className="space-y-1.5">
-                    {noteCategories.map(category => (
-                        <button
-                            key={category.refId}
-                            onClick={() => handleNav(sectionRefs[category.refId])}
-                            className="w-full text-left px-3 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                        >
-                            {category.category}
-                        </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <aside className="md:col-span-1 h-fit md:sticky top-24">
+              <div className="bg-neutral-900 p-5 rounded-lg border border-neutral-800">
+                  <h3 className="text-lg font-semibold text-white mb-4">Quick Navigation</h3>
+                  <div className="space-y-2">
+                      {noteCategories.map(category => (
+                          <button
+                              key={category.refId}
+                              onClick={() => handleNav(sectionRefs[category.refId])}
+                              className={`w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                                  activeId === category.refId
+                                  ? 'bg-blue-600 text-white'
+                                  : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
+                              }`}
+                          >
+                              {category.category}
+                          </button>
+                      ))}
+                  </div>
+              </div>
+            </aside>
+
+            <main className="md:col-span-3">
+              {noteCategories.map((category) => (
+                <section key={category.refId} id={category.refId} ref={sectionRefs[category.refId]} className="mb-16 scroll-mt-24">
+                  <h2 className="text-2xl font-bold text-white mb-6">{category.category}</h2>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {category.notes.map((note) => (
+                      <Card key={note.id} className="group bg-neutral-900 border border-neutral-800 rounded-lg shadow-sm hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                        <CardContent className="p-6 flex flex-col flex-grow">
+                          <div className="flex justify-between items-start mb-2">
+                            <Link to={`/notes/${note.id}`} className="flex-1 pr-4">
+                              <h3 className="font-bold text-lg text-white leading-tight group-hover:text-blue-400 transition-colors">{note.title}</h3>
+                            </Link>
+                            <Badge variant="outline" className="text-xs border-neutral-700 bg-neutral-800 text-neutral-300">{note.subject}</Badge>
+                          </div>
+                          <p className="text-sm text-neutral-400 mb-4 flex-grow line-clamp-2">{note.description}</p>
+                          
+                          <div className="mb-5 border-t border-b border-neutral-800 py-3">
+                              <h4 className="text-xs font-semibold text-neutral-500 mb-2">External Resources</h4>
+                              <div className="flex flex-wrap gap-2">
+                                  {note.resourceLinks.map(link => (
+                                    <Button key={link.platform} asChild size="sm" variant="outline" className="text-xs border-blue-600/50 text-blue-400 hover:bg-blue-600 hover:text-white">
+                                      <a href={link.url} target="_blank" rel="noopener noreferrer">
+                                          {link.platform} <ExternalLink className="w-3 h-3 ml-1.5"/>
+                                      </a>
+                                    </Button>
+                                  ))}
+                              </div>
+                          </div>
+                          
+                          <div className="mt-auto flex items-center justify-between text-sm text-neutral-400">
+                            <div className="flex items-center gap-4">
+                              <span className="flex items-center gap-1.5" title="Pages"><FileText className="w-4 h-4"/>{note.pages}</span>
+                              <span className="flex items-center gap-1.5" title="Downloads"><Download className="w-4 h-4"/>{note.downloads.toLocaleString()}</span>
+                            </div>
+                            <div className="flex items-center gap-1 font-semibold">
+                              <Star className="w-4 h-4 text-yellow-500"/>
+                              <span>{note.rating}</span>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
                     ))}
-                </div>
-            </div>
-          </aside>
-
-          {/* --- Main Content Area --- */}
-          <main className="md:col-span-3">
-            {noteCategories.map((category) => (
-              <section key={category.refId} ref={sectionRefs[category.refId]} className="mb-12 scroll-mt-28">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">{category.category}</h2>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {category.notes.map((note) => (
-                    <Card key={note.id} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
-                      <CardContent className="p-6 flex flex-col flex-grow">
-                        <div className="flex justify-between items-start mb-2">
-                          <Link to={`/notes/${note.id}`} className="flex-1">
-                            <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 leading-tight hover:text-orange-600">{note.title}</h3>
-                          </Link>
-                          <Badge variant="secondary">{note.subject}</Badge>
-                        </div>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow">{note.description}</p>
-                        
-                        <div className="flex flex-wrap gap-2 mb-4">
-                            {note.resourceLinks.map(link => (
-                                <a key={link.platform} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 hover:underline">
-                                    {link.platform} <ExternalLink className="w-3 h-3"/>
-                                </a>
-                            ))}
-                        </div>
-                        
-                        <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                          <div className="flex items-center gap-3">
-                            <span className="flex items-center gap-1"><FileText className="w-4 h-4"/>{note.pages} pages</span>
-                            <span className="flex items-center gap-1"><Download className="w-4 h-4"/>{note.downloads.toLocaleString()}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Star className="w-4 h-4 text-yellow-500"/>
-                            <span className="font-semibold">{note.rating}</span>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </main>
+                  </div>
+                </section>
+              ))}
+            </main>
+          </div>
         </div>
-      </div>
+      </main>
+
+       {showBackToTop && (
+        <Button 
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 h-12 w-12 rounded-full bg-blue-600/90 p-3 text-white shadow-lg transition-transform duration-200 ease-in-out hover:bg-blue-600 hover:scale-110"
+          aria-label="Go to top"
+        >
+          <ArrowUp className="h-6 w-6" />
+        </Button>
+      )}
+
+      {/* <Footer /> */}
     </div>
   );
 };
 
-export default Notes;
+export default NotesPage;
