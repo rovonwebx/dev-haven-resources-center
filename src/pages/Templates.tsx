@@ -13,7 +13,6 @@ const allTemplates = [
   { id: 12, title: "Simple Landing Page", author: "tuanphungcz", category: "Landing Page", description: "A clean landing page template built with basic HTML, CSS, and JavaScript.", image: "https://www.bleepstatic.com/content/hl-images/2022/04/08/GitHub__headpic.jpg", githubUrl: "https://github.com/tuanphungcz/simple-landing-page", demoUrl: "https://tuanphungcz.github.io/simple-landing-page/", tags: ["HTML5", "CSS3", "JS"] },
   { id: 14, title: "Agency Website Template", author: "cruip", category: "Landing Page", description: "A stunning and professional website template for creative agencies and studios.", image: "https://www.bleepstatic.com/content/hl-images/2022/04/08/GitHub__headpic.jpgg", githubUrl: "https://github.com/cruip/open-purpose-template", demoUrl: "https://open-purpose-template.cruip.com/", tags: ["HTML5", "Tailwind CSS"] },
   
-
   // E-commerce
   { id: 15, title: "Next.js Commerce", author: "Vercel", category: "E-commerce", description: "The all-in-one starter kit for high-performance e-commerce sites.", image: "https://www.bleepstatic.com/content/hl-images/2022/04/08/GitHub__headpic.jpg", githubUrl: "https://github.com/vercel/commerce", demoUrl: "https://demo.vercel.store/", tags: ["Next.js", "Headless"] },
   { id: 16, title: "Next.js Starter by Medusa", author: "Medusa.js", category: "E-commerce", description: "A production-ready Next.js starter for building a storefront with Medusa.", image: "https://www.bleepstatic.com/content/hl-images/2022/04/08/GitHub__headpic.jpg", githubUrl: "https://github.com/medusajs/nextjs-starter-medusa", demoUrl: "https://next.medusajs.com/", tags: ["Next.js", "Medusa", "Stripe"] },
@@ -33,8 +32,43 @@ const allTemplates = [
   { id: 8, title: "Next.js Starter Blog", author: "timlrx", category: "Blog", description: "A feature-packed starter blog with MDX, search, and themes for content creators.", image: "https://www.bleepstatic.com/content/hl-images/2022/04/08/GitHub__headpic.jpg", githubUrl: "https://github.com/timlrx/tailwind-nextjs-starter-blog", demoUrl: "https://tailwind-nextjs-starter-blog.vercel.app/", tags: ["Next.js", "MDX"] },
 ];
 
-// --- DATA FOR PROJECTS TABLE ---
-const projectData = [
+// --- DATA FOR AIML DEPT PROJECTS TABLE ---
+const aimlDeptProjects = [
+    { sno: 1, title: "Sponge Attack ... Data Poisoning", gitLink: "Cinofix/sponge_poisoning…", devResources: "Sponge attack paper and repo", aiTools: "Gemini, Claude, Fire Studio" },
+    { sno: 2, title: "Explainable Data‑Driven Digital Twins ... Battery States", gitLink: "(No public code)", devResources: "XAI applied digital twin paper", aiTools: "Claude, Gemini" },
+    { sno: 3, title: "Revolutionizing Agriculture: ML & DL Solutions for Crop Quality", gitLink: "(No public code)", devResources: "Agri‑DL tutorials, UNet/segmentation", aiTools: "Lovable, Gemini" },
+    { sno: 4, title: "Ensemble DL Model for Vehicular Engine Health Prediction", gitLink: "(No public code)", devResources: "Predictive maintenance ML papers", aiTools: "Gemini, Cursor" },
+    { sno: 5, title: "Web Attack Vulnerabilities: MITM & Session Hijacking", gitLink: "(No public code)", devResources: "OWASP MITM guides and ML anomaly detection", aiTools: "Claude, Bolt" },
+    { sno: 6, title: "Criminal Evidence Management Using Blockchain", gitLink: "(No public code)", devResources: "Blockchain evidence chain frameworks", aiTools: "Gemini, Cursor" },
+    { sno: 7, title: "Customer Behaviour Analysis with AI Recommendations", gitLink: "(No public code)", devResources: "Customer recommender tutorials", aiTools: "Lovable, Claude" },
+    { sno: 8, title: "Fake News Detection Using Feature‑Based Optimized MSVM", gitLink: "nishitpatel01/Fake_News_Detection", devResources: "Fake news classification ML pipelines", aiTools: "Gemini, Cursor, Claude" },
+    { sno: 9, title: "AI‑Based Financial Identification Based on Demography & Economics", gitLink: "(No public code)", devResources: "Credit scoring ML frameworks", aiTools: "Gemini, Claude" },
+    { sno: 10, title: "Centralized Application‑Context Aware Firewall", gitLink: "(No public code)", devResources: "Context-aware firewall research", aiTools: "Claude, Bolt" },
+    { sno: 11, title: "Hybrid AI for Stock Markets: Transformers & Q‑Learning", gitLink: "(No public code)", devResources: "Transformer-based forecasting + RL trading BS", aiTools: "Gemini, Fire Studio" },
+    { sno: 12, title: "Authentication & Key Agreement Using Anonymous Identity for P2P Cloud", gitLink: "(No public code)", devResources: "ZKP and credential systems research", aiTools: "Claude, Cursor" },
+    { sno: 13, title: "Paper Evaluation Using AI", gitLink: "(No public code)", devResources: "NLP similarity, summarization methods", aiTools: "Claude, GitHub Copilot" },
+    { sno: 14, title: "Quantum Resistance Blockchain for Secure Health Data", gitLink: "(No public code)", devResources: "Post‑quantum blockchain literature", aiTools: "Gemini, Cursor" },
+    { sno: 15, title: "Enhancing Sanskrit Isolated Word Recognition", gitLink: "(No public code)", devResources: "ASR for Sanskrit datasets", aiTools: "Lovable, Gemini" },
+    { sno: 16, title: "Decentralized Examination Platform for Secure Question Papers", gitLink: "(No public code)", devResources: "Secure exam blockchain platforms", aiTools: "Claude, Cursor" },
+    { sno: 17, title: "SMS Spam Detection & URL Malicious Classification", gitLink: "shrudex/sms-spam-detection", devResources: "Streamlit-based SMS spam ML", aiTools: "Claude, Gemini, Cursor" },
+    { sno: 18, title: "DL-Based Spectrum Sensing for Cognitive Radio Applications", gitLink: "(No public code)", devResources: "DL classification for radio signals", aiTools: "Gemini, Fire Studio" },
+    { sno: 19, title: "Multi-Modal Speech Transformer Decoders", gitLink: "(No public code)", devResources: "Audio-text multimodal transformers", aiTools: "Claude, Gemini" },
+    { sno: 20, title: "Stock Market Prediction via Multi-Source Multiple Instance Learning", gitLink: "(No public code)", devResources: "MIL for time series + news embedding methods", aiTools: "Gemini, Fire Studio" },
+    { sno: 21, title: "Explainable AI for Military Supply Chain Optimization Using SAR Images", gitLink: "(No public code)", devResources: "SAR imagery + XAI Grad-CAM papers", aiTools: "Claude, Cursor" },
+    { sno: 22, title: "SymptotrackAI: Hybrid RAG Chatbot for Symptom Monitoring", gitLink: "(No public code)", devResources: "RAG chatbot design with medical dataset", aiTools: "Claude, Gemini, Bolt" },
+    { sno: 23, title: "Telugu Text Summarization Using Extractive Method", gitLink: "(No public code)", devResources: "Telugu-BERT summarization resources", aiTools: "Gemini, Claude" },
+    { sno: 24, title: "Water Scarcity Management via Centralized Knowledge-Sharing Platform", gitLink: "(No public code)", devResources: "Water forecasting, dashboard frameworks", aiTools: "Lovable, Claude" },
+    { sno: 25, title: "Smart Campus Placement System Using Machine Learning", gitLink: "(No public code)", devResources: "Student placement ML tutorials", aiTools: "Gemini, Cursor" },
+    { sno: 26, title: "Protein Family Classification Using Deep Learning", gitLink: "(No public code)", devResources: "Bioinformatics deep learning pipelines", aiTools: "Claude, Gemini" },
+    { sno: 27, title: "AI & ML Pet Feeding System Using Image Processing", gitLink: "(No public code)", devResources: "Object detection (YOLO) and IoT embedding", aiTools: "Bolt, Fire Studio" },
+    { sno: 28, title: "Detecting AI‑Generated Images with CNN & Explainable AI", gitLink: "(No public code)", devResources: "GAN detection XAI frameworks", aiTools: "Claude, Gemini" },
+    { sno: 29, title: "Colorectal Cancer Detection Using Ensemble Pre‑Trained Algorithms", gitLink: "Dimnir/CancerClassification", devResources: "Colorectal histology ensemble models", aiTools: "Gemini, Claude, Cursor" },
+    { sno: 30, title: "Personalized E‑Learning Course Recommendation System", gitLink: "(No public code)", devResources: "Recommendation system for e-learning tutorials", aiTools: "Gemini, Lovable" },
+];
+
+
+// --- DATA FOR OTHER PROJECTS TABLE ---
+const otherProjectData = [
     { sno: 1, name: "Software Defect Prediction Using An Intelligent Ensemble-Based Model", link: "https://github.com/misbah-here/VESDP_Repository", resources: "https://scikit-learn.org/stable/modules/ensemble.html" },
     { sno: 2, name: "A Hierarchical Network-Based Method", link: "https://github.com/CN-UPB/hierarchical-coordination", resources: "https://arxiv.org/abs/1909.09056" },
     { sno: 3, name: "Revolutionizing Agriculture Machine and Deep Learning", link: "No repo found", resources: "https://towardsdatascience.com/agriculture-machine-learning-applications-crops-weather-78b3bf9c5f58" },
@@ -97,10 +131,48 @@ const TemplatesOrange = () => {
             </Link>
         </header>
 
-        {/* Section: More Developer Projects */}
+        {/* Section: AIML Dept Projects */}
         <section className="my-16">
             <div className="text-center">
-                <h2 className="text-3xl font-bold text-black dark:text-white mb-4">More Developer Projects</h2>
+                <h2 className="text-3xl font-bold text-black dark:text-white mb-4">AIML Dept Projects</h2>
+                <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-3xl mx-auto">
+                    The following table contains a curated list of project ideas and resources from the AIML Department.
+                    <br/>
+                    <span className="font-semibold text-red-600 dark:text-red-500">
+                        Disclaimer: This is a collection of information gathered from various online sources and is intended for informational purposes only.
+                    </span>
+                </p>
+            </div>
+            <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800">
+                <table className="min-w-full text-sm text-left text-slate-500 dark:text-slate-400">
+                    <thead className="text-xs text-slate-700 uppercase bg-slate-50 dark:bg-slate-700 dark:text-slate-400">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">S.No</th>
+                            <th scope="col" className="px-6 py-3">Project Title</th>
+                            <th scope="col" className="px-6 py-3">Git Link</th>
+                            <th scope="col" className="px-6 py-3">Development Resources</th>
+                            <th scope="col" className="px-6 py-3">Suggested AI Tools</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {aimlDeptProjects.map((project) => (
+                            <tr key={project.sno} className="bg-white border-b dark:bg-slate-900/50 dark:border-slate-800">
+                                <th scope="row" className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap dark:text-white">{project.sno}</th>
+                                <td className="px-6 py-4">{project.title}</td>
+                                <td className="px-6 py-4">{project.gitLink}</td>
+                                <td className="px-6 py-4">{project.devResources}</td>
+                                <td className="px-6 py-4">{project.aiTools}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        {/* Section: Other Projects */}
+        <section className="my-16">
+            <div className="text-center">
+                <h2 className="text-3xl font-bold text-black dark:text-white mb-4">Other Projects</h2>
                 <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-3xl mx-auto">
                     The following table contains a curated list of project ideas and resources.
                     <br/>
@@ -120,7 +192,7 @@ const TemplatesOrange = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {projectData.map((project) => (
+                        {otherProjectData.map((project) => (
                             <tr key={project.sno} className="bg-white border-b dark:bg-slate-900/50 dark:border-slate-800">
                                 <th scope="row" className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap dark:text-white">{project.sno}</th>
                                 <td className="px-6 py-4">{project.name}</td>
