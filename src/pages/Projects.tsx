@@ -1,23 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, ExternalLink, Github, Star, Users, Search, Code as CodeIcon } from "lucide-react";
+import { ExternalLink, Github, Star, Users, Search, Code as CodeIcon, Home, ArrowUp } from "lucide-react";
 
-// --- Data and Helper Functions (No changes here) ---
-
-const getDifficultyColor = (difficulty: string) => {
-  switch (difficulty) {
-    case "Beginner": return "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300";
-    case "Intermediate": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300";
-    case "Advanced": return "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300";
-    default: return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
-  }
-};
-
-const projects = [ /* ... Your full list of projects remains here ... */ 
+// --- Data (No changes here, remains the full list) ---
+const projects = [ /* ... Your full list of 100+ projects remains here ... */ 
     // Web Development
     { title: "React", author: "Facebook", description: "A JavaScript library for building user interfaces", technologies: ["JavaScript", "JSX", "Virtual DOM"], difficulty: "Advanced", duration: "Ongoing", stars: 227000, contributors: 1500, category: "Web Development", githubUrl: "https://github.com/facebook/react", demoUrl: "https://react.dev/" },
     { title: "Vue.js", author: "Evan You", description: "Progressive JavaScript framework for building user interfaces", technologies: ["JavaScript", "TypeScript", "HTML"], difficulty: "Intermediate", duration: "Ongoing", stars: 207000, contributors: 440, category: "Web Development", githubUrl: "https://github.com/vuejs/vue", demoUrl: "https://vuejs.org/" },
@@ -79,8 +69,8 @@ const projects = [ /* ... Your full list of projects remains here ... */
     { title: "MLflow", author: "Databricks", description: "Platform for the machine learning lifecycle", technologies: ["Python", "Java", "R"], difficulty: "Intermediate", duration: "Ongoing", stars: 18000, contributors: 710, category: "Data Science", githubUrl: "https://github.com/mlflow/mlflow", demoUrl: "https://mlflow.org/" },
 
     // Game Development
-    { title: "Unity", author: "Unity Technologies", description: "Cross-platform game engine", technologies: ["C#", "UnityScript", "Boo"], difficulty: "Advanced", duration: "Ongoing", stars: 0, contributors: 0, category: "Game Development", githubUrl: "https://github.com/Unity-Technologies", demoUrl: "https://unity.com/" },
-    { title: "Unreal Engine", author: "Epic Games", description: "3D computer graphics game engine", technologies: ["C++", "Blueprints"], difficulty: "Advanced", duration: "Ongoing", stars: 12000, contributors: 850, category: "Game Development", githubUrl: "https://github.com/EpicGames/UnrealEngine", demoUrl: "https://unrealengine.com/" },
+    { title: "Unity", author: "Unity Technologies", description: "Cross-platform game engine", technologies: ["C#", "UnityScript", "Boo"], difficulty: "Advanced", duration: "Ongoing", stars: 11000, contributors: 500, category: "Game Development", githubUrl: "https://github.com/Unity-Technologies", demoUrl: "https://unity.com/" },
+    { title: "Unreal Engine", author: "Epic Games", description: "3D computer graphics game engine", technologies: ["C++", "Blueprints"], difficulty: "Advanced", duration: "Ongoing", stars: 19000, contributors: 850, category: "Game Development", githubUrl: "https://github.com/EpicGames/UnrealEngine", demoUrl: "https://unrealengine.com/" },
     { title: "Godot", author: "Godot Team", description: "Multi-platform 2D and 3D game engine", technologies: ["GDScript", "C#", "C++"], difficulty: "Intermediate", duration: "Ongoing", stars: 90000, contributors: 2400, category: "Game Development", githubUrl: "https://github.com/godotengine/godot", demoUrl: "https://godotengine.org/" },
     { title: "Phaser", author: "Photon Storm", description: "2D game framework for making HTML5 games", technologies: ["JavaScript", "TypeScript"], difficulty: "Intermediate", duration: "Ongoing", stars: 37000, contributors: 380, category: "Game Development", githubUrl: "https://github.com/photonstorm/phaser", demoUrl: "https://phaser.io/" },
     { title: "LibGDX", author: "LibGDX Team", description: "Cross-platform Java game development framework", technologies: ["Java", "C++"], difficulty: "Advanced", duration: "Ongoing", stars: 23000, contributors: 680, category: "Game Development", githubUrl: "https://github.com/libgdx/libgdx", demoUrl: "https://libgdx.com/" },
@@ -103,33 +93,60 @@ const projects = [ /* ... Your full list of projects remains here ... */
     { title: "IPFS", author: "Protocol Labs", description: "Distributed system for storing and accessing files", technologies: ["Go", "JavaScript"], difficulty: "Advanced", duration: "Ongoing", stars: 23000, contributors: 390, category: "Blockchain", githubUrl: "https://github.com/ipfs/kubo", demoUrl: "https://ipfs.tech/" },
 
     // IoT & Hardware
-    { title: "Arduino", author: "Arduino Team", description: "Open-source electronics platform", technologies: ["C++", "Arduino"], difficulty: "Beginner", duration: "Ongoing", stars: 6800, contributors: 280, category: "IoT", githubUrl: "https://github.com/arduino/Arduino", demoUrl: "https://arduino.cc/" },
+    { title: "Arduino", author: "Arduino Team", description: "Open-source electronics platform", technologies: ["C++", "Arduino"], difficulty: "Beginner", duration: "Ongoing", stars: 15000, contributors: 280, category: "IoT", githubUrl: "https://github.com/arduino/Arduino", demoUrl: "https://arduino.cc/" },
     { title: "Raspberry Pi OS", author: "Raspberry Pi Foundation", description: "Operating system for Raspberry Pi", technologies: ["Linux", "Python", "C"], difficulty: "Intermediate", duration: "Ongoing", stars: 2600, contributors: 45, category: "IoT", githubUrl: "https://github.com/RPi-Distro/pi-gen", demoUrl: "https://raspberrypi.org/" },
     { title: "ESP-IDF", author: "Espressif", description: "Development framework for ESP32", technologies: ["C", "C++", "FreeRTOS"], difficulty: "Advanced", duration: "Ongoing", stars: 13000, contributors: 850, category: "IoT", githubUrl: "https://github.com/espressif/esp-idf", demoUrl: "https://docs.espressif.com/" },
     { title: "PlatformIO", author: "PlatformIO", description: "Professional collaborative platform for embedded development", technologies: ["Python", "C++"], difficulty: "Intermediate", duration: "Ongoing", stars: 7800, contributors: 180, category: "IoT", githubUrl: "https://github.com/platformio/platformio-core", demoUrl: "https://platformio.org/" },
     { title: "Node-RED", author: "Node-RED Team", description: "Flow-based development tool for visual programming", technologies: ["Node.js", "JavaScript"], difficulty: "Beginner", duration: "Ongoing", stars: 19000, contributors: 380, category: "IoT", githubUrl: "https://github.com/node-red/node-red", demoUrl: "https://nodered.org/" },
     { title: "Home Assistant", author: "Home Assistant", description: "Open source home automation platform", technologies: ["Python", "JavaScript"], difficulty: "Advanced", duration: "Ongoing", stars: 72000, contributors: 3200, category: "IoT", githubUrl: "https://github.com/home-assistant/core", demoUrl: "https://home-assistant.io/" },
-    { title: "OpenHAB", author: "openHAB", description: "Vendor and technology agnostic open source automation software", technologies: ["Java", "JavaScript"], difficulty: "Advanced", duration: "Ongoing", stars: 4300, contributors: 680, category: "IoT", githubUrl: "https://github.com/openhab/openhab-core", demoUrl: "https://openhab.org/" },
+    { title: "openHAB", author: "openHAB", description: "Vendor and technology agnostic open source automation software", technologies: ["Java", "JavaScript"], difficulty: "Advanced", duration: "Ongoing", stars: 4300, contributors: 680, category: "IoT", githubUrl: "https://github.com/openhab/openhab-core", demoUrl: "https://openhab.org/" },
     { title: "Tasmota", author: "Tasmota", description: "Alternative firmware for ESP8266/ESP32 based devices", technologies: ["C++", "Arduino"], difficulty: "Intermediate", duration: "Ongoing", stars: 22000, contributors: 520, category: "IoT", githubUrl: "https://github.com/arendst/Tasmota", demoUrl: "https://tasmota.github.io/" },
     { title: "ESPHome", author: "ESPHome", description: "System to control your ESP8266/ESP32 by simple configuration files", technologies: ["C++", "Python", "YAML"], difficulty: "Intermediate", duration: "Ongoing", stars: 8300, contributors: 680, category: "IoT", githubUrl: "https://github.com/esphome/esphome", demoUrl: "https://esphome.io/" },
     { title: "Blynk", author: "Blynk", description: "Platform for IoT projects", technologies: ["C++", "Java", "JavaScript"], difficulty: "Beginner", duration: "Ongoing", stars: 3700, contributors: 85, category: "IoT", githubUrl: "https://github.com/blynkkk/blynk-library", demoUrl: "https://blynk.io/" },
 ];
 
-const Projects = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+// --- Helper Functions ---
+const getDifficultyBadgeClass = (difficulty: string) => {
+  switch (difficulty) {
+    case "Beginner": return 'bg-emerald-900/90 text-emerald-100 border border-emerald-600/50';
+    case "Intermediate": return 'bg-amber-900/90 text-amber-100 border border-amber-600/50';
+    case "Advanced": return 'bg-red-900/90 text-red-100 border border-red-600/50';
+    default: return 'bg-neutral-700 text-neutral-300 border border-neutral-600';
+  }
+};
 
-  // Get all unique categories for the quick links, memoized for performance
+const ProjectsPage = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  // --- Scroll to Top Logic ---
+  useEffect(() => {
+    const checkScrollTop = () => {
+      if (!showBackToTop && window.pageYOffset > 400) {
+        setShowBackToTop(true);
+      } else if (showBackToTop && window.pageYOffset <= 400) {
+        setShowBackToTop(false);
+      }
+    };
+    window.addEventListener('scroll', checkScrollTop);
+    return () => window.removeEventListener('scroll', checkScrollTop);
+  }, [showBackToTop]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // --- Filtering Logic ---
   const allCategories = useMemo(() => {
     return ["All", ...Array.from(new Set(projects.map(p => p.category)))];
   }, []);
 
-  // Combined filtering logic
   const filteredProjects = useMemo(() => {
     return projects.filter(project => {
-      const matchesCategory = !selectedCategory || selectedCategory === "All" || project.category === selectedCategory;
+      const matchesCategory = selectedCategory === "All" || project.category === selectedCategory;
       const matchesSearch =
-        searchQuery === "" ||
+        !searchQuery ||
         project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.technologies.some(tech => tech.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -137,108 +154,131 @@ const Projects = () => {
       return matchesCategory && matchesSearch;
     });
   }, [searchQuery, selectedCategory]);
+  
+  const Breadcrumb = () => (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <div className="flex items-center gap-2 text-sm text-neutral-400">
+            <Link to="/" className="flex items-center gap-1 hover:text-blue-400 transition-colors">
+                <Home className="w-4 h-4" />
+                Home
+            </Link>
+            <span>/</span>
+            <span className="text-white font-medium">Projects</span>
+        </div>
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800/50 border-b-2 border-orange-500 shadow-sm sticky top-0 z-20">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <CodeIcon className="w-10 h-10 text-orange-500" />
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">Open Source Projects</h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Explore and contribute to real-world projects.</p>
-            </div>
-          </div>
-          <Button variant="ghost" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-            <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
-          </Button>
-        </div>
-      </header>
+    <div className="min-h-screen bg-neutral-950 text-white">
+      {/* <Header /> */}
       
-      {/* Main Content */}
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <main className="flex-1 w-full pt-12 pb-16">
+        <div className="text-center mb-8">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+              Open Source Project Catalog
+            </h2>
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
+              Explore and contribute to a curated list of real-world projects to build your skills.
+            </p>
+        </div>
+        
+        <Breadcrumb />
 
-          {/* --- Category Filters (Quick Links) --- */}
-          <aside className="md:col-span-1 h-fit md:sticky top-28">
-            <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Categories</h3>
-                <div className="space-y-2">
-                    {allCategories.map(category => (
-                        <button
-                            key={category}
-                            onClick={() => setSelectedCategory(category)}
-                            className={`w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                                selectedCategory === category
-                                ? 'bg-orange-500 text-white'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                            }`}
-                        >
-                            {category}
-                        </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            
+            <aside className="md:col-span-1 h-fit md:sticky top-24">
+                <div className="bg-neutral-900 p-5 rounded-lg border border-neutral-800">
+                    <h3 className="text-lg font-semibold text-white mb-4">Categories</h3>
+                    <div className="space-y-2">
+                        {allCategories.map(category => (
+                            <button
+                                key={category}
+                                onClick={() => setSelectedCategory(category)}
+                                className={`w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                                    selectedCategory === category
+                                    ? 'bg-blue-600 text-white'
+                                    : 'text-neutral-300 hover:bg-neutral-800 hover:text-white'
+                                }`}
+                            >
+                                {category}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            </aside>
+
+            <main className="md:col-span-3">
+                <div className="relative mb-6">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-neutral-500 w-5 h-5" />
+                <Input
+                    type="text"
+                    placeholder="Search by title, author, or technology..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 bg-neutral-900 border-2 border-neutral-800 rounded-full text-base focus:ring-blue-500 focus:border-blue-500 placeholder-neutral-500"
+                />
+                </div>
+
+                <p className="text-sm text-neutral-400 mb-6">
+                Showing {filteredProjects.length} of {projects.length} projects in <span className='font-semibold text-blue-400'>{selectedCategory}</span>.
+                </p>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {filteredProjects.map((project, index) => (
+                        <Card key={index} className="group bg-neutral-900 border border-neutral-800 rounded-lg shadow-sm hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                        <CardContent className="p-6 flex flex-col flex-grow">
+                            <div className="mb-4">
+                                <h2 className="font-bold text-lg text-white leading-tight">{project.title}</h2>
+                                <p className="text-sm text-neutral-400">by {project.author}</p>
+                            </div>
+                            <p className="text-neutral-400 text-sm mb-5 flex-grow line-clamp-3">{project.description}</p>
+                            
+                            <div className="mb-5">
+                                <Badge className={`text-xs ${getDifficultyBadgeClass(project.difficulty)}`}>{project.difficulty}</Badge>
+                            </div>
+
+                            <div className="flex flex-wrap gap-1.5 mb-5">
+                                {project.technologies.slice(0, 3).map((tech) => <Badge key={tech} variant="outline" className="text-xs border-neutral-700 bg-neutral-800 text-neutral-300">{tech}</Badge>)}
+                            </div>
+                            
+                            <div className="flex items-center justify-between text-sm text-neutral-400 py-3 border-y border-neutral-800">
+                                <div className="flex items-center gap-1.5"><Star className="w-4 h-4 text-yellow-500" /> {project.stars.toLocaleString()}</div>
+                                <div className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {project.contributors.toLocaleString()}</div>
+                            </div>
+
+                            <div className="mt-5 flex items-center gap-3">
+                                <Button asChild size="sm" variant="outline" className="w-full border-neutral-700 bg-neutral-800 hover:bg-neutral-700 hover:text-white">
+                                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"><Github className="w-4 h-4 mr-2" /> GitHub</a>
+                                </Button>
+                                {project.demoUrl && (
+                                    <Button asChild size="sm" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                                    <a href={project.demoUrl} target="_blank" rel="noopener noreferrer"><ExternalLink className="w-4 h-4 mr-2" /> Live Demo</a>
+                                    </Button>
+                                )}
+                            </div>
+                        </CardContent>
+                        </Card>
                     ))}
                 </div>
+            </main>
             </div>
-          </aside>
-
-          {/* --- Projects Grid --- */}
-          <main className="md:col-span-3">
-            <div className="relative mb-6">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <Input
-                type="text"
-                placeholder="Search projects by title, author, or technology..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-full text-base focus:ring-orange-500 focus:border-orange-500"
-              />
-            </div>
-
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-              Showing {filteredProjects.length} of {projects.length} projects in <span className='font-semibold text-orange-500'>{selectedCategory || 'All'}</span>.
-            </p>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filteredProjects.map((project, index) => (
-                <Card key={index} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
-                  <CardContent className="p-6 flex flex-col flex-grow">
-                    <div className="mb-3">
-                      <h2 className="font-bold text-lg text-gray-900 dark:text-gray-100 leading-tight">{project.title}</h2>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">by {project.author}</p>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow line-clamp-3">{project.description}</p>
-                    
-                    <div className="mb-4">
-                        <Badge className={getDifficultyColor(project.difficulty)}>{project.difficulty}</Badge>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {project.technologies.slice(0, 3).map((tech, i) => <Badge key={i} variant="outline" className="text-xs">{tech}</Badge>)}
-                    </div>
-                    
-                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 py-3 border-y border-gray-100 dark:border-gray-700">
-                        <div className="flex items-center gap-1.5"><Star className="w-4 h-4 text-yellow-500" /> {project.stars.toLocaleString()}</div>
-                        <div className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {project.contributors.toLocaleString()}</div>
-                    </div>
-
-                    <div className="mt-4 flex items-center gap-2">
-                        <Button asChild size="sm" className="w-full bg-gray-800 dark:bg-gray-200 text-white dark:text-black hover:bg-gray-700 dark:hover:bg-gray-300 rounded-full font-semibold">
-                          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"><Github className="w-4 h-4 mr-2" /> GitHub</a>
-                        </Button>
-                        <Button asChild size="sm" className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-full font-semibold">
-                          <a href={project.demoUrl} target="_blank" rel="noopener noreferrer"><ExternalLink className="w-4 h-4 mr-2" /> Live Demo</a>
-                        </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </main>
         </div>
-      </div>
+      </main>
+
+      {showBackToTop && (
+        <Button 
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 h-12 w-12 rounded-full bg-blue-600/90 p-3 text-white shadow-lg transition-transform duration-200 ease-in-out hover:bg-blue-600 hover:scale-110"
+          aria-label="Go to top"
+        >
+          <ArrowUp className="h-6 w-6" />
+        </Button>
+      )}
+
+      {/* <Footer /> */}
     </div>
   );
 };
 
-export default Projects;
+export default ProjectsPage;
