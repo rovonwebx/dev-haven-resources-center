@@ -1,8 +1,7 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen, Clock, Brain, Cpu, Database, Globe, Shield, Zap, Lightbulb } from "lucide-react";
+import { ArrowLeft, BookOpen, Clock, Brain, Cpu, Globe, Zap, Lightbulb } from "lucide-react";
 
 const Theories = () => {
   const theoryCategories = [
@@ -169,40 +168,39 @@ const Theories = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {category.theories.map((theory, theoryIndex) => (
-                  <Card key={theoryIndex} className={`${category.color} hover:shadow-lg transition-all duration-200 hover:scale-[1.02]`}>
-                    <CardContent className="p-5">
-                      <div className="flex justify-between items-start mb-3">
-                        <h3 className="font-semibold text-black text-lg leading-tight pr-2">{theory.title}</h3>
-                        <Button variant="outline" size="sm" className="text-xs ml-2 shrink-0" asChild>
-                          <Link to={`/theory/${theory.id}`}>
-                            <BookOpen className="w-3 h-3 mr-1" />
-                            Study
-                          </Link>
-                        </Button>
-                      </div>
-                      <p className="text-gray-700 text-sm leading-relaxed mb-4">{theory.description}</p>
-                      
-                      <div className="mb-4">
-                        <div className="text-xs font-medium text-gray-600 mb-2">Applications:</div>
-                        <div className="text-xs text-blue-700 bg-blue-100 px-2 py-1 rounded italic">
-                          {theory.applications}
+                  <Link to={`/theory/${theory.id}`} key={theoryIndex} className="block group">
+                    <Card className={`${category.color} group-hover:shadow-lg transition-all duration-200 group-hover:scale-[1.02] h-full`}>
+                      <CardContent className="p-5 flex flex-col h-full">
+                        <div className="flex-grow">
+                          <div className="flex justify-between items-start mb-3">
+                            <h3 className="font-semibold text-black text-lg leading-tight pr-2">{theory.title}</h3>
+                            <BookOpen className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors shrink-0" />
+                          </div>
+                          <p className="text-gray-700 text-sm leading-relaxed mb-4">{theory.description}</p>
+                          
+                          <div className="mb-4">
+                            <div className="text-xs font-medium text-gray-600 mb-2">Applications:</div>
+                            <div className="text-xs text-blue-700 bg-blue-100 px-2 py-1 rounded italic">
+                              {theory.applications}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      
-                      <div className="flex flex-wrap items-center gap-2 text-xs">
-                        <span className={`px-2 py-1 rounded-full font-medium ${getDifficultyColor(theory.difficulty)}`}>
-                          {theory.difficulty}
-                        </span>
-                        <span className={`px-2 py-1 rounded-full font-medium ${getYearColor(theory.year)}`}>
-                          {theory.year}
-                        </span>
-                        <div className="flex items-center text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {theory.readTime}
+                        
+                        <div className="flex flex-wrap items-center gap-2 text-xs mt-auto">
+                          <span className={`px-2 py-1 rounded-full font-medium ${getDifficultyColor(theory.difficulty)}`}>
+                            {theory.difficulty}
+                          </span>
+                          <span className={`px-2 py-1 rounded-full font-medium ${getYearColor(theory.year)}`}>
+                            {theory.year}
+                          </span>
+                          <div className="flex items-center text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
+                            <Clock className="w-3 h-3 mr-1" />
+                            {theory.readTime}
+                          </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             </section>
