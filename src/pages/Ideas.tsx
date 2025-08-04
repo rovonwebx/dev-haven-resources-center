@@ -1,14 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Lightbulb, TrendingUp, Clock, Users, Search, MessageSquare, BrainCircuit } from "lucide-react";
-import placeholder from '/public/placeholder.svg'; // Assuming placeholder.svg is in the public folder
+import { Lightbulb, TrendingUp, Clock, Users, Search, MessageSquare, BrainCircuit, Home, ChevronDown, XCircle, ArrowUp, Filter } from "lucide-react";
 
-// --- Data and Helper Functions (No changes here) ---
-
+// --- Data (No changes here, remains the full list) ---
 const ideas = [ /* ... Your full list of ideas remains here ... */ 
     {
       title: "Smart Home Energy Optimizer",
@@ -512,29 +510,105 @@ const ideas = [ /* ... Your full list of ideas remains here ... */
     }
 ];
 
-const getMarketPotentialColor = (potential: string) => {
+// --- Helper Functions (Updated for Dark Theme) ---
+const getMarketPotentialBadgeClass = (potential: string) => {
     switch (potential) {
-      case "Very High": return "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300";
-      case "High": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300";
-      case "Medium": return "bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300";
-      case "Low": return "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300";
-      default: return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
+      case "Very High": return 'bg-emerald-900/90 text-emerald-100 border border-emerald-600/50';
+      case "High": return 'bg-blue-900/90 text-blue-100 border border-blue-600/50';
+      case "Medium": return 'bg-amber-900/90 text-amber-100 border border-amber-600/50';
+      case "Low": return 'bg-red-900/90 text-red-100 border border-red-600/50';
+      default: return 'bg-neutral-700 text-neutral-300 border border-neutral-600';
     }
 };
 
-const getComplexityColor = (complexity: string) => {
+const getComplexityBadgeClass = (complexity: string) => {
     switch (complexity) {
-        case "Low": return "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300";
-        case "Medium": return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300";
-        case "High": return "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300";
-        case "Very High": return "bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300";
-        default: return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
+        case "Low": return 'bg-emerald-900/90 text-emerald-100 border border-emerald-600/50';
+        case "Medium": return 'bg-amber-900/90 text-amber-100 border border-amber-600/50';
+        case "High": return 'bg-red-900/90 text-red-100 border border-red-600/50';
+        case "Very High": return 'bg-purple-900/90 text-purple-100 border border-purple-600/50';
+        default: return 'bg-neutral-700 text-neutral-300 border border-neutral-600';
     }
 };
 
-const Ideas = () => {
+const CategoryFilterDropdown = ({ allCategories, selectedCategory, onSelectCategory }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const dropdownRef = useRef(null);
+
+    const filteredCategories = ["All", ...allCategories.filter(cat => cat !== "All" && cat.toLowerCase().includes(searchTerm.toLowerCase()))];
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+    
+    return (
+        <div className="relative" ref={dropdownRef}>
+            <Button 
+                variant="outline" 
+                onClick={() => setIsOpen(!isOpen)} 
+                className="w-full justify-between border-neutral-700 bg-neutral-800 hover:bg-neutral-700 hover:text-white"
+            >
+                <span>{selectedCategory}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+            </Button>
+            {isOpen && (
+                <div className="absolute top-full mt-2 w-full bg-neutral-800 border border-neutral-700 rounded-lg shadow-xl z-10 p-2">
+                    <Input
+                        type="text"
+                        placeholder="Search categories..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full mb-2 bg-neutral-900 border-neutral-600 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                    <div className="max-h-60 overflow-y-auto pr-1">
+                        {filteredCategories.map(category => (
+                             <button
+                                key={category}
+                                onClick={() => { onSelectCategory(category); setIsOpen(false); }}
+                                className={`w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                                    selectedCategory === category
+                                    ? 'bg-blue-600 text-white'
+                                    : 'text-neutral-300 hover:bg-neutral-700'
+                                }`}
+                            >
+                                {category}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+const IdeasPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  
+  // --- Scroll to Top Logic ---
+  useEffect(() => {
+    const checkScrollTop = () => {
+      if (!showBackToTop && window.pageYOffset > 400) {
+        setShowBackToTop(true);
+      } else if (showBackToTop && window.pageYOffset <= 400) {
+        setShowBackToTop(false);
+      }
+    };
+    window.addEventListener('scroll', checkScrollTop);
+    return () => window.removeEventListener('scroll', checkScrollTop);
+  }, [showBackToTop]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const allCategories = useMemo(() => {
     return ["All", ...Array.from(new Set(ideas.map(idea => idea.category)))];
@@ -542,9 +616,9 @@ const Ideas = () => {
   
   const filteredIdeas = useMemo(() => {
     return ideas.filter(idea => {
-      const matchesCategory = !selectedCategory || selectedCategory === "All" || idea.category === selectedCategory;
+      const matchesCategory = selectedCategory === "All" || idea.category === selectedCategory;
       const matchesSearch =
-        searchTerm === "" ||
+        !searchTerm ||
         idea.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         idea.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
         idea.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -552,115 +626,123 @@ const Ideas = () => {
       return matchesCategory && matchesSearch;
     });
   }, [searchTerm, selectedCategory]);
+  
+  const Breadcrumb = () => (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <div className="flex items-center gap-2 text-sm text-neutral-400">
+            <Link to="/" className="flex items-center gap-1 hover:text-blue-400 transition-colors">
+                <Home className="w-4 h-4" />
+                Home
+            </Link>
+            <span>/</span>
+            <span className="text-white font-medium">Ideas</span>
+        </div>
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white/80 dark:bg-gray-800/50 backdrop-blur-sm border-b border-orange-200 dark:border-gray-700 shadow-sm sticky top-0 z-20">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-lg">
-                <Lightbulb className="w-8 h-8 text-orange-500" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Project Ideas</h1>
-              <p className="text-gray-500 dark:text-gray-400">A launchpad for your next innovation.</p>
-            </div>
-          </div>
-          <Button variant="outline" size="sm" asChild className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
-            <Link to="/"><ArrowLeft className="w-4 h-4 mr-2" />Back to Home</Link>
-          </Button>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          
-          {/* --- Filter Sidebar (Quick Links) --- */}
-          <aside className="md:col-span-1 h-fit md:sticky top-28">
-            <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Categories</h3>
-                <div className="space-y-1.5">
-                    {allCategories.map(category => (
-                        <button
-                            key={category}
-                            onClick={() => setSelectedCategory(category)}
-                            className={`w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
-                                selectedCategory === category
-                                ? 'bg-orange-500 text-white shadow-sm'
-                                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                            }`}
-                        >
-                            {category}
-                        </button>
-                    ))}
-                </div>
-            </div>
-          </aside>
-
-          {/* --- Ideas Grid --- */}
-          <main className="md:col-span-3">
-            <div className="relative mb-6">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <Input
-                type="text"
-                placeholder="Search ideas by title, tag, or description..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-full text-base focus:ring-orange-500 focus:border-orange-500"
-              />
-            </div>
-
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-              Showing {filteredIdeas.length} of {ideas.length} ideas in <span className='font-semibold text-orange-500'>{selectedCategory || 'All'}</span>.
+    <div className="min-h-screen bg-neutral-950 text-white">
+      {/* <Header /> */}
+      
+      <main className="flex-1 w-full pt-12 pb-16">
+        <div className="text-center mb-8">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+              Project Idea Launchpad
+            </h2>
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
+              A curated collection of innovative concepts to inspire your next venture.
             </p>
-
-            {/* --- ChatterBox CTA --- */}
-            <Card className="mb-8 bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-lg">
-                <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                        <BrainCircuit size={40} />
-                        <div>
-                            <h3 className="font-bold text-lg">Want to brainstorm?</h3>
-                            <p className="text-sm opacity-90">Discuss these concepts, get more details, or generate new ideas with our AI assistant.</p>
-                        </div>
-                    </div>
-                    <Button asChild className="bg-white text-orange-600 hover:bg-orange-50 font-bold rounded-full w-full sm:w-auto flex-shrink-0">
-                        <Link to="/chatterbox"><MessageSquare className="w-4 h-4 mr-2"/> Start Chatting</Link>
-                    </Button>
-                </CardContent>
-            </Card>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {filteredIdeas.map((idea, index) => (
-                <Card key={index} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
-                  <CardContent className="p-6 flex flex-col flex-grow">
-                    <div className="mb-3">
-                        <Badge className="bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-300 mb-2">{idea.category}</Badge>
-                        <h2 className="font-bold text-lg text-gray-900 dark:text-gray-100 leading-tight">{idea.title}</h2>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow line-clamp-3">{idea.description}</p>
-                    
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {idea.tags.slice(0, 4).map((tag, i) => <Badge key={i} variant="outline" className="text-xs">{tag}</Badge>)}
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
-                        <div className="flex items-center gap-2"><TrendingUp className="w-4 h-4 text-green-500" /><span className='font-medium text-gray-700 dark:text-gray-300'>Potential:</span><span className={getMarketPotentialColor(idea.marketPotential) + " px-2 py-0.5 rounded-full text-xs"}>{idea.marketPotential}</span></div>
-                        <div className="flex items-center gap-2"><BrainCircuit className="w-4 h-4 text-purple-500" /><span className='font-medium text-gray-700 dark:text-gray-300'>Complexity:</span><span className={getComplexityColor(idea.complexity) + " px-2 py-0.5 rounded-full text-xs"}>{idea.complexity}</span></div>
-                        <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-blue-500" /><span className='font-medium text-gray-700 dark:text-gray-300'>Timeline:</span><span className='text-gray-600 dark:text-gray-400'>{idea.timeToMarket}</span></div>
-                        <div className="flex items-center gap-2"><Users className="w-4 h-4 text-yellow-500" /><span className='font-medium text-gray-700 dark:text-gray-300'>Audience:</span><span className='text-gray-600 dark:text-gray-400'>{idea.targetAudience}</span></div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </main>
         </div>
-      </div>
+
+        <Breadcrumb />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          
+            <aside className="md:col-span-1 h-fit md:sticky top-24">
+                <div className="bg-neutral-900 p-5 rounded-lg border border-neutral-800">
+                    <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2"><Filter className="w-4 h-4" /> Filter by Category</h3>
+                    <CategoryFilterDropdown 
+                        allCategories={allCategories} 
+                        selectedCategory={selectedCategory} 
+                        onSelectCategory={setSelectedCategory} 
+                    />
+                </div>
+            </aside>
+
+            <main className="md:col-span-3">
+                <div className="relative mb-6">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-neutral-500 w-5 h-5" />
+                <Input
+                    type="text"
+                    placeholder="Search ideas by title, tag, or description..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 bg-neutral-900 border-2 border-neutral-800 rounded-full text-base focus:ring-blue-500 focus:border-blue-500 placeholder-neutral-500"
+                />
+                </div>
+
+                <Card className="mb-8 bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg border-blue-500">
+                    <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div className="flex items-center gap-4">
+                            <BrainCircuit size={40} className="text-blue-200"/>
+                            <div>
+                                <h3 className="font-bold text-lg">Want to brainstorm?</h3>
+                                <p className="text-sm text-blue-200">Discuss these concepts or generate new ideas with our AI assistant.</p>
+                            </div>
+                        </div>
+                        <Button asChild variant="outline" className="bg-transparent border-white text-white hover:bg-white/10 w-full sm:w-auto flex-shrink-0">
+                            <Link to="/chatterbox"><MessageSquare className="w-4 h-4 mr-2"/> Start Chatting</Link>
+                        </Button>
+                    </CardContent>
+                </Card>
+
+                <p className="text-sm text-neutral-400 mb-6">
+                  Showing {filteredIdeas.length} of {ideas.length} ideas in <span className='font-semibold text-blue-400'>{selectedCategory}</span>.
+                </p>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {filteredIdeas.map((idea, index) => (
+                    <Card key={index} className="group bg-neutral-900 border border-neutral-800 rounded-lg shadow-sm hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                    <CardContent className="p-6 flex flex-col flex-grow">
+                        <div className="mb-3">
+                            <Badge className="bg-neutral-800 text-blue-300 border border-neutral-700 mb-2">{idea.category}</Badge>
+                            <h2 className="font-bold text-lg text-white leading-tight">{idea.title}</h2>
+                        </div>
+                        <p className="text-neutral-400 text-sm mb-4 flex-grow line-clamp-3">{idea.description}</p>
+                        
+                        <div className="flex flex-wrap gap-1.5 mb-5">
+                          {idea.tags.slice(0, 4).map((tag) => <Badge key={tag} variant="outline" className="text-xs border-neutral-700 bg-neutral-800 text-neutral-300">{tag}</Badge>)}
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm mt-auto pt-4 border-t border-neutral-800">
+                            <div className="flex items-center gap-2" title="Market Potential"><TrendingUp className="w-4 h-4 text-neutral-500" /><span className='font-medium text-neutral-300'>Potential:</span><Badge className={`text-xs ${getMarketPotentialBadgeClass(idea.marketPotential)}`}>{idea.marketPotential}</Badge></div>
+                            <div className="flex items-center gap-2" title="Complexity"><BrainCircuit className="w-4 h-4 text-neutral-500" /><span className='font-medium text-neutral-300'>Complexity:</span><Badge className={`text-xs ${getComplexityBadgeClass(idea.complexity)}`}>{idea.complexity}</Badge></div>
+                            <div className="flex items-center gap-2" title="Time to Market"><Clock className="w-4 h-4 text-neutral-500" /><span className='font-medium text-neutral-300'>Timeline:</span><span className='text-neutral-400'>{idea.timeToMarket}</span></div>
+                            <div className="flex items-center gap-2" title="Target Audience"><Users className="w-4 h-4 text-neutral-500" /><span className='font-medium text-neutral-300'>Audience:</span><span className='text-neutral-400'>{idea.targetAudience}</span></div>
+                        </div>
+                    </CardContent>
+                    </Card>
+                ))}
+                </div>
+            </main>
+            </div>
+        </div>
+      </main>
+
+       {showBackToTop && (
+        <Button 
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 h-12 w-12 rounded-full bg-blue-600/90 p-3 text-white shadow-lg transition-transform duration-200 ease-in-out hover:bg-blue-600 hover:scale-110"
+          aria-label="Go to top"
+        >
+          <ArrowUp className="h-6 w-6" />
+        </Button>
+      )}
+
+      {/* <Footer /> */}
     </div>
   );
 };
 
-export default Ideas;
+export default IdeasPage;
