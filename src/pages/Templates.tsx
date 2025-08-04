@@ -34,7 +34,7 @@ const allTemplates = [
 
 // --- DATA FOR AIML DEPT PROJECTS TABLE ---
 const aimlDeptProjects = [
-    { sno: 1, title: "Sponge Attack ... Data Poisoning", gitLink: "Cinofix/sponge_poisoning…", devResources: "Sponge attack paper and repo", aiTools: "Gemini, Claude, Fire Studio" },
+    { sno: 1, title: "Sponge Attack ... Data Poisoning", gitLink: "Cinofix/sponge_poisoning", devResources: "Sponge attack paper and repo", aiTools: "Gemini, Claude, Fire Studio" },
     { sno: 2, title: "Explainable Data‑Driven Digital Twins ... Battery States", gitLink: "(No public code)", devResources: "XAI applied digital twin paper", aiTools: "Claude, Gemini" },
     { sno: 3, title: "Revolutionizing Agriculture: ML & DL Solutions for Crop Quality", gitLink: "(No public code)", devResources: "Agri‑DL tutorials, UNet/segmentation", aiTools: "Lovable, Gemini" },
     { sno: 4, title: "Ensemble DL Model for Vehicular Engine Health Prediction", gitLink: "(No public code)", devResources: "Predictive maintenance ML papers", aiTools: "Gemini, Cursor" },
@@ -44,7 +44,7 @@ const aimlDeptProjects = [
     { sno: 8, title: "Fake News Detection Using Feature‑Based Optimized MSVM", gitLink: "nishitpatel01/Fake_News_Detection", devResources: "Fake news classification ML pipelines", aiTools: "Gemini, Cursor, Claude" },
     { sno: 9, title: "AI‑Based Financial Identification Based on Demography & Economics", gitLink: "(No public code)", devResources: "Credit scoring ML frameworks", aiTools: "Gemini, Claude" },
     { sno: 10, title: "Centralized Application‑Context Aware Firewall", gitLink: "(No public code)", devResources: "Context-aware firewall research", aiTools: "Claude, Bolt" },
-    { sno: 11, title: "Hybrid AI for Stock Markets: Transformers & Q‑Learning", gitLink: "(No public code)", devResources: "Transformer-based forecasting + RL trading BS", aiTools: "Gemini, Fire Studio" },
+    { sno: 11, title: "Hybrid AI for Stock Markets: Transformers & Q‑Learning", gitLink: "(No public code)", devResources: "Transformer-based forecasting + RL trading", aiTools: "Gemini, Fire Studio" },
     { sno: 12, title: "Authentication & Key Agreement Using Anonymous Identity for P2P Cloud", gitLink: "(No public code)", devResources: "ZKP and credential systems research", aiTools: "Claude, Cursor" },
     { sno: 13, title: "Paper Evaluation Using AI", gitLink: "(No public code)", devResources: "NLP similarity, summarization methods", aiTools: "Claude, GitHub Copilot" },
     { sno: 14, title: "Quantum Resistance Blockchain for Secure Health Data", gitLink: "(No public code)", devResources: "Post‑quantum blockchain literature", aiTools: "Gemini, Cursor" },
@@ -65,7 +65,6 @@ const aimlDeptProjects = [
     { sno: 29, title: "Colorectal Cancer Detection Using Ensemble Pre‑Trained Algorithms", gitLink: "Dimnir/CancerClassification", devResources: "Colorectal histology ensemble models", aiTools: "Gemini, Claude, Cursor" },
     { sno: 30, title: "Personalized E‑Learning Course Recommendation System", gitLink: "(No public code)", devResources: "Recommendation system for e-learning tutorials", aiTools: "Gemini, Lovable" },
 ];
-
 
 // --- DATA FOR OTHER PROJECTS TABLE ---
 const otherProjectData = [
@@ -102,6 +101,21 @@ const otherProjectData = [
 ];
 
 const filterCategories = ["All", "Landing Page", "Portfolio", "E-commerce", "Dashboard", "Blog"];
+
+// --- HELPER FUNCTION FOR AI TOOL LINKS ---
+const getAiToolUrl = (toolName) => {
+    const sanitizedToolName = toolName.trim();
+    const urls = {
+        'Gemini': 'https://gemini.google.com/',
+        'Claude': 'https://claude.ai/',
+        'Fire Studio': 'https://aistudio.google.com/',
+        'Lovable': 'https://www.lovable.ai/',
+        'Cursor': 'https://cursor.sh/',
+        'Bolt': 'https://www.google.com/search?q=Bolt+AI+tool',
+        'GitHub Copilot': 'https://github.com/features/copilot',
+    };
+    return urls[sanitizedToolName] || `https://www.google.com/search?q=${encodeURIComponent(sanitizedToolName + ' AI tool')}`;
+};
 
 const TemplatesOrange = () => {
   const [activeFilter, setActiveFilter] = useState("All");
@@ -159,9 +173,29 @@ const TemplatesOrange = () => {
                             <tr key={project.sno} className="bg-white border-b dark:bg-slate-900/50 dark:border-slate-800">
                                 <th scope="row" className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap dark:text-white">{project.sno}</th>
                                 <td className="px-6 py-4">{project.title}</td>
-                                <td className="px-6 py-4">{project.gitLink}</td>
-                                <td className="px-6 py-4">{project.devResources}</td>
-                                <td className="px-6 py-4">{project.aiTools}</td>
+                                <td className="px-6 py-4">
+                                    {project.gitLink.includes('/') ? (
+                                        <a href={`https://github.com/${project.gitLink}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">
+                                            {project.gitLink}
+                                        </a>
+                                    ) : (
+                                        project.gitLink
+                                    )}
+                                </td>
+                                <td className="px-6 py-4">
+                                    <a href={`https://www.google.com/search?q=${encodeURIComponent(project.devResources)}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">
+                                        {project.devResources}
+                                    </a>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <div className="flex flex-wrap gap-x-4 gap-y-2">
+                                        {project.aiTools.split(',').map((tool) => (
+                                            <a key={tool.trim()} href={getAiToolUrl(tool)} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap">
+                                                {tool.trim()}
+                                            </a>
+                                        ))}
+                                    </div>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -174,11 +208,7 @@ const TemplatesOrange = () => {
             <div className="text-center">
                 <h2 className="text-3xl font-bold text-black dark:text-white mb-4">Other Projects</h2>
                 <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-3xl mx-auto">
-                    The following table contains a curated list of project ideas and resources.
-                    <br/>
-                    <span className="font-semibold text-red-600 dark:text-red-500">
-                        Disclaimer: This is a collection of information gathered from various online sources and is intended for informational purposes only.
-                    </span>
+                    The following table contains another curated list of project ideas and resources.
                 </p>
             </div>
             <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800">
@@ -198,13 +228,13 @@ const TemplatesOrange = () => {
                                 <td className="px-6 py-4">{project.name}</td>
                                 <td className="px-6 py-4">
                                     {project.link.startsWith('http') ? (
-                                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:underline">{project.link}</a>
+                                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">{project.link}</a>
                                     ) : (
                                         project.link
                                     )}
                                 </td>
                                 <td className="px-6 py-4">
-                                    <a href={project.resources} target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:underline">{project.resources}</a>
+                                    <a href={project.resources} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">{project.resources}</a>
                                 </td>
                             </tr>
                         ))}
