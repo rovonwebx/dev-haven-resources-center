@@ -155,101 +155,143 @@ const TheoriesPage = () => {
 
     const getDifficultyColor = (difficulty: string) => {
       switch (difficulty) {
-        case "Beginner": return "bg-green-900/50 text-green-300 border border-green-700/50";
-        case "Intermediate": return "bg-yellow-900/50 text-yellow-300 border border-yellow-700/50";
-        case "Advanced": return "bg-red-900/50 text-red-300 border border-red-700/50";
-        case "Expert": return "bg-purple-900/50 text-purple-300 border border-purple-700/50";
-        default: return "bg-neutral-700 text-neutral-300";
+        case "Beginner": return "bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-300 border border-green-500/40";
+        case "Intermediate": return "bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-300 border border-yellow-500/40";
+        case "Advanced": return "bg-gradient-to-r from-red-500/20 to-pink-500/20 text-red-300 border border-red-500/40";
+        case "Expert": return "bg-gradient-to-r from-purple-500/20 to-indigo-500/20 text-purple-300 border border-purple-500/40";
+        default: return "bg-gradient-to-r from-neutral-700/50 to-neutral-600/50 text-neutral-300 border border-neutral-600/40";
       }
     };
 
     return (
-        <div className="min-h-screen bg-neutral-950 text-white font-sans">
-            <main className="flex-1 w-full pt-12 pb-16">
-                <div className="text-center mb-8 px-4">
-                    <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-                        Engineering Theories Hub
-                    </h1>
-                    <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
-                        An organized collection of fundamental theories for every stage of your engineering journey.
-                    </p>
-                </div>
+        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-white font-sans">
+            {/* Hero Section with Gradient */}
+            <div className="relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/5 to-emerald-600/10"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.1),transparent_70%)]"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.08),transparent_70%)]"></div>
+                
+                <main className="relative flex-1 w-full pt-16 pb-20">
+                    <div className="text-center mb-12 px-4">
+                        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 px-4 py-2 rounded-full border border-blue-500/30 mb-6">
+                            <span className="text-blue-400 text-sm font-medium">Engineering Excellence</span>
+                        </div>
+                        <h1 className="text-4xl sm:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent mb-6 leading-tight">
+                            Engineering Theories Hub
+                        </h1>
+                        <p className="text-xl text-neutral-300 max-w-4xl mx-auto leading-relaxed">
+                            Master the fundamental theories that power modern engineering with our comprehensive collection designed for every stage of your journey.
+                        </p>
+                    </div>
+                </main>
+            </div>
 
-                <Breadcrumb />
+            <Breadcrumb />
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <aside className="md:col-span-1 h-fit md:sticky top-24">
-                            <div className="bg-neutral-900 p-4 rounded-lg border border-neutral-800">
-                                <h3 className="text-lg font-semibold text-white mb-4">Jump to Section</h3>
-                                <div className="space-y-2">
-                                    {theoryCategories.map(cat => (
-                                        <button
-                                            key={cat.refId}
-                                            onClick={() => handleNav(sectionRefs[cat.refId])}
-                                            className={`w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 flex items-center gap-3 ${
-                                                activeId === cat.refId ? 'bg-blue-600 text-white shadow-lg' : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
-                                            }`}
-                                        >
-                                          <cat.icon className="w-4 h-4" />
-                                          {cat.category}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        </aside>
-
-                        <main className="md:col-span-3">
-                            <div className="space-y-16">
-                                {theoryCategories.map((category) => (
-                                    <section key={category.refId} id={category.refId} ref={sectionRefs[category.refId]} className="scroll-mt-24">
-                                        <Card className={`bg-neutral-900 border border-neutral-800 rounded-lg shadow-lg border-l-4 ${category.accentColor}`}>
-                                            <CardContent className="p-6">
-                                                <div className="flex items-center gap-4 mb-2">
-                                                    <category.icon className="w-8 h-8 text-blue-400" />
-                                                    <div>
-                                                        <h2 className="text-2xl font-bold text-white">{category.category} Year Theories</h2>
-                                                        <p className="text-neutral-400">{category.description}</p>
-                                                    </div>
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
-                                            {category.theories.map((theory) => (
-                                                <Link to={`/theory/${theory.id}`} key={theory.id} className="block group">
-                                                    <Card className="bg-neutral-900/70 border border-neutral-800 h-full transition-all duration-300 group-hover:border-blue-500/80 group-hover:bg-neutral-800/50 group-hover:shadow-xl">
-                                                        <CardContent className="p-5 flex flex-col h-full">
-                                                            <div className="flex-grow">
-                                                                <div className="flex justify-between items-start mb-2">
-                                                                    <h3 className="font-semibold text-neutral-100 text-md leading-tight pr-2">{theory.title}</h3>
-                                                                    <BookOpen className="w-5 h-5 text-neutral-500 group-hover:text-blue-400 transition-colors shrink-0" />
-                                                                </div>
-                                                                <p className="text-neutral-400 text-sm leading-relaxed">{theory.description}</p>
-                                                            </div>
-                                                            <div className="flex flex-wrap items-center gap-2 text-xs mt-4 pt-4 border-t border-neutral-800">
-                                                                <Badge className={getDifficultyColor(theory.difficulty)}>{theory.difficulty}</Badge>
-                                                                <Badge className="bg-neutral-700/80 text-neutral-300 flex items-center gap-1.5">
-                                                                    <Clock className="w-3 h-3" />
-                                                                    {theory.readTime}
-                                                                </Badge>
-                                                            </div>
-                                                        </CardContent>
-                                                    </Card>
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    </section>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <aside className="md:col-span-1 h-fit md:sticky top-24">
+                        <div className="bg-gradient-to-br from-neutral-900/90 to-neutral-900/50 backdrop-blur-sm p-6 rounded-xl border border-neutral-700/50 shadow-xl">
+                            <h3 className="text-lg font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Jump to Section</h3>
+                            <div className="space-y-3">
+                                {theoryCategories.map(cat => (
+                                    <button
+                                        key={cat.refId}
+                                        onClick={() => handleNav(sectionRefs[cat.refId])}
+                                        className={`w-full text-left px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 flex items-center gap-3 group ${
+                                            activeId === cat.refId 
+                                                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25' 
+                                                : 'text-neutral-300 hover:bg-gradient-to-r hover:from-neutral-800/80 hover:to-neutral-700/80 hover:text-white hover:shadow-lg'
+                                        }`}
+                                    >
+                                      <cat.icon className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${
+                                          activeId === cat.refId ? 'text-white' : 'text-neutral-400 group-hover:text-blue-400'
+                                      }`} />
+                                      {cat.category}
+                                    </button>
                                 ))}
                             </div>
-                        </main>
-                    </div>
+                        </div>
+                    </aside>
+
+                    <main className="md:col-span-3">
+                        <div className="space-y-20">
+                            {theoryCategories.map((category) => (
+                                <section key={category.refId} id={category.refId} ref={sectionRefs[category.refId]} className="scroll-mt-24">
+                                    <Card className="bg-gradient-to-br from-neutral-900/90 to-neutral-900/50 backdrop-blur-sm border border-neutral-700/50 rounded-xl shadow-2xl overflow-hidden">
+                                        <div className={`h-1 w-full bg-gradient-to-r ${
+                                            category.refId === 'first-year' ? 'from-emerald-500 to-green-400' :
+                                            category.refId === 'second-year' ? 'from-blue-500 to-cyan-400' :
+                                            category.refId === 'third-year' ? 'from-purple-500 to-pink-400' :
+                                            category.refId === 'fourth-year' ? 'from-red-500 to-orange-400' :
+                                            'from-yellow-500 to-amber-400'
+                                        }`}></div>
+                                        <CardContent className="p-8">
+                                            <div className="flex items-center gap-6 mb-4">
+                                                <div className={`p-4 rounded-xl bg-gradient-to-br ${
+                                                    category.refId === 'first-year' ? 'from-emerald-500/20 to-green-400/10' :
+                                                    category.refId === 'second-year' ? 'from-blue-500/20 to-cyan-400/10' :
+                                                    category.refId === 'third-year' ? 'from-purple-500/20 to-pink-400/10' :
+                                                    category.refId === 'fourth-year' ? 'from-red-500/20 to-orange-400/10' :
+                                                    'from-yellow-500/20 to-amber-400/10'
+                                                }`}>
+                                                    <category.icon className={`w-8 h-8 ${
+                                                        category.refId === 'first-year' ? 'text-emerald-400' :
+                                                        category.refId === 'second-year' ? 'text-blue-400' :
+                                                        category.refId === 'third-year' ? 'text-purple-400' :
+                                                        category.refId === 'fourth-year' ? 'text-red-400' :
+                                                        'text-yellow-400'
+                                                    }`} />
+                                                </div>
+                                                <div>
+                                                    <h2 className="text-3xl font-bold bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent mb-2">
+                                                        {category.category} {category.refId !== 'research' ? 'Year' : ''} Theories
+                                                    </h2>
+                                                    <p className="text-neutral-400 text-lg leading-relaxed">{category.description}</p>
+                                                </div>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                    
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+                                        {category.theories.map((theory) => (
+                                            <Link to={`/theory/${theory.id}`} key={theory.id} className="block group">
+                                                <Card className="bg-gradient-to-br from-neutral-900/80 to-neutral-900/40 backdrop-blur-sm border border-neutral-700/50 h-full transition-all duration-500 group-hover:border-blue-400/60 group-hover:from-neutral-800/90 group-hover:to-neutral-800/60 group-hover:shadow-2xl group-hover:shadow-blue-500/10 group-hover:-translate-y-1">
+                                                    <CardContent className="p-6 flex flex-col h-full">
+                                                        <div className="flex-grow">
+                                                            <div className="flex justify-between items-start mb-3">
+                                                                <h3 className="font-bold text-white text-lg leading-tight pr-2 group-hover:text-blue-300 transition-colors duration-300">{theory.title}</h3>
+                                                                <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-2 rounded-lg group-hover:from-blue-500/30 group-hover:to-purple-500/30 transition-all duration-300">
+                                                                    <BookOpen className="w-5 h-5 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
+                                                                </div>
+                                                            </div>
+                                                            <p className="text-neutral-300 text-sm leading-relaxed mb-4">{theory.description}</p>
+                                                        </div>
+                                                        <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-neutral-700/50">
+                                                            <Badge className={`${getDifficultyColor(theory.difficulty)} font-medium px-3 py-1`}>
+                                                                {theory.difficulty}
+                                                            </Badge>
+                                                            <Badge className="bg-gradient-to-r from-neutral-700/80 to-neutral-600/80 text-neutral-200 flex items-center gap-2 px-3 py-1 font-medium">
+                                                                <Clock className="w-3.5 h-3.5" />
+                                                                {theory.readTime}
+                                                            </Badge>
+                                                        </div>
+                                                    </CardContent>
+                                                </Card>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </section>
+                            ))}
+                        </div>
+                    </main>
                 </div>
-            </main>
+            </div>
 
             {showBackToTop && (
                 <Button
                     onClick={scrollToTop}
-                    className="fixed bottom-8 right-8 h-12 w-12 rounded-full bg-blue-600/90 p-3 text-white shadow-lg transition-transform duration-200 ease-in-out hover:bg-blue-600 hover:scale-110"
+                    className="fixed bottom-8 right-8 h-14 w-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white shadow-2xl shadow-blue-500/30 transition-all duration-300 ease-in-out hover:from-blue-500 hover:to-purple-500 hover:scale-110 hover:shadow-blue-500/50 backdrop-blur-sm border border-blue-400/30"
                     aria-label="Go to top"
                 >
                     <ArrowUp className="h-6 w-6" />
