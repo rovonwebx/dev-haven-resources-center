@@ -108,79 +108,102 @@ const DocumentationPage = () => {
     );
 
     return (
-        <div className="min-h-screen bg-neutral-950 text-white font-sans">
-            {/* <Header /> */}
-            <main className="flex-1 w-full pt-12 pb-16">
-                <div className="text-center mb-8">
-                    <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-                        Documentation Quick Start
-                    </h2>
-                    <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
-                        Your central hub for official docs, tutorials, and API references for essential technologies.
-                    </p>
-                </div>
+        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-white font-sans">
+            {/* Hero Section with Gradient */}
+            <div className="relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/5 to-emerald-600/10"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.1),transparent_70%)]"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.08),transparent_70%)]"></div>
                 
-                <Breadcrumb />
+                <main className="relative flex-1 w-full pt-16 pb-20">
+                    <div className="text-center mb-12">
+                        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 px-4 py-2 rounded-full border border-blue-500/30 mb-6">
+                            <span className="text-blue-400 text-sm font-medium">Technical Resources</span>
+                        </div>
+                        <h2 className="text-4xl sm:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent mb-6 leading-tight">
+                            Documentation Hub
+                        </h2>
+                        <p className="text-xl text-neutral-300 max-w-4xl mx-auto leading-relaxed">
+                            Your comprehensive resource center for official documentation, tutorials, and API references across essential development technologies.
+                        </p>
+                    </div>
+                </main>
+            </div>
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <aside className="md:col-span-1 h-fit md:sticky top-24">
-                            <div className="bg-neutral-900 p-5 rounded-lg border border-neutral-800">
-                                <h3 className="text-lg font-semibold text-white mb-4">Categories</h3>
-                                <div className="space-y-2">
-                                    {docCategories.map(cat => (
-                                        <button key={cat.refId} onClick={() => handleNav(sectionRefs[cat.refId])} className={`w-full text-left px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-3 ${activeId === cat.refId ? 'bg-blue-600 text-white' : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'}`}>
-                                            <cat.icon className="w-4 h-4" /> {cat.category}
-                                        </button>
+            <Breadcrumb />
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <aside className="md:col-span-1 h-fit md:sticky top-24">
+                        <div className="bg-gradient-to-br from-neutral-900/90 to-neutral-900/50 backdrop-blur-sm p-6 rounded-xl border border-neutral-700/50 shadow-xl">
+                            <h3 className="text-lg font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">Categories</h3>
+                            <div className="space-y-3">
+                                {docCategories.map(cat => (
+                                    <button key={cat.refId} onClick={() => handleNav(sectionRefs[cat.refId])} className={`w-full text-left px-4 py-3 text-sm font-medium rounded-lg transition-all duration-300 flex items-center gap-3 group ${
+                                        activeId === cat.refId 
+                                            ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25' 
+                                            : 'text-neutral-300 hover:bg-gradient-to-r hover:from-neutral-800/80 hover:to-neutral-700/80 hover:text-white hover:shadow-lg'
+                                    }`}>
+                                        <cat.icon className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${
+                                            activeId === cat.refId ? 'text-white' : 'text-neutral-400 group-hover:text-blue-400'
+                                        }`} />
+                                        {cat.category}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </aside>
+
+                    <main className="md:col-span-3 space-y-20">
+                        {docCategories.map((category) => (
+                            <section key={category.refId} id={category.refId} ref={sectionRefs[category.refId]} className="scroll-mt-24">
+                                <div className="flex items-center gap-6 mb-8">
+                                    <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20">
+                                        <category.icon className="w-8 h-8 text-blue-400" />
+                                    </div>
+                                    <h2 className="text-3xl font-bold bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent">
+                                        {category.category}
+                                    </h2>
+                                </div>
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                    {category.technologies.map(tech => (
+                                        <Card key={tech.name} className="bg-gradient-to-br from-neutral-900/80 to-neutral-900/40 backdrop-blur-sm border border-neutral-700/50 rounded-xl shadow-xl transition-all duration-500 hover:border-blue-400/60 hover:from-neutral-800/90 hover:to-neutral-800/60 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1">
+                                            <CardContent className="p-6">
+                                                <div className="flex items-center gap-4 mb-4">
+                                                    <div className="p-3 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20">
+                                                        <tech.logo className="w-10 h-10" />
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="text-xl font-bold text-white mb-1">{tech.name}</h3>
+                                                        <p className="text-sm text-neutral-400">{tech.description}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="space-y-3">
+                                                    {tech.links.map(link => (
+                                                        <a href={link.url} target="_blank" rel="noopener noreferrer" key={link.type} className="group flex items-center justify-between p-3 bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 rounded-lg hover:from-neutral-700/70 hover:to-neutral-600/70 transition-all duration-300 border border-neutral-700/30">
+                                                            <div className="flex items-center gap-3">
+                                                                <link.icon className="w-4 h-4 text-neutral-400 group-hover:text-blue-400 transition-colors duration-300" />
+                                                                <span className="text-sm font-medium text-neutral-300 group-hover:text-white transition-colors duration-300">{link.type}</span>
+                                                            </div>
+                                                            <ExternalLink className="w-4 h-4 text-neutral-500 group-hover:text-blue-400 transition-colors duration-300" />
+                                                        </a>
+                                                    ))}
+                                                </div>
+                                            </CardContent>
+                                        </Card>
                                     ))}
                                 </div>
-                            </div>
-                        </aside>
-
-                        <main className="md:col-span-3 space-y-16">
-                            {docCategories.map((category) => (
-                                <section key={category.refId} id={category.refId} ref={sectionRefs[category.refId]} className="scroll-mt-24">
-                                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3"><category.icon className="w-6 h-6 text-blue-400" /> {category.category}</h2>
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                        {category.technologies.map(tech => (
-                                            <Card key={tech.name} className="bg-neutral-900 border border-neutral-800 rounded-lg shadow-sm">
-                                                <CardContent className="p-6">
-                                                    <div className="flex items-center gap-4 mb-3">
-                                                        <tech.logo className="w-10 h-10" />
-                                                        <div>
-                                                            <h3 className="text-xl font-bold text-white">{tech.name}</h3>
-                                                            <p className="text-sm text-neutral-400">{tech.description}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="mt-4 space-y-2">
-                                                        {tech.links.map(link => (
-                                                            <a href={link.url} target="_blank" rel="noopener noreferrer" key={link.type} className="group flex items-center justify-between p-3 bg-neutral-800/50 rounded-md hover:bg-neutral-800 transition-colors">
-                                                                <div className="flex items-center gap-3">
-                                                                    <link.icon className="w-4 h-4 text-neutral-500 group-hover:text-blue-400" />
-                                                                    <span className="text-sm font-medium text-neutral-300 group-hover:text-white">{link.type}</span>
-                                                                </div>
-                                                                <ExternalLink className="w-4 h-4 text-neutral-600 group-hover:text-blue-400" />
-                                                            </a>
-                                                        ))}
-                                                    </div>
-                                                </CardContent>
-                                            </Card>
-                                        ))}
-                                    </div>
-                                </section>
-                            ))}
-                        </main>
-                    </div>
+                            </section>
+                        ))}
+                    </main>
                 </div>
-            </main>
+            </div>
 
             {showBackToTop && (
-                <Button onClick={scrollToTop} className="fixed bottom-8 right-8 h-12 w-12 rounded-full bg-blue-600/90 p-3 text-white shadow-lg transition-transform duration-200 ease-in-out hover:bg-blue-600 hover:scale-110" aria-label="Go to top">
+                <Button onClick={scrollToTop} className="fixed bottom-8 right-8 h-14 w-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white shadow-2xl shadow-blue-500/30 transition-all duration-300 ease-in-out hover:from-blue-500 hover:to-purple-500 hover:scale-110 hover:shadow-blue-500/50 backdrop-blur-sm border border-blue-400/30" aria-label="Go to top">
                     <ArrowUp className="h-6 w-6" />
                 </Button>
             )}
-
-            {/* <Footer /> */}
         </div>
     );
 };
