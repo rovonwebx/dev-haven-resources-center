@@ -319,7 +319,7 @@ const Index = () => {
                         </div>
                     </Link>
                     <div className="flex items-center gap-2">
-                        <a href="https://github.com/RishiRohanKalapala/dhrc-bugs-beacon-form/issues/new" target="_blank" rel="noopener noreferrer" aria-label="Report technical issue">
+                        <a href="https://ckr-web.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Access Collaboration Hub">
                             <Button variant="ghost" size="icon" className="rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white"><MessageSquare className="h-5 w-5" /></Button>
                         </a>
                         <Button onClick={() => setIsPanelOpen(true)} variant="ghost" size="icon" className="relative rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white">
@@ -387,15 +387,16 @@ const Index = () => {
                             <p className="text-xs text-neutral-400">Team communication platform</p>
                         </div>
                         <Badge className="bg-emerald-600 text-white text-[10px] font-semibold py-1 px-2 rounded">BETA</Badge>
-                         <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={handleChatFeatureClick}
-                            className="flex-shrink-0 text-xs font-medium text-emerald-400 border-emerald-600 hover:bg-emerald-600 hover:text-white"
-                        >
-                            Access
-                            <ArrowRight className="ml-1 h-3 w-3" />
-                        </Button>
+                         <a href="https://ckr-web.vercel.app" target="_blank" rel="noopener noreferrer">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="flex-shrink-0 text-xs font-medium text-emerald-400 border-emerald-600 hover:bg-emerald-600 hover:text-white"
+                            >
+                                Access
+                                <ArrowRight className="ml-1 h-3 w-3" />
+                            </Button>
+                        </a>
                     </div>
                     <div className="flex items-center justify-center text-center gap-3 p-3 rounded-lg bg-neutral-800/50">
                         <Users className="h-5 w-5 text-purple-400 flex-shrink-0" />
