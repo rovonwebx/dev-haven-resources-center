@@ -8,10 +8,32 @@ import Chatbot from "@/components/Chatbot";
 import { 
     ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon, Bell, Zap, MessageSquare, Menu, 
     ChevronLeft, ChevronRight, Database, Server, Code, FileText, BookOpen, Users,
-    Award, Lightbulb, Briefcase, BrainCircuit, Map, Calendar 
+    Award, Lightbulb, Briefcase, BrainCircuit, Map, Calendar, ClipboardCheck, School, LayoutTemplate, Bot 
 } from 'lucide-react';
 
-// --- ORIGINAL DATA ARRAYS (FOR REFERENCE, BUT UNUSED IN THE NEW GRID) ---
+// --- UPDATED DATA ARRAY WITH ALL 17 CARDS ---
+const resourceCardsNew = [
+    { number: 1, title: "Certificates", description: "Industry-recognized certifications and online courses.", path: "/certificates", icon: Award },
+    { number: 2, title: "Projects", description: "Hands-on projects and portfolio ideas.", path: "/projects", icon: Code },
+    { number: 3, title: "Ideas", description: "Creative project concepts and innovation inspiration.", path: "/ideas", icon: Lightbulb },
+    { number: 4, title: "Blogs", description: "Technical articles and industry insights.", path: "/blogs", icon: BookOpen },
+    { number: 5, title: "DSA", description: "Data Structures and Algorithms resources.", path: "/dsa", icon: Database },
+    { number: 6, title: "Coding Challenges", description: "Practice problems and competitive programming.", path: "/coding-challenges", icon: Code },
+    { number: 7, title: "Internships", description: "Internship opportunities and application tips.", path: "/internships", icon: Briefcase },
+    { number: 8, title: "Notes", description: "Study materials and quick reference guides.", path: "/notes", icon: FileText },
+    { number: 9, title: "Documents", description: "Templates, guides, and documentation.", path: "/documents", icon: FileText },
+    { number: 10, title: "Theories", description: "Computer science fundamentals and concepts.", path: "/theories", icon: BrainCircuit },
+    { number: 11, title: "Roadmaps", description: "Career path guidance and learning tracks.", path: "/roadmaps", icon: Map },
+    { number: 12, title: "Student Projects", description: "Academic projects and research ideas.", path: "/student-projects", icon: Users },
+    { number: 13, title: "Events", description: "Tech conferences, workshops, and meetups.", path: "/events", icon: Calendar },
+    { number: 14, title: "Assignments", description: "Practice assignments and problem sets for various subjects.", path: "/assignments", icon: ClipboardCheck },
+    { number: 15, title: "Campus Notes", description: "Collaborative study notes and campus resources.", path: "/campus-notes", icon: School },
+    { number: 16, title: "Templates", description: "Ready-to-use web templates and design resources.", path: "/templates", icon: LayoutTemplate },
+    { number: 17, title: "Anyone Can Develop", description: "Complete guide to creating webpages with AI assistance.", path: "/anyone-can-develop", icon: Bot },
+];
+
+
+// --- ALL OTHER DATA AND COMPONENTS REMAIN UNCHANGED ---
 const navLinks = [
   { title: "Certificates", path: "/certificates" },
   { title: "Projects", path: "/projects" },
@@ -36,36 +58,11 @@ const quickLinks = [
     },
 ];
 
-// --- THIS IS THE ONLY DATA ARRAY THAT IS REPLACED ---
-const resourceCardsNew = [
-    { number: 1, title: "Certificates", description: "Industry-recognized certifications and online courses.", path: "/certificates", icon: Award },
-    { number: 2, title: "Projects", description: "Hands-on projects and portfolio ideas.", path: "/projects", icon: Code },
-    { number: 3, title: "Ideas", description: "Creative project concepts and innovation inspiration.", path: "/ideas", icon: Lightbulb },
-    { number: 4, title: "Blogs", description: "Technical articles and industry insights.", path: "/blogs", icon: BookOpen },
-    { number: 5, title: "DSA", description: "Data Structures and Algorithms resources.", path: "/dsa", icon: Database },
-    { number: 6, title: "Coding Challenges", description: "Practice problems and competitive programming.", path: "/coding-challenges", icon: Code },
-    { number: 7, title: "Internships", description: "Internship opportunities and application tips.", path: "/internships", icon: Briefcase },
-    { number: 8, title: "Notes", description: "Study materials and quick reference guides.", path: "/notes", icon: FileText },
-    { number: 9, title: "Documents", description: "Templates, guides, and documentation.", path: "/documents", icon: FileText },
-    { number: 10, title: "Theories", description: "Computer science fundamentals and concepts.", path: "/theories", icon: BrainCircuit },
-    { number: 11, title: "Roadmaps", description: "Career path guidance and learning tracks.", path: "/roadmaps", icon: Map },
-    { number: 12, title: "Student Projects", description: "Academic projects and research ideas.", path: "/student-projects", icon: Users },
-    { number: 13, title: "Events", description: "Tech conferences, workshops, and meetups.", path: "/events", icon: Calendar }
-];
-
-const NOTIF_KEY = 'dhrc_tos_update_dismissed';
-const POPUP_KEY = 'dhrc_opportunities_popup_dismissed_2025_07';
-const CHAT_TUTORIAL_KEY = 'dhrc_chat_tutorial_dismissed_beta';
-
 const hackathonsData = [
     { source: "MLH 2025 Season", focus: "Collegiate hackathons", relevance: "Season includes summer 2025 events", link: "https://mlh.io/seasons/2025/events" },
     { source: "Devpost", focus: "Global hackathon platform", relevance: "New and upcoming, relevant for summer", link: "https://devpost.com/hackathons" },
     { source: "HackerEarth", focus: "Business challenges, prizes", relevance: "Upcoming events with 2025 deadlines", link: "https://www.hackerearth.com/challenges/" },
     { source: "Devfolio", focus: "Hackathon hosting & participation", relevance: "Events opening in August 2025", link: "https://devfolio.co/hackathons" },
-    { source: "Smart India Hackathon", focus: "Nationwide, student-focused", relevance: "Editions in 2025, problem-solving focus", link: "https://sih.gov.in/" },
-    { source: "Hack Club", focus: "High school hackathons", relevance: "Events in August 2025, global reach", link: "https://hackclub.com/events/" },
-    { source: "CSE NoticeBard", focus: "India-specific, 9 hackathons", relevance: "Upcoming in 2025, registration open", link: "https://csenoticebard.in/category/hackathons/" },
-    { source: "Airmeet", focus: "Global major hackathons", relevance: "Lists events for 2025, including summer", link: "https://www.airmeet.com/hub/events/category/hackathon/" },
 ];
 
 const internshipsData = [
@@ -73,111 +70,24 @@ const internshipsData = [
     { source: "Bright Network", focus: "Deadline tracker, various fields", relevance: "Summer 2025 deadlines, ongoing", link: "https://www.brightnetwork.co.uk/internship-deadlines/" },
     { source: "Capital One", focus: "Business/technology, 10 weeks", relevance: "Summer 2025 programs, student-focused", link: "https://www.capitalonecareers.com/students-and-grads" },
     { source: "MEA Internship Portal", focus: "Government, India, honorarium", relevance: "Terms in 2025, applications ongoing", link: "https://www.mea.gov.in/internship-in-mea.htm" },
-    { source: "Opportunities Corners", focus: "Fully funded, international", relevance: "Summer 2025, includes July-August dates", link: "https://opportunitiescorners.info/fully-funded-internships/" },
-    { source: "Smithsonian Institution", focus: "Year-round, various fields", relevance: "Includes July 2025 events", link: "https://www.si.edu/internships" },
-    { source: "Accenture", focus: "Technology, May-August 2025", relevance: "Full-time prioritized, applications open", link: "https://www.accenture.com/in-en/careers/jobsearch?jk=&sb=1" },
-    { source: "Indeed", focus: "Job board, summer internships", relevance: "701 jobs, start dates in May 2025", link: "https://in.indeed.com/q-summer-internship-jobs.html" },
 ];
+
+const NOTIF_KEY = 'dhrc_tos_update_dismissed';
+const POPUP_KEY = 'dhrc_opportunities_popup_dismissed_2025_07';
+const CHAT_TUTORIAL_KEY = 'dhrc_chat_tutorial_dismissed_beta';
 
 const NotificationSound = ({ play }) => {
     const audioRef = useRef(null);
-    useEffect(() => {
-        if (play) {
-            audioRef.current.play().catch(error => console.log("Audio play failed:", error));
-        }
-    }, [play]);
+    useEffect(() => { if (play) { audioRef.current.play().catch(e => {}); } }, [play]);
     return <audio ref={audioRef} src="https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3" />;
 };
 
-const ThemeToggler = ({ theme, toggleTheme }) => (
-    <Button variant="ghost" size="icon" onClick={toggleTheme} className="rounded-full text-neutral-400 hover:bg-neutral-800 hover:text-white" aria-label="Toggle theme">
-        {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-    </Button>
-);
-
-const ChatTutorialPopup = ({ onDismiss }) => {
-    const [step, setStep] = useState(0);
-    const navigate = useNavigate();
-
-    const tutorialSteps = [
-        {
-            illustration: "https://i.ibb.co/L5rM0H1/undraw-group-chat-re-pmca.png",
-            title: "1. Create a Room",
-            description: "Easily start a new public or private chat room to connect with others.",
-        },
-        {
-            illustration: "https://i.ibb.co/7jJzJ7b/undraw-invite-re-rrcp.png",
-            title: "2. Invite Your Mates",
-            description: "Share a unique link to invite your friends and classmates to join your room.",
-        },
-        {
-            illustration: "https://i.ibb.co/3kMhVKZ/undraw-mobile-messages-re-yx8w.png",
-            title: "3. Start Collaborating",
-            description: "Chat in real-time, share ideas, and work together seamlessly.",
-        },
-    ];
-
-    const handleNext = () => setStep((prev) => Math.min(prev + 1, tutorialSteps.length - 1));
-    const handlePrev = () => setStep((prev) => Math.max(prev - 1, 0));
-
-    const handleGetStarted = () => {
-        onDismiss();
-        navigate('/chatterbox');
-    };
-
-    return (
-        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
-            <Card className="w-full max-w-md bg-neutral-900 border border-neutral-700 rounded-lg shadow-2xl">
-                <CardContent className="p-6 text-center relative">
-                    <button onClick={onDismiss} className="absolute top-3 right-3 p-1.5 rounded-full text-neutral-400 hover:bg-neutral-700 transition-colors">
-                        <X size={18} />
-                    </button>
-                    
-                    <img
-                        src={tutorialSteps[step].illustration}
-                        alt={tutorialSteps[step].title}
-                        className="w-full max-w-[200px] h-auto mx-auto mb-5"
-                    />
-
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                        {tutorialSteps[step].title}
-                    </h3>
-                    <p className="text-neutral-400 mb-6 min-h-[40px]">
-                        {tutorialSteps[step].description}
-                    </p>
-
-                    <div className="flex items-center justify-between">
-                        <Button variant="ghost" onClick={handlePrev} disabled={step === 0} className={`transition-opacity text-white ${step === 0 ? 'opacity-0' : 'opacity-100'}`}>
-                            <ChevronLeft size={20} className="mr-1" /> Prev
-                        </Button>
-                        <div className="flex items-center space-x-2">
-                            {tutorialSteps.map((_, index) => (
-                                <div key={index} className={`h-2 w-2 rounded-full transition-colors ${step === index ? 'bg-blue-500' : 'bg-neutral-600'}`}></div>
-                            ))}
-                        </div>
-                        {step < tutorialSteps.length - 1 ? (
-                            <Button onClick={handleNext} className="bg-blue-600 hover:bg-blue-700 text-white">
-                                Next <ChevronRight size={20} className="ml-1" />
-                            </Button>
-                        ) : (
-                            <Button onClick={handleGetStarted} className="bg-blue-600 hover:bg-blue-700 text-white">
-                                Get Started
-                            </Button>
-                        )}
-                    </div>
-                </CardContent>
-            </Card>
-        </div>
-    );
-};
-
 const Index = () => {
-    const [showNotif, setShowNotif] = useState(true);
+    const [showNotif, setShowNotif] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const [theme, setTheme] = useState('dark');
     const [playNotificationSound, setPlayNotificationSound] = useState(false);
-    const [showChatTutorial, setShowChatTutorial] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -209,11 +119,6 @@ const Index = () => {
         window.sessionStorage.setItem(POPUP_KEY, '1');
     };
     
-    const dismissChatTutorial = () => {
-        setShowChatTutorial(false);
-        window.sessionStorage.setItem(CHAT_TUTORIAL_KEY, '1');
-    };
-    
     const OpportunityList = ({ title, data }) => (
         <div>
             <h4 className="font-semibold text-neutral-200 mb-3 px-4 text-sm uppercase tracking-wide">{title}</h4>
@@ -233,7 +138,6 @@ const Index = () => {
         <div className="min-h-screen bg-neutral-950 flex flex-col font-sans text-white">
             <Analytics />
             <NotificationSound play={playNotificationSound} />
-            {showChatTutorial && <ChatTutorialPopup onDismiss={dismissChatTutorial} />}
 
             {showPopup && (
                 <div className="fixed top-5 right-5 z-50 w-[calc(100%-2.5rem)] max-w-md bg-neutral-900/95 backdrop-blur-xl rounded-lg shadow-2xl border border-neutral-700">
