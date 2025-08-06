@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Send, Bot, User, Loader2, ArrowLeft } from "lucide-react";
+import { Send, Bot, User, Loader2, ArrowLeft, Server, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import clsx from 'clsx'; // Using clsx for cleaner conditional classes
+import clsx from 'clsx';
+import { Analytics } from '@vercel/analytics/react';
 
+// --- The Message interface remains unchanged ---
 interface Message {
   id: string;
   text: string;
@@ -25,8 +27,9 @@ const ChatterBox = () => {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null); // Ref for auto-growing textarea
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
+  // --- All functional hooks remain unchanged ---
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -35,11 +38,10 @@ const ChatterBox = () => {
     scrollToBottom();
   }, [messages]);
 
-  // useEffect for auto-growing textarea
   useEffect(() => {
     if (textAreaRef.current) {
-      textAreaRef.current.style.height = 'auto'; // Reset height to recalculate
-      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; // Set to content height
+      textAreaRef.current.style.height = 'auto';
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
     }
   }, [inputValue]);
 
@@ -101,27 +103,28 @@ const ChatterBox = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-white dark:bg-gray-900 font-sans">
+    <div className="flex flex-col h-screen bg-neutral-950 font-sans text-white">
+      <Analytics />
       
-      {/* --- Top Notification --- */}
-      <div className="bg-orange-100 dark:bg-orange-900/50 p-3 text-center text-sm text-orange-800 dark:text-orange-200">
+      {/* --- Restyled Top Notification --- */}
+      <div className="bg-blue-900/50 p-3 text-center text-sm text-blue-200 border-b border-blue-800/50">
         <p>
           To test the full potential of the ChatterBox, please{" "}
-          <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer" className="font-semibold underline hover:text-orange-600 dark:hover:text-orange-300">
+          <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer" className="font-semibold underline hover:text-blue-300">
             log in
           </a>
           .
         </p>
       </div>
 
-      {/* --- Header --- */}
-      <header className="flex items-center p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 flex-shrink-0">
-        <Link to="/" className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
-          <ArrowLeft className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+      {/* --- Consistent Header --- */}
+      <header className="flex items-center p-4 border-b border-neutral-800 bg-neutral-900 flex-shrink-0">
+        <Link to="/" className="p-2 rounded-full hover:bg-neutral-800">
+          <ArrowLeft className="w-5 h-5 text-neutral-300" />
         </Link>
         <div className="flex items-center gap-3 mx-auto">
-            <img src="https://cdn-icons-png.flaticon.com/512/1055/1055672.png" alt="ChatterBox Icon" className="w-8 h-8"/>
-            <h1 className="text-lg font-bold text-gray-800 dark:text-gray-100">CKR ChatterBox</h1>
+            <MessageSquare className="w-7 h-7 text-blue-400"/>
+            <h1 className="text-xl font-bold text-neutral-100">CKR ChatterBox</h1>
         </div>
         <div className="w-9 h-9"></div> {/* Spacer to balance the back button */}
       </header>
@@ -137,33 +140,46 @@ const ChatterBox = () => {
               })}
             >
               {message.isBot && (
-                <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0">
-                  <Bot size={20} className="text-white" />
+                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Bot size={18} className="text-white" />
                 </div>
               )}
               <div
                 className={clsx(
-                  'max-w-[85%] px-4 py-3 rounded-2xl leading-relaxed break-words',
+                  'max-w-[85%] px-4 py-3 rounded-2xl leading-relaxed break-words shadow-md',
                   message.isBot
-                    ? 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
-                    : 'bg-orange-500 text-white'
+                    ? 'bg-neutral-800 text-neutral-200'
+                    : 'bg-blue-600 text-white'
                 )}
               >
-                <p>{message.text}</p>
-                <div className="text-xs opacity-70 mt-2 text-right">
+                {/* A simple markdown-like renderer for bold and newlines */}
+                <p className="whitespace-pre-wrap">
+                  {message.text.split(/(\*\*.*?\*\*)/g).map((part, index) => 
+                    part.startsWith('**') && part.endsWith('**') ? 
+                    <strong key={index}>{part.slice(2, -2)}</strong> : 
+                    part
+                  )}
+                </p>
+                <div className="text-xs opacity-60 mt-2 text-right">
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
+               {!message.isBot && (
+                <div className="w-8 h-8 rounded-full bg-neutral-700 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <User size={18} className="text-neutral-200" />
+                </div>
+              )}
             </div>
           ))}
 
           {isLoading && (
             <div className="flex items-start gap-3 w-full animate-fade-in">
-                <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0">
-                  <Bot size={20} className="text-white" />
+                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+                  <Bot size={18} className="text-white" />
                 </div>
-                <div className="px-4 py-3 rounded-2xl bg-gray-100 dark:bg-gray-700">
-                    <Loader2 className="w-5 h-5 animate-spin text-orange-500" />
+                <div className="px-4 py-3 rounded-2xl bg-neutral-800 flex items-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin text-blue-400" />
+                    <span className="text-sm text-neutral-400">Thinking...</span>
                 </div>
             </div>
           )}
@@ -172,7 +188,7 @@ const ChatterBox = () => {
       </main>
 
       {/* --- Chat Input Form Area --- */}
-      <footer className="p-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+      <footer className="p-4 bg-neutral-900 border-t border-neutral-800">
         <div className="max-w-3xl mx-auto">
           <form
             onSubmit={(e) => { e.preventDefault(); handleSendMessage(); }}
@@ -183,21 +199,24 @@ const ChatterBox = () => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyPress}
-              placeholder="Ask anything..."
-              className="w-full border border-gray-300 dark:border-gray-600 rounded-2xl py-3 pl-4 pr-14 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none max-h-40"
+              placeholder="Ask anything about engineering, careers, or resources..."
+              className="w-full border border-neutral-700 rounded-2xl py-3 pl-4 pr-14 bg-neutral-800 text-neutral-100 placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none max-h-48"
               rows={1}
               disabled={isLoading}
             />
             <Button
               type="submit"
               size="icon"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full bg-orange-500 text-white disabled:bg-gray-400 dark:disabled:bg-gray-600 hover:bg-orange-600 transition-all"
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-blue-600 text-white disabled:bg-neutral-700 disabled:text-neutral-400 hover:bg-blue-700 transition-all"
               disabled={isLoading || !inputValue.trim()}
               aria-label="Send message"
             >
               {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
             </Button>
           </form>
+          <p className="text-center text-xs text-neutral-600 mt-3">
+             CKR ChatterBox can make mistakes. Consider checking important information.
+          </p>
         </div>
       </footer>
     </div>
