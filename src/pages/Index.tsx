@@ -42,13 +42,13 @@ const resourceCards = [
     { title: "Internships", description: "Internship opportunities and career guidance.", path: "/internships", img: "https://cdn-icons-png.flaticon.com/512/3135/3135768.png", status: 'Updated' },
     { title: "Notes", description: "Study materials and quick reference guides.", path: "/notes", img: "https://cdn-icons-png.flaticon.com/512/3135/3135773.png" },
     { title: "Campus Notes", description: "Collaborative study notes and campus resources.", path: "/campus-notes", img: "https://cdn-icons-png.flaticon.com/512/3135/3135772.png", status: 'Updated' },
-    { title: "Assignments", description: "Practice assignments and problem sets for various subjects.", path: "/assignments", img: "https://cdn-icons-png.flaticon.com/512/3843/3843516.png", status: 'New' },
+    { title: "Assignments", description: "Practice assignments and problem sets for various subjects.", path: "/assignments", img: "https://cdn-icons-png.flaticon.com/512/3135/3135718.png", status: 'New' },
     { title: "Documents", description: "Technical documentation and manuals.", path: "/documents", img: "https://cdn-icons-png.flaticon.com/512/3135/3135766.png" },
     { title: "Theories", description: "Fundamental concepts and theoretical knowledge.", path: "/theories", img: "https://cdn-icons-png.flaticon.com/512/3135/3135762.png" },
-    { title: "Roadmaps", description: "Structured learning paths for DSA and Web Development.", path: "/roadmaps", img: "https://cdn-icons-png.flaticon.com/512/3135/3135757.png" },
-    { title: "Student Projects", description: "Innovative projects built by students across India.", path: "/student-projects", img: "https://cdn-icons-png.flaticon.com/512/3135/3135758.png" },
+    { title: "Roadmaps", description: "Structured learning paths for DSA and Web Development.", path: "/roadmaps", img: "https://cdn-icons-png.flaticon.com/512/3135/3135757.png", status: 'Updated' },
+    { title: "Student Projects", description: "Innovative projects built by students across India.", path: "/student-projects", img: "https://cdn-icons-png.flaticon.com/512/3135/3135758.png", status: 'Updated' },
     { title: "Events", description: "Tech events, competitions, and conferences.", path: "/events", img: "https://cdn-icons-png.flaticon.com/512/3135/3135760.png" },
-    { title: "Interview Questions", description: "Comprehensive SQL interview questions and answers.", path: "/interview-questions", img: "https://cdn-icons-png.flaticon.com/512/3135/3135764.png" },
+    { title: "Interview Questions", description: "Comprehensive SQL interview questions and answers.", path: "/interview-questions", img: "https://cdn-icons-png.flaticon.com/512/3135/3135764.png", status: 'Updated' },
     { title: "Anyone Can Develop", description: "Complete guide to creating webpages with AI assistance.", path: "/anyone-can-develop", img: "https://cdn-icons-png.flaticon.com/512/3135/3135770.png", status: 'Updated' },
     { title: "Templates", description: "Ready-to-use web templates and design resources.", path: "/templates", img: "https://cdn-icons-png.flaticon.com/512/3135/3135769.png", status: 'Updated' }
 ];
