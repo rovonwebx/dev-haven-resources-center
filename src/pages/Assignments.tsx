@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Clock, Users, Server, Camera, Check, X, FileDown, Percent, Eye, XCircle, GripVertical } from "lucide-react";
+import { ArrowLeft, Clock, Users, Server, Camera, Check, X, FileDown, Percent, Eye, XCircle, GripVertical, Zap } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Analytics } from '@vercel/analytics/react';
 import clsx from 'clsx';
 
-// --- FULL DATA (50 Questions Each) is preserved ---
+// --- FULL DATA (50 Questions Each) ---
+
 const aptitudeQuestions = [
     // Quantitative Aptitude (1-15)
     { id: 'apt1', question: 'A man buys an item for Rs. 500 and sells it for Rs. 600. What is his profit percentage?', options: ['10%', '15%', '20%', '25%'], answer: '20%' },
@@ -121,7 +122,7 @@ const hrQuestions = [
 ];
 
 const Assignments = () => {
-    // State management for the component
+    // --- All component state and logic is preserved ---
     const [view, setView] = useState('selection');
     const [currentTest, setCurrentTest] = useState(null);
     const [testData, setTestData] = useState([]);
@@ -132,11 +133,9 @@ const Assignments = () => {
     const [isPaletteOpen, setIsPaletteOpen] = useState(false);
     const [cameraStream, setCameraStream] = useState(null);
     
-    // Refs for timer and video element
     const timerRef = useRef(null);
     const videoRef = useRef(null);
 
-    // Effect to start and stop the camera stream
     const stopCamera = () => {
         if (cameraStream) {
             cameraStream.getTracks().forEach(track => track.stop());
@@ -145,23 +144,18 @@ const Assignments = () => {
     };
 
     useEffect(() => {
-        if (view === 'test' && !cameraStream) {
-            // This will be triggered by startTest function instead
-        } else if (view !== 'test' && cameraStream) {
+        if (view !== 'test' && cameraStream) {
             stopCamera();
         }
-        // Cleanup function to stop camera when component unmounts
         return () => stopCamera();
     }, [view]);
 
-    // Effect to manage the video element source
     useEffect(() => {
         if (videoRef.current && cameraStream) {
             videoRef.current.srcObject = cameraStream;
         }
     }, [cameraStream]);
 
-    // Effect to manage the countdown timer
     useEffect(() => {
         if (view === 'test' && timeLeft > 0) {
             timerRef.current = setInterval(() => {
@@ -169,12 +163,10 @@ const Assignments = () => {
             }, 1000);
         } else if (timeLeft === 0 && view === 'test') {
             clearInterval(timerRef.current);
-            submitTest();
+            submitTest(true); // Auto-submit when time runs out
         }
         return () => clearInterval(timerRef.current);
     }, [view, timeLeft]);
-
-    // --- Core Functions ---
 
     const handleSelectTest = (testType) => {
         setCurrentTest(testType);
@@ -204,11 +196,8 @@ const Assignments = () => {
     const toggleMarkForReview = () => {
         const newMarked = new Set(markedForReview);
         const questionId = testData[currentQuestionIndex].id;
-        if (newMarked.has(questionId)) {
-            newMarked.delete(questionId);
-        } else {
-            newMarked.add(questionId);
-        }
+        if (newMarked.has(questionId)) newMarked.delete(questionId);
+        else newMarked.add(questionId);
         setMarkedForReview(newMarked);
     };
 
@@ -218,10 +207,10 @@ const Assignments = () => {
         setAnswers(newAnswers);
     };
 
-    const submitTest = () => {
+    const submitTest = (isAutoSubmit = false) => {
         stopCamera();
         clearInterval(timerRef.current);
-        if (window.confirm("Are you sure you want to end the test?")) {
+        if (isAutoSubmit || window.confirm("Are you sure you want to end the test?")) {
             setView('results');
         }
     };
@@ -233,7 +222,7 @@ const Assignments = () => {
         }, 0);
     };
 
-    // --- Render Functions for Each View ---
+    // --- All render functions are preserved, with the error fix applied ---
 
     const renderSelection = () => (
       <div className="max-w-4xl mx-auto">
@@ -286,8 +275,11 @@ const Assignments = () => {
     );
   
     const renderTest = () => {
-        if (!testData || testData.length === 0) return <div>Loading test...</div>;
         const question = testData[currentQuestionIndex];
+        // THIS IS THE FIX: Ensure question object exists before rendering.
+        if (!question) {
+            return <div className="text-center p-8">Loading question...</div>;
+        }
         const isMarked = markedForReview.has(question.id);
 
         return (
@@ -316,7 +308,7 @@ const Assignments = () => {
                         </CardContent>
                         <div className="flex flex-wrap items-center justify-between p-4 border-t border-neutral-800 gap-2">
                            <div className="flex gap-2">
-                               <Button onClick={toggleMarkForReview} variant="outline" className={clsx(isMarked ? 'bg-purple-600 text-white border-purple-500' : 'border-neutral-700 text-neutral-300 hover:bg-neutral-800')}>
+                               <Button onClick={toggleMarkForReview} variant="outline" className={clsx('border-neutral-700 text-neutral-300 hover:bg-neutral-800', { 'bg-purple-600 text-white border-purple-500 hover:bg-purple-700': isMarked })}>
                                    <Eye className="mr-2 h-4 w-4" /> {isMarked ? 'Unmark Review' : 'Mark for Review'}
                                </Button>
                                <Button onClick={clearResponse} variant="destructive">
@@ -347,7 +339,7 @@ const Assignments = () => {
                        </div>
                        
                         <h4 className="font-semibold text-white mb-2">Question Palette</h4>
-                        <div className="grid grid-cols-5 gap-2 mb-4">
+                        <div className="grid grid-cols-5 gap-2 mb-4 max-h-52 overflow-y-auto pr-2">
                             {Array.from({ length: testData.length }).map((_, i) => {
                                 const qId = testData[i].id;
                                 const isAnswered = answers.hasOwnProperty(qId);
@@ -375,7 +367,7 @@ const Assignments = () => {
                              <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full border-2 border-blue-500"></div>Current</div>
                         </div>
 
-                        <Button onClick={submitTest} className="w-full bg-red-600 hover:bg-red-700 text-white font-bold">End Test</Button>
+                        <Button onClick={() => submitTest(false)} className="w-full bg-red-600 hover:bg-red-700 text-white font-bold">End Test</Button>
                     </Card>
                 </div>
             </div>
