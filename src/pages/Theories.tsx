@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen, Clock, Brain, Cpu, Globe, Zap, Lightbulb } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Analytics } from "@vercel/analytics/react";
+import { ArrowLeft, BookOpen, Clock, Brain, Cpu, Globe, Zap, Lightbulb, Server, CheckCircle, BrainCircuit, Atom, FlaskConical, FunctionSquare, Network } from "lucide-react";
 
-const Theories = () => {
-  const theoryCategories = [
+// --- All original data is preserved ---
+const theoryCategories = [
     {
       category: "First Year - Mathematical & Scientific Foundations",
-      icon: Brain,
-      color: "bg-green-50 border-green-200",
+      icon: Atom,
       theories: [
         { id: "set-theory", title: "Set Theory and Mathematical Logic", description: "Fundamental concepts of sets, relations, functions, and logical reasoning", difficulty: "Beginner", readTime: "45 min", applications: "Database design, Programming logic", year: "1st Year" },
         { id: "number-theory", title: "Number Theory Fundamentals", description: "Prime numbers, modular arithmetic, and cryptographic applications", difficulty: "Intermediate", readTime: "50 min", applications: "Cryptography, Computer Security", year: "1st Year" },
@@ -22,7 +23,6 @@ const Theories = () => {
     {
       category: "Second Year - Computer Science Fundamentals",
       icon: Cpu,
-      color: "bg-blue-50 border-blue-200",
       theories: [
         { id: "computational-complexity", title: "Computational Complexity Theory", description: "Study of P vs NP problems, complexity classes, and algorithmic efficiency analysis", difficulty: "Advanced", readTime: "75 min", applications: "Algorithm Design, Optimization", year: "2nd Year" },
         { id: "automata-theory", title: "Automata Theory", description: "Finite state machines, regular expressions, context-free grammars, and formal languages", difficulty: "Intermediate", readTime: "65 min", applications: "Compiler Design, Pattern Matching", year: "2nd Year" },
@@ -36,8 +36,7 @@ const Theories = () => {
     },
     {
       category: "Third Year - Software Engineering & Systems",
-      icon: Globe,
-      color: "bg-purple-50 border-purple-200",
+      icon: Network,
       theories: [
         { id: "solid-principles", title: "SOLID Principles", description: "Five fundamental design principles for writing maintainable and scalable object-oriented software", difficulty: "Intermediate", readTime: "45 min", applications: "Software Architecture, Code Quality", year: "3rd Year" },
         { id: "design-patterns", title: "Design Patterns Theory", description: "Reusable solutions to commonly occurring problems in software design and architecture", difficulty: "Advanced", readTime: "90 min", applications: "Framework Development, System Design", year: "3rd Year" },
@@ -53,7 +52,6 @@ const Theories = () => {
     {
       category: "Fourth Year - Advanced Technologies & Specialization",
       icon: Zap,
-      color: "bg-red-50 border-red-200",
       theories: [
         { id: "machine-learning-theory", title: "Machine Learning Theory", description: "Statistical learning theory, bias-variance tradeoff, and generalization bounds", difficulty: "Advanced", readTime: "100 min", applications: "AI Systems, Data Science", year: "4th Year" },
         { id: "ai-foundations", title: "Artificial Intelligence Foundations", description: "Search algorithms, knowledge representation, reasoning, and planning", difficulty: "Advanced", readTime: "110 min", applications: "Expert Systems, Robotics", year: "4th Year" },
@@ -70,7 +68,6 @@ const Theories = () => {
     {
       category: "Research & Emerging Technologies",
       icon: Lightbulb,
-      color: "bg-yellow-50 border-yellow-200",
       theories: [
         { id: "bioinformatics", title: "Bioinformatics Theory", description: "Computational methods for analyzing biological data and genomic sequences", difficulty: "Advanced", readTime: "85 min", applications: "Drug Discovery, Genetic Analysis", year: "Research" },
         { id: "neuromorphic-computing", title: "Neuromorphic Computing", description: "Brain-inspired computing architectures and spike-based neural networks", difficulty: "Expert", readTime: "95 min", applications: "AI Hardware, Cognitive Computing", year: "Research" },
@@ -80,182 +77,168 @@ const Theories = () => {
         { id: "green-computing", title: "Green Computing Theory", description: "Energy-efficient computing, sustainable technology, and environmental impact", difficulty: "Intermediate", readTime: "60 min", applications: "Sustainable Tech, Energy Optimization", year: "Research" }
       ]
     }
-  ];
+];
 
-  const getDifficultyColor = (difficulty: string) => {
+const getDifficultyClass = (difficulty) => {
     switch (difficulty) {
-      case "Beginner": return "bg-green-100 text-green-800";
-      case "Intermediate": return "bg-yellow-100 text-yellow-800";
-      case "Advanced": return "bg-red-100 text-red-800";
-      case "Expert": return "bg-purple-100 text-purple-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "Beginner": return "bg-emerald-900/80 text-emerald-200 border border-emerald-600/50";
+      case "Intermediate": return "bg-amber-900/80 text-amber-200 border border-amber-600/50";
+      case "Advanced": return "bg-red-900/80 text-red-200 border border-red-600/50";
+      case "Expert": return "bg-purple-900/80 text-purple-200 border border-purple-600/50";
+      default: return "bg-neutral-700 text-neutral-200 border-neutral-600";
     }
-  };
+};
 
-  const getYearColor = (year: string) => {
+const getYearClass = (year) => {
     switch (year) {
-      case "1st Year": return "bg-blue-100 text-blue-800";
-      case "2nd Year": return "bg-green-100 text-green-800";
-      case "3rd Year": return "bg-purple-100 text-purple-800";
-      case "4th Year": return "bg-red-100 text-red-800";
-      case "Research": return "bg-gray-100 text-gray-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "1st Year": return "bg-blue-900/80 text-blue-200 border border-blue-600/50";
+      case "2nd Year": return "bg-cyan-900/80 text-cyan-200 border border-cyan-600/50";
+      case "3rd Year": return "bg-indigo-900/80 text-indigo-200 border border-indigo-600/50";
+      case "4th Year": return "bg-rose-900/80 text-rose-200 border border-rose-600/50";
+      case "Research": return "bg-gray-700 text-gray-200 border border-gray-500";
+      default: return "bg-neutral-700 text-neutral-200 border-neutral-600";
     }
-  };
+};
 
+const Theories = () => {
   return (
-    <div className="min-h-screen bg-white">
-      <header className="border-b border-gray-300 bg-white">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center space-x-4">
-              <h1 className="text-3xl font-serif text-black">Engineering Theories</h1>
-            </div>
-            <Button variant="ghost" size="sm" asChild className="text-blue-600 hover:bg-blue-50">
-              <Link to="/">
-                <ArrowLeft className="w-4 h-4 mr-1" />
-                Main Page
-              </Link>
-            </Button>
-          </div>
-          <p className="text-gray-600 text-sm mt-1">Fundamental concepts and theoretical foundations for engineering students</p>
-          <p className="text-blue-600 text-sm mt-2 font-medium">50+ Core Theories | All Academic Years | Research Topics</p>
-        </div>
-      </header>
+    <div className="min-h-screen bg-neutral-950 flex flex-col font-sans text-white">
+        <Analytics />
 
-      <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="mb-8 bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-lg border border-purple-200">
-          <h2 className="text-xl font-semibold text-black mb-3">Comprehensive Theory Collection</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Explore 50+ fundamental theories that form the backbone of computer science and engineering. 
-            From mathematical foundations to cutting-edge research topics, each theory is explained with practical 
-            applications and real-world relevance.
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm">
-            <div className="bg-white p-3 rounded border text-center">
-              <div className="font-bold text-2xl text-green-600">1st</div>
-              <div className="text-gray-600">Mathematical Foundations</div>
+        <header className="sticky top-0 w-full border-b border-neutral-800 bg-neutral-950/90 backdrop-blur-xl z-40">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+                <Link to="/" className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center shadow-lg">
+                        <Server className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="hidden sm:block">
+                        <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Center of Knowledge & Resources</h1>
+                        <p className="text-xs text-neutral-400 font-medium tracking-wider uppercase">Professional Resource Hub</p>
+                    </div>
+                </Link>
+                <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="sm" asChild className="text-neutral-300 hover:bg-neutral-800 hover:text-white">
+                        <Link to="/">
+                            <ArrowLeft className="w-4 h-4 mr-2" />
+                            Back to Hub
+                        </Link>
+                    </Button>
+                    <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer">
+                        <Button className="bg-blue-600 text-white hover:bg-blue-700 font-semibold px-4 py-2 rounded-lg transition-all">Access Portal</Button>
+                    </a>
+                </div>
             </div>
-            <div className="bg-white p-3 rounded border text-center">
-              <div className="font-bold text-2xl text-blue-600">2nd</div>
-              <div className="text-gray-600">CS Fundamentals</div>
-            </div>
-            <div className="bg-white p-3 rounded border text-center">
-              <div className="font-bold text-2xl text-purple-600">3rd</div>
-              <div className="text-gray-600">Systems & Software</div>
-            </div>
-            <div className="bg-white p-3 rounded border text-center">
-              <div className="font-bold text-2xl text-red-600">4th</div>
-              <div className="text-gray-600">Advanced Topics</div>
-            </div>
-            <div className="bg-white p-3 rounded border text-center">
-              <div className="font-bold text-2xl text-yellow-600">Research</div>
-              <div className="text-gray-600">Research Areas</div>
-            </div>
-          </div>
-        </div>
+        </header>
 
-        {theoryCategories.map((category, categoryIndex) => {
-          const IconComponent = category.icon;
-          return (
-            <section key={categoryIndex} className="mb-12">
-              <div className="flex items-center mb-6">
-                <IconComponent className="w-6 h-6 text-blue-600 mr-3" />
-                <h2 className="text-2xl font-serif text-black">
-                  {category.category}
+      <main className="flex-1 w-full pt-12 pb-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+                <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4 flex items-center justify-center gap-4">
+                    <BookOpen className="w-10 h-10 text-blue-400" />
+                    Engineering Theories
                 </h2>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {category.theories.map((theory, theoryIndex) => (
-                  <Link to={`/theory/${theory.id}`} key={theoryIndex} className="block group">
-                    <Card className={`${category.color} group-hover:shadow-lg transition-all duration-200 group-hover:scale-[1.02] h-full`}>
-                      <CardContent className="p-5 flex flex-col h-full">
-                        <div className="flex-grow">
-                          <div className="flex justify-between items-start mb-3">
-                            <h3 className="font-semibold text-black text-lg leading-tight pr-2">{theory.title}</h3>
-                            <BookOpen className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors shrink-0" />
-                          </div>
-                          <p className="text-gray-700 text-sm leading-relaxed mb-4">{theory.description}</p>
-                          
-                          <div className="mb-4">
-                            <div className="text-xs font-medium text-gray-600 mb-2">Applications:</div>
-                            <div className="text-xs text-blue-700 bg-blue-100 px-2 py-1 rounded italic">
-                              {theory.applications}
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex flex-wrap items-center gap-2 text-xs mt-auto">
-                          <span className={`px-2 py-1 rounded-full font-medium ${getDifficultyColor(theory.difficulty)}`}>
-                            {theory.difficulty}
-                          </span>
-                          <span className={`px-2 py-1 rounded-full font-medium ${getYearColor(theory.year)}`}>
-                            {theory.year}
-                          </span>
-                          <div className="flex items-center text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
-                            <Clock className="w-3 h-3 mr-1" />
-                            {theory.readTime}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          );
-        })}
-
-        <Card className="mt-12 border-2 border-blue-200 bg-blue-50">
-          <CardContent className="p-6">
-            <h3 className="font-semibold text-black mb-4 flex items-center">
-              <Brain className="w-5 h-5 mr-2 text-blue-600" />
-              Theory Study Methodology
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-              <div>
-                <h4 className="font-medium mb-3 text-black">Understanding Theory</h4>
-                <ul className="text-gray-700 space-y-2">
-                  <li>• Start with fundamental definitions and concepts</li>
-                  <li>• Use visual aids and mathematical proofs</li>
-                  <li>• Connect theoretical concepts to practical applications</li>
-                  <li>• Work through examples systematically</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-3 text-black">Practical Application</h4>
-                <ul className="text-gray-700 space-y-2">
-                  <li>• Implement theoretical concepts in programming</li>
-                  <li>• Engage in peer discussions and study groups</li>
-                  <li>• Solve related problems and case studies</li>
-                  <li>• Teach concepts to reinforce understanding</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-3 text-black">Progressive Learning</h4>
-                <ul className="text-gray-700 space-y-2">
-                  <li>• Follow difficulty progression systematically</li>
-                  <li>• Build upon previously learned concepts</li>
-                  <li>• Regular review and reinforcement</li>
-                  <li>• Apply theories to current research trends</li>
-                </ul>
-              </div>
+                <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
+                    Fundamental concepts and theoretical foundations spanning the entire computer science & engineering curriculum.
+                </p>
             </div>
-          </CardContent>
-        </Card>
 
-        <div className="mt-12 pt-6 border-t border-gray-200 text-center">
-          <p className="text-gray-500 text-sm">
-            All theories are curated from academic sources and industry best practices. 
-            Covering <span className="font-semibold text-blue-600">50+ core theories</span> across 
-            <span className="font-semibold text-green-600">4 academic years</span> plus research topics.
-          </p>
-          <p className="text-xs text-gray-400 mt-2">
-            For additional theoretical resources, visit the main <Link to="/" className="text-blue-600 hover:underline">Engineering Resources Hub</Link>
-          </p>
+            {theoryCategories.map((category, categoryIndex) => {
+              const IconComponent = category.icon;
+              return (
+                <section key={categoryIndex} className="mb-16">
+                  <div className="flex items-center mb-6 pb-3 border-b border-neutral-800">
+                    <IconComponent className="w-7 h-7 text-blue-400 mr-4" />
+                    <h2 className="text-2xl font-semibold text-white">
+                      {category.category}
+                    </h2>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {category.theories.map((theory, theoryIndex) => (
+                      <Link to={`/theory/${theory.id}`} key={theoryIndex} className="block group">
+                        <Card className="bg-neutral-900 border border-neutral-800 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full">
+                          <CardContent className="p-5 flex flex-col flex-grow">
+                              <h3 className="font-semibold text-white text-lg mb-2">{theory.title}</h3>
+                              <p className="text-neutral-400 text-sm leading-relaxed mb-4 flex-grow">{theory.description}</p>
+                              
+                              <div className="mb-4">
+                                <div className="text-xs font-medium text-neutral-500 mb-1.5">APPLICATIONS</div>
+                                <div className="text-xs font-semibold text-blue-300 bg-blue-900/50 px-2.5 py-1.5 rounded-md border border-blue-800/60">
+                                  {theory.applications}
+                                </div>
+                              </div>
+                            
+                            <div className="flex flex-wrap items-center gap-2 text-xs mt-auto pt-4 border-t border-neutral-800">
+                              <Badge className={`font-bold ${getDifficultyClass(theory.difficulty)}`}>
+                                {theory.difficulty}
+                              </Badge>
+                              <Badge className={`font-bold ${getYearClass(theory.year)}`}>
+                                {theory.year}
+                              </Badge>
+                              <Badge className="font-bold bg-neutral-800 text-neutral-300 border border-neutral-700">
+                                <Clock className="w-3 h-3 mr-1.5" />
+                                {theory.readTime}
+                              </Badge>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
+
+            <Card className="mt-12 bg-neutral-900 border border-neutral-800">
+                <CardHeader>
+                    <CardTitle className="text-xl font-bold text-white flex items-center gap-3">
+                       <BrainCircuit className="w-6 h-6 text-emerald-400" />
+                       Effective Study Methodology
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                    <div>
+                        <h3 className="font-semibold text-neutral-200 mb-3">Conceptual Understanding</h3>
+                        <ul className="space-y-2">
+                            <li className="flex items-start"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2.5 mt-1 shrink-0" /><span className="text-neutral-400">Start with core definitions and axioms.</span></li>
+                            <li className="flex items-start"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2.5 mt-1 shrink-0" /><span className="text-neutral-400">Relate abstract ideas to concrete examples.</span></li>
+                            <li className="flex items-start"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2.5 mt-1 shrink-0" /><span className="text-neutral-400">Teach the concept to someone else to test your knowledge.</span></li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h3 className="font-semibold text-neutral-200 mb-3">Practical Application</h3>
+                        <ul className="space-y-2">
+                            <li className="flex items-start"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2.5 mt-1 shrink-0" /><span className="text-neutral-400">Implement algorithms or models based on the theory.</span></li>
+                            <li className="flex items-start"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2.5 mt-1 shrink-0" /><span className="text-neutral-400">Solve related problems on platforms like LeetCode or HackerRank.</span></li>
+                            <li className="flex items-start"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2.5 mt-1 shrink-0" /><span className="text-neutral-400">Analyze case studies where the theory is applied.</span></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 className="font-semibold text-neutral-200 mb-3">Long-Term Retention</h3>
+                        <ul className="space-y-2">
+                            <li className="flex items-start"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2.5 mt-1 shrink-0" /><span className="text-neutral-400">Use spaced repetition systems (e.g., Anki) for key facts.</span></li>
+                            <li className="flex items-start"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2.5 mt-1 shrink-0" /><span className="text-neutral-400">Build upon foundational theories as you progress each year.</span></li>
+                            <li className="flex items-start"><CheckCircle className="w-4 h-4 text-emerald-500 mr-2.5 mt-1 shrink-0" /><span className="text-neutral-400">Regularly review and connect different theoretical areas.</span></li>
+                        </ul>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
       </main>
+
+        <footer className="bg-neutral-900 border-t border-neutral-800">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div className="text-center">
+                    <p className="text-sm text-neutral-500">
+                        © {new Date().getFullYear()} Center of Knowledge & Resources - All Rights Reserved.
+                    </p>
+                    <div className="flex justify-center space-x-6 text-sm mt-4">
+                        <Link to="/terms-of-service" className="text-neutral-500 hover:text-blue-400 transition-colors">Terms of Service</Link>
+                        <Link to="/privacy-policy" className="text-neutral-500 hover:text-blue-400 transition-colors">Privacy Policy</Link>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
   );
 };
