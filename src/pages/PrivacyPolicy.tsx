@@ -109,7 +109,7 @@ const PrivacyPolicyFinal = () => {
           {/* Privacy Policy Content */}
           <div className="flex-1 min-w-0 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm p-6 sm:p-8">
             <div className="mb-6">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Privacy Policy for Dev Haven Resources Center</h2>
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Privacy Policy for Center of Knowledge & Resources</h2>
               <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                 Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
@@ -118,7 +118,7 @@ const PrivacyPolicyFinal = () => {
             <div className="space-y-8 text-slate-700 dark:text-slate-300 leading-relaxed">
               <section id="introduction">
                 <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">1. Introduction</h3>
-                <p>This Privacy Policy explains how Dev Haven Resources Center ("DHRC", "we", "us") collects, uses, and protects your information when you use our website and services (the "Service"). We are committed to protecting your privacy and ensuring you have a positive experience on our site.</p>
+                <p>This Privacy Policy explains how Center of Knowledge & Resources ("CKR", "we", "us") collects, uses, and protects your information when you use our website and services (the "Service"). We are committed to protecting your privacy and ensuring you have a positive experience on our site.</p>
               </section>
 
               <section id="data-collected">

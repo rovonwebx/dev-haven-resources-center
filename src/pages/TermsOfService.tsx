@@ -70,14 +70,14 @@ const TermsOfServiceEnhanced = () => {
           {/* Terms Content Section */}
           <div className="flex-1 min-w-0 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm p-6 sm:p-8">
             <div className="mb-6">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Terms of Service for Dev Haven Resources Center</h2>
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Terms of Service for Center of Knowledge & Resources</h2>
               <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                 Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
             </div>
             
             <div className="space-y-8 text-slate-700 dark:text-slate-300 leading-relaxed">
-              <p>Welcome to the Dev Haven Resources Center ("DHRC", "we", "us", or "our"). These Terms of Service ("Terms") govern your access to and use of our website, resources, and services (collectively, the "Service"). Please read them carefully.</p>
+              <p>Welcome to the Center of Knowledge & Resources ("CKR", "we", "us", or "our"). These Terms of Service ("Terms") govern your access to and use of our website, resources, and services (collectively, the "Service"). Please read them carefully.</p>
               
               <section id="acceptance">
                 <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">1. Acceptance of Terms</h3>
@@ -86,7 +86,7 @@ const TermsOfServiceEnhanced = () => {
 
               <section id="description">
                 <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">2. Description of Service</h3>
-                <p>DHRC provides a curated collection of educational materials, code snippets, project templates, guides, and other resources for developers and students ("Resources"). The Service is provided for informational and educational purposes only.</p>
+                <p>CKR provides a curated collection of educational materials, code snippets, project templates, guides, and other resources for developers and students ("Resources"). The Service is provided for informational and educational purposes only.</p>
               </section>
 
               <section id="conduct">
@@ -102,27 +102,27 @@ const TermsOfServiceEnhanced = () => {
 
               <section id="ip">
                 <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">4. Intellectual Property Rights</h3>
-                <p>Our website, branding, and original content are the exclusive property of DHRC. The Resources we provide, particularly third-party templates and code snippets, are subject to their own respective open-source licenses (e.g., MIT, GPL). It is your responsibility to understand and comply with the license of any third-party resource you use.</p>
+                <p>Our website, branding, and original content are the exclusive property of CKR. The Resources we provide, particularly third-party templates and code snippets, are subject to their own respective open-source licenses (e.g., MIT, GPL). It is your responsibility to understand and comply with the license of any third-party resource you use.</p>
               </section>
 
               <section id="resources">
                 <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">5. Use of Resources</h3>
-                <p>DHRC grants you a limited, non-exclusive license to access and use the Resources for your personal, non-commercial, and educational purposes. This license does not grant you ownership of the Resources. You agree not to reproduce, sell, or resell any part of the Service without express written permission from us or the original license holder.</p>
+                <p>CKR grants you a limited, non-exclusive license to access and use the Resources for your personal, non-commercial, and educational purposes. This license does not grant you ownership of the Resources. You agree not to reproduce, sell, or resell any part of the Service without express written permission from us or the original license holder.</p>
               </section>
 
               <section id="disclaimers">
                 <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">6. Disclaimers</h3>
-                <p>The Service and all Resources are provided on an "as is" and "as available" basis without any warranties, express or implied. DHRC does not warrant that the Service will be error-free or that any information is accurate or reliable. You use the Service and Resources at your own risk.</p>
+                <p>The Service and all Resources are provided on an "as is" and "as available" basis without any warranties, express or implied. CKR does not warrant that the Service will be error-free or that any information is accurate or reliable. You use the Service and Resources at your own risk.</p>
               </section>
               
               <section id="liability">
                 <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">7. Limitation of Liability</h3>
-                <p>To the fullest extent permitted by law, DHRC shall not be liable for any indirect, incidental, special, or consequential damages, including loss of profits or data, resulting from your use of the Service or any Resources obtained from it.</p>
+                <p>To the fullest extent permitted by law, CKR shall not be liable for any indirect, incidental, special, or consequential damages, including loss of profits or data, resulting from your use of the Service or any Resources obtained from it.</p>
               </section>
 
               <section id="third-party">
                 <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">8. Third-Party Links</h3>
-                <p>The Service may contain links to third-party websites or services that are not owned or controlled by DHRC. We are not responsible for the content or practices of any third-party websites.</p>
+                <p>The Service may contain links to third-party websites or services that are not owned or controlled by CKR. We are not responsible for the content or practices of any third-party websites.</p>
               </section>
 
               <section id="termination">
@@ -137,7 +137,7 @@ const TermsOfServiceEnhanced = () => {
               
               <section id="law">
                 <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-2">11. Governing Law</h3>
-                <p>These Terms shall be governed and construed in accordance with the laws of the jurisdiction in which DHRC operates, without regard to its conflict of law provisions.</p>
+                <p>These Terms shall be governed and construed in accordance with the laws of the jurisdiction in which CKR operates, without regard to its conflict of law provisions.</p>
               </section>
             </div>
           </div>
