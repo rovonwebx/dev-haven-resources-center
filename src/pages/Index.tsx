@@ -459,7 +459,7 @@ const Index = () => {
                                 <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
                                     <Server className="w-5 h-5 text-white" />
                                 </div>
-                                <span className="text-xl font-bold text-white">EDC</span>
+                                <span className="text-xl font-bold text-white">CKR</span>
                             </Link>
                             <p className="text-neutral-500 text-sm leading-relaxed">
                                 Professional engineering data center providing enterprise-grade resources and tools.
@@ -498,7 +498,7 @@ const Index = () => {
 
                     <div className="mt-8 pt-6 border-t border-neutral-800 flex flex-col sm:flex-row justify-between items-center text-center">
                         <p className="text-sm text-neutral-500 mb-4 sm:mb-0">
-                            © {new Date().getFullYear()} Engineering Data Center - All Rights Reserved.
+                            © {new Date().getFullYear()} Center of Knowledge & Resources - All Rights Reserved.
                         </p>
                         <div className="flex space-x-6 text-sm">
                             <Link to="/terms-of-service" className="text-neutral-500 hover:text-blue-400 transition-colors">Terms of Service</Link>
