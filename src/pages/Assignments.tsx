@@ -2,14 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, BookOpen, Clock, Users, Award, Calendar, Target, Zap, Server, Camera, Check, X, FileDown, Percent } from "lucide-react";
+import { ArrowLeft, Clock, Users, Server, Camera, Check, X, FileDown, Percent, Eye, XCircle, GripVertical } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Analytics } from '@vercel/analytics/react';
 import clsx from 'clsx';
 
-// --- FULL DATA (50 Questions Each) ---
-
+// --- FULL DATA (50 Questions Each) is preserved ---
 const aptitudeQuestions = [
     // Quantitative Aptitude (1-15)
     { id: 'apt1', question: 'A man buys an item for Rs. 500 and sells it for Rs. 600. What is his profit percentage?', options: ['10%', '15%', '20%', '25%'], answer: '20%' },
@@ -68,7 +66,6 @@ const aptitudeQuestions = [
     { id: 'apt50', 'question': 'Find the correctly spelled word.', 'options': ['Millennium', 'Milennium', 'Millenium', 'Milenium'], 'answer': 'Millennium'}
 ];
 
-
 const hrQuestions = [
     // Behavioral & Situational
     { id: 'hr1', question: 'Which of the following best describes your approach to handling stress?', options: ['Take short breaks to refocus', 'Thrive under pressure', 'Prioritize tasks and tackle them one by one', 'Seek support from colleagues'], answer: 'Prioritize tasks and tackle them one by one' },
@@ -101,20 +98,70 @@ const hrQuestions = [
     { id: "hr28", question: "If you had to choose between finishing a project on time or ensuring it is of the highest quality, which would you choose?", options: ["Always quality, even if it's late.", "Always on time, even if quality suffers.", "It depends on the project's requirements and impact.", "I would try to do both without compromise."], answer: "It depends on the project's requirements and impact." },
     { id: "hr29", question: "How do you handle failure?", options: ["I get discouraged.", "I see it as a learning opportunity.", "I try to hide it.", "I blame others."], answer: "I see it as a learning opportunity." },
     { id: "hr30", question: "What are you looking for in a new role?", options: ["More money", "Better work-life balance", "A chance to grow my skills and contribute meaningfully", "Less responsibility"], answer: "A chance to grow my skills and contribute meaningfully" },
-    ...Array.from({ length: 20 }, (_, i) => ({ id: `hr${i + 31}`, question: `Sample HR Question ${i + 31}`, options: ['A', 'B', 'C', 'D'], answer: 'A' }))
+    { id: 'hr31', question: 'A coworker takes credit for your idea. What do you do?', options: ['Confront them publicly.', 'Let it go to avoid conflict.', 'Discuss the matter privately with them and then with your manager if needed.', 'Take credit for one of their ideas later.'], answer: 'Discuss the matter privately with them and then with your manager if needed.' },
+    { id: 'hr32', question: 'Which is more important: creativity or efficiency?', options: ['Creativity is always more important.', 'Efficiency is always more important.', 'They are equally important and ideally work together.', 'It depends entirely on the task.'], answer: 'It depends entirely on the task.' },
+    { id: 'hr33', question: 'How do you organize and plan your work?', options: ['I use a to-do list app or project management tool.', 'I keep a mental checklist.', 'I respond to tasks as they come in.', 'I plan my entire week every Monday morning.'], answer: 'I use a to-do list app or project management tool.' },
+    { id: 'hr34', question: 'Are you a leader or a follower?', options: ['A leader', 'A follower', 'I can be both, depending on the situation.', 'I prefer to work alone.'], answer: 'I can be both, depending on the situation.' },
+    { id: 'hr35', question: 'What do you do if you don\'t know the answer to a question?', options: ['Guess the answer.', 'Say "I don\'t know" and move on.', 'Say "I don\'t know, but I will find out" and explain how.', 'Try to change the subject.'], answer: 'Say "I don\'t know, but I will find out" and explain how.' },
+    { id: 'hr36', question: 'Would you rather work on one large project or several small projects at once?', options: ['One large project for deep focus.', 'Several small projects to keep things interesting.', 'I am comfortable with both.', 'It does not matter to me.'], answer: 'I am comfortable with both.' },
+    { id: 'hr37', question: 'How do you contribute to a positive work culture?', options: ['By staying positive and helping colleagues.', 'By focusing only on my work.', 'By organizing team events.', 'By reporting any issues to HR.'], answer: 'By staying positive and helping colleagues.' },
+    { id: 'hr38', question: 'What is your opinion on working overtime?', options: ['It should be avoided at all costs.', 'It is necessary sometimes to meet important deadlines.', 'I am always willing to work overtime.', 'It shows a lack of proper planning.'], answer: 'It is necessary sometimes to meet important deadlines.' },
+    { id: 'hr39', question: 'How do you deal with ambiguity in a project\'s requirements?', options: ['I make assumptions and proceed.', 'I ask for clarification from stakeholders until the requirements are clear.', 'I wait for someone else to figure it out.', 'I build what I think is best.'], answer: 'I ask for clarification from stakeholders until the requirements are clear.' },
+    { id: 'hr40', question: 'What are three words that best describe you?', options: ['Creative, lazy, smart', 'Hard-working, reliable, introverted', 'Dedicated, adaptable, collaborative', 'Ambitious, impatient, friendly'], answer: 'Dedicated, adaptable, collaborative' },
+    { id: 'hr41', question: 'Why do you want to work for our company?', options: ['Because I need a job.', 'Because I admire your company culture and products.', 'Because the salary is good.', 'Because it is close to my home.'], answer: 'Because I admire your company culture and products.' },
+    { id: 'hr42', question: 'How do you keep your technical skills sharp?', options: ['Through side projects and online courses.', 'Only through the work I do on the job.', 'I don\'t; I learn what I need to.', 'By reading articles and books.'], answer: 'Through side projects and online courses.' },
+    { id: 'hr43', question: 'Describe your process for troubleshooting a problem.', options: ['I ask for help immediately.', 'I use a systematic, logical approach to isolate the issue.', 'I try random solutions until one works.', 'I read the entire documentation first.'], answer: 'I use a systematic, logical approach to isolate the issue.' },
+    { id: 'hr44', question: 'What is more important to you: the work itself or the team you work with?', options: ['The work itself.', 'The team I work with.', 'Both are equally important.', 'Neither is very important.'], answer: 'Both are equally important.' },
+    { id: 'hr45', question: 'How do you react when your work is criticized?', options: ['I get defensive.', 'I ignore the criticism.', 'I listen to the feedback and use it to improve.', 'I criticize their work in return.'], answer: 'I listen to the feedback and use it to improve.' },
+    { id: 'hr46', question: 'What kind of manager do you work best with?', options: ['One who is hands-off and gives me autonomy.', 'One who provides clear, direct guidance.', 'One who is a mentor and coach.', 'The type of manager does not matter to me.'], answer: 'One who is a mentor and coach.' },
+    { id: 'hr47', question: 'Tell me about a time you had to persuade someone to see your point of view.', options: ['I presented data and evidence to support my argument.', 'I raised my voice to make my point.', 'I gave up if they did not agree immediately.', 'I asked a manager to intervene.'], answer: 'I presented data and evidence to support my argument.' },
+    { id: 'hr48', question: 'What does the term "company culture" mean to you?', options: ['The office parties and perks.', 'The shared values, beliefs, and practices of the employees.', 'The company\'s dress code.', 'The number of hours people work.'], answer: 'The shared values, beliefs, and practices of the employees.' },
+    { id: 'hr49', question: 'Are you more of a big-picture thinker or a detail-oriented person?', options: ['Big-picture thinker', 'Detail-oriented person', 'I am strong in both areas.', 'I have not thought about it.'], answer: 'I am strong in both areas.' },
+    { id: 'hr50', question: 'Do you have any questions for us?', options: ['No, everything is clear.', 'Yes, what are the next steps in the interview process?', 'Yes, what does a typical day in this role look like?', 'Both B and C are good questions.'], answer: 'Both B and C are good questions.' }
 ];
 
-
 const Assignments = () => {
-    // --- All state and logic hooks remain unchanged ---
+    // State management for the component
     const [view, setView] = useState('selection');
     const [currentTest, setCurrentTest] = useState(null);
     const [testData, setTestData] = useState([]);
     const [answers, setAnswers] = useState({});
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [timeLeft, setTimeLeft] = useState(30 * 60);
+    const [markedForReview, setMarkedForReview] = useState(new Set());
+    const [isPaletteOpen, setIsPaletteOpen] = useState(false);
+    const [cameraStream, setCameraStream] = useState(null);
+    
+    // Refs for timer and video element
     const timerRef = useRef(null);
+    const videoRef = useRef(null);
 
+    // Effect to start and stop the camera stream
+    const stopCamera = () => {
+        if (cameraStream) {
+            cameraStream.getTracks().forEach(track => track.stop());
+            setCameraStream(null);
+        }
+    };
+
+    useEffect(() => {
+        if (view === 'test' && !cameraStream) {
+            // This will be triggered by startTest function instead
+        } else if (view !== 'test' && cameraStream) {
+            stopCamera();
+        }
+        // Cleanup function to stop camera when component unmounts
+        return () => stopCamera();
+    }, [view]);
+
+    // Effect to manage the video element source
+    useEffect(() => {
+        if (videoRef.current && cameraStream) {
+            videoRef.current.srcObject = cameraStream;
+        }
+    }, [cameraStream]);
+
+    // Effect to manage the countdown timer
     useEffect(() => {
         if (view === 'test' && timeLeft > 0) {
             timerRef.current = setInterval(() => {
@@ -127,18 +174,26 @@ const Assignments = () => {
         return () => clearInterval(timerRef.current);
     }, [view, timeLeft]);
 
+    // --- Core Functions ---
+
     const handleSelectTest = (testType) => {
         setCurrentTest(testType);
         setTestData(testType === 'Aptitude' ? aptitudeQuestions : hrQuestions);
         setView('instructions');
     };
 
-    const startTest = () => {
-        if (window.confirm("This test requires camera access for proctoring. Please grant permission.")) {
+    const startTest = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            setCameraStream(stream);
             setView('test');
             setTimeLeft(30 * 60);
             setCurrentQuestionIndex(0);
             setAnswers({});
+            setMarkedForReview(new Set());
+        } catch (err) {
+            alert("Camera access is required for this test. Please allow camera access and try again.");
+            console.error("Camera access denied:", err);
         }
     };
 
@@ -146,21 +201,40 @@ const Assignments = () => {
         setAnswers(prev => ({ ...prev, [questionId]: option }));
     };
 
+    const toggleMarkForReview = () => {
+        const newMarked = new Set(markedForReview);
+        const questionId = testData[currentQuestionIndex].id;
+        if (newMarked.has(questionId)) {
+            newMarked.delete(questionId);
+        } else {
+            newMarked.add(questionId);
+        }
+        setMarkedForReview(newMarked);
+    };
+
+    const clearResponse = () => {
+        const newAnswers = { ...answers };
+        delete newAnswers[testData[currentQuestionIndex].id];
+        setAnswers(newAnswers);
+    };
+
     const submitTest = () => {
+        stopCamera();
         clearInterval(timerRef.current);
-        setView('results');
+        if (window.confirm("Are you sure you want to end the test?")) {
+            setView('results');
+        }
     };
 
     const calculateScore = () => {
         return testData.reduce((score, question) => {
-            if (answers[question.id] === question.answer) {
-                return score + 1;
-            }
+            if (answers[question.id] === question.answer) return score + 1;
             return score;
         }, 0);
     };
 
-    // --- All render functions remain unchanged ---
+    // --- Render Functions for Each View ---
+
     const renderSelection = () => (
       <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
@@ -212,46 +286,100 @@ const Assignments = () => {
     );
   
     const renderTest = () => {
-      if (!testData || testData.length === 0) return <div>Loading test...</div>;
-      const question = testData[currentQuestionIndex];
-      return (
-          <div className="max-w-4xl mx-auto">
-              <Card className="bg-neutral-900 border-neutral-800">
-                  <CardHeader className="flex flex-row justify-between items-center">
-                      <CardTitle>Question {currentQuestionIndex + 1}/{testData.length}</CardTitle>
-                      <div className="text-lg font-mono bg-red-800/80 text-white px-4 py-1 rounded-lg">
-                          <Clock className="inline mr-2 h-5 w-5"/>{`${Math.floor(timeLeft / 60)}:${('0' + timeLeft % 60).slice(-2)}`}
-                      </div>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                      <p className="text-xl text-white mb-8 min-h-[60px]">{question.question}</p>
-                      <div className="space-y-4">
-                          {question.options.map((option, index) => (
-                              <div
-                                  key={index}
-                                  onClick={() => handleAnswerSelect(question.id, option)}
-                                  className={clsx("p-4 border rounded-lg cursor-pointer transition-all", {
-                                      'bg-blue-600 border-blue-500 text-white': answers[question.id] === option,
-                                      'border-neutral-700 hover:bg-neutral-800': answers[question.id] !== option
-                                  })}
-                              >
-                                  {option}
-                              </div>
-                          ))}
-                      </div>
-                      <div className="flex justify-between mt-8">
-                          <Button onClick={() => setCurrentQuestionIndex(p => p - 1)} disabled={currentQuestionIndex === 0}>Previous</Button>
-                          {currentQuestionIndex < testData.length - 1 ? (
-                              <Button onClick={() => setCurrentQuestionIndex(p => p + 1)}>Next</Button>
-                          ) : (
-                              <Button onClick={submitTest} className="bg-green-600 hover:bg-green-700">Submit Test</Button>
-                          )}
-                      </div>
-                      <Progress value={((currentQuestionIndex + 1) / testData.length) * 100} className="mt-6 h-2 [&>*]:bg-blue-600" />
-                  </CardContent>
-              </Card>
-          </div>
-      );
+        if (!testData || testData.length === 0) return <div>Loading test...</div>;
+        const question = testData[currentQuestionIndex];
+        const isMarked = markedForReview.has(question.id);
+
+        return (
+            <div className="flex flex-col lg:flex-row gap-6">
+                {/* Main Question Panel */}
+                <div className="flex-grow">
+                    <Card className="bg-neutral-900 border-neutral-800 h-full flex flex-col">
+                        <CardHeader className="flex flex-row justify-between items-center">
+                            <CardTitle>Question {currentQuestionIndex + 1}/{testData.length}</CardTitle>
+                            <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setIsPaletteOpen(!isPaletteOpen)}>
+                                <GripVertical />
+                            </Button>
+                        </CardHeader>
+                        <CardContent className="p-6 flex-grow flex flex-col">
+                            <p className="text-xl text-white mb-8 flex-grow">{question.question}</p>
+                            <div className="space-y-4">
+                                {question.options.map((option, index) => (
+                                    <div key={index} onClick={() => handleAnswerSelect(question.id, option)} className={clsx("p-4 border rounded-lg cursor-pointer transition-all", {
+                                        'bg-blue-600 border-blue-500 text-white': answers[question.id] === option,
+                                        'border-neutral-700 hover:bg-neutral-800': answers[question.id] !== option
+                                    })}>
+                                        {option}
+                                    </div>
+                                ))}
+                            </div>
+                        </CardContent>
+                        <div className="flex flex-wrap items-center justify-between p-4 border-t border-neutral-800 gap-2">
+                           <div className="flex gap-2">
+                               <Button onClick={toggleMarkForReview} variant="outline" className={clsx(isMarked ? 'bg-purple-600 text-white border-purple-500' : 'border-neutral-700 text-neutral-300 hover:bg-neutral-800')}>
+                                   <Eye className="mr-2 h-4 w-4" /> {isMarked ? 'Unmark Review' : 'Mark for Review'}
+                               </Button>
+                               <Button onClick={clearResponse} variant="destructive">
+                                   <XCircle className="mr-2 h-4 w-4" /> Clear Response
+                               </Button>
+                           </div>
+                            <div className="flex gap-2">
+                                <Button onClick={() => setCurrentQuestionIndex(p => p - 1)} disabled={currentQuestionIndex === 0}>Previous</Button>
+                                <Button onClick={() => setCurrentQuestionIndex(p => p + 1)} disabled={currentQuestionIndex >= testData.length - 1}>Next</Button>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
+
+                {/* Right Sidebar Dashboard */}
+                <div className={clsx("lg:block lg:w-80 flex-shrink-0", isPaletteOpen ? "block" : "hidden")}>
+                    <Card className="bg-neutral-900 border-neutral-800 p-4 sticky top-24">
+                       <div className="flex items-center gap-4 mb-4">
+                           <div className="w-24 h-20 bg-black rounded-md overflow-hidden border border-neutral-700">
+                               <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover"></video>
+                           </div>
+                           <div>
+                               <h3 className="font-bold text-white">John Doe</h3>
+                               <div className="text-lg font-mono bg-neutral-800 text-red-400 px-3 py-1 rounded-md mt-1">
+                                   <Clock className="inline mr-2 h-4 w-4"/>{`${Math.floor(timeLeft / 60)}:${('0' + timeLeft % 60).slice(-2)}`}
+                               </div>
+                           </div>
+                       </div>
+                       
+                        <h4 className="font-semibold text-white mb-2">Question Palette</h4>
+                        <div className="grid grid-cols-5 gap-2 mb-4">
+                            {Array.from({ length: testData.length }).map((_, i) => {
+                                const qId = testData[i].id;
+                                const isAnswered = answers.hasOwnProperty(qId);
+                                const isMarked = markedForReview.has(qId);
+                                const isCurrent = currentQuestionIndex === i;
+                                return (
+                                    <button
+                                        key={qId}
+                                        onClick={() => setCurrentQuestionIndex(i)}
+                                        className={clsx('w-10 h-10 rounded-md flex items-center justify-center font-bold border-2 transition-all', {
+                                            'bg-green-600 text-white border-green-500': isAnswered && !isCurrent,
+                                            'bg-purple-600 text-white border-purple-500': isMarked && !isCurrent,
+                                            'bg-neutral-700 text-neutral-300 border-neutral-600 hover:bg-neutral-600': !isAnswered && !isMarked && !isCurrent,
+                                            'border-blue-500 ring-2 ring-blue-500': isCurrent,
+                                        })}
+                                    >{i + 1}</button>
+                                );
+                            })}
+                        </div>
+                        
+                        <div className="space-y-1 text-xs text-neutral-400 mb-4">
+                            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-green-600"></div>Answered</div>
+                            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-purple-600"></div>Marked for Review</div>
+                            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-neutral-700"></div>Not Answered</div>
+                             <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full border-2 border-blue-500"></div>Current</div>
+                        </div>
+
+                        <Button onClick={submitTest} className="w-full bg-red-600 hover:bg-red-700 text-white font-bold">End Test</Button>
+                    </Card>
+                </div>
+            </div>
+        );
     };
     
     const renderResults = () => {
