@@ -37,11 +37,11 @@ const resourceCards = [
     { title: "Projects", description: "Hands-on projects and portfolio ideas.", path: "/projects", img: "https://cdn-icons-png.flaticon.com/512/1055/1055687.png" },
     { title: "Ideas", description: "Innovation concepts and startup ideas.", path: "/ideas", img: "https://cdn-icons-png.flaticon.com/512/2721/2721297.png" },
     { title: "Blogs", description: "Technical articles and engineering insights.", path: "/blogs", img: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png" },
-    { title: "DSA", description: "Data Structures and Algorithms resources.", path: "/dsa", img: "https://cdn-icons-png.flaticon.com/512/2721/2721298.png" },
+    { title: "DSA", description: "250+ Data Structures and Algorithms problems and resources.", path: "/dsa", img: "https://cdn-icons-png.flaticon.com/512/2721/2721298.png", status: '250+ Problems' },
     { title: "Coding Challenges", description: "Programming contests and practice problems.", path: "/coding-challenges", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
     { title: "Internships", description: "Internship opportunities and career guidance.", path: "/internships", img: "https://cdn-icons-png.flaticon.com/512/3135/3135768.png", status: 'Updated' },
     { title: "Notes", description: "Study materials and quick reference guides.", path: "/notes", img: "https://cdn-icons-png.flaticon.com/512/3135/3135773.png" },
-    { title: "Campus Notes", description: "Collaborative study notes and campus resources.", path: "/campus-notes", img: "https://cdn-icons-png.flaticon.com/512/3135/3135772.png" },
+    { title: "Campus Notes", description: "Collaborative study notes and campus resources.", path: "/campus-notes", img: "https://cdn-icons-png.flaticon.com/512/3135/3135772.png", status: 'Updated' },
     { title: "Assignments", description: "Practice assignments and problem sets for various subjects.", path: "/assignments", img: "https://cdn-icons-png.flaticon.com/512/3843/3843516.png", status: 'New' },
     { title: "Documents", description: "Technical documentation and manuals.", path: "/documents", img: "https://cdn-icons-png.flaticon.com/512/3135/3135766.png" },
     { title: "Theories", description: "Fundamental concepts and theoretical knowledge.", path: "/theories", img: "https://cdn-icons-png.flaticon.com/512/3135/3135762.png" },
@@ -240,6 +240,7 @@ const Index = () => {
             case 'Coming Soon': return 'bg-amber-900/90 text-amber-100 border border-amber-600/50 font-medium';
             case 'On Working': return 'bg-blue-900/90 text-blue-100 border border-blue-600/50 font-medium';
             case 'New': return 'bg-purple-900/90 text-purple-100 border border-purple-600/50 font-medium';
+            case '250+ Problems': return 'bg-cyan-900/90 text-cyan-100 border border-cyan-600/50 font-medium';
             default: return '';
         }
     };

@@ -29,6 +29,7 @@ import TheoryReader from "./pages/TheoryReader";
 import AnyoneCanDevelop from "./pages/AnyoneCanDevelop";
 import ChatterBox from "./pages/ChatterBox";
 import Templates from "./pages/Templates";
+import Assignments from "./pages/Assignments";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
@@ -58,6 +59,7 @@ const App = () => (
             <Route path="/notes/:id" element={<NotesViewer />} />
             <Route path="/notes/:id/preview" element={<NotesViewer />} />
             <Route path="/campus-notes" element={<CampusNotes />} />
+            <Route path="/assignments" element={<Assignments />} />
             <Route path="/documents" element={<Documents />} />
             <Route path="/documents/:id" element={<DocumentReader />} />
             <Route path="/theories" element={<Theories />} />
