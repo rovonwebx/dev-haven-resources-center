@@ -21,13 +21,13 @@ const navLinks = [
 ];
 
 const quickLinks = [
-    { title: "DSA Roadmap", path: "/roadmaps/dsa" },
-    { title: "Web Dev Roadmap", path: "/roadmaps/web-development" },
+    { title: "DSA Roadmap", path: "/roadmaps" },
+    { title: "Web Dev Roadmap", path: "/roadmaps" },
     { title: "Latest Internships", path: "/internships" },
     { title: "SQL Interview Questions", path: "/interview-questions" },
     {
         title: "Submit a Project",
-        path: "https://dhrc-tools.vercel.app/student-projects/submit",
+        path: "https://center-knowledge-vault.vercel.app",
         external: true
     },
 ];
