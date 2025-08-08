@@ -110,7 +110,7 @@ CKR/
 | Contributor | Role | Contributions |
 |-------------|------|---------------|
 | **Rishi Rohan Kalapala** | Lead Developer | Entire frontend build, roadmap setup, resource integration |
-| **Abhi Vignesh K** | Web Sockets | Collabrator and Chat Application |
+| **Abhi Vignesh K** | Web Sockets | Collaborator and Chat Application |
 | **Shubhang G** | Designer | Chat Application UI, Component Design |
 | **Naveen Nunna** | Video Editor | Product Video Making & Graphic Designer |
 | **Dhanush Reddy & Sai Sharan** | Content Contributors | Notes, Projects, SQL Questions, Templates |
