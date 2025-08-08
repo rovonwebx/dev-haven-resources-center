@@ -82,7 +82,7 @@ CKR/
 
 ---
 
-## 🖼️ Screenshots
+## Screenshots
 
 > Add relevant screenshots of:
 - Home page
@@ -98,7 +98,7 @@ CKR/
 > This project is the result of collaborative effort by passionate developers, designers, and academic leaders.
 
 ### 🎯 Initial Development by:
-- **Kalyan N** – Full Stack Developer, Product Lead  
+- **Rishi Rohan Kalapala** – Full Stack Developer, Product Lead  
   🔗 [LinkedIn](https://www.linkedin.com/in/kalyan-n) | 🌐 [Portfolio](https://webstrix.com)
 
 ### 🤝 Special Thanks to:
@@ -109,11 +109,12 @@ CKR/
 ### 💡 Feature Contributors:
 | Contributor | Role | Contributions |
 |-------------|------|---------------|
-| **Kalyan N** | Lead Developer | Entire frontend build, roadmap setup, resource integration |
-| **Ajay K.** | Content Manager | Notes upload, Events sync, Internship updates |
-| **Shreya M.** | Designer | Resume Generator UI, Component Design |
-| **ChatterBox Bot** | AI Assistant | Doubt-solving, student interactions |
-| **CKR Community** | Content Contributors | Notes, Projects, SQL Questions, Templates |
+| **Rishi Rohan Kalapala** | Lead Developer | Entire frontend build, roadmap setup, resource integration |
+| **Abhi Vignesh K** | Web Sockets | Collabrator and Chat Application |
+| **Shubhang G** | Designer | Chat Application UI, Component Design |
+| **Naveen Nunna** | Video Editor | Product Video Making & Graphic Designer |
+| **Dhanush Reddy & Sai Sharan** | Content Contributors | Notes, Projects, SQL Questions, Templates |
+| **Vrshith R & Yuvraj A** | Testers | Complete Page Updaters |
 
 ---
 
