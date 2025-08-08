@@ -8,7 +8,7 @@ This platform aims to bridge the gap between students and essential learning res
 
 ## Live Website
 
-[Visit CKR Now](https://dhrc.vercel.app/)
+[Visit CKR Now](https://ckrdatacenter.vercel.app/)
 
 ---
 
