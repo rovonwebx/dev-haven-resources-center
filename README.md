@@ -93,20 +93,20 @@ CKR/
 
 ---
 
-## 👥 Credits & Contributors
+## Credits & Contributors
 
 > This project is the result of collaborative effort by passionate developers, designers, and academic leaders.
 
-### 🎯 Initial Development by:
+### Initial Development by:
 - **Rishi Rohan Kalapala** – Full Stack Developer, Product Lead  
-  🔗 [LinkedIn](https://www.linkedin.com/in/kalyan-n) | 🌐 [Portfolio](https://webstrix.com)
+  [LinkedIn](https://www.linkedin.com/in/rishirohankalapala/) | [Portfolio](https://rishirohank.vercel.app/)
 
-### 🤝 Special Thanks to:
+### Special Thanks to:
 - **Mentors & Faculty Support** from the CSE (AIML) Department
 - **Student Content Contributors** from 2024-2025 batch
 - **UI/UX Inspiration** by open source Tailwind libraries
 
-### 💡 Feature Contributors:
+### Feature Contributors:
 | Contributor | Role | Contributions |
 |-------------|------|---------------|
 | **Rishi Rohan Kalapala** | Lead Developer | Entire frontend build, roadmap setup, resource integration |
