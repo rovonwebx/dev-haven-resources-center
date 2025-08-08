@@ -47,7 +47,7 @@ CKR offers a wide range of student-focused functionalities:
 - **Chat with Your Mates** – Real-time doubt solving
 - **Student Project Gallery**
 
-### 📅 Event & Career
+### Event & Career
 - **Upcoming Events & Hackathons**
 - **Internship Updates**
 - **AI Tools Integration for Learning**
@@ -112,7 +112,7 @@ CKR/
 | **Rishi Rohan Kalapala** | Lead Developer | Entire frontend build, roadmap setup, resource integration |
 | **Abhi Vignesh K** | Web Sockets | Collaborator and Chat Application |
 | **Shubhang G** | Designer | Chat Application UI, Component Design |
-| **Naveen Nunna** | Video Editor | Product Video Making & Graphic Designer |
+| **Naveen Nunna** | Video Editor | Product Video Making & Product Graphic Designs |
 | **Dhanush Reddy & Sai Sharan** | Content Contributors | Notes, Projects, SQL Questions, Templates |
 | **Vrshith R & Yuvraj A** | Testers | Complete Page Updaters |
 
