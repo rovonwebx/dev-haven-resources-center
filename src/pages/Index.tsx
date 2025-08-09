@@ -171,15 +171,6 @@ const Index = () => {
                 </div>
             </div>
 
-            {showNotif && (
-                <div className="w-full bg-blue-600 text-white text-sm py-3 px-4 flex items-center justify-center text-center gap-x-4 z-50">
-                    <div className="flex items-center gap-2">
-                        <Database className="h-4 w-4" />
-                        <p><strong>System Update:</strong> Enhanced data center and <a href="https://dhrc-tools.vercel.app/" className="underline font-semibold hover:text-blue-200 transition-colors">Engineering Tools</a> now available.</p>
-                    </div>
-                    <button onClick={dismissNotif} className="p-1.5 rounded-full hover:bg-blue-700/80 transition-colors flex-shrink-0" aria-label="Dismiss notification"><X size={18} /></button>
-                </div>
-            )}
 
             <header className="sticky top-0 w-full border-b border-neutral-800 bg-neutral-950/90 backdrop-blur-xl z-40">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
@@ -236,53 +227,64 @@ const Index = () => {
                 </div>
             </section>
             
-            <div className="w-full bg-neutral-900 border-b border-neutral-800">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                     <div className="flex items-center justify-center text-center gap-3 p-3 rounded-lg bg-neutral-800/50">
-                        <Database className="h-5 w-5 text-blue-400 flex-shrink-0" />
-                        <div>
-                            <p className="text-sm font-semibold text-neutral-200">
-                                Project Repository Access
-                            </p>
-                            <p className="text-xs text-neutral-400">Download enterprise-grade projects</p>
+            <div className="w-full bg-gradient-to-r from-blue-950/50 via-neutral-900 to-purple-950/50 border-b border-neutral-800">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <div className="bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-xl border border-blue-500/20 backdrop-blur-sm">
+                        <div className="p-6">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                                        <Zap className="h-6 w-6 text-white" />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-xl font-bold text-white">System Enhancement Update</h2>
+                                        <p className="text-sm text-neutral-300">Advanced tools and resources now available</p>
+                                    </div>
+                                </div>
+                                <Badge className="bg-blue-600 text-white text-xs font-semibold py-1 px-3 rounded-full">NEW</Badge>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div className="flex items-center gap-3 p-4 rounded-lg bg-neutral-800/30 border border-neutral-700/50">
+                                    <Database className="h-5 w-5 text-blue-400 flex-shrink-0" />
+                                    <div className="flex-grow">
+                                        <p className="text-sm font-semibold text-neutral-200">Enhanced Data Center</p>
+                                        <p className="text-xs text-neutral-400">Enterprise-grade project repository</p>
+                                    </div>
+                                    <Link to="/student-projects" className="flex-shrink-0">
+                                        <Button variant="outline" size="sm" className="text-xs font-medium text-blue-400 border-blue-600 hover:bg-blue-600 hover:text-white">
+                                            Browse <ArrowRight className="ml-1 h-3 w-3" />
+                                        </Button>
+                                    </Link>
+                                </div>
+                                
+                                <div className="flex items-center gap-3 p-4 rounded-lg bg-neutral-800/30 border border-neutral-700/50">
+                                    <MessageSquare className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                                    <div className="flex-grow">
+                                        <p className="text-sm font-semibold text-neutral-200">Collaboration Platform</p>
+                                        <p className="text-xs text-neutral-400">Team communication & workspace</p>
+                                    </div>
+                                    <a href="https://ckr-web.vercel.app" target="_blank" rel="noopener noreferrer">
+                                        <Button variant="outline" size="sm" className="text-xs font-medium text-emerald-400 border-emerald-600 hover:bg-emerald-600 hover:text-white">
+                                            Access <ArrowRight className="ml-1 h-3 w-3" />
+                                        </Button>
+                                    </a>
+                                </div>
+                                
+                                <div className="flex items-center gap-3 p-4 rounded-lg bg-neutral-800/30 border border-neutral-700/50">
+                                    <Users className="h-5 w-5 text-purple-400 flex-shrink-0" />
+                                    <div className="flex-grow">
+                                        <p className="text-sm font-semibold text-neutral-200">Engineering Tools</p>
+                                        <p className="text-xs text-neutral-400">Advanced development utilities</p>
+                                    </div>
+                                    <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer">
+                                        <Button variant="outline" size="sm" className="text-xs font-medium text-purple-400 border-purple-600 hover:bg-purple-600 hover:text-white">
+                                            Access <ArrowRight className="ml-1 h-3 w-3" />
+                                        </Button>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                         <Link to="/student-projects" className="flex-shrink-0">
-                            <Button variant="outline" size="sm" className="text-xs font-medium text-blue-400 border-blue-600 hover:bg-blue-600 hover:text-white">
-                                Browse <ArrowRight className="ml-1 h-3 w-3" />
-                            </Button>
-                        </Link>
-                    </div>
-                    <div className="flex items-center justify-center text-center gap-3 p-3 rounded-lg bg-neutral-800/50 border-x-0 md:border-x border-neutral-700">
-                        <MessageSquare className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-                        <div>
-                            <p className="text-sm font-semibold text-neutral-200">
-                                Professional Collaboration
-                            </p>
-                            <p className="text-xs text-neutral-400">Team communication platform</p>
-                        </div>
-                        <Badge className="bg-emerald-600 text-white text-[10px] font-semibold py-1 px-2 rounded">BETA</Badge>
-                         <a href="https://ckr-web.vercel.app" target="_blank" rel="noopener noreferrer">
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="flex-shrink-0 text-xs font-medium text-emerald-400 border-emerald-600 hover:bg-emerald-600 hover:text-white"
-                            >
-                                Access
-                                <ArrowRight className="ml-1 h-3 w-3" />
-                            </Button>
-                        </a>
-                    </div>
-                    <div className="flex items-center justify-center text-center gap-3 p-3 rounded-lg bg-neutral-800/50">
-                        <Users className="h-5 w-5 text-purple-400 flex-shrink-0" />
-                        <div>
-                            <p className="text-sm font-semibold text-neutral-200">Collaboration Hub</p>
-                            <p className="text-xs text-neutral-400">Connect with engineering professionals</p>
-                        </div>
-                         <Link to="/chatterbox">
-                            <Button size="sm" className="bg-purple-600 text-white font-medium hover:bg-purple-700 transition-all text-xs">
-                                Enter Hub <ArrowRight className="ml-1 hidden sm:inline-block" size={14} />
-                            </Button>
-                        </Link>
                     </div>
                 </div>
             </div>

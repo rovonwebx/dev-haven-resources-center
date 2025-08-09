@@ -115,7 +115,7 @@ const StudentProjectsPage = () => {
                 {selectedCategory === "All" ? "All Projects" : `${selectedCategory} Projects`}
             </h3>
             {/* The StudentProjects component should render cards matching the dark theme */}
-            <StudentProjects category={selectedCategory} />
+            <StudentProjects />
 
             {/* --- Call-to-Action Sections --- */}
             <section className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
