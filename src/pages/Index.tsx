@@ -4,11 +4,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Analytics } from "@vercel/analytics/react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import Chatbot from "@/components/Chatbot";
 import { 
     ArrowRight, X, Github, Linkedin, Twitter, Sun, Moon, Bell, Zap, MessageSquare, Menu, 
     ChevronLeft, ChevronRight, Database, Server, Code, FileText, BookOpen, Users,
-    Award, Lightbulb, Briefcase, BrainCircuit, Map, Calendar, ClipboardCheck, School, LayoutTemplate, Bot 
+    Award, Lightbulb, Briefcase, BrainCircuit, Map, Calendar, ClipboardCheck, School, LayoutTemplate, Bot, Loader 
 } from 'lucide-react';
 
 // --- UPDATED DATA ARRAY WITH ALL 17 CARDS ---
@@ -88,7 +89,10 @@ const Index = () => {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const [theme, setTheme] = useState('dark');
     const [playNotificationSound, setPlayNotificationSound] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [navigating, setNavigating] = useState(false);
     const navigate = useNavigate();
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         const root = window.document.documentElement;
@@ -117,6 +121,14 @@ const Index = () => {
     const dismissPopup = () => {
         setShowPopup(false);
         window.sessionStorage.setItem(POPUP_KEY, '1');
+    };
+
+    const handleNavigation = (path) => {
+        setNavigating(true);
+        setTimeout(() => {
+            navigate(path);
+            setNavigating(false);
+        }, 100);
     };
     
     const OpportunityList = ({ title, data }) => (
@@ -175,7 +187,7 @@ const Index = () => {
             <header className="sticky top-0 w-full border-b border-neutral-800 bg-neutral-950/90 backdrop-blur-xl z-40">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
                     <Link to="/" className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center shadow-lg">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center shadow-lg transition-transform duration-200 hover:scale-105">
                             <Server className="w-6 h-6 text-white" />
                         </div>
                         <div className="hidden sm:block">
@@ -184,30 +196,86 @@ const Index = () => {
                         </div>
                     </Link>
                     <div className="flex items-center gap-2">
+                        {isMobile && (
+                            <Button 
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+                                variant="ghost" 
+                                size="icon" 
+                                className="rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white md:hidden"
+                                aria-label="Toggle mobile menu"
+                            >
+                                <Menu className="h-5 w-5" />
+                            </Button>
+                        )}
                         <a href="https://ckr-web.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Access Collaboration Hub">
-                            <Button variant="ghost" size="icon" className="rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white"><MessageSquare className="h-5 w-5" /></Button>
+                            <Button variant="ghost" size="icon" className="rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white transition-all duration-200 hover:scale-105">
+                                <MessageSquare className="h-5 w-5" />
+                            </Button>
                         </a>
-                        <Button onClick={() => setIsPanelOpen(true)} variant="ghost" size="icon" className="relative rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white">
+                        <Button 
+                            onClick={() => setIsPanelOpen(true)} 
+                            variant="ghost" 
+                            size="icon" 
+                            className="relative rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white transition-all duration-200 hover:scale-105"
+                            aria-label="View engineering opportunities"
+                        >
                             <Bell className="h-5 w-5" />
-                            <span className="absolute top-1 right-1 flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span></span>
+                            <span className="absolute top-1 right-1 flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                            </span>
                         </Button>
                         <Link to="/resume-generator" className="hidden md:block">
-                            <Button variant="outline" className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white font-semibold px-4 py-2 rounded-lg transition-all">Resume Generator</Button>
+                            <Button 
+                                variant="outline" 
+                                className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white font-semibold px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105"
+                                aria-label="Generate professional resume"
+                            >
+                                Resume Generator
+                            </Button>
                         </Link>
-                        <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer">
-                            <Button className="bg-blue-600 text-white hover:bg-blue-700 font-semibold px-4 py-2 rounded-lg transition-all">Access Portal</Button>
+                        <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Access engineering tools portal">
+                            <Button className="bg-blue-600 text-white hover:bg-blue-700 font-semibold px-4 py-2 rounded-lg transition-all duration-200 hover:scale-105">
+                                Access Portal
+                            </Button>
                         </a>
                     </div>
                 </div>
             </header>
             
-            <nav className="w-full bg-neutral-900 border-b border-neutral-800">
+            <nav className={`w-full bg-neutral-900 border-b border-neutral-800 ${isMobile ? 'hidden' : 'block'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-center gap-x-2 gap-y-2">
                     {navLinks.map((link) => (
-                        <Link key={link.title} to={link.path} className="px-4 py-2 rounded-lg text-sm font-medium text-neutral-300 hover:bg-blue-600 hover:text-white transition-all duration-200">{link.title}</Link>
+                        <Link 
+                            key={link.title} 
+                            to={link.path} 
+                            className="px-4 py-2 rounded-lg text-sm font-medium text-neutral-300 hover:bg-blue-600 hover:text-white transition-all duration-200 hover:scale-105"
+                            aria-label={`Navigate to ${link.title}`}
+                        >
+                            {link.title}
+                        </Link>
                     ))}
                 </div>
             </nav>
+
+            {/* Mobile Navigation Menu */}
+            {isMobile && isMobileMenuOpen && (
+                <div className="w-full bg-neutral-900 border-b border-neutral-800 md:hidden animate-fade-in">
+                    <div className="max-w-7xl mx-auto px-4 py-3 space-y-2">
+                        {navLinks.map((link) => (
+                            <Link 
+                                key={link.title} 
+                                to={link.path} 
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="block px-4 py-3 rounded-lg text-sm font-medium text-neutral-300 hover:bg-blue-600 hover:text-white transition-all duration-200 border border-neutral-700 hover:border-blue-600"
+                                aria-label={`Navigate to ${link.title}`}
+                            >
+                                {link.title}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             <section className="w-full bg-neutral-900 border-b border-neutral-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center gap-2 md:gap-4">
@@ -215,12 +283,28 @@ const Index = () => {
                         <Code className="h-4 w-4" />
                         Quick Access:
                     </h3>
-                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1">
+                    <div className={`flex items-center gap-x-4 gap-y-1 ${isMobile ? 'overflow-x-auto scrollbar-hide pb-2' : 'flex-wrap justify-center md:justify-start'}`}>
                         {quickLinks.map((link) => (
                             link.external ? (
-                                <a key={link.title} href={link.path} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline transition-colors">{link.title}</a>
+                                <a 
+                                    key={link.title} 
+                                    href={link.path} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className={`text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline transition-all duration-200 hover:scale-105 ${isMobile ? 'whitespace-nowrap' : ''}`}
+                                    aria-label={`Open ${link.title} in new tab`}
+                                >
+                                    {link.title}
+                                </a>
                             ) : (
-                                <Link key={link.title} to={link.path} className="text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline transition-colors">{link.title}</Link>
+                                <Link 
+                                    key={link.title} 
+                                    to={link.path} 
+                                    className={`text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline transition-all duration-200 hover:scale-105 ${isMobile ? 'whitespace-nowrap' : ''}`}
+                                    aria-label={`Navigate to ${link.title}`}
+                                >
+                                    {link.title}
+                                </Link>
                             )
                         ))}
                     </div>
@@ -252,8 +336,13 @@ const Index = () => {
                                         <p className="text-xs text-neutral-400">Enterprise-grade project repository</p>
                                     </div>
                                     <Link to="/student-projects" className="flex-shrink-0">
-                                        <Button variant="outline" size="sm" className="text-xs font-medium text-blue-400 border-blue-600 hover:bg-blue-600 hover:text-white">
-                                            Browse <ArrowRight className="ml-1 h-3 w-3" />
+                                        <Button 
+                                            variant="outline" 
+                                            size="sm" 
+                                            className="text-xs font-medium text-blue-400 border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 hover:scale-105"
+                                            aria-label="Browse enhanced data center projects"
+                                        >
+                                            {navigating ? <Loader className="h-3 w-3 animate-spin" /> : <>Browse <ArrowRight className="ml-1 h-3 w-3" /></>}
                                         </Button>
                                     </Link>
                                 </div>
@@ -265,7 +354,12 @@ const Index = () => {
                                         <p className="text-xs text-neutral-400">Team communication & workspace</p>
                                     </div>
                                     <a href="https://ckr-web.vercel.app" target="_blank" rel="noopener noreferrer">
-                                        <Button variant="outline" size="sm" className="text-xs font-medium text-emerald-400 border-emerald-600 hover:bg-emerald-600 hover:text-white">
+                                        <Button 
+                                            variant="outline" 
+                                            size="sm" 
+                                            className="text-xs font-medium text-emerald-400 border-emerald-600 hover:bg-emerald-600 hover:text-white transition-all duration-200 hover:scale-105"
+                                            aria-label="Access collaboration platform in new tab"
+                                        >
                                             Access <ArrowRight className="ml-1 h-3 w-3" />
                                         </Button>
                                     </a>
@@ -278,7 +372,12 @@ const Index = () => {
                                         <p className="text-xs text-neutral-400">Advanced development utilities</p>
                                     </div>
                                     <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer">
-                                        <Button variant="outline" size="sm" className="text-xs font-medium text-purple-400 border-purple-600 hover:bg-purple-600 hover:text-white">
+                                        <Button 
+                                            variant="outline" 
+                                            size="sm" 
+                                            className="text-xs font-medium text-purple-400 border-purple-600 hover:bg-purple-600 hover:text-white transition-all duration-200 hover:scale-105"
+                                            aria-label="Access engineering tools in new tab"
+                                        >
                                             Access <ArrowRight className="ml-1 h-3 w-3" />
                                         </Button>
                                     </a>
@@ -305,15 +404,20 @@ const Index = () => {
                         {resourceCardsNew.map((card) => {
                             const Icon = card.icon;
                             return (
-                                <Link to={card.path} key={card.title} className="block group">
-                                    <div className="bg-neutral-900 p-6 rounded-2xl shadow-sm hover:shadow-2xl hover:shadow-blue-900/30 transition-all duration-300 h-full border border-neutral-800 hover:border-blue-500/50 transform hover:-translate-y-1">
+                                <Link 
+                                    to={card.path} 
+                                    key={card.title} 
+                                    className="block group"
+                                    aria-label={`Access ${card.title}: ${card.description}`}
+                                >
+                                    <div className="bg-neutral-900 p-6 rounded-2xl shadow-sm hover:shadow-2xl hover:shadow-blue-900/30 transition-all duration-300 h-full border border-neutral-800 hover:border-blue-500/50 transform hover:-translate-y-1 hover:scale-105 animate-fade-in">
                                         <div className="flex items-start gap-5">
-                                            <div className="bg-neutral-800 p-3 rounded-xl flex-shrink-0 border border-neutral-700">
-                                                <Icon className="w-6 h-6 text-blue-400" />
+                                            <div className="bg-neutral-800 p-3 rounded-xl flex-shrink-0 border border-neutral-700 group-hover:bg-blue-600/20 group-hover:border-blue-500/50 transition-all duration-300">
+                                                <Icon className="w-6 h-6 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
                                             </div>
                                             <div>
-                                                <h3 className="font-bold text-white text-lg mb-1">{`${card.number}. ${card.title}`}</h3>
-                                                <p className="text-neutral-400 text-sm">{card.description}</p>
+                                                <h3 className="font-bold text-white text-lg mb-1 group-hover:text-blue-100 transition-colors duration-300">{`${card.number}. ${card.title}`}</h3>
+                                                <p className="text-neutral-400 text-sm group-hover:text-neutral-300 transition-colors duration-300">{card.description}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -364,9 +468,33 @@ const Index = () => {
                         <div>
                             <h3 className="font-semibold text-neutral-200 tracking-wider uppercase mb-4 text-sm">Connect</h3>
                             <div className="flex space-x-4 justify-center sm:justify-start">
-                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-neutral-800"><Github size={20} /></a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-neutral-800"><Linkedin size={20} /></a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-neutral-800"><Twitter size={20} /></a>
+                                <a 
+                                    href="#" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="text-neutral-400 hover:text-blue-400 transition-all duration-200 p-2 rounded-lg hover:bg-neutral-800 hover:scale-110"
+                                    aria-label="Follow us on GitHub"
+                                >
+                                    <Github size={20} />
+                                </a>
+                                <a 
+                                    href="#" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="text-neutral-400 hover:text-blue-400 transition-all duration-200 p-2 rounded-lg hover:bg-neutral-800 hover:scale-110"
+                                    aria-label="Connect with us on LinkedIn"
+                                >
+                                    <Linkedin size={20} />
+                                </a>
+                                <a 
+                                    href="#" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="text-neutral-400 hover:text-blue-400 transition-all duration-200 p-2 rounded-lg hover:bg-neutral-800 hover:scale-110"
+                                    aria-label="Follow us on Twitter"
+                                >
+                                    <Twitter size={20} />
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -376,8 +504,20 @@ const Index = () => {
                             © {new Date().getFullYear()} Center of Knowledge & Resources - All Rights Reserved.
                         </p>
                         <div className="flex space-x-6 text-sm">
-                            <Link to="/terms-of-service" className="text-neutral-500 hover:text-blue-400 transition-colors">Terms of Service</Link>
-                            <Link to="/privacy-policy" className="text-neutral-500 hover:text-blue-400 transition-colors">Privacy Policy</Link>
+                            <Link 
+                                to="/terms-of-service" 
+                                className="text-neutral-500 hover:text-blue-400 transition-all duration-200 hover:scale-105"
+                                aria-label="Read our terms of service"
+                            >
+                                Terms of Service
+                            </Link>
+                            <Link 
+                                to="/privacy-policy" 
+                                className="text-neutral-500 hover:text-blue-400 transition-all duration-200 hover:scale-105"
+                                aria-label="Read our privacy policy"
+                            >
+                                Privacy Policy
+                            </Link>
                         </div>
                     </div>
                 </div>
