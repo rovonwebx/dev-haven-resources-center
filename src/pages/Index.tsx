@@ -403,48 +403,39 @@ const Index = () => {
              </div>
 
             {/* --- THIS IS THE ONLY SECTION THAT HAS BEEN CHANGED --- */}
-            <main className="flex-1 w-full pt-12 pb-16 bg-neutral-100">
+            <main className="flex-1 w-full pt-12 pb-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 tracking-tight mb-4">
+                        <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
                             Engineering Resource Center
                         </h2>
-                        <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
+                        <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
                             Professional-grade resources, tools, and documentation for software engineers and developers.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {resourceCardsNew.map((card) => {
                             const Icon = card.icon;
                             return (
-                                <div 
+                                <Link 
+                                    to={card.path} 
                                     key={card.title} 
-                                    className="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full border border-neutral-200 hover:border-blue-300 transform hover:-translate-y-1 hover:scale-[1.02]"
+                                    className="block group"
+                                    aria-label={`Access ${card.title}: ${card.description}`}
                                 >
-                                    <div className="flex items-start gap-4 mb-4">
-                                        <div className="bg-blue-600 p-3 rounded-xl flex-shrink-0 shadow-md">
-                                            <Icon className="w-6 h-6 text-white" />
-                                        </div>
-                                        <div className="flex-grow">
-                                            <h3 className="font-bold text-neutral-900 text-lg mb-2">{`${card.number}. ${card.title}`}</h3>
-                                            <p className="text-neutral-600 text-sm mb-4 leading-relaxed">{card.description}</p>
+                                    <div className="bg-neutral-900 p-6 rounded-2xl shadow-sm hover:shadow-2xl hover:shadow-blue-900/30 transition-all duration-300 h-full border border-neutral-800 hover:border-blue-500/50 transform hover:-translate-y-1 hover:scale-105 animate-fade-in">
+                                        <div className="flex items-start gap-5">
+                                            <div className="bg-neutral-800 p-3 rounded-xl flex-shrink-0 border border-neutral-700 group-hover:bg-blue-600/20 group-hover:border-blue-500/50 transition-all duration-300">
+                                                <Icon className="w-6 h-6 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
+                                            </div>
+                                            <div>
+                                                <h3 className="font-bold text-white text-lg mb-1 group-hover:text-blue-100 transition-colors duration-300">{`${card.number}. ${card.title}`}</h3>
+                                                <p className="text-neutral-400 text-sm group-hover:text-neutral-300 transition-colors duration-300">{card.description}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="mt-auto">
-                                        <Link to={card.path} className="w-full">
-                                            <Button 
-                                                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
-                                                aria-label={`Access ${card.title}: ${card.description}`}
-                                            >
-                                                <span className="flex items-center justify-center gap-2">
-                                                    Access Tool
-                                                    <ArrowRight className="w-4 h-4" />
-                                                </span>
-                                            </Button>
-                                        </Link>
-                                    </div>
-                                </div>
+                                </Link>
                             );
                         })}
                     </div>
