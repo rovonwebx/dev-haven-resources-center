@@ -90,6 +90,7 @@ const Index = () => {
     const [theme, setTheme] = useState('dark');
     const [playNotificationSound, setPlayNotificationSound] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isQuickLinksOpen, setIsQuickLinksOpen] = useState(false);
     const [navigating, setNavigating] = useState(false);
     const navigate = useNavigate();
     const isMobile = useIsMobile();
@@ -279,11 +280,24 @@ const Index = () => {
 
             <section className="w-full bg-neutral-900 border-b border-neutral-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center gap-2 md:gap-4">
-                    <h3 className="text-sm md:text-base font-semibold text-neutral-200 flex-shrink-0 flex items-center gap-2">
-                        <Code className="h-4 w-4" />
-                        Quick Access:
-                    </h3>
-                    <div className={`flex items-center gap-x-4 gap-y-1 ${isMobile ? 'overflow-x-auto scrollbar-hide pb-2' : 'flex-wrap justify-center md:justify-start'}`}>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                        <h3 className="text-sm md:text-base font-semibold text-neutral-200 flex items-center gap-2">
+                            <Code className="h-4 w-4" />
+                            Quick Access:
+                        </h3>
+                        {isMobile && (
+                            <Button 
+                                onClick={() => setIsQuickLinksOpen(!isQuickLinksOpen)} 
+                                variant="ghost" 
+                                size="icon" 
+                                className="rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white ml-2"
+                                aria-label="Toggle quick links menu"
+                            >
+                                <Menu className="h-4 w-4" />
+                            </Button>
+                        )}
+                    </div>
+                    <div className={`${isMobile && !isQuickLinksOpen ? 'hidden' : 'flex'} items-center gap-x-4 gap-y-1 ${isMobile ? 'w-full flex-wrap' : 'overflow-x-auto scrollbar-hide pb-2 md:flex-wrap md:justify-center md:justify-start'}`}>
                         {quickLinks.map((link) => (
                             link.external ? (
                                 <a 
@@ -291,7 +305,7 @@ const Index = () => {
                                     href={link.path} 
                                     target="_blank" 
                                     rel="noopener noreferrer" 
-                                    className={`text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline transition-all duration-200 hover:scale-105 ${isMobile ? 'whitespace-nowrap' : ''}`}
+                                    className={`text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline transition-all duration-200 hover:scale-105 ${isMobile ? 'w-full py-2 px-3 bg-neutral-800 rounded-lg border border-neutral-700 hover:border-blue-500' : 'whitespace-nowrap'}`}
                                     aria-label={`Open ${link.title} in new tab`}
                                 >
                                     {link.title}
@@ -300,7 +314,7 @@ const Index = () => {
                                 <Link 
                                     key={link.title} 
                                     to={link.path} 
-                                    className={`text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline transition-all duration-200 hover:scale-105 ${isMobile ? 'whitespace-nowrap' : ''}`}
+                                    className={`text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline transition-all duration-200 hover:scale-105 ${isMobile ? 'w-full py-2 px-3 bg-neutral-800 rounded-lg border border-neutral-700 hover:border-blue-500' : 'whitespace-nowrap'}`}
                                     aria-label={`Navigate to ${link.title}`}
                                 >
                                     {link.title}
@@ -311,35 +325,35 @@ const Index = () => {
                 </div>
             </section>
             
-            <div className="w-full bg-gradient-to-r from-blue-950/50 via-neutral-900 to-purple-950/50 border-b border-neutral-800">
+            <div className="w-full bg-blue-600 border-b border-blue-500">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    <div className="bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-xl border border-blue-500/20 backdrop-blur-sm">
+                    <div className="bg-white rounded-xl border border-blue-200 shadow-lg">
                         <div className="p-6">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                                    <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center shadow-md">
                                         <Zap className="h-6 w-6 text-white" />
                                     </div>
                                     <div>
-                                        <h2 className="text-xl font-bold text-white">System Enhancement Update</h2>
-                                        <p className="text-sm text-neutral-300">Advanced tools and resources now available</p>
+                                        <h2 className="text-xl font-bold text-blue-900">System Enhancement Update</h2>
+                                        <p className="text-sm text-blue-700">Advanced tools and resources now available</p>
                                     </div>
                                 </div>
                                 <Badge className="bg-blue-600 text-white text-xs font-semibold py-1 px-3 rounded-full">NEW</Badge>
                             </div>
                             
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div className="flex items-center gap-3 p-4 rounded-lg bg-neutral-800/30 border border-neutral-700/50">
-                                    <Database className="h-5 w-5 text-blue-400 flex-shrink-0" />
+                                <div className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 border border-blue-200">
+                                    <Database className="h-5 w-5 text-blue-600 flex-shrink-0" />
                                     <div className="flex-grow">
-                                        <p className="text-sm font-semibold text-neutral-200">Enhanced Data Center</p>
-                                        <p className="text-xs text-neutral-400">Enterprise-grade project repository</p>
+                                        <p className="text-sm font-semibold text-blue-900">Enhanced Data Center</p>
+                                        <p className="text-xs text-blue-700">Enterprise-grade project repository</p>
                                     </div>
                                     <Link to="/student-projects" className="flex-shrink-0">
                                         <Button 
                                             variant="outline" 
                                             size="sm" 
-                                            className="text-xs font-medium text-blue-400 border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 hover:scale-105"
+                                            className="text-xs font-medium text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 hover:scale-105"
                                             aria-label="Browse enhanced data center projects"
                                         >
                                             {navigating ? <Loader className="h-3 w-3 animate-spin" /> : <>Browse <ArrowRight className="ml-1 h-3 w-3" /></>}
@@ -347,46 +361,46 @@ const Index = () => {
                                     </Link>
                                 </div>
                                 
-                                <div className="flex items-center gap-3 p-4 rounded-lg bg-neutral-800/30 border border-neutral-700/50">
-                                    <MessageSquare className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                                <div className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 border border-blue-200">
+                                    <Code className="h-5 w-5 text-blue-600 flex-shrink-0" />
                                     <div className="flex-grow">
-                                        <p className="text-sm font-semibold text-neutral-200">Collaboration Platform</p>
-                                        <p className="text-xs text-neutral-400">Team communication & workspace</p>
+                                        <p className="text-sm font-semibold text-blue-900">AI-Powered Tools</p>
+                                        <p className="text-xs text-blue-700">Smart interview and coding assistants</p>
                                     </div>
-                                    <a href="https://ckr-web.vercel.app" target="_blank" rel="noopener noreferrer">
+                                    <Link to="/ai-interviews" className="flex-shrink-0">
                                         <Button 
                                             variant="outline" 
                                             size="sm" 
-                                            className="text-xs font-medium text-emerald-400 border-emerald-600 hover:bg-emerald-600 hover:text-white transition-all duration-200 hover:scale-105"
-                                            aria-label="Access collaboration platform in new tab"
+                                            className="text-xs font-medium text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 hover:scale-105"
+                                            aria-label="Try AI-powered interview tools"
                                         >
-                                            Access <ArrowRight className="ml-1 h-3 w-3" />
+                                            {navigating ? <Loader className="h-3 w-3 animate-spin" /> : <>Try Now <ArrowRight className="ml-1 h-3 w-3" /></>}
                                         </Button>
-                                    </a>
+                                    </Link>
                                 </div>
                                 
-                                <div className="flex items-center gap-3 p-4 rounded-lg bg-neutral-800/30 border border-neutral-700/50">
-                                    <Users className="h-5 w-5 text-purple-400 flex-shrink-0" />
+                                <div className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 border border-blue-200">
+                                    <Briefcase className="h-5 w-5 text-blue-600 flex-shrink-0" />
                                     <div className="flex-grow">
-                                        <p className="text-sm font-semibold text-neutral-200">Engineering Tools</p>
-                                        <p className="text-xs text-neutral-400">Advanced development utilities</p>
+                                        <p className="text-sm font-semibold text-blue-900">Career Resources</p>
+                                        <p className="text-xs text-blue-700">Updated internship and job portals</p>
                                     </div>
-                                    <a href="https://dhrc-tools.vercel.app/" target="_blank" rel="noopener noreferrer">
+                                    <Link to="/internships" className="flex-shrink-0">
                                         <Button 
                                             variant="outline" 
                                             size="sm" 
-                                            className="text-xs font-medium text-purple-400 border-purple-600 hover:bg-purple-600 hover:text-white transition-all duration-200 hover:scale-105"
-                                            aria-label="Access engineering tools in new tab"
+                                            className="text-xs font-medium text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 hover:scale-105"
+                                            aria-label="Explore career opportunities"
                                         >
-                                            Access <ArrowRight className="ml-1 h-3 w-3" />
+                                            {navigating ? <Loader className="h-3 w-3 animate-spin" /> : <>Explore <ArrowRight className="ml-1 h-3 w-3" /></>}
                                         </Button>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
 
             {/* --- THIS IS THE ONLY SECTION THAT HAS BEEN CHANGED --- */}
             <main className="flex-1 w-full pt-12 pb-16">
