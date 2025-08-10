@@ -403,7 +403,7 @@ const Index = () => {
              </div>
 
             {/* --- THIS IS THE ONLY SECTION THAT HAS BEEN CHANGED --- */}
-            <main className="flex-1 w-full pt-12 pb-16">
+            <main className="flex-1 w-full pt-12 pb-16 bg-gradient-to-br from-neutral-900 via-neutral-950 to-neutral-900">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
@@ -414,28 +414,37 @@ const Index = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {resourceCardsNew.map((card) => {
                             const Icon = card.icon;
                             return (
-                                <Link 
-                                    to={card.path} 
+                                <div 
                                     key={card.title} 
-                                    className="block group"
-                                    aria-label={`Access ${card.title}: ${card.description}`}
+                                    className="group bg-white/5 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 h-full border border-white/10 hover:border-blue-400/50 transform hover:-translate-y-1 hover:scale-[1.02] animate-fade-in"
                                 >
-                                    <div className="bg-neutral-900 p-6 rounded-2xl shadow-sm hover:shadow-2xl hover:shadow-blue-900/30 transition-all duration-300 h-full border border-neutral-800 hover:border-blue-500/50 transform hover:-translate-y-1 hover:scale-105 animate-fade-in">
-                                        <div className="flex items-start gap-5">
-                                            <div className="bg-neutral-800 p-3 rounded-xl flex-shrink-0 border border-neutral-700 group-hover:bg-blue-600/20 group-hover:border-blue-500/50 transition-all duration-300">
-                                                <Icon className="w-6 h-6 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
-                                            </div>
-                                            <div>
-                                                <h3 className="font-bold text-white text-lg mb-1 group-hover:text-blue-100 transition-colors duration-300">{`${card.number}. ${card.title}`}</h3>
-                                                <p className="text-neutral-400 text-sm group-hover:text-neutral-300 transition-colors duration-300">{card.description}</p>
-                                            </div>
+                                    <div className="flex items-start gap-4 mb-4">
+                                        <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-3 rounded-xl flex-shrink-0 border border-blue-400/30 group-hover:border-blue-400/60 transition-all duration-300">
+                                            <Icon className="w-6 h-6 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
+                                        </div>
+                                        <div className="flex-grow">
+                                            <h3 className="font-bold text-white text-lg mb-2 group-hover:text-blue-100 transition-colors duration-300">{`${card.number}. ${card.title}`}</h3>
+                                            <p className="text-neutral-400 text-sm group-hover:text-neutral-300 transition-colors duration-300 mb-4 leading-relaxed">{card.description}</p>
                                         </div>
                                     </div>
-                                </Link>
+                                    <div className="mt-auto">
+                                        <Link to={card.path} className="w-full">
+                                            <Button 
+                                                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg group-hover:shadow-blue-500/25"
+                                                aria-label={`Access ${card.title}: ${card.description}`}
+                                            >
+                                                <span className="flex items-center justify-center gap-2">
+                                                    Access Tool
+                                                    <ArrowRight className="w-4 h-4" />
+                                                </span>
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </div>
                             );
                         })}
                     </div>
