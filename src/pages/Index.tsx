@@ -403,13 +403,13 @@ const Index = () => {
              </div>
 
             {/* --- THIS IS THE ONLY SECTION THAT HAS BEEN CHANGED --- */}
-            <main className="flex-1 w-full pt-12 pb-16 bg-gradient-to-br from-neutral-900 via-neutral-950 to-neutral-900">
+            <main className="flex-1 w-full pt-12 pb-16 bg-neutral-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+                        <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 tracking-tight mb-4">
                             Engineering Resource Center
                         </h2>
-                        <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
+                        <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
                             Professional-grade resources, tools, and documentation for software engineers and developers.
                         </p>
                     </div>
@@ -420,21 +420,21 @@ const Index = () => {
                             return (
                                 <div 
                                     key={card.title} 
-                                    className="group bg-white/5 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 h-full border border-white/10 hover:border-blue-400/50 transform hover:-translate-y-1 hover:scale-[1.02] animate-fade-in"
+                                    className="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full border border-neutral-200 hover:border-blue-300 transform hover:-translate-y-1 hover:scale-[1.02]"
                                 >
                                     <div className="flex items-start gap-4 mb-4">
-                                        <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-3 rounded-xl flex-shrink-0 border border-blue-400/30 group-hover:border-blue-400/60 transition-all duration-300">
-                                            <Icon className="w-6 h-6 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
+                                        <div className="bg-blue-600 p-3 rounded-xl flex-shrink-0 shadow-md">
+                                            <Icon className="w-6 h-6 text-white" />
                                         </div>
                                         <div className="flex-grow">
-                                            <h3 className="font-bold text-white text-lg mb-2 group-hover:text-blue-100 transition-colors duration-300">{`${card.number}. ${card.title}`}</h3>
-                                            <p className="text-neutral-400 text-sm group-hover:text-neutral-300 transition-colors duration-300 mb-4 leading-relaxed">{card.description}</p>
+                                            <h3 className="font-bold text-neutral-900 text-lg mb-2">{`${card.number}. ${card.title}`}</h3>
+                                            <p className="text-neutral-600 text-sm mb-4 leading-relaxed">{card.description}</p>
                                         </div>
                                     </div>
                                     <div className="mt-auto">
                                         <Link to={card.path} className="w-full">
                                             <Button 
-                                                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg group-hover:shadow-blue-500/25"
+                                                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
                                                 aria-label={`Access ${card.title}: ${card.description}`}
                                             >
                                                 <span className="flex items-center justify-center gap-2">
