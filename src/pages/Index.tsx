@@ -353,7 +353,7 @@ const Index = () => {
                                         <Button 
                                             variant="outline" 
                                             size="sm" 
-                                            className="text-xs font-medium text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 hover:scale-105"
+                                            className="text-xs font-medium transition-all duration-200 hover:scale-105"
                                             aria-label="Browse enhanced data center projects"
                                         >
                                             {navigating ? <Loader className="h-3 w-3 animate-spin" /> : <>Browse <ArrowRight className="ml-1 h-3 w-3" /></>}
@@ -371,7 +371,7 @@ const Index = () => {
                                         <Button 
                                             variant="outline" 
                                             size="sm" 
-                                            className="text-xs font-medium text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 hover:scale-105"
+                                            className="text-xs font-medium transition-all duration-200 hover:scale-105"
                                             aria-label="Try AI-powered interview tools"
                                         >
                                             {navigating ? <Loader className="h-3 w-3 animate-spin" /> : <>Try Now <ArrowRight className="ml-1 h-3 w-3" /></>}
@@ -389,7 +389,7 @@ const Index = () => {
                                         <Button 
                                             variant="outline" 
                                             size="sm" 
-                                            className="text-xs font-medium text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 hover:scale-105"
+                                            className="text-xs font-medium transition-all duration-200 hover:scale-105"
                                             aria-label="Explore career opportunities"
                                         >
                                             {navigating ? <Loader className="h-3 w-3 animate-spin" /> : <>Explore <ArrowRight className="ml-1 h-3 w-3" /></>}
