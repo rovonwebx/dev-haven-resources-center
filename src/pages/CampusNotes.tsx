@@ -60,7 +60,7 @@ const academicYears = [
       refId: "fourth-year",
       accentColor: "border-red-500",
       description: "Final year projects and industry preparation",
-      driveLink: "#",
+      driveLink: "https://drive.google.com/drive/folders/1J6KQxSag1ag2c-hEjEgu9gCAfhmho-Yb",
       subjects: ["Capstone Project", "Blockchain", "Cloud Computing", "DevOps"],
       resources: [
         { name: "Project Reports", icon: FileText, count: 30, description: "Sample final year project reports" },
