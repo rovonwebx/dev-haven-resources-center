@@ -113,7 +113,7 @@ const Index = () => {
     const isMobile = useIsMobile();
 
     useEffect(() => {
-        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('dark');
         const popupDismissed = window.sessionStorage.getItem(POPUP_KEY);
         if (!popupDismissed) {
             const timer = setTimeout(() => {
@@ -141,36 +141,56 @@ const Index = () => {
 
     const OpportunityList = ({ title, data }) => (
         <div>
-            <h4 className="font-semibold text-neutral-200 mb-3 px-4 text-sm uppercase tracking-wider">{title}</h4>
+            <h4 className="font-semibold text-gray-900 mb-3 px-4 text-sm uppercase tracking-wider">{title}</h4>
             <div className="space-y-1">
                 {data.map((item) => (
-                    <a href={item.link} key={item.source} target="_blank" rel="noopener noreferrer" className="block p-3 mx-2 rounded-lg hover:bg-neutral-800/80 transition-colors duration-200 border-l-2 border-transparent hover:border-blue-500">
-                        <p className="font-semibold text-sm text-white">{item.source}</p>
-                        <p className="text-xs text-neutral-400 mt-1">{item.focus}</p>
+                    <a href={item.link} key={item.source} target="_blank" rel="noopener noreferrer" className="block p-3 mx-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 border-l-2 border-transparent hover:border-blue-500">
+                        <p className="font-semibold text-sm text-gray-900">{item.source}</p>
+                        <p className="text-xs text-gray-600 mt-1">{item.focus}</p>
                     </a>
                 ))}
             </div>
         </div>
     );
 
+    const cardGradients = [
+        "from-orange-200 to-orange-100",
+        "from-emerald-200 to-emerald-100", 
+        "from-pink-200 to-pink-100",
+        "from-purple-200 to-purple-100",
+        "from-cyan-200 to-cyan-100",
+        "from-rose-200 to-rose-100",
+        "from-violet-200 to-violet-100",
+        "from-teal-200 to-teal-100",
+        "from-fuchsia-200 to-fuchsia-100",
+        "from-amber-200 to-amber-100",
+        "from-lime-200 to-lime-100",
+        "from-indigo-200 to-indigo-100",
+        "from-sky-200 to-sky-100",
+        "from-red-200 to-red-100",
+        "from-green-200 to-green-100",
+        "from-yellow-200 to-yellow-100",
+        "from-blue-200 to-blue-100",
+    ];
+
     return (
-        <div className="min-h-screen bg-black flex flex-col font-sans text-white overflow-x-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col font-sans text-gray-900 overflow-x-hidden">
             <Analytics />
             <NotificationSound play={playNotificationSound} />
 
             {/* --- MODERN POPUP --- */}
             {showPopup && (
-                <div className="fixed top-5 right-5 z-50 w-[calc(100%-2.5rem)] max-w-md bg-neutral-900/80 backdrop-blur-2xl rounded-2xl shadow-2xl border border-neutral-700 animate-fade-in-down">
+                <div className="fixed top-5 right-5 z-50 w-[calc(100%-2.5rem)] max-w-md bg-white/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-gray-200 animate-fade-in-down">
                     <div className="p-5">
                         <div className="flex items-start justify-between mb-4">
                             <div className="flex items-center gap-3">
-                                <span className="bg-gradient-to-br from-blue-500 to-purple-600 p-2.5 rounded-xl inline-flex shadow-lg"><Bell className="text-white" size={20} /></span>
+                                <span className="bg-gradient-to-br from-blue-500 to-blue-600 p-2.5 rounded-xl inline-flex shadow-lg"><Bell className="text-white" size={20} /></span>
                                 <div>
-                                    <h3 className="font-semibold text-white">Opportunities Update</h3>
-                                    <p className="text-sm text-neutral-300">August 2025</p>
+                                    <h3 className="font-semibold text-gray-900">Opportunities Update</h3>
+                                    <p className="text-sm text-gray-600">August 2025</p>
                                 </div>
                             </div>
-                            <Button onClick={dismissPopup} variant="ghost" size="icon" className="h-8 w-8 rounded-full text-neutral-400 hover:bg-neutral-700/60"><X size={18} /></Button>
+                            <Button onClick={dismissPopup} variant="ghost" size="icon" className="h-8 w-8 rounded-full text-gray-500 hover:bg-gray-100"><X size={18} /></Button>
                         </div>
                         <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
                             <OpportunityList title="Hackathons" data={hackathonsData} />
@@ -181,10 +201,10 @@ const Index = () => {
             )}
 
             {/* --- MODERN SIDE PANEL --- */}
-            <div className={`fixed top-0 right-0 h-full bg-neutral-900/80 backdrop-blur-2xl shadow-2xl z-50 w-full max-w-md transform transition-transform duration-300 border-l border-neutral-800 ${isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-                <div className="p-5 border-b border-neutral-800 flex justify-between items-center sticky top-0 bg-neutral-900/90 backdrop-blur-sm">
-                    <h3 className="font-semibold text-lg text-white">Hub Updates</h3>
-                    <button onClick={() => setIsPanelOpen(false)} className="p-2 rounded-full text-neutral-400 hover:bg-neutral-700/60 transition-colors"><X size={18} /></button>
+            <div className={`fixed top-0 right-0 h-full bg-white/95 backdrop-blur-2xl shadow-2xl z-50 w-full max-w-md transform transition-transform duration-300 border-l border-gray-200 ${isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                <div className="p-5 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white/90 backdrop-blur-sm">
+                    <h3 className="font-semibold text-lg text-gray-900">Hub Updates</h3>
+                    <button onClick={() => setIsPanelOpen(false)} className="p-2 rounded-full text-gray-500 hover:bg-gray-100 transition-colors"><X size={18} /></button>
                 </div>
                 <div className="py-4 space-y-6 overflow-y-auto h-[calc(100%-5rem)] custom-scrollbar">
                     <OpportunityList title="Technical Hackathons" data={hackathonsData} />
@@ -193,7 +213,7 @@ const Index = () => {
             </div>
 
             {/* --- HEADER --- */}
-            <header className="sticky top-0 w-full border-b border-neutral-800 bg-neutral-950 z-40">
+            <header className="sticky top-0 w-full border-b border-gray-200 bg-white/80 backdrop-blur-lg z-40 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center gap-8">
@@ -201,14 +221,14 @@ const Index = () => {
                                 <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shadow-md transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-blue-600/40">
                                     <Rocket className="w-5 h-5 text-white" />
                                 </div>
-                                <h1 className="text-xl font-semibold text-white tracking-tight">Resource Center</h1>
+                                <h1 className="text-xl font-semibold text-gray-900 tracking-tight">Resource Center</h1>
                             </Link>
                             <nav className="hidden md:flex items-center gap-2">
                                 {navLinks.map((link) => (
                                     <Link
                                         key={link.title}
                                         to={link.path}
-                                        className="px-3 py-2 rounded-md text-sm font-medium text-neutral-300 hover:bg-neutral-800 hover:text-white transition-colors"
+                                        className="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
                                     >
                                         {link.title}
                                     </Link>
@@ -220,7 +240,7 @@ const Index = () => {
                                 onClick={() => setIsPanelOpen(true)}
                                 variant="ghost"
                                 size="icon"
-                                className="relative rounded-lg text-neutral-300 hover:bg-neutral-800 hover:text-white transition-all"
+                                className="relative rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all"
                             >
                                 <Bell className="h-5 w-5" />
                                 <span className="absolute top-1.5 right-1.5 flex h-2.5 w-2.5">
@@ -233,7 +253,7 @@ const Index = () => {
                                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                                     variant="ghost"
                                     size="icon"
-                                    className="rounded-lg text-neutral-300 hover:bg-neutral-800 hover:text-white"
+                                    className="rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                                 >
                                     <Menu className="h-5 w-5" />
                                 </Button>
@@ -242,14 +262,14 @@ const Index = () => {
                     </div>
                 </div>
                 {isMobileMenuOpen && (
-                    <nav className="md:hidden border-t border-neutral-800 py-4">
+                    <nav className="md:hidden border-t border-gray-200 py-4 bg-white">
                         <div className="flex flex-col items-center gap-2 px-4">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.title}
                                     to={link.path}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="px-4 py-2 rounded-md text-base font-medium text-neutral-300 hover:bg-neutral-800 hover:text-white transition-colors w-full text-center"
+                                    className="px-4 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors w-full text-center"
                                 >
                                     {link.title}
                                 </Link>
@@ -263,15 +283,15 @@ const Index = () => {
             {showBanner && <WelcomeBanner onDismiss={dismissBanner} />}
 
             {/* --- QUICK LINKS NAVBAR --- */}
-            <nav className="bg-neutral-950 border-b border-neutral-800">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+            <nav className="bg-white border-b border-gray-200 shadow-sm">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
                     <div className="flex items-center justify-center md:justify-start gap-4 overflow-x-auto custom-scrollbar">
-                        <h3 className="text-sm font-semibold text-neutral-400 hidden md:block">Quick Links:</h3>
+                        <h3 className="text-sm font-semibold text-gray-500 hidden md:block">Quick Links:</h3>
                         {quickLinks.map((link) => (
                              <Link
                                 key={link.title}
                                 to={link.path}
-                                className="flex-shrink-0 px-3 py-1.5 rounded-md text-sm font-medium text-neutral-300 hover:bg-neutral-800 hover:text-white transition-colors"
+                                className="flex-shrink-0 px-3 py-1.5 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
                             >
                                 {link.title}
                             </Link>
@@ -284,25 +304,38 @@ const Index = () => {
             {/* --- GRID MAIN SECTION --- */}
             <main className="flex-1 w-full py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {resourceCardsNew.map((card) => {
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {resourceCardsNew.map((card, index) => {
                             const Icon = card.icon;
+                            const gradient = cardGradients[index % cardGradients.length];
                             return (
                                 <Link
                                     to={card.path}
                                     key={card.title}
                                     className="block group"
                                 >
-                                    <div className="relative bg-neutral-900 p-6 rounded-2xl shadow-sm transition-all duration-300 h-full border-2 border-neutral-800 group-hover:border-blue-600 group-hover:-translate-y-1">
-                                        <div className="flex items-start gap-5">
-                                            <div className="bg-neutral-800 p-3.5 rounded-xl flex-shrink-0 border border-neutral-700 group-hover:bg-blue-950/50 group-hover:border-blue-500/50 transition-all duration-300">
-                                                <Icon className="w-6 h-6 text-blue-400 group-hover:text-blue-300" />
+                                    <div className={`relative bg-gradient-to-br ${gradient} p-8 rounded-3xl shadow-lg transition-all duration-300 h-full group-hover:shadow-2xl group-hover:-translate-y-2 group-hover:scale-[1.02]`}>
+                                        <div className="flex flex-col h-full">
+                                            <div className="flex items-start justify-between mb-6">
+                                                <div className="bg-white/40 backdrop-blur-sm p-3 rounded-xl shadow-md">
+                                                    <Icon className="w-7 h-7 text-gray-800" />
+                                                </div>
                                             </div>
                                             <div className="flex-grow">
-                                                <h3 className="font-bold text-white text-lg mb-1">{card.title}</h3>
-                                                <p className="text-neutral-400 text-sm">{card.description}</p>
+                                                <h3 className="font-bold text-gray-900 text-2xl mb-2 tracking-tight">{card.title}</h3>
+                                                <p className="text-gray-700 text-sm leading-relaxed">{card.description}</p>
                                             </div>
-                                            <ArrowRight className="w-5 h-5 text-neutral-600 transition-all duration-300 group-hover:text-blue-400 group-hover:translate-x-1" />
+                                            <div className="mt-6 flex items-center justify-between">
+                                                <div className="flex -space-x-2">
+                                                    <div className="w-8 h-8 rounded-full bg-gray-600 border-2 border-white flex items-center justify-center">
+                                                        <Users className="w-4 h-4 text-white" />
+                                                    </div>
+                                                    <div className="w-8 h-8 rounded-full bg-gray-800 border-2 border-white flex items-center justify-center text-xs font-semibold text-white">
+                                                        {Math.floor(Math.random() * 5) + 2}+
+                                                    </div>
+                                                </div>
+                                                <ArrowRight className="w-6 h-6 text-gray-700 transition-all duration-300 group-hover:translate-x-2 group-hover:text-gray-900" />
+                                            </div>
                                         </div>
                                     </div>
                                 </Link>
@@ -313,19 +346,19 @@ const Index = () => {
             </main>
 
             {/* --- FOOTER --- */}
-            <footer className="bg-neutral-950 border-t border-neutral-800">
+            <footer className="bg-white border-t border-gray-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                         <div className="mb-4 md:mb-0">
-                            <h3 className="font-semibold text-neutral-200 tracking-wider uppercase mb-4 text-sm">Resource Center</h3>
-                            <p className="text-neutral-400 text-sm">© {new Date().getFullYear()} All Rights Reserved.</p>
+                            <h3 className="font-semibold text-gray-900 tracking-wider uppercase mb-4 text-sm">Resource Center</h3>
+                            <p className="text-gray-600 text-sm">© {new Date().getFullYear()} All Rights Reserved.</p>
                         </div>
                         <div />
                         <div />
                         <div className="flex justify-start md:justify-end space-x-4">
-                            <a href="#" className="text-neutral-400 hover:text-blue-500 transition-colors p-2 rounded-lg hover:bg-neutral-800"><Github size={20} /></a>
-                            <a href="#" className="text-neutral-400 hover:text-blue-500 transition-colors p-2 rounded-lg hover:bg-neutral-800"><Linkedin size={20} /></a>
-                            <a href="#" className="text-neutral-400 hover:text-blue-500 transition-colors p-2 rounded-lg hover:bg-neutral-800"><Twitter size={20} /></a>
+                            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-gray-100"><Github size={20} /></a>
+                            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-gray-100"><Linkedin size={20} /></a>
+                            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-gray-100"><Twitter size={20} /></a>
                         </div>
                     </div>
                 </div>
