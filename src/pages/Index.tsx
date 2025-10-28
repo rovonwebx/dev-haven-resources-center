@@ -11,7 +11,7 @@ import {
     Award, Lightbulb, Briefcase, BrainCircuit, Map, Calendar, ClipboardCheck, School, LayoutTemplate, Bot, Rocket, Megaphone
 } from 'lucide-react';
 
-// --- DATA ARRAYS (UPDATED) ---
+// --- DATA ARRAYS (UNCHANGED) ---
 const resourceCardsNew = [
     { number: 1, title: "Certificates", description: "Industry-recognized certifications and courses.", path: "/certificates", icon: Award },
     { number: 2, title: "Projects", description: "Hands-on projects and portfolio ideas.", path: "/projects", icon: Code },
@@ -63,11 +63,15 @@ const BANNER_KEY = 'dhrc_freshers_banner_dismissed_2025_29';
 
 const NotificationSound = ({ play }) => {
     const audioRef = useRef(null);
-    useEffect(() => { if (play) { audioRef.current.play().catch(e => {}); } }, [play]);
-    return <audio ref={audioRef} src="https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3" />;
+    useEffect(() => { 
+        if (play) { 
+            audioRef.current.play().catch(e => {}); 
+        } 
+    }, [play]);
+    return <audio ref={audioRef} src="https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3" preload="auto" />;
 };
 
-// --- Welcome Banner Component ---
+// --- Welcome Banner Component (UNCHANGED) ---
 const WelcomeBanner = ({ onDismiss }) => {
     return (
         <div className="bg-blue-600">
@@ -83,15 +87,16 @@ const WelcomeBanner = ({ onDismiss }) => {
                         </p>
                     </div>
                     <div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
-                        <a href="/roadmaps" className="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-blue-600 bg-white hover:bg-blue-50">
+                        <Link to="/roadmaps" className="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-blue-600 bg-white hover:bg-blue-50">
                             Get Started
-                        </a>
+                        </Link>
                     </div>
                     <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
                         <button
                             type="button"
                             className="-mr-1 flex p-2 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2"
                             onClick={onDismiss}
+                            aria-label="Dismiss banner"
                         >
                             <span className="sr-only">Dismiss</span>
                             <X className="h-6 w-6 text-white" />
@@ -154,31 +159,26 @@ const Index = () => {
     );
 
     const cardGradients = [
-        "from-orange-200 to-orange-100",
-        "from-emerald-200 to-emerald-100", 
-        "from-pink-200 to-pink-100",
-        "from-purple-200 to-purple-100",
-        "from-cyan-200 to-cyan-100",
-        "from-rose-200 to-rose-100",
-        "from-violet-200 to-violet-100",
-        "from-teal-200 to-teal-100",
-        "from-fuchsia-200 to-fuchsia-100",
-        "from-amber-200 to-amber-100",
-        "from-lime-200 to-lime-100",
-        "from-indigo-200 to-indigo-100",
-        "from-sky-200 to-sky-100",
-        "from-red-200 to-red-100",
-        "from-green-200 to-green-100",
-        "from-yellow-200 to-yellow-100",
+        "from-orange-200 to-orange-100", "from-emerald-200 to-emerald-100", 
+        "from-pink-200 to-pink-100", "from-purple-200 to-purple-100",
+        "from-cyan-200 to-cyan-100", "from-rose-200 to-rose-100",
+        "from-violet-200 to-violet-100", "from-teal-200 to-teal-100",
+        "from-fuchsia-200 to-fuchsia-100", "from-amber-200 to-amber-100",
+        "from-lime-200 to-lime-100", "from-indigo-200 to-indigo-100",
+        "from-sky-200 to-sky-100", "from-red-200 to-red-100",
+        "from-green-200 to-green-100", "from-yellow-200 to-yellow-100",
         "from-blue-200 to-blue-100",
     ];
+
+    const HERO_BG_IMAGE_URL = 'https://uc1a77d8415a09c6421b4ea3b4bd.previews.dropboxusercontent.com/p/thumb/ACzfkPqiOo-pTeL-27czcDjptJHcrF-cB0aNpPRBa3H6zxds7R0u3vpGygLNnAWvLFwcLZq533-2nUfDPwfrnrseFDHKMxMIYo5X7Oy50p09gxSOsVjU_2moNxcqdsxQAq_r1vcLq7b2v54J51OqsbQ9uRtd6T07Rn5hesovvR2SkBOGck4L_ICQAsGIfpo5yjn-40quxK5iBGdicxO7Ec9M7xLxOfsA-1NlP9B6r6_6bJ9c55pTli1ZZfBOnHUKC2fLcb83waPsVjIpH3ooXSqet1GqGtRCPFADBpVhcLQvoooXdD3lD9p9RlM2PuU7Ufkrm-GiOBRYYReyiSkJ3PTdKnfWsi6HA-9_YcYMLtmrPtwm7shQoAC-E9LkEsWq-fQ/p.png?is_prewarmed=true';
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col font-sans text-gray-900 overflow-x-hidden">
             <Analytics />
             <NotificationSound play={playNotificationSound} />
 
-            {/* --- MODERN POPUP --- */}
+            {/* --- MODERN POPUP (UNCHANGED) --- */}
             {showPopup && (
                 <div className="fixed top-5 right-5 z-50 w-[calc(100%-2.5rem)] max-w-md bg-white/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-gray-200 animate-fade-in-down">
                     <div className="p-5">
@@ -190,7 +190,7 @@ const Index = () => {
                                     <p className="text-sm text-gray-600">August 2025</p>
                                 </div>
                             </div>
-                            <Button onClick={dismissPopup} variant="ghost" size="icon" className="h-8 w-8 rounded-full text-gray-500 hover:bg-gray-100"><X size={18} /></Button>
+                            <Button onClick={dismissPopup} variant="ghost" size="icon" className="h-8 w-8 rounded-full text-gray-500 hover:bg-gray-100" aria-label="Dismiss notification"><X size={18} /></Button>
                         </div>
                         <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
                             <OpportunityList title="Hackathons" data={hackathonsData} />
@@ -200,11 +200,11 @@ const Index = () => {
                 </div>
             )}
 
-            {/* --- MODERN SIDE PANEL --- */}
+            {/* --- MODERN SIDE PANEL (UNCHANGED) --- */}
             <div className={`fixed top-0 right-0 h-full bg-white/95 backdrop-blur-2xl shadow-2xl z-50 w-full max-w-md transform transition-transform duration-300 border-l border-gray-200 ${isPanelOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                 <div className="p-5 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white/90 backdrop-blur-sm">
                     <h3 className="font-semibold text-lg text-gray-900">Hub Updates</h3>
-                    <button onClick={() => setIsPanelOpen(false)} className="p-2 rounded-full text-gray-500 hover:bg-gray-100 transition-colors"><X size={18} /></button>
+                    <button onClick={() => setIsPanelOpen(false)} className="p-2 rounded-full text-gray-500 hover:bg-gray-100 transition-colors" aria-label="Close panel"><X size={18} /></button>
                 </div>
                 <div className="py-4 space-y-6 overflow-y-auto h-[calc(100%-5rem)] custom-scrollbar">
                     <OpportunityList title="Technical Hackathons" data={hackathonsData} />
@@ -212,7 +212,7 @@ const Index = () => {
                 </div>
             </div>
 
-            {/* --- HEADER --- */}
+            {/* --- HEADER (UNCHANGED) --- */}
             <header className="sticky top-0 w-full border-b border-gray-200 bg-white/80 backdrop-blur-lg z-40 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
@@ -241,6 +241,7 @@ const Index = () => {
                                 variant="ghost"
                                 size="icon"
                                 className="relative rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all"
+                                aria-label="View latest updates and opportunities"
                             >
                                 <Bell className="h-5 w-5" />
                                 <span className="absolute top-1.5 right-1.5 flex h-2.5 w-2.5">
@@ -254,6 +255,7 @@ const Index = () => {
                                     variant="ghost"
                                     size="icon"
                                     className="rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                                    aria-label="Toggle main menu"
                                 >
                                     <Menu className="h-5 w-5" />
                                 </Button>
@@ -279,19 +281,19 @@ const Index = () => {
                 )}
             </header>
 
-            {/* --- WELCOME BANNER --- */}
+            {/* --- WELCOME BANNER (UNCHANGED) --- */}
             {showBanner && <WelcomeBanner onDismiss={dismissBanner} />}
 
-            {/* --- QUICK LINKS NAVBAR --- */}
+            {/* --- QUICK LINKS NAVBAR (UNCHANGED) --- */}
             <nav className="bg-white border-b border-gray-200 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
                     <div className="flex items-center justify-center md:justify-start gap-4 overflow-x-auto custom-scrollbar">
-                        <h3 className="text-sm font-semibold text-gray-500 hidden md:block">Quick Links:</h3>
+                        <h3 className="text-sm font-semibold text-gray-500 hidden md:block flex-shrink-0">Quick Links:</h3>
                         {quickLinks.map((link) => (
                              <Link
                                 key={link.title}
                                 to={link.path}
-                                className="flex-shrink-0 px-3 py-1.5 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                                className="flex-shrink-0 px-3 py-1.5 rounded-full text-sm font-medium text-gray-600 bg-gray-50 hover:bg-blue-100 hover:text-blue-700 transition-colors border border-gray-200"
                             >
                                 {link.title}
                             </Link>
@@ -301,23 +303,73 @@ const Index = () => {
             </nav>
 
             
-            {/* --- GRID MAIN SECTION --- */}
-            <main className="flex-1 w-full py-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* --- MAIN CONTENT LAYOUT --- */}
+            <main className="flex-1 w-full pb-16">
+                
+                {/* --- FULL-WIDTH HERO SECTION --- */}
+                <div className="w-full relative pt-10 pb-16 mb-16 overflow-hidden border-b border-gray-200" style={{backgroundColor: '#fff'}}> 
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
+                            
+                            {/* 1. Background Image Layer (z-0) */}
+                            <div 
+                                className="absolute inset-0 z-0 bg-cover bg-center"
+                                style={{
+                                    backgroundImage: `url('${HERO_BG_IMAGE_URL}')`,
+                                }}
+                            ></div>
+                            
+                            {/* 2. White Translucent Overlay for Readability (z-0) */}
+                            <div className="absolute inset-0 z-0 bg-white/70 backdrop-blur-sm"></div>
+
+                            {/* 3. Content Layer (z-10) */}
+                            <div className="relative z-10 text-center py-20 px-6 sm:px-10 lg:px-16 max-w-4xl mx-auto">
+                                <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-200 text-sm px-3 py-1.5 rounded-full transition-colors font-medium mx-auto">
+                                    <span className="flex items-center mx-1">🚀 One Stop Hub</span>
+                                </Badge>
+                                <h2 className="mt-6 text-5xl font-extrabold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
+                                    Your Center for <span className="text-blue-600">Tech Growth</span>
+                                </h2>
+                                <p className="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
+                                    Explore a curated collection of resources, from certificates and projects to roadmaps and internships, designed to accelerate your journey as a student developer.
+                                </p>
+                                {/* CTA BUTTONS */}
+                                <div className="mt-10 flex justify-center space-x-4">
+                                    <Link to="/roadmaps">
+                                        <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/50 transition-transform hover:scale-[1.02]">
+                                            Start Your Roadmap <ArrowRight className="ml-2 h-5 w-5" />
+                                        </Button>
+                                    </Link>
+                                    <Link to="/projects">
+                                        <Button variant="outline" className="text-gray-700 hover:bg-gray-100 border-gray-300 transition-transform hover:scale-[1.02]">
+                                            View Projects
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                {/* --- RESOURCE CARDS GRID (Contained) --- */}
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0">
+                    <h3 className="text-3xl font-bold text-gray-900 mb-8 tracking-tight">All Resources</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {resourceCardsNew.map((card, index) => {
                             const Icon = card.icon;
-                            const gradient = cardGradients[index % cardGradients.length];
+                            const gradient = cardGradients[index % cardGradients.length]; 
                             return (
                                 <Link
                                     to={card.path}
                                     key={card.title}
                                     className="block group"
+                                    aria-label={`Go to ${card.title} resources`}
                                 >
-                                    <div className={`relative bg-gradient-to-br ${gradient} p-8 rounded-3xl shadow-lg transition-all duration-300 h-full group-hover:shadow-2xl group-hover:-translate-y-2 group-hover:scale-[1.02]`}>
+                                    <div className={`relative bg-gradient-to-br ${gradient} p-8 rounded-3xl shadow-lg transition-all duration-300 h-full group-hover:shadow-2xl group-hover:scale-[1.01] group-hover:shadow-gray-300/50`}>
                                         <div className="flex flex-col h-full">
                                             <div className="flex items-start justify-between mb-6">
-                                                <div className="bg-white/40 backdrop-blur-sm p-3 rounded-xl shadow-md">
+                                                <div className="bg-white/50 backdrop-blur-sm p-3 rounded-xl shadow-md ring-1 ring-white/60">
                                                     <Icon className="w-7 h-7 text-gray-800" />
                                                 </div>
                                             </div>
@@ -326,7 +378,7 @@ const Index = () => {
                                                 <p className="text-gray-700 text-sm leading-relaxed">{card.description}</p>
                                             </div>
                                             <div className="mt-6 flex items-center justify-end">
-                                                <ArrowRight className="w-6 h-6 text-gray-700 transition-all duration-300 group-hover:translate-x-2 group-hover:text-gray-900" />
+                                                <ArrowRight className="w-6 h-6 text-gray-700 transition-all duration-300 group-hover:translate-x-1 group-hover:text-blue-600" />
                                             </div>
                                         </div>
                                     </div>
@@ -337,7 +389,7 @@ const Index = () => {
                 </div>
             </main>
 
-            {/* --- FOOTER --- */}
+            {/* --- FOOTER (UNCHANGED) --- */}
             <footer className="bg-white border-t border-gray-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -346,16 +398,16 @@ const Index = () => {
                             <p className="text-gray-600 text-sm">© {new Date().getFullYear()} All Rights Reserved.</p>
                         </div>
                         <div />
-                        <div />
-                        <div className="flex justify-start md:justify-end space-x-4">
-                            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-gray-100"><Github size={20} /></a>
-                            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-gray-100"><Linkedin size={20} /></a>
-                            <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-gray-100"><Twitter size={20} /></a>
+                        <div className="col-span-1 md:col-span-2 flex justify-start md:justify-end space-x-2">
+                            <a href="#" aria-label="GitHub Profile" className="text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-gray-100"><Github size={20} /></a>
+                            <a href="#" aria-label="LinkedIn Profile" className="text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-gray-100"><Linkedin size={20} /></a>
+                            <a href="#" aria-label="Twitter Profile" className="text-gray-600 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-gray-100"><Twitter size={20} /></a>
                         </div>
                     </div>
                 </div>
             </footer>
 
+            {/* --- FIXED CHATBOT (UNCHANGED) --- */}
             <div className="fixed bottom-5 right-5 z-40">
                 <Chatbot />
             </div>
