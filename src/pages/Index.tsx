@@ -325,15 +325,7 @@ const Index = () => {
                                                 <h3 className="font-bold text-gray-900 text-2xl mb-2 tracking-tight">{card.title}</h3>
                                                 <p className="text-gray-700 text-sm leading-relaxed">{card.description}</p>
                                             </div>
-                                            <div className="mt-6 flex items-center justify-between">
-                                                <div className="flex -space-x-2">
-                                                    <div className="w-8 h-8 rounded-full bg-gray-600 border-2 border-white flex items-center justify-center">
-                                                        <Users className="w-4 h-4 text-white" />
-                                                    </div>
-                                                    <div className="w-8 h-8 rounded-full bg-gray-800 border-2 border-white flex items-center justify-center text-xs font-semibold text-white">
-                                                        {Math.floor(Math.random() * 5) + 2}+
-                                                    </div>
-                                                </div>
+                                            <div className="mt-6 flex items-center justify-end">
                                                 <ArrowRight className="w-6 h-6 text-gray-700 transition-all duration-300 group-hover:translate-x-2 group-hover:text-gray-900" />
                                             </div>
                                         </div>
