@@ -22,7 +22,7 @@ const StudentProjectsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 flex flex-col font-sans text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col font-sans text-gray-900">
       <Analytics />
 
       {/* Consistent Header */}

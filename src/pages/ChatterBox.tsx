@@ -103,7 +103,7 @@ const ChatterBox = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-neutral-950 font-sans text-white">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-900">
       <Analytics />
       
       {/* --- Restyled Top Notification --- */}

@@ -124,7 +124,7 @@ const Chatbot = () => {
         <Button
           onClick={() => setIsOpen(!isOpen)}
           className={clsx(
-            "rounded-full w-16 h-16 bg-primary-blue text-white shadow-xl flex items-center justify-center transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-105 border border-white/20",
+            "rounded-full w-16 h-16 bg-gray-900 text-white shadow-xl flex items-center justify-center transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-105 hover:bg-black",
             { 'rotate-90': isOpen }
           )}
           size="icon"

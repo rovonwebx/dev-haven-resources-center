@@ -358,7 +358,7 @@ const DSAPage = () => {
     );
 
     return (
-        <div className="min-h-screen bg-neutral-950 text-white font-sans">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 font-sans">
             {/* <Header /> */}
             <main className="flex-1 w-full pt-12 pb-16">
                 <div className="text-center mb-8">

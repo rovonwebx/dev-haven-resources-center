@@ -279,7 +279,7 @@ const CertificatesPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900">
       {/* <Header /> */}
       
       <main className="flex-1 w-full pt-12 pb-16">

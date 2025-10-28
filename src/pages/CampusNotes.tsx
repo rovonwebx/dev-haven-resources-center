@@ -134,7 +134,7 @@ const CampusNotesPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 font-sans">
       {/* CSS for Print/Screenshot Protection */}
       <style>{`
         @media print {

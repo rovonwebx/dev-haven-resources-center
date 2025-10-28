@@ -348,10 +348,10 @@ const getCategoryBadgeClass = (category) => {
 
 const InterviewQuestions = () => {
   return (
-    <div className="min-h-screen bg-neutral-950 flex flex-col font-sans text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col font-sans text-gray-900">
         <Analytics />
         
-        <header className="sticky top-0 w-full border-b border-neutral-800 bg-neutral-950/90 backdrop-blur-xl z-40">
+        <header className="sticky top-0 w-full border-b border-gray-200 bg-white/80 backdrop-blur-xl z-40 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
                 <Link to="/" className="flex items-center gap-3">
                     <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center shadow-lg">
